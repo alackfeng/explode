@@ -1,0 +1,81 @@
+#构建全平台app - FAQ.
+
+## 操作日志
+
+
+##### FAQ
+
+```sh
+Q1. Uncaught TypeError: Cannot assign to read only property 'exports' of object '#<Object>'
+A1. 因为webpack 2中不允许混用import和module.exports ,
+解决办法就是统一改成ES6的方式编写即可.
+```
+
+```sh
+Q2. warning.js?6327:33 Warning: React does not recognize the `headerMode` prop on a DOM element
+A2. StackNavigator({}, {headerMode: 'none'})
+```
+
+```sh
+Q3. Uncaught (in promise) Unsupported platform . @createNavigationContainer.js
+A3.
+```
+
+```sh
+Q4. Unable to resolve module `stream` from `/Users/assetfun/source/code/aftradeapp/node_modules/cipher-base/index.js`
+A4. ----不使用了，npm install stream --save，直接把react-native-stream改成stream
+npm install --save react-native-stream
+mv node_modules/react-native-stream node_modules/stream
+```
+
+```sh
+Q5. Can't find variable: Buffer
+A5. npm install --save buffer
+var Buffer = require('buffer').Buffer;
+if(typeof global !== 'undefined') {
+global.Buffer = require('buffer').Buffer; // TODO just use global Buffer
+}
+npm install --save assetfunjs-ws assetfunjs
+
+global.Buffer = global.Buffer || require('buffer').Buffer;
+/Users/assetfun/source/code/aftradeapp/node_modules/create-hash/make-hash.js
+```
+
+```sh
+Q6. undefined is not an object (evaluating 'superCtor.prototype')
+A6. ----不使用了，npm install stream --save，直接把react-native-stream改成stream
+```
+
+```sh
+Q7. redux-saga Uncaught ReferenceError: regeneratorRuntime is not defined
+A7. npm install --save-dev babel-polyfill
+import 'regenerator-runtime/runtime'; ----- sagas/index.js 加入
+```
+
+```sh
+Q8. Could not find com.android.tools.build:gradle:3.0.1
+A8. 增加google()到android/build.gradle 支持3.0.1
+```
+
+```sh
+Q9. Cannot find entry file index.js in any of the roots
+A9.
+vi android/app/build.gradle =>
+project.ext.react = [
+entryFile: "index.android.js"
+]
+vi android/app/src/main/java/com/aftbomb/MainApplication.java =>
+protected String getJSMainModuleName() {
+return "index.android";
+}
+```
+
+```sh
+Q10. React Native unable to load script from assets index.android.bundle
+
+A10. mkdir -p android/app/src/main/assets;
+
+react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest
+```
+
+
