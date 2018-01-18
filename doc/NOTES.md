@@ -15,7 +15,7 @@
 ####
 
 
-##### 增加assetfunjs库支持，
+##### 增加区块基础库支持，包括 assetfunjs assetfunjs-ws库，可以调用注册账号成功
 
 ```sh
 npm install --save git+https://github.com/alackfeng/assetfunjs.git
