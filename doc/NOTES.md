@@ -12,6 +12,24 @@
 *	react|react-native
 *	react-native-cli: 2.0.1
 
+####
+
+##### 增加导航功能，react-navigation. 增加国际化支持，i18n。 增加ICON支持
+
+```sh
+npm install --save react-redux redux ###react-navigation
+npm install --save-dev file-loader
+npm install --save react-native-vector-icons react-native-i18n
+npm install --save styled-components
+npm install --save animated lodash
+
+npm install --save redux-persist redux-thunk redux-logger redux-saga
+
+npm install --save git+https://github.com/react-community/react-navigation.git#d5618ebd41ec1ac53cb40301d0f71610fbbb7172
+npm install --save path-to-regexp
+
+```
+
 #### 20180117 -: 
 
 ##### first init explode project

@@ -78,4 +78,28 @@ A10. mkdir -p android/app/src/main/assets;
 react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest
 ```
 
+```sh
+Q11. react-native-i18n module is not correctly linked
+A11. web.package.js => entry : { vendor: { 'react-native-i18n' } }
+```
+
+
+```sh
+Q12. the module `MaterialIcons` could not be found within the package
+A12. https://github.com/oblador/react-native-vector-icons/issues/626
+rm ./node_modules/react-native/local-cli/core/__fixtures__/files/package.json
+```
+
+
+```sh
+Q13. Could not find "store" in either the context or props of "Connect(App)"
+A13. 
+```
+
+```sh
+Q14. Uncaught TypeError: __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default.a.compile is not a function
+A14. npm install --save path-to-regexp
+```
+
+
 

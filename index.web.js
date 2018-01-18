@@ -1,5 +1,5 @@
 import { AppRegistry } from 'react-native';
-import App from './App';
+import App from "./js/ClientApp";
 
 AppRegistry.registerComponent('aftbomb', () => App);
 
