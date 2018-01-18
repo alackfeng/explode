@@ -27,10 +27,10 @@ const AppNavigator = StackNavigator({
   }
 }, {
   headerMode: 'none',
-  URIPrefix: 'aftrade://',
+  URIPrefix: 'aftbomb://',
   cardStyle: {
     backgroundColor: 'transparent',
   },
 });
 
-export default AppTabNavigator;
+export default AppNavigator;

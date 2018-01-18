@@ -30,7 +30,7 @@ const AppNavigator = StackNavigator({
   }
 }, {
   headerMode: 'screen',
-  URIPrefix: 'aftrade://',
+  URIPrefix: 'aftbomb://',
   cardStyle: {
     backgroundColor: 'transparent',
   },

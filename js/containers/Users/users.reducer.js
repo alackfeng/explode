@@ -18,12 +18,6 @@ export const usersReducer = (state = initialUsersState, action = {}) => {
 	console.log(">>>>>[users.reducer.js]::usersReducer - ", action.type, action);
 
 	switch (action.type) {
-		case REHYDRATE: {	// REHYDRATE
-			return {
-				...state,
-				...action.payload.users
-			};
-		}
 		case USERS.PENDING: {	// USERS
 			return {
 				...state,

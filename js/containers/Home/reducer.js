@@ -10,12 +10,6 @@ const initState = {
 
 export default function home(state = initState, action) {
   switch (action.type) {
-    case REHYDRATE: {
-      return {
-        ...state,
-        ...action.payload.home,
-      };
-    }
     case ActionTypes.GET_RANDOM: {
       return {
         ...state,
