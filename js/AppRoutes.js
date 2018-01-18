@@ -8,8 +8,8 @@ import Home from './containers/Home';
 import IconsGrid from './containers/IconsGrid';
 import NotFound from './containers/NotFound';
 import Translation from './containers/Translation';
-import { WelcomeScreen, RegisterScreen, LoginScreen, SplashScreen } from "./containers/Enter";
-//import { NodeScreen, } from "../containers/Wallet";
+import { WelcomeScreen, SplashScreen } from "./containers/Enter";
+import { LoginScreen, RegisterScreen, NodeScreen } from "./containers/Users";
 
 import Ionicons from "react-native-vector-icons/MaterialIcons";
 
@@ -42,34 +42,34 @@ export const AppRoutes = {
     screen: Home,
     path: 'home',
     navigationOptions: {
-      title: 'welcome',
+      title: 'home news',
       tabBarLabel: translate('menu.tab.home', locale),
       tabBarIcon: getIcon('home'),
     },
   },
-  Relation: {
+  Ico: {
     screen: IconsGrid,
-    path: 'relation',
+    path: 'ico',
     navigationOptions: {
-      title: 'relation',
+      title: 'ico issue',
       tabBarLabel: translate('menu.tab.relation', locale),
       tabBarIcon: getIcon('supervisor-account'),
     },
   },
-  News: {
+  Assets: {
     screen: Translation,
-    path: 'news',
+    path: 'assets',
     navigationOptions: {
       title: 'news',
       tabBarLabel: translate('menu.tab.news', locale),
       tabBarIcon: getIcon('explore'),
     },
   },
-  Wallet: {
-    screen: LoginScreen, //NodeScreen,
-    path: 'wallet',
+  Users: {
+    screen: NodeScreen,
+    path: 'users',
     navigationOptions: {
-      title: 'wallet',
+      title: 'user center',
       tabBarLabel: translate('menu.tab.wallet', locale),
       tabBarIcon: getIcon('fingerprint'),
     },

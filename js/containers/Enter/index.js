@@ -1,2 +1,3 @@
 
-export * from "./screens";
+export * from "./screens/Splash";
+export * from "./screens/Welcome";

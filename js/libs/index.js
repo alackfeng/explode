@@ -6,4 +6,4 @@ export const translate = (key, locale, interpolation = null) =>
 
 export const locale = 'en'; //I18n.locale;
 
-//export * from "./routerTransition";
+export * from "./routerTransition";

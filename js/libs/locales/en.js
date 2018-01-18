@@ -8,10 +8,10 @@ export const en = {
 	},
 	menu: {
 		tab: {
-			home: "Home",
-			relation: "Relation",
-			news: "News",
-			wallet: "My Wallet",
+			home: "Home News",
+			relation: "Ico Issue",
+			news: "Assets Manage",
+			wallet: "User Center",
 			"404": "Not Found"
 		}
 	},

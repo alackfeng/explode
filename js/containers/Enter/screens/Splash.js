@@ -69,7 +69,7 @@ class Splash extends Component {
     if(isAuthenticated) {
       navigation.navigate('Main');
     } else {
-      navigation.navigate('Welcome');
+      navigation.navigate('Users');
     }
   }
 

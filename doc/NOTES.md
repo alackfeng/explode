@@ -14,6 +14,23 @@
 
 ####
 
+
+##### 增加assetfunjs库支持，
+
+```sh
+npm install --save git+https://github.com/alackfeng/assetfunjs.git
+
+### npm install --save assetfunjs assetfunjs-ws
+
+### 参考FAQ。 Q4 stream |  Q5 buffer
+npm install --save react-native-stream
+mv node_modules/react-native-stream node_modules/stream
+
+global.Buffer = global.Buffer || require('buffer').Buffer;
+/Users/assetfun/source/code/aftradeapp/node_modules/create-hash/make-hash.js
+
+```
+
 ##### 增加导航功能，react-navigation. 增加国际化支持，i18n。 增加ICON支持
 
 ```sh

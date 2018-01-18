@@ -7,8 +7,8 @@ import AppNavigator from '../../navigator';
 import transient from '../reducers/transient';
 import home from '../../containers/Home/reducer';
 import { enterReducer } from "../../containers/Enter/reducer";
-//import { walletReducer } from "../../containers/Wallet/wallet.reducer";
-//import { settingsReducer } from "../../containers/Wallet/settings.reducer";
+import { walletReducer } from "../../containers/Users/wallet.reducer";
+import { settingsReducer } from "../../containers/Users/settings.reducer";
 import { usersReducer } from "../../containers/Users/users.reducer";
 
 export default {
@@ -18,7 +18,7 @@ export default {
   },
   home,
   enter: enterReducer,
-  //wallet: walletReducer,
-  //settings: settingsReducer,
+  wallet: walletReducer,
+  settings: settingsReducer,
   users: usersReducer, 
 };

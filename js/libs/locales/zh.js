@@ -8,10 +8,10 @@ export const zh = {
 	},
 	menu: {
 		tab: {
-			home: "首页",
-			relation: "关系户",
-			news: "资讯",
-			wallet: "我的钱包",
+			home: "首页|资讯",
+			relation: "发行ICO",
+			news: "资产管理",
+			wallet: "用户中心",
 			"404": "找不到"
 		}
 	},
