@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Dimensions, Text, View, Modal, TouchableHighlight, Alert, TouchableOpacity } from "react-native";
-import { init, createAccount } from "../users.actions";
+//import { init, createAccount } from "../users.actions";
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
 import { ViewContainer, Colors, Normalize, StyleSheet } from "../../../components";
@@ -130,14 +130,14 @@ class Lock extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  inited: state.users.inited,
+  //inited: state.users.inited,
   isLocked: state.users.isLocked,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
-    init: bindActionCreators(init, dispatch),
-    createAccount: bindActionCreators(createAccount, dispatch),
+    //init: bindActionCreators(init, dispatch),
+    //createAccount: bindActionCreators(createAccount, dispatch),
   };
 }
 

@@ -1,9 +1,11 @@
 /* eslint-disable no-constant-condition */
 import { delay } from "redux-saga";
 import { take, put, call, fork, select, all } from 'redux-saga/effects'
-import { api, history } from '../api';
-import * as actions from '../actions'
-import { getUser, getRepo, getStarredByUser, getStargazersByRepo } from '../reducers/selectors'
+import { api, history } from '../services';
+import * as actions from '../actions';
+import { getUser, getRepo, getStarredByUser, getStargazersByRepo } from '../reducers/selectors';
+
+import {watchUserLogin, watchUserRegister } from "./users.saga";
 
 // each entity defines 3 creators { request, success, failure }
 const { user, repo, starred, stargazers } = actions;
@@ -87,7 +89,9 @@ function* watchLoadUserPage() {
 export default function* root() {
 	console.log("=====[sagas.js]::root - ");
 	yield all([
-		fork(watchNavigate),
-		fork(watchLoadUserPage),
+		//fork(watchNavigate),
+		//fork(watchLoadUserPage),
+		fork(watchUserRegister),
+		fork(watchUserLogin),
 	]);
 }

@@ -1,5 +1,5 @@
-import { REHYDRATE } from "redux-persist";
-import { USERS, USERS_LOGIN, USERS_REGISTER, USER_UNLOCK } from "./users.types";
+
+import { USERS, USERS_LOGIN, USERS_REGISTER, USER_UNLOCK } from "../actions";
 
 export const initialUsersState = {
 	inited: null, 
@@ -13,12 +13,12 @@ export const initialUsersState = {
 	currentAccount: [],
 };
 
-export const usersReducer = (state = initialUsersState, action = {}) => {
+const usersReducer = (state = initialUsersState, action = {}) => {
 	
 	console.log(">>>>>[users.reducer.js]::usersReducer - ", action.type, action);
 
 	switch (action.type) {
-		case USERS.PENDING: {	// USERS
+		case USERS.REQUEST: {	// USERS
 			return {
 				...state,
 				inited: 0,
@@ -37,7 +37,7 @@ export const usersReducer = (state = initialUsersState, action = {}) => {
 				inited: -1,
 			};
 		}
-		case USERS_REGISTER.PENDING: {
+		case USERS_REGISTER.REQUEST: {
 			return {
 				...state,
 				pending: {...state.pending, register: 1}
@@ -50,7 +50,7 @@ export const usersReducer = (state = initialUsersState, action = {}) => {
 				...action.payload,
 			}
 		}
-		case USER_UNLOCK.PENDING: {
+		case USER_UNLOCK.REQUEST: {
 			return {
 				...state,
 				pending: {...state.pending, unlock: 1}
@@ -74,3 +74,4 @@ export const usersReducer = (state = initialUsersState, action = {}) => {
 			return state;
 	}
 };
+export default usersReducer;

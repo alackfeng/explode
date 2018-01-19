@@ -11,7 +11,7 @@ import styles from './styles';
 const Translation = () => {
   return (
     <View style={styles.container}>
-      <Text>Translated greeting:</Text>
+      <Text>Translated greeting: {locale}</Text>
       <Text>{translate('greeting', locale)}</Text>
     </View>
   );

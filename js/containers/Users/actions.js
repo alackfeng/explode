@@ -2,7 +2,7 @@
 import { WALLET, NODE, CONNECT, ACCOUNTSEARCH } from "./types";
 
 import willTransitionTo from "../../libs/routerTransition";
-import ApplicationApi from "../../api/ApplicationApi";
+import ApplicationApi from "../../services/ApplicationApi";
 
 
 export const nodeConnect = (nodes) => {

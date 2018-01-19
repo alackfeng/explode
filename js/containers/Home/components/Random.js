@@ -12,7 +12,7 @@ import {
 
 import {
   getRandomNumber,
-} from '../actions';
+} from '../../../actions';
 
 class Random extends Component {
   componentWillMount() {

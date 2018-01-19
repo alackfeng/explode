@@ -4,11 +4,14 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Text, View, StatusBar, TextInput, Button, TouchableHighlight } from "react-native";
-import { init, createAccount, loginAccount } from "../users.actions";
+import { triggerUser } from "../../../actions";
+
+const {init: usersInit, register: userRegister, login: userLogin} = triggerUser;
+
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
 import { ViewContainer, Colors, Normalize, StyleSheet } from "../../../components";
-import { LockScreen } from "./Lock";
+//import { LockScreen } from "./Lock";
 
 const SLView = styled.View`
   flex: 1;
@@ -123,7 +126,7 @@ class Register extends Component {
 
     try {
 
-      this.props.loginAccount(username, password); /*.then((res) => {
+      this.props.userLogin(username, password); /*.then((res) => {
 
         console.log("=====[Register.js]::userLogin - createAccount return : ok ", res);
         FetchChain("getAccount", res).then((ret) => {
@@ -149,10 +152,12 @@ class Register extends Component {
 
     const refcode = this.state.refcode;
     const referrer = this.state.registrar;
+    const registrar = this.state.registrar;
+    const referrer_percent = 0;
 
     try {
 
-      this.props.createAccount(username, password, this.state.registrar, referrer, 0, refcode).then((res) => {
+      this.props.userRegister(username, {username, password, registrar, referrer, referrer_percent, refcode}).then((res) => {
 
         console.log("=====[Register.js]::userRegister - createAccount return : ok ", res);
         FetchChain("getAccount", res).then((ret) => {
@@ -213,7 +218,7 @@ class Register extends Component {
             <SLTextSubmit>LOG</SLTextSubmit>
           </SLButtonSubmit>
         </SLViewSubmit>
-         <LockScreen />
+         {/*(<LockScreen />*/}
 			</ViewContainer>
 		);
 	}
@@ -224,16 +229,8 @@ const mapStateToProps = (state) => ({
   currentAccount: state.users.currentAccount,
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    init: bindActionCreators(init, dispatch),
-    createAccount: bindActionCreators(createAccount, dispatch),
-    loginAccount: bindActionCreators(loginAccount, dispatch),
-  };
-}
-
 export const RegisterScreen = connect(mapStateToProps, {
-  init,
-  createAccount,
-  loginAccount,
+  usersInit,
+  userRegister,
+  userLogin,
 })(Register);
