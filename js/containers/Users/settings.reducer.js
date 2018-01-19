@@ -26,7 +26,7 @@ export const settingsReducer = (state = initialSettingsState, action = {}) => {
 		case REHYDRATE: {	// REHYDRATE
 			return {
 				...state,
-				...action.payload.settings
+				...action.payload,
 			};
 		}
 		case SETTINGS.PENDING: {	// SETTINGS
@@ -50,7 +50,7 @@ export const settingsReducer = (state = initialSettingsState, action = {}) => {
 		case SETTINGS_CHANGE.PENDING: {	// SETTINGS_CHANGE
 			return {
 				...state,
-				pending: {...state.pending, ...action.payload}
+				pending: {...state.pending, ...action.payload,}
 			};
 		}
 		case SETTINGS_CHANGE.SUCCESS: {

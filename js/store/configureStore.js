@@ -23,14 +23,14 @@ import analytics from "./analytics";
 import { isDebuggingInChrome } from "../env";
 
 import storageEngine from './storageEngine';
-import reducers from './reducers';
-import ActionTypes from './action_types.json';
+import reducers from '../reducers';
+import { SET_APP_READY } from '../actions';
 
+// add support redux saga
 import 'regenerator-runtime/runtime';
-//import createSagaMiddleware from "redux-saga";
-//import { mySaga } from "../sagas";
+import createSagaMiddleware, { END } from "redux-saga";
+const sagaMiddleware = createSagaMiddleware();
 
-//const sagaMiddleware = createSagaMiddleware();
 
 //const isDebuggingInChrome = true;
 const logger = createLogger({
@@ -43,8 +43,8 @@ const persistConfig = {
   key: 'app:',
   // don't restore data from these reducers
   blacklist: [
-    'transient',
-    'nav',
+    //'app',
+    //'nav',
   ],
   storage: storageEngine
 };
@@ -61,11 +61,14 @@ let store;
  * (exported for use with server-side rendering)
  */
 export function generateStore(initialState, hydrate = true) {
+
   // conditionally add args to store
   const args = [
     //hydrate ? autoRehydrate() : null,
-    applyMiddleware(thunkMiddleware, promise, array, /*analytics, loggerMiddleware, */logger),
+    applyMiddleware(sagaMiddleware, /*thunkMiddleware, promise, array, analytics, loggerMiddleware, */logger),
   ].filter(arg => arg !== null);
+
+  
 
   // create the store
   return createStore(
@@ -93,12 +96,14 @@ function init() {
   persistStore(store, null, () => {
     // called when rehydration complete
     store.dispatch({
-      type: ActionTypes.SET_APP_READY,
+      type: SET_APP_READY,
       appReady: true,
     });
   });
 
-  //sagaMiddleware.run(mySaga); // test
+  // add support redux saga
+  store.runSaga = sagaMiddleware.run;
+  store.close = () => store.dispatch(END)
 
   if(isDebuggingInChrome) {
     window.store = store;

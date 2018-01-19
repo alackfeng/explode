@@ -15,6 +15,15 @@
 ####
 
 
+#### 20180119 -: 
+
+##### 增加redux-saga流程控制支持，解决几个问题
+*	action->store处理过程中，可插入同时控制同步或异步的多次操作
+*	action->store过程中saga可触发另一个action,并等待另一个action完成，再继续处理原action任务
+
+
+#### 20180118 -: 
+
 ##### 增加区块基础库支持，包括 assetfunjs assetfunjs-ws库，可以调用注册账号成功
 
 ```sh

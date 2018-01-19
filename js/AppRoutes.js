@@ -9,7 +9,7 @@ import IconsGrid from './containers/IconsGrid';
 import NotFound from './containers/NotFound';
 import Translation from './containers/Translation';
 import { WelcomeScreen, SplashScreen } from "./containers/Enter";
-import { LoginScreen, RegisterScreen, NodeScreen } from "./containers/Users";
+import { LoginScreen, RegisterScreen } from "./containers/Users";
 
 import Ionicons from "react-native-vector-icons/MaterialIcons";
 
@@ -66,7 +66,7 @@ export const AppRoutes = {
     },
   },
   Users: {
-    screen: NodeScreen,
+    screen: WelcomeScreen, //NodeScreen,
     path: 'users',
     navigationOptions: {
       title: 'user center',

@@ -1,4 +1,4 @@
-import ActionTypes from '../action_types.json';
+import { SET_APP_READY } from '../actions';
 
 const initState = {
   appReady: false,
@@ -7,9 +7,9 @@ const initState = {
 /**
  * Data that shouldn't be persisted across sessions can be saved here
  */
-export default function transient(state = initState, action) {
+export default function appReducer(state = initState, action) {
   switch (action.type) {
-    case ActionTypes.SET_APP_READY: {
+    case SET_APP_READY: {
       return {
         ...state,
         appReady: action.appReady,

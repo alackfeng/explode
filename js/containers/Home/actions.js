@@ -1,8 +1,8 @@
-import ActionTypes from '../../store/action_types.json';
+import { DO_STUFF, GET_RANDOM } from "../../actions";
 
 export function getRandomNumber() {
   return {
-    type: ActionTypes.GET_RANDOM,
+    type: GET_RANDOM,
     payload: {
       random: Math.floor(Math.random() * 1e6),
     },
@@ -11,7 +11,7 @@ export function getRandomNumber() {
 
 export function doSomeStuff() {
   return {
-    type: ActionTypes.DO_STUFF,
+    type: DO_STUFF,
     payload: {
       stuff: 2 + 2,
     },

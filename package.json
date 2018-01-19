@@ -23,7 +23,11 @@
   "dependencies": {
     "animated": "^0.2.1",
     "assetfunjs": "git+https://github.com/alackfeng/assetfunjs.git",
+    "es6-promise": "^4.2.2",
+    "humps": "^2.0.1",
+    "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
+    "normalizr": "^3.2.4",
     "path-to-regexp": "^2.1.0",
     "react": "16.2.0",
     "react-dom": "^16.2.0",

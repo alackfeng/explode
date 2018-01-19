@@ -2,7 +2,7 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 
-import ActionTypes from '../../store/action_types.json';
+import { GET_RANDOM } from "../../actions";
 
 const initState = {
   random: null,
@@ -10,7 +10,7 @@ const initState = {
 
 export default function home(state = initState, action) {
   switch (action.type) {
-    case ActionTypes.GET_RANDOM: {
+    case GET_RANDOM: {
       return {
         ...state,
         random: action.payload.random,

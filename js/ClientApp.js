@@ -4,13 +4,24 @@ import {
 } from 'react-redux';
 import {
   getStore,
-} from './store/store';
+} from './store/configureStore';
 import App from './App';
 // import Playground from "./Playground"; // 用于测试UI View, 直接修改Playground中的Module，并在Provider子组件加载
-console.log("==================== store", getStore());
+
+// add support redux saga
+import rootSaga from './sagas';
+const store = getStore(); 
+store.runSaga(rootSaga).done.then(() => {
+	console.log('sagas complete');
+}).catch( (e) => {
+	console.error('sagas error : ', e.message);
+});
+
+//DEBUG console.log("==================== store", getStore(), rootSaga);
+
 const ClientApp = () => {
   return (
-    <Provider store={getStore()}>
+    <Provider store={store}>
       <App />
     </Provider>
   );

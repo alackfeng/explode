@@ -80,6 +80,7 @@ class Lock extends Component {
 
 		const { isLocked } = this.props;
 
+		return null;
 		if(!isLocked) {
 			return null;
 		}

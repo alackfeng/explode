@@ -1,4 +1,4 @@
-import ActionTypes from '../../store/action_types.json';
+import ActionTypes from '../../actions';
 
 import { REGSITER } from "./type";
 

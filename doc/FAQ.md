@@ -109,3 +109,10 @@ A15.
 ```
 
 
+```sh
+Q16. Can't find variable: self
+A16. 
+npm install --save isomorphic-fetch es6-promise
+react-native不需要支持这个，注释掉即可
+```
+

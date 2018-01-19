@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { View, Text } from "react-native";
-// import LaunchScreen from "./Common/LaunchScreen";
+import LaunchScreen from "./components/LaunchScreen";
 
 import {
   connect,
@@ -27,7 +27,7 @@ const App = (props) => {
   // launch screen
   if(!props.appReady) {
     console.log("=====[App.js]::App appReady - ", props.appReady);
-    // return <LaunchScreen />
+    return <LaunchScreen />
   }
 
   // enter app
@@ -48,7 +48,7 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    appReady: state.transient.appReady,
+    appReady: state.app.appReady,
     nav: state.nav,
   };
 }
