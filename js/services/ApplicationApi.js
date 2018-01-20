@@ -22,12 +22,14 @@ class Api {
     ChainValidation.required(registrar, "registrar_id");
     ChainValidation.required(referrer, "referrer_id");
 
-    return new Promise((resolve, reject) => {
+    console.log("=====[ApplicationApi.js]::create_account ------------ ");
+    //return new Promise((resolve, reject) => {
         return Promise.all([
             FetchChain("getAccount", registrar),
             FetchChain("getAccount", referrer)
         ]).then((res)=> {
             let [ chain_registrar, chain_referrer ] = res;
+            console.log("=====[ApplicationApi.js]::create_account ------------ ", res);
 
             let tr = new TransactionBuilder();
             tr.add_type_operation("account_create", {
@@ -60,7 +62,7 @@ class Api {
                 }
             });
 
-            resolve(tr);
+            return tr;
             /*return WalletDb.process_transaction(
                 tr,
                 null, //signer_private_keys,
@@ -73,7 +75,7 @@ class Api {
                 reject(err);
             });*/
         });
-    });
+    //});
   }
 
 }

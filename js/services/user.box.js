@@ -39,11 +39,13 @@ class UsersBox {
             saving_keys: false,
             keys: {"AFT5aNtKtnEnsQTxuyTZWT2nCAxWeDijj1hKr7vH2k2tTTQ5wFrBL": "5KPvHg16A1GiYD5icwfVhFj75up2BXepukW9f9SMKyumcGXsc22"}
         };
+
+        this.confirm_transactions = 0; // second confirm
 	}
 
 
-    process_transaction(state, tr, signer_pubkeys, broadcast, extra_keys = []) {
-        const passwordLogin = state.enter.isAuthenticated ; //SettingsStore.getState().settings.get("passwordLogin");
+    process_transaction(tr, signer_pubkeys, broadcast, extra_keys = []) {
+        const passwordLogin = true; //state.enter.isAuthenticated ; //SettingsStore.getState().settings.get("passwordLogin");
         console.log("=====[users.box.js]::process_transaction - passwordLogin : ", Apis.instance().chain_id, passwordLogin);
 
         if(!passwordLogin && Apis.instance().chain_id !== this.state.wallet.chain_id)
@@ -93,17 +95,17 @@ class UsersBox {
                                 // This should not happen, get_required_signatures will only
                                 // returned keys from my_pubkeys
                                 throw new Error("Missing signing key for " + pubkey_string)
-                            console.log("=====[users.box.js]::process_transaction - fprivate_key : ", private_key, pubkey_string);
+                            console.log("=====[users.box.js]::process_transaction - private_key : ", private_key, pubkey_string);
                             tr.add_signer(private_key, pubkey_string)
                         }
                     })
                 }).then(()=> {
                     if(broadcast) {
                         if(this.confirm_transactions) {
-                            let p = new Promise((resolve, reject) => {
-                                ; //TransactionConfirmActions.confirm(tr, resolve, reject)
-                            })
-                            return p;
+                            //let p = new Promise((resolve, reject) => {
+                            //    ; //TransactionConfirmActions.confirm(tr, resolve, reject)
+                            //})
+                            return Promise.resolve({type: "confirm_transactions", transaction: tr});
                         }
                         else
                             return tr.broadcast()
@@ -178,20 +180,23 @@ class UsersBox {
                 
                 console.log("=====[users.box.js]::createAccountWithPassword - transaction: ", tr);
                 return this.process_transaction(
-                    state,
                     tr,
                     null, //signer_private_keys,
                     true
                 ).then((res) => {
                     console.log("process_transaction then", res);
-                    resolve({privateKey: {privKey: active_private.toWif(), pubKey: active_private.toPublicKey().toPublicKeyString()}, currentAccount: account_name});
+                    return {
+                        response: res,
+                        extra: {privateKey: {privKey: active_private.toWif(), pubKey: active_private.toPublicKey().toPublicKeyString()}, currentAccount: account_name}
+                    };
                 }).catch(err => {
                     console.log("process_transaction catch", err);
-                    reject(err);
+                    //Promise.reject(err);
+                    return {response: null, error: err || 'Something bad happened'};
                 });
                 // resolve;
 
-            }).catch(reject);
+            }).catch(Promise.reject);
         };
 
         if(registrar) {
@@ -233,8 +238,7 @@ class UsersBox {
                 }
             })); ///.catch(Promise.reject);
 
-            return create_account_promise.then(res => {
-                const result = res;
+            return create_account_promise.then(result => {
             	//console.log("=====[users.box.js]::createAccountWithPassword - result, ", result);
 
                 if (result && result.error) {
@@ -256,7 +260,7 @@ class UsersBox {
   /* 
    * inner call
    */
-  generateKeyFromPassword(accountName, role, password) {
+  generateKeyFromPassword = (accountName, role, password) => {
     let seed = accountName + role + password;
     let privKey = PrivateKey.fromSeed(seed);
     let pubKey = privKey.toPublicKey().toString();

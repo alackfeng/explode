@@ -45,7 +45,7 @@ const persistConfig = {
   blacklist: [
     //'app',
     'nav',
-    //'enter',
+    'users',
   ],
   storage: storageEngine
 };
@@ -66,7 +66,7 @@ export function generateStore(initialState, hydrate = true) {
   // conditionally add args to store
   const args = [
     //hydrate ? autoRehydrate() : null,
-    applyMiddleware(sagaMiddleware, /*thunkMiddleware, promise, array, analytics, loggerMiddleware, */logger),
+    applyMiddleware(sagaMiddleware, thunkMiddleware, promise, array, /*analytics, loggerMiddleware,*/ logger),
   ].filter(arg => arg !== null);
 
   

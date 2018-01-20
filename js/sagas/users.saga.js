@@ -10,10 +10,9 @@ import { getUser, getRepo, getStarredByUser, getStargazersByRepo } from '../redu
 // each entity defines 3 creators { request, success, failure }
 const { user, repo, starred, stargazers } = actions;
 
-const { userRegister, userLogin } = actions;
+const { userRegister, userLogin, appSaveKey } = actions;
 
 /***************************** Subroutines ************************************/
-
 // resuable fetch Subroutine
 // entity :  user | repo | starred | stargazers
 // apiFn  : api.fetchUser | api.fetchRepo | ...
@@ -28,12 +27,28 @@ function* fetchEntity(entity, apiFn, id, info) {
     yield put( entity.success(id, response) )
   else
     yield put( entity.failure(id, error) )
+  
+  return {response, error};
 }
 	
 // yeah! we can also bind Generators
 export const callUserRegister    = fetchEntity.bind(null, userRegister, usersBox.createAccountWithPassword)
 export const callUserLogin       = fetchEntity.bind(null, userLogin, api.fetchUser)
 
+
+// 保存私钥
+function* saveKey(generateKey, account_name, password, response) {
+	let {privKey : owner_private} = generateKey(account_name, "owner", password);
+    let {privKey: active_private} = generateKey(account_name, "active", password);
+
+    yield put( appSaveKey(account_name, [
+    	{type: "owner", privKey: owner_private.toWif(), pubKey: owner_private.toPublicKey().toString()},
+    	{type: "active", privKey: active_private.toWif(), pubKey: active_private.toPublicKey().toString()}
+    ]) );
+    //yield put( appSaveKey(account_name, {type: "active", privKey: active_private.toWif(), pubKey: active_private.toPublicKey().toString()}) );
+}
+
+export const callSaveKey = saveKey.bind(null, usersBox.generateKeyFromPassword);
 
 // load user unless it is cached
 function* register(username, regInfo, requiredFields) {
@@ -43,7 +58,12 @@ function* register(username, regInfo, requiredFields) {
 		const user = yield select(getUser, username)
 		console.log("=====[users.saga.js]::register - exists user: ", user)
 		if (!user || requiredFields.some(key => !user.hasOwnProperty(key))) {
-			yield call(callUserRegister, username, regInfo)
+			
+			const {response, error} = yield call(callUserRegister, username, regInfo);
+			if(response) { // save key
+				console.log("=====[users.saga.js]::register - register user <", username, "> ok : ", response);
+				yield call(callSaveKey, username, regInfo.password, response);
+			}
 		}
 
 	} catch ( e ) {
@@ -61,7 +81,7 @@ function* login(username, password, requiredFields) {
 		console.log("=====[users.saga.js]::login - exists user: ", user)
 
 		if (!user || requiredFields.some(key => !user.hasOwnProperty(key))) {
-			yield call(callUserLogin, username, password)
+			 yield call(callUserLogin, username, password)
 		}
 
 	} catch ( e ) {

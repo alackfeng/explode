@@ -116,3 +116,8 @@ npm install --save isomorphic-fetch es6-promise
 react-native不需要支持这个，注释掉即可
 ```
 
+
+```sh
+Q17. redux-persist/createPersistoid: error serializing state TypeError: Converting circular structure to JSON
+A17. 
+```

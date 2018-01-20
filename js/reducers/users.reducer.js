@@ -1,11 +1,11 @@
 
-import { USERS, USERS_LOGIN, USERS_REGISTER, USER_UNLOCK } from "../actions";
+import { USERS, USERS_LOGIN, USERS_REGISTER, USER_UNLOCK, TRIGGER_USERS_REGISTER } from "../actions";
 
 export const initialUsersState = {
 	inited: null, 
+	isRegister: false,
 	registers: [],
 	isLocked: true,
-	currentAccount: [],
 };
 
 const usersReducer = (state = initialUsersState, action = {}) => {
@@ -32,13 +32,22 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 				inited: -1,
 			};
 		}
-		case USERS_REGISTER.REQUEST:
-		case USERS_REGISTER.SUCCESS:
-		case USERS_REGISTER.FAILURE: 
+		case TRIGGER_USERS_REGISTER:
 		{
 			return {
 				...state,
-				registers: [...state.registers, {...action}]
+				isRegister: true,
+			}
+		}
+		case USERS_REGISTER.SUCCESS:
+		case USERS_REGISTER.REQUEST:
+		case USERS_REGISTER.FAILURE: 
+		{
+			const reg_status = (action.type === USERS_REGISTER.REQUEST) ? true : false; //!state.isRegister;
+			return {
+				...state,
+				registers: [...state.registers, {...action}],
+				isRegister: reg_status
 			};
 		}
 		case USER_UNLOCK.REQUEST: {

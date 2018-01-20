@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Text, View, StatusBar, TextInput, Button, TouchableHighlight } from "react-native";
+import { Text, View, StatusBar, TextInput, Button, TouchableHighlight, ActivityIndicator } from "react-native";
 import { triggerUser } from "../../../actions";
 
 const {init: usersInit, register: userRegister, login: userLogin} = triggerUser;
@@ -12,6 +12,8 @@ import { ChainStore, FetchChain } from "assetfunjs/es";
 
 import { ViewContainer, Colors, Normalize, StyleSheet } from "../../../components";
 //import { LockScreen } from "./Lock";
+
+import { NodeScreen } from "./Node";
 
 const SLView = styled.View`
   flex: 1;
@@ -66,6 +68,11 @@ const SLViewSubmit = styled(SLView)`
   justify-content: center;
 `;
 
+const SLViewIndicator = styled(SLView)`
+  justify-content: center;
+  align-items: center;
+`;
+
 const SLButtonSubmit = styled(SLButton)``;
 
 const SLTextSubmit = styled(SLText)`
@@ -79,6 +86,7 @@ const SLTextSubmit = styled(SLText)`
 class Register extends Component {
 
   props: {
+    isRegister: boolean,
     isAuthenticated: boolean,
     userRegister: Function,
     navigation: Object,
@@ -96,19 +104,24 @@ class Register extends Component {
       username: 'fengtest',
       password: 'fengtest',
       registrar: 'fengtest1',
+      currentAccount: null,
     };
   }
 
-  componentDiDMount() {
+
+  componentWillMount() {
     const { isAuthenticated, navigation } = this.props;
     console.log("=====[Register.js]::componentDiDMount - ", isAuthenticated);
     if(isAuthenticated) {
       navigation.navigate('Login');
     }
+
+
+
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
-    console.log("=====[Register.js]::shouldComponentUpdate - isAuthenticated - ", nextProps.isAuthenticated);
+    console.log("=====[Register.js]::shouldComponentUpdate - isAuthenticated - ", nextProps.status);
     return true;
   }
 
@@ -123,6 +136,14 @@ class Register extends Component {
 
     const { store, dispatch } = this.props;
     console.log("=====[Register.js]::userLogin - dispatch is exist > ", store, dispatch);
+
+    const account_ = ChainStore.getAccount(this.state.username);
+    console.log("=====[Register.js]::componentWillMount - account_ - ", this.state.username, JSON.stringify(account_));
+    if(account_) {
+      this.setState({
+        currentAccount: account_,
+      });
+    }
 
     try {
 
@@ -152,7 +173,7 @@ class Register extends Component {
 
     const refcode = this.state.refcode;
     const referrer = this.state.registrar;
-    const registrar = 0; //this.state.registrar;
+    const registrar = this.state.registrar;
     const referrer_percent = 0;
 
     try {
@@ -179,11 +200,12 @@ class Register extends Component {
 
 	render() {
 
-		const { isAuthenticated, navigation, currentAccount } = this.props;
-    console.log("=====[Register.js]::render - ", isAuthenticated);
+		const { isRegister, isAuthenticated, navigation, currentAccount } = this.props;
+    console.log("=====[Register.js]::render - ", isRegister);
 
 		return (
 			<ViewContainer>
+        <NodeScreen />
 				<SLViewText>
           <SLTextTitle>Reigster Aftrade Account : {currentAccount}</SLTextTitle>
         </SLViewText>
@@ -210,6 +232,10 @@ class Register extends Component {
             onChangeText={(text) => this.setState({ password: text })}
           />
         </SLViewUserInput>
+        <SLViewIndicator>
+          {isRegister && <Text>注册中</Text>}
+          <ActivityIndicator animating={isRegister || false} color='red' />
+        </SLViewIndicator>
         <SLViewSubmit>
   				<SLButtonSubmit onPress={(e) => this.userRegister(e)} >
             <SLTextSubmit>REG</SLTextSubmit>
@@ -220,14 +246,16 @@ class Register extends Component {
           </SLButtonSubmit>
         </SLViewSubmit>
          {/*(<LockScreen />*/}
+        <Text>{JSON.stringify(this.state.currentAccount)}</Text>
 			</ViewContainer>
 		);
 	}
 }
 
 const mapStateToProps = (state) => ({
-  inited: state.users.inited,
-  currentAccount: state.users.currentAccount,
+  isRegister: state.users.isRegister,
+  currentAccount: state.app.currentAccount,
+  status: state.app.nodeStatus.status,
 });
 
 export const RegisterScreen = connect(mapStateToProps, {

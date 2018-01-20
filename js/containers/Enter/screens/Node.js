@@ -4,16 +4,16 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ListView } from "react-native";
-import { nodeConnect, updateRpcConnectionStatus } from "../actions";
+import { nodeConnect, updateRpcConnectionStatus } from "../../../actions";
 import { Apis } from "assetfunjs-ws";
 
 import { ViewContainer, Colors, Normalize, StyleSheet } from "../../../components";
 import { nodeList } from "../../../env";
+import willTransitionTo from "../../../libs/routerTransition";
 
-import { AccountSearchScreen } from "./AccountSearch";
-import { SettingsScreen } from "./Settings";
-import { WalletScreen } from "./Wallet";
-import { RegisterScreen } from "../../Users";
+//import { AccountSearchScreen } from "./AccountSearch";
+//import { SettingsScreen } from "./Settings";
+//import { WalletScreen } from "./Wallet";
 
 const SLViewText = styled.View`
   flex: 1;
@@ -51,6 +51,7 @@ class Node extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		console.log("+++++[Node.js]::componentWillReceiveProps - node ...", nextProps.status, nextProps.url, this.state.statusList);
 		if(nextProps.status) {
 			
 			this.state.statusList.length && this.state.statusList.push(nextProps.status);
@@ -63,7 +64,16 @@ class Node extends Component {
 
 	componentDidMount() {
 		
-		this.props.nodeConnect(nodeList);
+		// call someting, example api to node
+		this.setState({statusList: []});
+		
+		let nodeTransition = (res) => {
+			console.log("+++++[Node.js]::nodeConnect - call api...", res);
+			const url = res;
+			this.props.nodeConnect(nodeList, url);
+		};
+
+		willTransitionTo(null, null, nodeTransition);
 		Apis.setRpcConnectionStatusCallback(this.updateRpcConnectionStatus.bind(this));
 
 	}
@@ -108,7 +118,6 @@ class Node extends Component {
 					{ this.renderNodeList() }
 					{ showStatusList }
 				</SLViewText>
-				<RegisterScreen />
 			</ViewContainer>
 		);
 	}
@@ -116,15 +125,18 @@ class Node extends Component {
 
 
 const mapStateToProps = (state) => ({
-	url: state.wallet.url,
-	status: state.wallet.status,
+	url: state.app.nodeStatus.url,
+	status: state.app.nodeStatus.status,
 });
 
-const mapDispatchToProps = dispatch => {
-	return {
-		nodeConnect: bindActionCreators(nodeConnect, dispatch),
-		updateRpcConnectionStatus: bindActionCreators(updateRpcConnectionStatus, dispatch),
-	};
-}
+////const mapDispatchToProps = dispatch => {
+//	return {
+//		nodeConnect: bindActionCreators(nodeConnect, dispatch),
+//		updateRpcConnectionStatus: bindActionCreators(updateRpcConnectionStatus, dispatch),
+//	};
+//}
 
-export const NodeScreen = connect(mapStateToProps, mapDispatchToProps)(Node);
+export const NodeScreen = connect(mapStateToProps, {
+	nodeConnect,
+	updateRpcConnectionStatus,
+})(Node);
