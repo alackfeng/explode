@@ -44,7 +44,7 @@ const persistConfig = {
   // don't restore data from these reducers
   blacklist: [
     //'app',
-    //'nav',
+    'nav',
     //'enter',
   ],
   storage: storageEngine

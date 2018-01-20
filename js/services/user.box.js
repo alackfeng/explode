@@ -17,8 +17,8 @@ import {ChainStore, PrivateKey, key, Aes} from "assetfunjs/es";
 import {Apis, ChainConfig} from "assetfunjs-ws";
 //import AddressIndex from "stores/AddressIndex";
 
-import application_api from "../../api/ApplicationApi";
-import { faucetAddress as faucet_address } from "../../env";
+import application_api from "./ApplicationApi";
+import { faucetAddress as faucet_address } from "../env";
 
 let aes_private = null;
 let _passwordKey =  {"AFT5aNtKtnEnsQTxuyTZWT2nCAxWeDijj1hKr7vH2k2tTTQ5wFrBL": PrivateKey.fromWif("5KPvHg16A1GiYD5icwfVhFj75up2BXepukW9f9SMKyumcGXsc22")};
@@ -32,6 +32,8 @@ let dictJson, AesWorker;
 class UsersBox {
 
 	constructor() {
+        console.log("=====[users.box.js]::constructor - call ");
+
 		this.state = { 
             wallet: {chain_id: "c6a9402f3aa854a533888ee3293e244c2f988261268e3fb36d8df359d6919288"}, 
             saving_keys: false,
@@ -145,18 +147,24 @@ class UsersBox {
 	/*
 	 * call api create account 
 	*/
-  createAccountWithPassword( dispatch, state, account_name, password, registrar, referrer, referrer_percent, refcode ) {
+  createAccountWithPassword = ( login, {username, password, registrar, referrer, referrer_percent, refcode}=regInfo ) => {
 
+    if(login !== username) {
+        console.error("=====[users.box.js]::createAccountWithPassword - wrong : ", login, username);
+        throw new Error(JSON.stringify({err_no: 11011, err_msg: "call register param wrong"}));
+        return;
+    }
+    
+    const account_name = username;
+    console.log("=====[users.box.js]::createAccountWithPassword - param: ", account_name);
     let {privKey : owner_private} = this.generateKeyFromPassword(account_name, "owner", password);
     let {privKey: active_private} = this.generateKeyFromPassword(account_name, "active", password);
 
-
-    console.log("=====[users.box.js]::createAccountWithPassword - param: ", dispatch, state.users.inited);
     console.log("=====[users.box.js]::createAccountWithPassword - create account:", account_name);
     console.log("=====[users.box.js]::createAccountWithPassword - new active pubkey", active_private.toPublicKey().toPublicKeyString(), active_private.toWif());
     console.log("=====[users.box.js]::createAccountWithPassword - new owner pubkey", owner_private.toPublicKey().toPublicKeyString());
 
-    return new Promise((resolve, reject) => {
+    //return new Promise((resolve, reject) => {
         let create_account = () => {
             return application_api.create_account(
                 owner_private.toPublicKey().toPublicKeyString(),
@@ -186,7 +194,7 @@ class UsersBox {
             }).catch(reject);
         };
 
-        if(1 || registrar) {
+        if(registrar) {
             // using another user's account as registrar
             return create_account();
         } else {
@@ -216,26 +224,32 @@ class UsersBox {
                     }
                 })
             }).then(r => r.json().then(res => {
-            		console.log("=====[users.box.js]::createAccountWithPassword -  res, ", res);
+            	
+                //console.log("=====[users.box.js]::createAccountWithPassword -  res, ", res);
                 if (!res || (res && res.error)) {
-                    reject(res.error);
+                    return Promise.reject(res.error);
                 } else {
-                    resolve(res);
+                    return Promise.resolve(res);
                 }
-            })).catch(reject);
+            })); ///.catch(Promise.reject);
 
-            return create_account_promise.then(result => {
-            		console.log("=====[users.box.js]::createAccountWithPassword - result, ", result);
+            return create_account_promise.then(res => {
+                const result = res;
+            	//console.log("=====[users.box.js]::createAccountWithPassword - result, ", result);
+
                 if (result && result.error) {
-                    reject(result.error);
+                    return Promise.reject(result.error);
                 } else {
-                    resolve(result);
+                    return Promise.resolve(result);
                 }
-            }).catch(error => {
-                reject(error);
+            }).then(
+                result => ({response: result}),
+            ).catch(error => {
+                //console.log("=====[users.box.js]::createAccountWithPassword - error, ", error);
+                return {response: null, error: error || 'Something bad happened'};
             });
         }
-    });
+    //});
   }
 
 
@@ -253,3 +267,4 @@ class UsersBox {
 }
 
 export default new UsersBox();
+

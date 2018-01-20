@@ -3,12 +3,7 @@ import { USERS, USERS_LOGIN, USERS_REGISTER, USER_UNLOCK } from "../actions";
 
 export const initialUsersState = {
 	inited: null, 
-	pending: {
-		inited: false,
-		users: false,
-		register: false,
-		unlock: false,
-	},
+	registers: [],
 	isLocked: true,
 	currentAccount: [],
 };
@@ -37,18 +32,14 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 				inited: -1,
 			};
 		}
-		case USERS_REGISTER.REQUEST: {
+		case USERS_REGISTER.REQUEST:
+		case USERS_REGISTER.SUCCESS:
+		case USERS_REGISTER.FAILURE: 
+		{
 			return {
 				...state,
-				pending: {...state.pending, register: 1}
+				registers: [...state.registers, {...action}]
 			};
-		}
-		case USERS_REGISTER.SUCCESS: {
-			return {
-				...state,
-				pending: {...state.pending, register: false},
-				...action.payload,
-			}
 		}
 		case USER_UNLOCK.REQUEST: {
 			return {

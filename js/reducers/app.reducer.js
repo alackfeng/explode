@@ -11,6 +11,7 @@ app 相关全局设置存储在本地上，
 const initState = {
   appReady: false,
   locale: 'en',
+  users: {},
   transactions: [],
 };
 
@@ -43,7 +44,7 @@ export default function appReducer(state = initState, action) {
     case TRIGGER_USERS_REGISTER: {
       return {
         ...state,
-        transactions: [...state.transactions, action],
+        //transactions: [...state.transactions, action],
       };
     }
     default:

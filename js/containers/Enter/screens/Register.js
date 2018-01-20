@@ -152,12 +152,13 @@ class Register extends Component {
 
     const refcode = this.state.refcode;
     const referrer = this.state.registrar;
-    const registrar = this.state.registrar;
+    const registrar = 0; //this.state.registrar;
     const referrer_percent = 0;
 
     try {
 
-      this.props.userRegister(username, {username, password, registrar, referrer, referrer_percent, refcode}).then((res) => {
+      this.props.userRegister(username, {username, password, registrar, referrer, referrer_percent, refcode});
+      /*.then((res) => {
 
         console.log("=====[Register.js]::userRegister - createAccount return : ok ", res);
         FetchChain("getAccount", res).then((ret) => {
@@ -168,10 +169,10 @@ class Register extends Component {
       }).catch( err => {
 
         console.log("=====[Register.js]::userRegister - createAccount return : error - ", err);
-      });
+      });*/
 
     } catch ( e ) {
-      console.error("=====[Register.js]::userRegister - error : ", e);
+      console.error("=====[Register.js]::userRegister - error : ", e.err_no);
     }
     
   }

@@ -30,25 +30,25 @@ export const user = {
 
 
 export const userRegister = {
-	request: (username, password, registrar, referrer, referrer_percent, refcode) => (
-		action(USERS_REGISTER[REQUEST], {account_name, password, registrar, referrer, referrer_percent, refcode})),
+	request: (username, regInfo) => (
+		action(USERS_REGISTER[REQUEST], {username, regInfo})),
 	success: (username, response) => action(USERS_REGISTER[SUCCESS], {username, response}),
 	failure: (username, error) => action(USERS_REGISTER[FAILURE], {username, error}),
 }
 
 export const userLogin = {
-	request: (login, password) => (
-		action(USERS_REGISTER[REQUEST], {login, password})),
-	success: (login, response) => action(USERS_REGISTER[SUCCESS], {login, response}),
-	failure: (login, error) => action(USERS_REGISTER[FAILURE], {login, error}),
+	request: (username, password) => (
+		action(USERS_REGISTER[REQUEST], {username, password})),
+	success: (username, response) => action(USERS_REGISTER[SUCCESS], {username, response}),
+	failure: (username, error) => action(USERS_REGISTER[FAILURE], {username, error}),
 }
 
 
 
 export const triggerUser = {
 	init: (state => action(USERS_INIT, {state})),
-	login: ((login, password) => action(TRIGGER_USERS_LOGIN, {login, password})),
-	register: ((username, regInfo = {}) => action(TRIGGER_USERS_REGISTER, {username, regInfo})),
+	login: ((username, password, requiredFields = []) => action(TRIGGER_USERS_LOGIN, {username, password, requiredFields})),
+	register: ((username, regInfo = {}, requiredFields = []) => action(TRIGGER_USERS_REGISTER, {username, regInfo, requiredFields})),
 }
 //export const usersInit 			= state => action(USERS_INIT, {state});
 //export const callUserLogin		= (login, password) => action(TRIGGER_USERS_LOGIN, {login, password});
