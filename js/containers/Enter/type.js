@@ -1,4 +1,4 @@
 
-import { createActionSet } from "../../components";
+import { createActionSet } from "../../libs/help";
 
 export const REGSITER = createActionSet('REGSITER');

@@ -7,6 +7,7 @@ import {
 
 import styles from './styles';
 import Random from './components/Random';
+import { LoadingScreen } from "../../components";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
         To get started, edit index.*.js
       </Text>
       <Random />
+      <LoadingScreen />
     </View>
   );
 };

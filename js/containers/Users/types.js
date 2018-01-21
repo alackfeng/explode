@@ -1,5 +1,5 @@
 
-import { createActionSet } from "../../components";
+import { createActionSet } from "../../libs/help";
 
 // setting relation action type
 export const SETTINGS									= createActionSet('SETTINGS');

@@ -19,9 +19,10 @@ export const notFoundKey = 'NotFound';
  * Gets an Icon component.
  */
 const getIcon = (name) => {
-  const comp = ({ tintColor }) => (
+  const comp = ({ tintColor, focused }) => (
     <Icon
-      name={name}
+      name={!focused ? name : name }
+      size={26}
       style={{
         color: tintColor,
       }}
@@ -29,6 +30,7 @@ const getIcon = (name) => {
   );
   comp.propTypes = {
     tintColor: PropTypes.string,
+    focused: PropTypes.boolean,
   };
   return comp;
 };

@@ -2,7 +2,7 @@
 
 import { action, createRequestTypes, REQUEST, SUCCESS, FAILURE  } from "./types";
 
-import { createActionSet } from "../components";
+import { createActionSet } from "../libs";
 
 // users action type
 export const USERS				= createRequestTypes('USERS');

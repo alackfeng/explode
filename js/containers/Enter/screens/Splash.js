@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, Image, Text, Button, ImageBackground } from "react-native";
-import { ViewContainer, Colors, Normalize, StyleSheet } from "../../../components";
+import { ViewContainer, Normalize, StyleSheet } from "../../../components";
+import { Colors } from "../../../libs/Colors";
 import { translate, locale } from "../../../libs";
+import { resetNavigationTo } from "../../../libs/help";
 
 const mapStateToProps = state => ({
   isAuthenticated: state.enter.isAuthenticated,
@@ -67,9 +69,9 @@ class Splash extends Component {
     const { isAuthenticated, navigation } = this.props;
     console.log("=====[Splash.js]::componentDidMount - isAuthenticated - ", isAuthenticated);
     if(isAuthenticated) {
-      navigation.navigate('Main');
+      resetNavigationTo('Main', navigation);
     } else {
-      navigation.navigate('Users');
+      resetNavigationTo('Login', navigation);
     }
   }
 

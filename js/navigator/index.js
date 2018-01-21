@@ -6,6 +6,7 @@ import { /*TabNavigator, */StackNavigator, DrawerNavigator } from "react-navigat
 const AppTabNavigator = TabNavigator(TabRoutes, {
   initialRouteName: 'Home',
   tabBarPosition: 'bottom',
+  swipeEnabled: false, //是否允许在标签之间进行滑动
   tabBarOptions: sharedTabBarOptions,
 });
 

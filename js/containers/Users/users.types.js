@@ -1,5 +1,5 @@
 
-import { createActionSet } from "../../components";
+import { createActionSet } from "../../libs/help";
 
 // users action type
 export const USERS									= createActionSet('USERS');

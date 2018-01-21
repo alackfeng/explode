@@ -7,7 +7,8 @@ import { ListView } from "react-native";
 import { nodeConnect, updateRpcConnectionStatus } from "../../../actions";
 import { Apis } from "assetfunjs-ws";
 
-import { ViewContainer, Colors, Normalize, StyleSheet } from "../../../components";
+import { ViewContainer, Normalize, StyleSheet } from "../../../components";
+import { Colors } from "../../../libs/Colors";
 import { nodeList } from "../../../env";
 import willTransitionTo from "../../../libs/routerTransition";
 

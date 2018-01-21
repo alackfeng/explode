@@ -1,15 +1,16 @@
 export default {
   showIcon: true,
   showLabel: true,
-  activeTintColor: '#000',
-  activeBackgroundColor: '#EEE',
+  activeTintColor: '#e91e63',
+  activeBackgroundColor: '#FFF',
   inactiveTintColor: '#666',
   // inactiveBackgroundColor: '#0F0',
   indicatorStyle: {
     backgroundColor: '#000',
+    height: 0, //android 安卓底部会多出一条线
   },
   style: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#FFF',
   },
   labelStyle: {
     color: '#000',

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 
-import { Colors } from "./Colors";
+import { Colors } from "../libs/Colors";
 
 
 type Props = {

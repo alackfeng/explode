@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, Button, ActivityIndicator,  } from "react-native";
 
-import { ViewContainer, Colors, Normalize, StyleSheet } from "../../../components";
+import { ViewContainer, Normalize, StyleSheet } from "../../../components";
+import { Colors } from "../../../libs/Colors";
 import { translate, locale } from "../../../libs";
 
 const styles = StyleSheet.create({
