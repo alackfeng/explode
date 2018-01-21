@@ -119,5 +119,10 @@ react-native不需要支持这个，注释掉即可
 
 ```sh
 Q17. redux-persist/createPersistoid: error serializing state TypeError: Converting circular structure to JSON
-A17. 
+A17. 不使用persist，只通过cached
+```
+
+```sh
+Q18. Overflow during conversion: "18761827272590623000"
+A18. 
 ```

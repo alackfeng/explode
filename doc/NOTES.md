@@ -17,6 +17,13 @@
 #### 20180121 -: 
 ##### 优化导航样式,增加重置NavigationActions,是否允许在标签之间进行滑动
 ##### 测试loadingAnimation
+##### Splash启动页实现Swiper侧滑展示钱包功能说明
+
+```sh
+npm install --save react-swipeable-views react-motion
+npm install --save react-swipeable-views-native
+npm install --save react-native-elements
+```
 
 #### 20180120 -: 
 

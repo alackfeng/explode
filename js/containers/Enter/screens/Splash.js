@@ -6,8 +6,10 @@ import { Colors } from "../../../libs/Colors";
 import { translate, locale } from "../../../libs";
 import { resetNavigationTo } from "../../../libs/help";
 
+import { SwipeableView } from "../../../components";
+
 const mapStateToProps = state => ({
-  isAuthenticated: state.enter.isAuthenticated,
+  isAuthenticated: state.app.currentAccount,
 });
 
 const styles = StyleSheet.create({
@@ -16,11 +18,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
+    //position: 'absolute',
+    //top: 0,
+    //bottom: 0,
+    //left: 0,
+    //right: 0,
   },
   logo: {
     position: 'absolute',
@@ -68,34 +70,32 @@ class Splash extends Component {
   componentDidMount() {
     const { isAuthenticated, navigation } = this.props;
     console.log("=====[Splash.js]::componentDidMount - isAuthenticated - ", isAuthenticated);
-    if(isAuthenticated) {
+    if(isAuthenticated) { // 已经使用过直接跳转到主导航
       resetNavigationTo('Main', navigation);
-    } else {
-      resetNavigationTo('Login', navigation);
+    } else { // 否则显示splash页面，钱包介绍说明
+      ; //resetNavigationTo('Login', navigation);
     }
   }
 
   setModalVisible = (login) => {
 
-    this.props.navigation.navigate(login ? 'Login' : 'Register');
+    resetNavigationTo(login ? 'Login' : 'Register', this.props.navigation);
   }
 
 	render() {
 
     const { navigation } = this.props;
 
-		return (
-			<View style={styles.logoContainer} >
-				<Image 
-          style={styles.logo}
-          source={require('../images/logo-black.png')}
-        >
-            
-        </Image>
-        <Text style={styles.title}>
-          {translate('enter.splash.welcomeTitle', locale)}
-        </Text>
+    if(0)
+      return (
+        <ViewContainer>
+          <SwipeableView />
+        </ViewContainer>
+      );
 
+		return (
+			<ViewContainer>
+        <SwipeableView />
         <View style={styles.signInContainer}>
           <Button
             raised
@@ -109,7 +109,7 @@ class Splash extends Component {
           />
         </View>
         
-			</View>
+			</ViewContainer>
 		);
 	}
 }
