@@ -126,3 +126,14 @@ A17. 不使用persist，只通过cached
 Q18. Overflow during conversion: "18761827272590623000"
 A18. 
 ```
+
+
+```sh
+
+Q19. react-native-elements 导入后提示，
+Module parse failed: Unexpected token (12:11) You may need an appropriate loader to handle this file type
+A19. 在webpack.config.js增加相应的库导入 
+```
+
+
+

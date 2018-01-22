@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Image, Text, Button, ImageBackground } from "react-native";
+import { View, Image, Text, ImageBackground } from "react-native";
 import { ViewContainer, Normalize, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
 import { translate, locale } from "../../../libs";
@@ -8,29 +8,19 @@ import { resetNavigationTo } from "../../../libs/help";
 
 import { SwipeableView } from "../../../components";
 
+import { Button } from 'react-native-elements';
+
 const mapStateToProps = state => ({
   isAuthenticated: state.app.currentAccount,
 });
 
 const styles = StyleSheet.create({
-  logoContainer: {
-    backgroundColor: Colors.white,
-    flex: 1,
+  swipeable: {
+    flexWrap: 'nowrap',
     justifyContent: 'center',
     alignItems: 'center',
-    //position: 'absolute',
-    //top: 0,
-    //bottom: 0,
-    //left: 0,
-    //right: 0,
-  },
-  logo: {
-    position: 'absolute',
-    opacity: 0.3,
-    resizeMode: 'stretch',
-    height: 200,
-    width: 200,
-    flexWrap: 'wrap',
+    alignContent: 'center',
+    height: '100%',
   },
   slide: {
     flex: 1,
@@ -52,12 +42,13 @@ const styles = StyleSheet.create({
   },
   signInContainer: {
     position: 'absolute',
-    right: 0,
     left: 0,
     bottom: 80,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignContent: 'center',
   },
 });
 
@@ -98,12 +89,29 @@ class Splash extends Component {
         <SwipeableView />
         <View style={styles.signInContainer}>
           <Button
-            raised
+            raised 
+            disabled={false}
+            loading={false}
+            outline
+            //activityIndicatorStyle={{backgroundColor: 'yellow'}}
+            large={false}
+            iconRight={{name: 'lock',  size: 26}}
+            buttonStyle={{backgroundColor: 'blue', borderRadius: 10}}
+            textStyle={{textAlign: 'center'}}
             title={translate('enter.splash.signInButton', locale)}
             onPress={() => this.setModalVisible(true)}
           />
           <Button
-            raised
+            raised 
+            disabled={false}
+            loading={true}
+            loadingRight
+            outline
+            //activityIndicatorStyle={{backgroundColor: 'yellow'}}
+            large={false}
+            icon={{name: 'home',  size: 26}}
+            buttonStyle={{backgroundColor: 'red', borderRadius: 10}}
+            textStyle={{textAlign: 'center'}}
             title={translate('enter.splash.registerInButton', locale)}
             onPress={() => this.setModalVisible(false)}
           />

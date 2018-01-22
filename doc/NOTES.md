@@ -14,6 +14,15 @@
 
 ####
 
+
+#### 20180122 -: 
+
+##### 优化splash显示问题
+##### 编写登录页面react-native-elements\
+
+
+
+
 #### 20180121 -: 
 ##### 优化导航样式,增加重置NavigationActions,是否允许在标签之间进行滑动
 ##### 测试loadingAnimation

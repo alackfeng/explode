@@ -42,6 +42,7 @@ module.exports = {
       'redux',
       'react-native-i18n',
       'styled-components',
+      'react-native-elements',
     ],
   },
   output: {
@@ -75,6 +76,7 @@ module.exports = {
           path.resolve(process.cwd(), 'node_modules', 'react-navigation'),
           path.resolve(process.cwd(), 'node_modules', 'react-native-tab-view'),
           path.resolve(process.cwd(), 'node_modules', 'styled-components'),
+          path.resolve(process.cwd(), 'node_modules', 'react-native-elements'),
           path.resolve(process.cwd(), 'js'),
           path.resolve(process.cwd(), 'index.web.js'),
         ],
