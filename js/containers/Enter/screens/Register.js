@@ -15,6 +15,7 @@ import { Colors } from "../../../libs/Colors";
 //import { LockScreen } from "./Lock";
 
 import { Icon, Button, Input } from 'react-native-elements';
+import { resetNavigationTo } from "../../../libs/help";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -296,14 +297,14 @@ class Register extends Component {
                 buttonStyle={{height: 50, width: 200, backgroundColor: 'black', borderWidth: 2, borderColor: 'white', borderRadius: 30}}
                 containerStyle={{marginVertical: 10}}
                 textStyle={{fontWeight: 'bold'}}
-                onPress={() => navigation.navigate('Register')}
+                onPress={() => resetNavigationTo('Register', navigation)}
               />
               <Button
                 text="登  录"
                 clear
                 textStyle={{color: 'rgba(78, 116, 289, 1)'}}
                 containerStyle={{marginTop: 20,marginVertical:20}}
-                onPress={() => navigation.navigate('Login')}
+                onPress={() => resetNavigationTo('Login', navigation)}
               />
             </View>
           </View>

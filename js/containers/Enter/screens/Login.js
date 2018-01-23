@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Dimensions } from "react-native";
 
 import { Icon, Button, Input } from 'react-native-elements';
 import { ViewContainer, Normalize, StyleSheet } from "../../../components";
+import { resetNavigationTo } from "../../../libs/help";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -132,14 +133,14 @@ class Login extends Component {
                 buttonStyle={{height: 50, width: 200, backgroundColor: 'black', borderWidth: 2, borderColor: 'white', borderRadius: 30}}
                 containerStyle={{marginVertical: 10}}
                 textStyle={{fontWeight: 'bold'}}
-                onPress={() => navigation.navigate('Home')}
+                onPress={() => resetNavigationTo('Main', navigation)}
               />
               <Button
                 text="注  册"
                 clear
                 textStyle={{color: 'rgba(78, 116, 289, 1)'}}
                 containerStyle={{marginTop: 20,marginVertical:20}}
-                onPress={() => navigation.navigate('Register')}
+                onPress={() => resetNavigationTo('Register', navigation)}
               />
             </View>
           </View>

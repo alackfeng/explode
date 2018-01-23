@@ -24,7 +24,7 @@
 #### 20180122 -: 
 
 ##### 优化splash显示问题
-##### 编写登录页面react-native-elements\react-native-clean-form
+##### 编写登录页面react-native-elements, 用户中心路由 
 
 
 

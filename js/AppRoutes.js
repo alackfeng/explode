@@ -1,6 +1,8 @@
 import React from 'react';
+import { View, Text } from "react-native";
 import PropTypes from 'prop-types';
 
+import { StackNavigator } from "react-navigation";
 import { translate, locale } from "./libs";
 
 import { Icon } from './components/Icon';
@@ -9,6 +11,8 @@ import IconsGrid from './containers/IconsGrid';
 import NotFound from './containers/NotFound';
 import Translation from './containers/Translation';
 import { WelcomeScreen, SplashScreen, LoginScreen, RegisterScreen, NodeScreen } from "./containers/Enter";
+
+import { CenterScreen, SettingsScreen } from "./containers/Users";
 
 import Ionicons from "react-native-vector-icons/MaterialIcons";
 
@@ -34,6 +38,36 @@ const getIcon = (name) => {
   };
   return comp;
 };
+
+const sharedRoutes = {
+  Settings: {
+    screen: SettingsScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
+  },
+  Nodes: {
+    screen: NodeScreen,
+    navigationOptions: {
+      header: <View><Text>hello Center</Text></View>,
+    },
+  },
+};
+
+const UsersStackNavigator = StackNavigator(
+  {
+    Center: {
+      screen: CenterScreen,
+      navigationOptions: {
+        title: 'User Center',
+      },
+    },
+    ...sharedRoutes,
+  },
+  {
+    headerMode: 'none',
+  }
+);
 
 /**
  * The routes for the App
@@ -67,7 +101,7 @@ export const AppRoutes = {
     },
   },
   Users: {
-    screen: RegisterScreen, //WelcomeScreen, //NodeScreen,
+    screen: UsersStackNavigator, //RegisterScreen, //WelcomeScreen, //NodeScreen,
     path: 'users',
     navigationOptions: {
       title: 'user center',

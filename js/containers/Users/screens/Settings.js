@@ -9,6 +9,8 @@ import { init, change, currentAccount } from "../settings.actions";
 import { ViewContainer, Normalize, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
 
+import { Header } from "react-native-elements";
+
 
 class Settings extends Component {
 
@@ -50,6 +52,11 @@ class Settings extends Component {
 
 		return (
 			<ViewContainer>
+				<Header
+				  leftComponent={{ icon: 'menu', color: '#fff' }}
+				  centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+				  rightComponent={{ icon: 'home', color: '#fff' }}
+				/>
 				<Text style={{marginBottom: 20}}>{ accountName || "Hello Settings"} </Text>
 				<TextInput
 	    		style={{height: 40, borderColor: 'gray', borderWidth: 1}}
@@ -66,7 +73,7 @@ class Settings extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	accountName: state.settings.currentAccount,
+	accountName: state.app.currentAccount,
 });
 
 const mapDispatchToProps = dispatch => {
