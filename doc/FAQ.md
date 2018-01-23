@@ -135,5 +135,13 @@ Module parse failed: Unexpected token (12:11) You may need an appropriate loader
 A19. 在webpack.config.js增加相应的库导入 
 ```
 
+```sh
+Q20. ./node_modules/react-native-elements/src/buttons/Button.js
+Module not found: Error: Can't resolve 'expo' in '/Users/assetfun/source/code/explode/node_modules/react-native-elements/src/buttons'
+A20. View //require('expo').LinearGradient
+vi /Users/assetfun/source/code/explode/node_modules/react-native-elements/src/buttons/Button.js
+```
+
+
 
 

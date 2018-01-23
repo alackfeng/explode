@@ -90,9 +90,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 90,
     height: 90,
-    textAlign: 'center',
-    alignItems: 'center',
-    marginLeft: 20,
   },
   slide: {
     flex: 1,

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Text, View, StatusBar, TextInput, Button, TouchableHighlight, ActivityIndicator } from "react-native";
+import { Text, View, StatusBar, TextInput, TouchableHighlight, ActivityIndicator, ScrollView, Dimensions } from "react-native";
 import { triggerUser } from "../../../actions";
 
 const {init: usersInit, register: userRegister, login: userLogin} = triggerUser;
@@ -13,6 +13,11 @@ import { ChainStore, FetchChain } from "assetfunjs/es";
 import { ViewContainer, Normalize, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
 //import { LockScreen } from "./Lock";
+
+import { Icon, Button, Input } from 'react-native-elements';
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+
 
 import { NodeScreen } from "./Node";
 
@@ -82,6 +87,8 @@ const SLTextSubmit = styled(SLText)`
   border-radius: 5;
   background-color: ${Colors.timberwolf};
 `;
+
+
 
 
 class Register extends Component {
@@ -205,53 +212,159 @@ class Register extends Component {
     console.log("=====[Register.js]::render - ", isRegister);
 
 		return (
-			<ViewContainer>
-        <NodeScreen />
-				<SLViewText>
-          <SLTextTitle>Reigster Aftrade Account : {currentAccount}</SLTextTitle>
-        </SLViewText>
-        <SLViewUserInput>
-          <SLTextTitleName>用户名：</SLTextTitleName>
-          <SLTextUserName
-            placeholder="Type a Username"
-            autoCapitalize='none'
-            autoCorrect={false}
-            autoFocus={true}
-            value={this.state.username || this.props.username} 
-            onChangeText={(text) => this.setState({ username: text })}
-          />
-        </SLViewUserInput>
-        <SLViewUserInput>
-          <SLTextTitlePasswd>密      码：</SLTextTitlePasswd>
-          <SLTextUserPaswd
-            placeholder="Type a Password"
-            autoCapitalize='none'
-            autoCorrect={false}
-            autoFocus={false}
-            secureTextEntry={true}
-            value={this.state.password}
-            onChangeText={(text) => this.setState({ password: text })}
-          />
-        </SLViewUserInput>
-        <SLViewIndicator>
-          {isRegister && <Text>注册中</Text>}
-          <ActivityIndicator animating={isRegister || false} color='red' />
-        </SLViewIndicator>
-        <SLViewSubmit>
-  				<SLButtonSubmit onPress={(e) => this.userRegister(e)} >
-            <SLTextSubmit>REG</SLTextSubmit>
-          </SLButtonSubmit>
-          <Text style={{}}>       </Text>
-          <SLButtonSubmit onPress={(e) => this.userLogin(e)} >
-            <SLTextSubmit>LOG</SLTextSubmit>
-          </SLButtonSubmit>
-        </SLViewSubmit>
-         {/*(<LockScreen />*/}
-        <Text>{JSON.stringify(this.state.currentAccount)}</Text>
-			</ViewContainer>
+			<ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.contentView} >
+          <View style={{backgroundColor: 'white', width: SCREEN_WIDTH, alignItems: 'center'}}>
+            <Text style={{color: 'white', fontSize: 30, marginVertical: 10, fontWeight: '300', marginTop: 10}}>登录</Text>
+            <Text style={styles.welcome} >Welcome to Aftrade Register</Text>
+            <View style={[styles.overlay, { marginBottom: 30, marginTop: 1 }]}>
+            <Input
+              containerStyle={{borderRadius: 40, borderWidth: 1, borderColor: 'rgba(110, 120, 170, 1)', height: 50, width: SCREEN_WIDTH - 50, marginVertical: 10}}
+              icon={
+                <Icon
+                  name='person'
+                  color='rgba(110, 120, 170, 1)'
+                  size={25}
+                />
+              }
+              iconContainerStyle={{marginLeft: 20}}
+              placeholder="Username"
+              placeholderTextColor="rgba(110, 120, 170, 1)"
+              inputStyle={{marginLeft: 10, color: 'white'}}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardAppearance="light"
+              keyboardType="email-address"
+              returnKeyType="next"
+              ref={ input => this.email2Input = input }
+              onSubmitEditing={() => {
+                this.password2Input.focus();
+              }}
+              blurOnSubmit={false}
+            />
+            <Input
+              containerStyle={{borderRadius: 40, borderWidth: 1, borderColor: 'rgba(110, 120, 170, 1)', height: 50, width: SCREEN_WIDTH - 50, marginVertical: 10}}
+              icon={
+                <Icon
+                  name='lock'
+                  color='rgba(110, 120, 170, 1)'
+                  size={25}
+                />
+              }
+              iconContainerStyle={{marginLeft: 20}}
+              placeholder="Password"
+              placeholderTextColor="rgba(110, 120, 170, 1)"
+              inputStyle={{marginLeft: 10, color: 'white'}}
+              autoCapitalize="none"
+              keyboardAppearance="light"
+              secureTextEntry={true}
+              autoCorrect={false}
+              keyboardType="default"
+              returnKeyType="next"
+              ref={ input => this.password2Input = input }
+              onSubmitEditing={() => {
+                this.confirmPassword2Input.focus();
+              }}
+              blurOnSubmit={false}
+            />
+            <Input
+              containerStyle={{borderRadius: 40, borderWidth: 1, borderColor: 'rgba(110, 120, 170, 1)', height: 50, width: SCREEN_WIDTH - 50, marginTop: 10, marginBottom: 30}}
+              icon={
+                <Icon
+                  name='lock'
+                  color='rgba(110, 120, 170, 1)'
+                  size={25}
+                />
+              }
+              iconContainerStyle={{marginLeft: 20}}
+              placeholder="Confirm Password"
+              placeholderTextColor="rgba(110, 120, 170, 1)"
+              inputStyle={{marginLeft: 10, color: 'white'}}
+              autoCapitalize="none"
+              keyboardAppearance="light"
+              secureTextEntry={true}
+              autoCorrect={false}
+              keyboardType="default"
+              returnKeyType="done"
+              ref={ input => this.confirmPassword2Input = input }
+              blurOnSubmit={true}
+            />
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Button
+                text ='注  册'
+                buttonStyle={{height: 50, width: 200, backgroundColor: 'black', borderWidth: 2, borderColor: 'white', borderRadius: 30}}
+                containerStyle={{marginVertical: 10}}
+                textStyle={{fontWeight: 'bold'}}
+                onPress={() => navigation.navigate('Register')}
+              />
+              <Button
+                text="登  录"
+                clear
+                textStyle={{color: 'rgba(78, 116, 289, 1)'}}
+                containerStyle={{marginTop: 20,marginVertical:20}}
+                onPress={() => navigation.navigate('Login')}
+              />
+            </View>
+          </View>
+        </View>
+      </ScrollView>
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'nowrap',
+    backgroundColor: '#F5FCFF',
+    height: '100%',
+  },
+  contentView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  triangleLeft: {
+    position: 'absolute',
+    left: -20,
+    bottom: 0,
+    width: 0,
+    height: 0,
+    borderRightWidth: 20,
+    borderRightColor: 'white',
+    borderBottomWidth: 25,
+    borderBottomColor: 'transparent',
+    borderTopWidth: 25,
+    borderTopColor: 'transparent'
+  },
+  triangleRight: {
+    position: 'absolute',
+    right: -20,
+    top: 0,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 20,
+    borderLeftColor: 'white',
+    borderBottomWidth: 25,
+    borderBottomColor: 'transparent',
+    borderTopWidth: 25,
+    borderTopColor: 'transparent'
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  menu: {
+    margin: 10,
+    padding: 10
+  }
+}); 
+
 
 const mapStateToProps = (state) => ({
   isRegister: state.users.isRegister,

@@ -15,10 +15,16 @@
 ####
 
 
+#### 20180123 -: 
+
+##### 优化登录注册页面，
+##### 
+
+
 #### 20180122 -: 
 
 ##### 优化splash显示问题
-##### 编写登录页面react-native-elements\
+##### 编写登录页面react-native-elements\react-native-clean-form
 
 
 

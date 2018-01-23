@@ -8,7 +8,7 @@ import { resetNavigationTo } from "../../../libs/help";
 
 import { SwipeableView } from "../../../components";
 
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.app.currentAccount,
@@ -89,30 +89,34 @@ class Splash extends Component {
         <SwipeableView />
         <View style={styles.signInContainer}>
           <Button
-            raised 
-            disabled={false}
-            loading={false}
-            outline
-            //activityIndicatorStyle={{backgroundColor: 'yellow'}}
-            large={false}
-            iconRight={{name: 'lock',  size: 26}}
-            buttonStyle={{backgroundColor: 'blue', borderRadius: 10}}
-            textStyle={{textAlign: 'center'}}
-            title={translate('enter.splash.signInButton', locale)}
+            text="登录"
+            icon={
+              <Icon
+                name='3d-rotation'
+                size={15}
+                color='white'
+              />
+            }
+            iconContainerStyle={{marginRight: 10}}
+            textStyle={{fontWeight: '700'}}
+            buttonStyle={{backgroundColor: 'rgba(90, 154, 230, 1)', width: 130, borderColor: 'transparent', borderWidth: 0, borderRadius: 30}}
+            containerStyle={{marginTop: 20}}
             onPress={() => this.setModalVisible(true)}
           />
           <Button
-            raised 
-            disabled={false}
-            loading={true}
-            loadingRight
-            outline
-            //activityIndicatorStyle={{backgroundColor: 'yellow'}}
-            large={false}
-            icon={{name: 'home',  size: 26}}
-            buttonStyle={{backgroundColor: 'red', borderRadius: 10}}
-            textStyle={{textAlign: 'center'}}
-            title={translate('enter.splash.registerInButton', locale)}
+            text="注册"
+            icon={
+              <Icon
+                name='3d-rotation'
+                size={15}
+                color='white'
+              />
+            }
+            iconRight
+            iconContainerStyle={{marginLeft: 10}}
+            textStyle={{fontWeight: '700'}}
+            buttonStyle={{backgroundColor: 'rgba(199, 43, 98, 1)', width: 150, borderColor: 'transparent', borderWidth: 0, borderRadius: 30}}
+            containerStyle={{marginTop: 20}}
             onPress={() => this.setModalVisible(false)}
           />
         </View>
