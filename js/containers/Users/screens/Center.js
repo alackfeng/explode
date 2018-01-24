@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Dimensions, View, ScrollView, Image, TouchableHighlight, ListView } from "react-native";
 import { Text, Card, ButtonGroup, Tile, Col, Row, Icon, List, ListItem, Avatar, Badge } from "react-native-elements";
 
-import { ViewContainer, Normalize, StyleSheet } from "../../../components";
+import { ViewContainer, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -23,14 +23,18 @@ const listMenu = [
 		icon: 'av-timer',
 		subtitle: '设置属性',
 		nav: {
-			param: 'Settings'
+			title: 'Settings',
+			user: 'me',
 		}
 	},
 	{
 		title: 'Nodes',
 		icon: 'flight-takeoff',
 		subtitle: '节点信息',
-		nav: true,
+		nav: {
+			title: 'Nodes',
+			user: 'me',
+		}
 	},
 	{
 		title: 'Main',
@@ -92,7 +96,7 @@ class Center extends Component {
 			if(item.nav === true) 
 				navigation.navigate(item.title);
 			else 
-				navigation.navigate(item.title, {name: item.nav.param});
+				navigation.navigate(item.title, item.nav);
 		}
 	}
 

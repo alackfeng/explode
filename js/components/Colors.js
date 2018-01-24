@@ -54,7 +54,8 @@ const NAMED_COLORS = {
   pink: "rgba(245, 64, 199, 1)",
   darkPink: "rgba(200, 40, 159, 1)",
   orange: "rgba(247, 144, 77, 1)",
-  salmon: "rgba(243, 91, 89, 1)"
+  salmon: "rgba(243, 91, 89, 1)",
+
 };
 
 const THEME_COLORS = {
@@ -71,6 +72,8 @@ const THEME_COLORS = {
 
   // loading 
   greyDark: "#999",
+  primaryDark: '#262626',
+  greyLight: '#f1f1f1',
 
   // legacy
   inactiveText: "#9B9B9B"

@@ -94,6 +94,11 @@ export const normalize = size => {
   return size;
 };
 
+export const SCREEN_WIDTH = deviceWidth;
+export const SCREEN_HEIGHT = deviceHeight;
+export const PIXEL_RATIO = pixelRatio;
+
+
 
 export const getFontColorByBackground = bgColor => {
   const r = parseInt(bgColor.substr(0, 2), 16);
@@ -144,4 +149,14 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export const delay = (delayed, ms) =>
   Promise.all([delayed, sleep(ms)]).then(([data]) => data);
+
+
+export const fonts = {
+  fontPrimaryLight: { fontFamily: 'Nunito-Light' },
+  fontPrimary: { fontFamily: 'Nunito-Regular' },
+  fontPrimaryItalic: { fontFamily: 'Nunito-Italic' },
+  fontPrimarySemiBold: { fontFamily: 'Nunito-SemiBold' },
+  fontPrimaryBold: { fontFamily: 'Nunito-Bold' },
+  fontCode: { fontFamily: 'Menlo' },
+};
 

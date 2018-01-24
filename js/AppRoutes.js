@@ -48,9 +48,9 @@ const sharedRoutes = {
   },
   Nodes: {
     screen: NodeScreen,
-    navigationOptions: {
-      header: <View><Text>hello Center</Text></View>,
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    }),
   },
 };
 

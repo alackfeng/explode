@@ -10,7 +10,7 @@ const {init: usersInit, register: userRegister, login: userLogin} = triggerUser;
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
-import { ViewContainer, Normalize, StyleSheet } from "../../../components";
+import { ViewContainer, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
 //import { LockScreen } from "./Lock";
 

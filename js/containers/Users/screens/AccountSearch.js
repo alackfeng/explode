@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { Text, View, StatusBar, TextInput, Button, TouchableHighlight } from "react-native";
 import { accountSearch } from "../actions";
 
-import { ViewContainer, Normalize, StyleSheet } from "../../../components";
+import { ViewContainer, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
 
 import iDB from "../../../libs/idb-instance";

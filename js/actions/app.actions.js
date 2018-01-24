@@ -10,6 +10,7 @@ export const SET_APP_LOCALE	= 'SET_APP_LOCALE';
 export const APP_FOREVER_SAVE_KEY = 'APP_FOREVER_SAVE_KEY';
 export const APP_FOREVER_INIT_NODES = 'APP_FOREVER_INIT_NODES';
 export const APP_FOREVER_CHANGE_RPC_STATUS = 'APP_FOREVER_CHANGE_RPC_STATUS';
+export const APP_FOREVER_UPDATE_NODES = 'APP_FOREVER_UPDATE_NODES';
 /*
 // app relation action call
 app 相关全局设置存储在本地上，
@@ -49,8 +50,9 @@ export function doSomeStuff() {
 }
 
 export const appSaveKey = (username, keys=[]) => action(APP_FOREVER_SAVE_KEY, {username, keys})
-export const updateRpcConnectionStatus = (status) => action(APP_FOREVER_CHANGE_RPC_STATUS, {status});
-export const nodeConnect = (nodes, url) => action(APP_FOREVER_INIT_NODES, {nodes, url});
+export const updateRpcConnectionStatus = (status, url) => action(APP_FOREVER_CHANGE_RPC_STATUS, {status, url});
+export const initConnect = (nodes, url) => action(APP_FOREVER_INIT_NODES, {nodes, url});
+export const nodeConnect = (nodes, url) => action(APP_FOREVER_UPDATE_NODES, {nodes, url});
 
 
 

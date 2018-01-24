@@ -7,7 +7,7 @@ import { Dimensions, Text, View, Modal, TouchableHighlight, Alert, TouchableOpac
 //import { init, createAccount } from "../users.actions";
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
-import { ViewContainer, Normalize, StyleSheet } from "../../../components";
+import { ViewContainer, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
 
 

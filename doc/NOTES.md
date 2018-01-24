@@ -14,6 +14,14 @@
 
 ####
 
+#### 20180124 -: 
+
+##### 节点连接管理功能，包括界面和库调用
+
+##### 搜索框，
+npm install --save react-native-search-bar
+npm install --save react-native-material-design-searchbar
+
 
 #### 20180123 -: 
 

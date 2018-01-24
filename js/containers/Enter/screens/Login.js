@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, ScrollView, Dimensions } from "react-native";
 
 import { Icon, Button, Input } from 'react-native-elements';
-import { ViewContainer, Normalize, StyleSheet } from "../../../components";
+import { ViewContainer, StyleSheet } from "../../../components";
 import { resetNavigationTo } from "../../../libs/help";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;

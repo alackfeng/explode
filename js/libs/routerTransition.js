@@ -48,6 +48,19 @@ const filterAndSortURLs = (count, latencies) => {
     return urls;
 };
 
+const reNodeList = (urls, latencies) => {
+
+    let nodes = [];
+    nodeList.map(a => {
+        if(!!latencies[a.url]) {
+            a.latency = latencies[a.url];    
+        }
+        console.log("---------------->>>>>>>>>>>. NODE ", a);
+        nodes.push(a);
+    });
+    return nodes;
+};
+
 const willTransitionTo = (nextState, replaceState, callback) => {
     /* if (connect) ss.set("latencyChecks", latencyChecks + 1); // Every 25 connect attempts we refresh the api latency list
     if (latencyChecks >= 25) {
@@ -99,6 +112,7 @@ const willTransitionTo = (nextState, replaceState, callback) => {
             urls = filterAndSortURLs(0, latencies);
             // ss.set("apiLatencies", latencies);
             connectionManager.urls = urls;
+            callback(connectionManager.url, reNodeList(urls, latencies));
         }
         connectionManager.connectWithFallback(connect).then(() => {
             var db;
@@ -118,7 +132,7 @@ const willTransitionTo = (nextState, replaceState, callback) => {
                     chainId: Apis.instance().chain_id
                 }); */
 
-                callback(connectionManager.url);
+                callback(connectionManager.url, null);
 
 
             });
@@ -167,6 +181,7 @@ const willTransitionTo = (nextState, replaceState, callback) => {
     if (connect && !apiLatenciesCount && !connectionCheckPromise) connectionManager.checkConnections().then((res) => {
         console.log("=====[routerTransition.js]::willTransitionTo - Connection latencies:", res);
         //ss.set("apiLatencies", res);
+        callback(connectionManager.url, res);
     });
 
     console.log("=====[routerTransition.js]::willTransitionTo - end ");

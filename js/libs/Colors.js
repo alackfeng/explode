@@ -71,6 +71,8 @@ const THEME_COLORS = {
 
   // loading 
   greyDark: "#999",
+  greyLight: '#f1f1f1',
+  primaryDark: '#262626',
 
   // legacy
   inactiveText: "#9B9B9B"

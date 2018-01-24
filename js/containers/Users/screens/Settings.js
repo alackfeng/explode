@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { Text, View, StatusBar, TextInput, Button, TouchableHighlight } from "react-native";
 import { init, change, currentAccount } from "../settings.actions";
 
-import { ViewContainer, Normalize, StyleSheet } from "../../../components";
+import { ViewContainer, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
 
 import { Header } from "react-native-elements";

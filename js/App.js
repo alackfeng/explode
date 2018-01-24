@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { View, Text } from "react-native";
@@ -13,38 +13,91 @@ import './libs';
 import AppNavigator from './navigator';
 import URIWrapper from './URIWrapper';
 
+
+import { initConnect, nodeConnect, updateRpcConnectionStatus } from "./actions";
+import { willTransitionTo } from "./libs";
+import { Apis } from "assetfunjs-ws";
+
+import { nodeList } from "./env";
+
+
 const NavigationWrappedApp = URIWrapper(AppNavigator);
 
-const App = (props) => {
-  const {
-    appReady,
-    dispatch,
-    nav,
-  } = props;
+class App extends Component {
 
-  console.log("=====[App.js]::App ready - ", appReady, " , nav - ", JSON.stringify(nav.routes.length));
-
-  // launch screen
-  if(!props.appReady) {
-    console.log("=====[App.js]::App appReady - ", props.appReady);
-    return <LaunchScreen />
+  props: {
+    appReady: PropTypes.bool,
+    nav: PropTypes.object,
+    dispatch: PropTypes.func,
   }
 
-  // enter app
-  return (
-    <NavigationWrappedApp
-      dispatch={dispatch}
-      state={nav}
-      appReady={appReady}
-    />
-  );
-};
+  constructor(props) {
+    super(props);
 
-App.propTypes = {
-  appReady: PropTypes.bool,
-  nav: PropTypes.object,
-  dispatch: PropTypes.func,
-};
+  }
+
+  componentWillMount() {
+    console.log("=====[App.js]::componentWillMount - init");
+
+    this.props.dispatch(initConnect([], null))
+  }
+
+  componentDidMount() {
+    //if(appReady) {
+
+      console.log("=====[App.js]::componentDidMount - init");
+
+      // app启动时直接尝试连接节点
+
+      let nodeTransition = (res, nodeList) => {
+        console.log("+++++[App.js]::nodeConnect - call api...", res);
+        const url = res;
+        this.props.dispatch(nodeConnect(nodeList, url));
+
+        
+      };
+
+      willTransitionTo(null, null, nodeTransition);
+
+      // listen status callback
+      Apis.setRpcConnectionStatusCallback(this.updateRpcConnectionStatusCallback.bind(this));
+    //}
+  }
+
+  updateRpcConnectionStatusCallback = (status) => {
+    console.log("=====[App.js]::updateRpcConnectionStatusCallback - ", status);
+    this.props.dispatch(updateRpcConnectionStatus(status));
+  }
+
+
+
+  render() {
+    const {
+      appReady,
+      dispatch,
+      nav,
+    } = this.props;
+
+    console.log("=====[App.js]::App ready - ", appReady, " , nav - ", JSON.stringify(nav.routes.length));
+
+    
+    // launch screen
+    if(!appReady) {
+      console.log("=====[App.js]::App appReady - ", appReady);
+      return <LaunchScreen />
+    }
+
+    // enter app
+    return (
+      <NavigationWrappedApp
+        dispatch={dispatch}
+        state={nav}
+        appReady={appReady}
+      />
+    );
+  };
+
+}
 
 function mapStateToProps(state) {
   return {

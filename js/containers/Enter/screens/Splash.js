@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, Image, Text, ImageBackground } from "react-native";
-import { ViewContainer, Normalize, StyleSheet } from "../../../components";
+import { ViewContainer, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
 import { translate, locale } from "../../../libs";
 import { resetNavigationTo } from "../../../libs/help";

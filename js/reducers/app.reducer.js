@@ -1,5 +1,5 @@
 
-import { SET_APP_READY, SET_APP_LOCALE, APP_FOREVER_SAVE_KEY, APP_FOREVER_INIT_NODES, APP_FOREVER_CHANGE_RPC_STATUS } from '../actions';
+import { SET_APP_READY, SET_APP_LOCALE, APP_FOREVER_SAVE_KEY, APP_FOREVER_INIT_NODES, APP_FOREVER_UPDATE_NODES, APP_FOREVER_CHANGE_RPC_STATUS } from '../actions';
 
 import { TRIGGER_USERS_REGISTER, TRIGGER_USERS_LOGIN } from "../actions";
 
@@ -67,6 +67,16 @@ export default function appReducer(state = initState, action) {
         nodesApi: action.nodes,
         nodeStatus: {
           url: action.url,
+          status: null,
+        }
+      }
+    }
+    case APP_FOREVER_UPDATE_NODES: {
+      return {
+        ...state,
+        nodesApi: action.nodes ? action.nodes : state.nodesApi,
+        nodeStatus: {
+          url: action.url,
           status: state.nodeStatus.status
         }
       }
@@ -75,7 +85,7 @@ export default function appReducer(state = initState, action) {
       return {
         ...state,
         nodeStatus: {
-          url: state.nodeStatus.url,
+          url: action.url ? action.url : state.nodeStatus.url,
           status: action.status,
         }
       }

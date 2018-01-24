@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 import { View, Text, Button, ActivityIndicator,  } from "react-native";
 
-import { ViewContainer, Normalize, StyleSheet } from "../../../components";
-import { Colors } from "../../../libs/Colors";
-import { translate, locale } from "../../../libs";
+import { ViewContainer, StyleSheet } from "../../../components";
+import { Colors as colors, normalize, translate, locale } from "../../../libs";
+
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.coolGray,
+    backgroundColor: colors.coolGray,
   },
   welcomeMessage: {
-    color: Colors.white,
+    color: colors.white,
     paddingBottom: 20,
-    fontSize: Normalize(24),
+    fontSize: normalize(24),
   },
   menu: {
     web: {
