@@ -1,11 +1,18 @@
+
 import React, { Component } from "react";
+import styled from "styled-components/native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { View, Text, ScrollView, Dimensions } from "react-native";
-
+import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
 import { Icon, Button, Input } from 'react-native-elements';
-import { ViewContainer, StyleSheet } from "../../../components";
-import { resetNavigationTo } from "../../../libs/help";
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import { ViewContainer, StyleSheet } from "../../../components";
+
+import { ChainStore, FetchChain } from "assetfunjs/es";
+
+import { triggerUser } from "../../../actions";
+const {init: usersInit, register: userRegister, login: userLogin} = triggerUser;
 
 
 const styles = StyleSheet.create({
@@ -62,17 +69,51 @@ const styles = StyleSheet.create({
 
 class Login extends Component {
 
+
+  state: {
+    username: string,
+    password: string,
+  }
   constructor( ) {
     super();
 
     this.state = {
-      username: '',
-      password: '',
+      username: 'fengyue1',
+      password: '123456789',
     };
+
+    this.userLogin  = this.userLogin.bind(this);
   }
+
+
+  userLogin = (e) => {
+
+    const { username, password } = this.state;
+    console.log("=====[Login.js]::userLogin - ", username, password);
+    e.preventDefault();
+
+    const accountObj = ChainStore.getAccount(this.state.username);
+    console.log("=====[Login.js]::userLogin - account_ - ", this.state.username, JSON.stringify(accountObj));
+    //if(account_) {
+    //  this.setState({
+    //    currentAccount: account_,
+    //  });
+    //}
+
+    try {
+
+      this.props.userLogin(username, password);
+
+    } catch ( e ) {
+      console.error("=====[Login.js]::userLogin - error : ", e);
+    }
+  }
+
 	render() {
 
-		const { navigation } = this.props;
+		const { navigation, nodeStatus, loginStatus } = this.props;
+    console.info("=====[Login.js]::render - login status : ", loginStatus);
+
 		return (
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.contentView} >
@@ -102,6 +143,7 @@ class Login extends Component {
                   this.passwordInput.focus();
                 }}
                 blurOnSubmit={false}
+                value={this.state.username}
               />
             </View>
             <View style={[styles.overlay, { marginBottom: 30, marginTop: 1 }]}>
@@ -125,6 +167,7 @@ class Login extends Component {
                 ref={ input => this.passwordInput = input }
                 onChangeText={ text => this.setState({password: text})}
                 blurOnSubmit={true}
+                value={this.state.password}
               />
             </View>
             <View style={{flexDirection: 'row'}}>
@@ -133,16 +176,17 @@ class Login extends Component {
                 buttonStyle={{height: 50, width: 200, backgroundColor: 'black', borderWidth: 2, borderColor: 'white', borderRadius: 30}}
                 containerStyle={{marginVertical: 10}}
                 textStyle={{fontWeight: 'bold'}}
-                onPress={() => resetNavigationTo('Main', navigation)}
+                onPress={() => resetNavigationTo('Main', navigation)} //onPress={this.userLogin}
               />
               <Button
-                text="注  册"
+                text="     跳转到注册"
                 clear
                 textStyle={{color: 'rgba(78, 116, 289, 1)'}}
                 containerStyle={{marginTop: 20,marginVertical:20}}
                 onPress={() => resetNavigationTo('Register', navigation)}
               />
             </View>
+            {nodeStatus && <View style={{backgroundColor: 'red'}}><Text>{nodeStatus.url} > {nodeStatus.status} </Text></View>}
           </View>
         </View>
       </ScrollView>
@@ -150,4 +194,15 @@ class Login extends Component {
 	}
 }
 
-export const LoginScreen = Login;
+
+const mapStateToProps = (state) => ({
+  loginStatus: state.users.loginStatus,
+  currentAccount: state.app.currentAccount,
+  nodeStatus: state.app.nodeStatus,
+});
+
+export const LoginScreen = connect(mapStateToProps, {
+  userLogin,
+})(Login);
+
+

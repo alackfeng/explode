@@ -4,23 +4,20 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Text, View, StatusBar, TextInput, TouchableHighlight, ActivityIndicator, ScrollView, Dimensions } from "react-native";
-import { triggerUser } from "../../../actions";
+import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
+import { Icon, Button, Input, Overlay } from 'react-native-elements';
 
+import { ViewContainer, StyleSheet, TransactionConfirmModal } from "../../../components";
+import { triggerUser } from "../../../actions";
 const {init: usersInit, register: userRegister, login: userLogin} = triggerUser;
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
-import { ViewContainer, StyleSheet } from "../../../components";
-import { Colors } from "../../../libs/Colors";
+import Modal from "react-native-modal";
+
+
 //import { LockScreen } from "./Lock";
-
-import { Icon, Button, Input } from 'react-native-elements';
-import { resetNavigationTo } from "../../../libs/help";
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
-
-import { NodeScreen } from "./Node";
+//import { NodeScreen } from "./Node";
 
 const SLView = styled.View`
   flex: 1;
@@ -95,15 +92,16 @@ const SLTextSubmit = styled(SLText)`
 class Register extends Component {
 
   props: {
-    isRegister: boolean,
-    isAuthenticated: boolean,
+    regStatus: Object,
     userRegister: Function,
     navigation: Object,
-    username: string,
+    nodeStatus: Object,
+    currentAccount: string,
   }
   state: {
     username: string,
     password: string,
+    confirmPass: string,
   }
 
   constructor(props) {
@@ -111,79 +109,55 @@ class Register extends Component {
 
     this.state = {
       username: 'fengtest',
-      password: 'fengtest',
+      password: '',
+      confirmPass: '',
+
+      refcode: 'fengtest1',
+      referrer: 'fengtest1',
       registrar: 'fengtest1',
-      currentAccount: null,
+      referrer_percent: 0,
+
+      errorName: '',
+      errorPass: '',
+      errorConfirm: '',
+
+      isLoading: true,
     };
   }
 
 
   componentWillMount() {
-    const { isAuthenticated, navigation } = this.props;
-    console.log("=====[Register.js]::componentDiDMount - ", isAuthenticated);
-    if(isAuthenticated) {
-      navigation.navigate('Login');
+    const { currentAccount, navigation } = this.props;
+    console.log("=====[Register.js]::componentDiDMount - ", currentAccount);
+    if(currentAccount) {
+      ; //resetNavigationTo('Main', navigation);
     }
-
-
 
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
-    console.log("=====[Register.js]::shouldComponentUpdate - isAuthenticated - ", nextProps.status);
+    console.log("=====[Register.js]::shouldComponentUpdate - currentAccount - ", nextProps.nodeStatus);
     return true;
   }
 
-  userLogin = (e) => {
 
-    const { username, password } = this.state;
-    console.log("=====[Register.js]::userLogin - ", username, password);
-    e.preventDefault();
-
-    const refcode = this.state.refcode;
-    const referrer = this.state.registrar;
-
-    const { store, dispatch } = this.props;
-    console.log("=====[Register.js]::userLogin - dispatch is exist > ", store, dispatch);
-
-    const account_ = ChainStore.getAccount(this.state.username);
-    console.log("=====[Register.js]::componentWillMount - account_ - ", this.state.username, JSON.stringify(account_));
-    if(account_) {
-      this.setState({
-        currentAccount: account_,
-      });
-    }
-
-    try {
-
-      this.props.userLogin(username, password); /*.then((res) => {
-
-        console.log("=====[Register.js]::userLogin - createAccount return : ok ", res);
-        FetchChain("getAccount", res).then((ret) => {
-          console.log("=====[Register.js]::userLogin - createAccount : getAccount is : ", ret);
-        }).catch(err => {
-          console.error("=====[Register.js]::userLogin - createAccount : getAccount is : err ", err);
-        })
-      }).catch( err => {
-
-        console.log("=====[Register.js]::userLogin - createAccount return : error - ", err);
-      }); */
-
-    } catch ( e ) {
-      console.error("=====[Register.js]::userLogin - error : ", e);
-    }
-  }
 
   userRegister = (e) => {
     
-    const { username, password } = this.state;
+    const { username, password, confirmPass } = this.state;
     console.log("=====[Register.js]::userRegister - ", username, password);
+
     e.preventDefault();
+
+    if(!username || !password || password !== confirmPass) {
+      console.error("=====[Register.js]::userRegister - password not equal to confirmPass", username, password);
+      return;
+    }
 
     const refcode = this.state.refcode;
     const referrer = this.state.registrar;
-    const registrar = this.state.registrar;
-    const referrer_percent = 0;
+    const registrar = null; //this.state.registrar;
+    const referrer_percent = this.state.referrer_percent;
 
     try {
 
@@ -207,16 +181,48 @@ class Register extends Component {
     
   }
 
+  onChangeUserName = (text) => {
+
+    console.log("=====[Register.js]::onChangeUserName - ", text);
+
+    if(!text || text.length <= 5) {
+      this.setState({username: text, errorName: "包含字母和数字"});
+    } else 
+      this.setState({username: text, errorName: ''});
+  }
+
+  onChangePassword = (text) => {
+    console.log("=====[Register.js]::onChangePassword - ", text);
+
+    if(!text || text.length <= 5) {
+      this.setState({password: text, errorPass: "小于等于13位"});
+    } else 
+      this.setState({password: text, errorPass: ''});  
+  }
+
+  onChangeConfirmPass = (text) => {
+    console.log("=====[Register.js]::onChangeConfirmPass - ", text);
+
+    if(!text || text !== this.state.password) {
+      this.setState({confirmPass: text, errorConfirm: "密码不相同"});
+    } else 
+      this.setState({confirmPass: text, errorConfirm: ''});  
+  }
+
 	render() {
 
-		const { isRegister, isAuthenticated, navigation, currentAccount } = this.props;
-    console.log("=====[Register.js]::render - ", isRegister);
+		const { regStatus, navigation, currentAccount, nodeStatus } = this.props;
+    console.log("=====[Register.js]::render - ", regStatus, currentAccount, nodeStatus);
+
+    const isLoading = regStatus.isRegister;
+    const loadingProps = isLoading ? {size: 'large'} : '';
 
 		return (
 			<ScrollView contentContainerStyle={styles.container}>
+        {this.state.isLoading && <TransactionConfirmModal onCancel={() => this.setState({isLoading: false})}/>}
         <View style={styles.contentView} >
           <View style={{backgroundColor: 'white', width: SCREEN_WIDTH, alignItems: 'center'}}>
-            <Text style={{color: 'white', fontSize: 30, marginVertical: 10, fontWeight: '300', marginTop: 10}}>登录</Text>
+            <Text style={{color: 'black', fontSize: 30, marginVertical: 10, fontWeight: '300', marginTop: 10}}>登录</Text>
             <Text style={styles.welcome} >Welcome to Aftrade Register</Text>
             <View style={[styles.overlay, { marginBottom: 30, marginTop: 1 }]}>
             <Input
@@ -231,7 +237,7 @@ class Register extends Component {
               iconContainerStyle={{marginLeft: 20}}
               placeholder="Username"
               placeholderTextColor="rgba(110, 120, 170, 1)"
-              inputStyle={{marginLeft: 10, color: 'white'}}
+              inputStyle={{marginLeft: 10, color: 'black'}}
               autoCapitalize="none"
               autoCorrect={false}
               keyboardAppearance="light"
@@ -242,6 +248,10 @@ class Register extends Component {
                 this.password2Input.focus();
               }}
               blurOnSubmit={false}
+              displayError={!!this.state.errorName}
+              errorMessage={this.state.errorName}
+              value={this.state.username}
+              onChangeText={this.onChangeUserName}
             />
             <Input
               containerStyle={{borderRadius: 40, borderWidth: 1, borderColor: 'rgba(110, 120, 170, 1)', height: 50, width: SCREEN_WIDTH - 50, marginVertical: 10}}
@@ -255,7 +265,7 @@ class Register extends Component {
               iconContainerStyle={{marginLeft: 20}}
               placeholder="Password"
               placeholderTextColor="rgba(110, 120, 170, 1)"
-              inputStyle={{marginLeft: 10, color: 'white'}}
+              inputStyle={{marginLeft: 10, color: 'black'}}
               autoCapitalize="none"
               keyboardAppearance="light"
               secureTextEntry={true}
@@ -267,6 +277,10 @@ class Register extends Component {
                 this.confirmPassword2Input.focus();
               }}
               blurOnSubmit={false}
+              displayError={!!this.state.errorPass}
+              errorMessage={this.state.errorPass}
+              value={this.state.password}
+              onChangeText={this.onChangePassword}
             />
             <Input
               containerStyle={{borderRadius: 40, borderWidth: 1, borderColor: 'rgba(110, 120, 170, 1)', height: 50, width: SCREEN_WIDTH - 50, marginTop: 10, marginBottom: 30}}
@@ -280,7 +294,7 @@ class Register extends Component {
               iconContainerStyle={{marginLeft: 20}}
               placeholder="Confirm Password"
               placeholderTextColor="rgba(110, 120, 170, 1)"
-              inputStyle={{marginLeft: 10, color: 'white'}}
+              inputStyle={{marginLeft: 10, color: 'black'}}
               autoCapitalize="none"
               keyboardAppearance="light"
               secureTextEntry={true}
@@ -289,6 +303,10 @@ class Register extends Component {
               returnKeyType="done"
               ref={ input => this.confirmPassword2Input = input }
               blurOnSubmit={true}
+              displayError={!!this.state.errorConfirm}
+              errorMessage={this.state.errorConfirm}
+              value={this.state.confirmPass}
+              onChangeText={this.onChangeConfirmPass}
             />
             </View>
             <View style={{flexDirection: 'row'}}>
@@ -297,10 +315,12 @@ class Register extends Component {
                 buttonStyle={{height: 50, width: 200, backgroundColor: 'black', borderWidth: 2, borderColor: 'white', borderRadius: 30}}
                 containerStyle={{marginVertical: 10}}
                 textStyle={{fontWeight: 'bold'}}
-                onPress={() => resetNavigationTo('Register', navigation)}
+                onPress={this.userRegister}
+                loading={isLoading}
+                loadingProps={loadingProps}
               />
               <Button
-                text="登  录"
+                text="   跳转到登录"
                 clear
                 textStyle={{color: 'rgba(78, 116, 289, 1)'}}
                 containerStyle={{marginTop: 20,marginVertical:20}}
@@ -308,7 +328,24 @@ class Register extends Component {
               />
             </View>
           </View>
+          {nodeStatus && <View><Text>{nodeStatus.url} > {nodeStatus.status} </Text></View>}
         </View>
+        {/*isLoading && (
+        <Modal 
+          isVisible={this.state.isLoading} 
+          width={300} 
+          height={300}
+          transparent={false}
+        >
+          <Text>Hello from Modal!</Text>
+          <Button
+            text="Cancel"
+            clear
+            textStyle={{color: 'rgba(78, 116, 289, 1)'}}
+            containerStyle={{marginTop: 20,marginVertical:20}}
+            onPress={() => this.setState({isLoading: false})}
+          />
+        </Modal>)*/}
       </ScrollView>
 		);
 	}
@@ -327,7 +364,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
   triangleLeft: {
     position: 'absolute',
@@ -368,9 +405,9 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state) => ({
-  isRegister: state.users.isRegister,
+  regStatus: state.users.regStatus,
   currentAccount: state.app.currentAccount,
-  status: state.app.nodeStatus.status,
+  nodeStatus: state.app.nodeStatus,
 });
 
 export const RegisterScreen = connect(mapStateToProps, {

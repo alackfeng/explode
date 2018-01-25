@@ -1,10 +1,19 @@
 
-import { USERS, USERS_LOGIN, USERS_REGISTER, USER_UNLOCK, TRIGGER_USERS_REGISTER } from "../actions";
+import { USERS, USERS_LOGIN, USERS_REGISTER, USER_UNLOCK, TRIGGER_USERS_REGISTER, TRIGGER_USERS_LOGIN } from "../actions";
 
 export const initialUsersState = {
 	inited: null, 
-	isRegister: false,
+	regStatus: {
+		username: '',
+		regInfo: [],
+		isRegister: false,
+	},
 	registers: [],
+	loginStatus: {
+		username: '',
+		password: '',
+		isLogin: false,
+	},
 	isLocked: true,
 };
 
@@ -36,7 +45,22 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 		{
 			return {
 				...state,
-				isRegister: true,
+				regStatus: {
+					username: action.username || '',
+					regInfo: action.regInfo || [],
+					isRegister: action.username ? true : false,
+				}
+			}
+		}
+		case TRIGGER_USERS_LOGIN:
+		{
+			return {
+				...state,
+				loginStatus: {
+					username: action.username || '',
+					password: action.password || '',
+					isLogin: action.username ? true : false,
+				},
 			}
 		}
 		case USERS_REGISTER.SUCCESS:
@@ -50,6 +74,7 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 				isRegister: reg_status
 			};
 		}
+
 		case USER_UNLOCK.REQUEST: {
 			return {
 				...state,

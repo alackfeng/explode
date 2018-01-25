@@ -1,8 +1,6 @@
 
 import { SET_APP_READY, SET_APP_LOCALE, APP_FOREVER_SAVE_KEY, APP_FOREVER_INIT_NODES, APP_FOREVER_UPDATE_NODES, APP_FOREVER_CHANGE_RPC_STATUS } from '../actions';
 
-import { TRIGGER_USERS_REGISTER, TRIGGER_USERS_LOGIN } from "../actions";
-
 /*
 // redux trigger
 app 相关全局设置存储在本地上，
@@ -40,18 +38,6 @@ export default function appReducer(state = initState, action) {
       return {
         ...state,
         locale: action.locale,
-      };
-    }
-    case TRIGGER_USERS_LOGIN: {
-      return {
-        ...state,
-        transactions: [...state.transactions, action],
-      };
-    }
-    case TRIGGER_USERS_REGISTER: {
-      return {
-        ...state,
-        //transactions: [...state.transactions, action],
       };
     }
     case APP_FOREVER_SAVE_KEY: {

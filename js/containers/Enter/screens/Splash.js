@@ -62,10 +62,10 @@ class Splash extends Component {
     const { isAuthenticated, navigation } = this.props;
     console.log("=====[Splash.js]::componentDidMount - isAuthenticated - ", isAuthenticated);
 
-    if(1 || isAuthenticated) { // 已经使用过直接跳转到主导航
+    if(isAuthenticated) { // 已经使用过直接跳转到主导航
       resetNavigationTo('Main', navigation);
     } else { // 否则显示splash页面，钱包介绍说明
-      resetNavigationTo('Login', navigation);
+      //resetNavigationTo('Login', navigation);
     }
   }
 

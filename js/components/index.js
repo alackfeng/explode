@@ -8,3 +8,5 @@ export * from "./CustomTabBar";
 export * from "./LoadingScreen";
 
 export * from "./SwipeableView";
+
+export * from "./TransactionConfirmModal";

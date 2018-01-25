@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { View, Text } from "react-native";
 import LaunchScreen from "./components/LaunchScreen";
 
+
 import {
   connect,
 } from 'react-redux';
@@ -19,6 +20,7 @@ import { willTransitionTo } from "./libs";
 import { Apis } from "assetfunjs-ws";
 
 import { nodeList } from "./env";
+
 
 
 const NavigationWrappedApp = URIWrapper(AppNavigator);
@@ -53,8 +55,6 @@ class App extends Component {
         console.log("+++++[App.js]::nodeConnect - call api...", res);
         const url = res;
         this.props.dispatch(nodeConnect(nodeList, url));
-
-        
       };
 
       willTransitionTo(null, null, nodeTransition);

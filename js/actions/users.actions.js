@@ -38,9 +38,9 @@ export const userRegister = {
 
 export const userLogin = {
 	request: (username, password) => (
-		action(USERS_REGISTER[REQUEST], {username, password})),
-	success: (username, response) => action(USERS_REGISTER[SUCCESS], {username, response}),
-	failure: (username, error) => action(USERS_REGISTER[FAILURE], {username, error}),
+		action(USERS_LOGIN[REQUEST], {username, password})),
+	success: (username, response) => action(USERS_LOGIN[SUCCESS], {username, response}),
+	failure: (username, error) => action(USERS_LOGIN[FAILURE], {username, error}),
 }
 
 

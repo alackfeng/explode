@@ -44,6 +44,8 @@ module.exports = {
       'styled-components',
       'react-native-elements',
       'react-native-parallax-scroll-view',
+      'react-native-modal',
+      'react-native-animatable',
     ],
   },
   output: {
@@ -79,6 +81,8 @@ module.exports = {
           path.resolve(process.cwd(), 'node_modules', 'styled-components'),
           path.resolve(process.cwd(), 'node_modules', 'react-native-elements'),
           path.resolve(process.cwd(), 'node_modules', 'react-native-parallax-scroll-view'),
+          path.resolve(process.cwd(), 'node_modules', 'react-native-modal'),
+          path.resolve(process.cwd(), 'node_modules', 'react-native-animatable'),
           path.resolve(process.cwd(), 'js'),
           path.resolve(process.cwd(), 'index.web.js'),
         ],

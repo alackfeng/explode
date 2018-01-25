@@ -14,6 +14,23 @@
 
 ####
 
+#### 20180125 -: 
+
+##### 模式对话框使用 TransactionConfirmModal.js
+npm install --save react-native-modal
+
+
+```sh
+##### path.resolve(process.cwd(), 'node_modules', 'react-native-modal'),
+##### path.resolve(process.cwd(), 'node_modules', 'react-native-animatable'),
+
+vi /Users/assetfun/source/code/explode/node_modules/react-native-modal/src/index.js ====>>>>
+    if( Platform.OS === 'android' || Platform.OS === 'ios') {
+      DeviceEventEmitter.addListener('didUpdateDimensions', this._handleDimensionsUpdate);
+    }
+<<<====
+```
+
 #### 20180124 -: 
 
 ##### 节点连接管理功能，包括界面和库调用

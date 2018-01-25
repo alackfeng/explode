@@ -5,13 +5,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ListView, Text, Dimensions, FlatList } from "react-native";
 import { Colors, SCREEN_WIDTH, normalize } from "../../../libs";
-import { ViewContainer, StyleSheet } from "../../../components";
 import { SearchBar, List, ListItem } from "react-native-elements";
+import { ViewContainer, StyleSheet } from "../../../components";
 import { nodeConnect, updateRpcConnectionStatus } from "../../../actions";
+
 import { Apis } from "assetfunjs-ws";
-
-
-
 
 import { nodeList } from "../../../env";
 import willTransitionTo from "../../../libs/routerTransition";
@@ -95,24 +93,24 @@ class Node extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log("+++++[Node.js]::componentWillReceiveProps - node ...", nextProps.status, nextProps.url, this.state.statusList);
-		if(nextProps.status) {
+		console.log("+++++[Node.js]::componentWillReceiveProps - node ...", nextProps.nodeStatus.status, nextProps.nodeStatus.url, this.state.statusList);
+		if(nextProps.nodeStatus) {
 			
-			this.state.statusList.length && this.state.statusList.push(nextProps.status);
+			this.state.statusList.length && this.state.statusList.push(nextProps.nodeStatus);
 
 			this.setState({
-				statusList: this.state.statusList.length ? this.state.statusList : [nextProps.status]
+				statusList: this.state.statusList.length ? this.state.statusList : [nextProps.nodeStatus]
 			});
 		}
 	}
 
 	componentDidMount() {
 		
-		const { url, status } = this.props;
+		const { nodeStatus } = this.props;
 		// call someting, example api to node
 		this.setState({statusList: []});
 		
-		if(url && status === 'open') {
+		if(nodeStatus.url && nodeStatus.status === 'open') {
 			return;
 		}
 
@@ -193,17 +191,17 @@ class Node extends Component {
  
 	render() {
 
-		const { url, status, navigation } = this.props;
+		const { nodeStatus, navigation } = this.props;
 		const { searchStart, searchFocus, query } = this.state;
 
-		console.log("=====[Node.js]::render - node - ", query, url, status, navigation.state.params);
+		console.log("=====[Node.js]::render - node - ", query, nodeStatus, navigation.state.params);
 		let showNodeList = nodeList.map((item, index) => {
 			// console.log("=====[Node.js]::render - showNodeList - ", item, index);
 			return <SLText key={index}>{index}: {item.url} - {item.location}</SLText>
 		});
 
 		let showStatusList = this.state.statusList.map((item, index) => {
-			return <SLText key={index}>Connect to Node-{url}, status-{item}</SLText>;
+			return <SLText key={index}>Connect to Node-{item.url}, status-{item.status}</SLText>;
 		});
 
 		return (
@@ -241,8 +239,7 @@ class Node extends Component {
 
 const mapStateToProps = (state) => ({
 	nodeList: state.app.nodesApi,
-	url: state.app.nodeStatus.url,
-	status: state.app.nodeStatus.status,
+	nodeStatus: state.app.nodeStatus,
 });
 
 export const NodeScreen = connect(mapStateToProps, {
