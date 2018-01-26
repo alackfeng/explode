@@ -1,5 +1,6 @@
 
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -7,9 +8,9 @@ import { Text, View, StatusBar, TextInput, TouchableHighlight, ActivityIndicator
 import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
 import { Icon, Button, Input, Overlay } from 'react-native-elements';
 
-import { ViewContainer, StyleSheet, TransactionConfirmModal } from "../../../components";
+import { ViewContainer, StyleSheet, LoadingRegisterModal } from "../../../components";
 import { triggerUser } from "../../../actions";
-const {init: usersInit, register: userRegister, login: userLogin} = triggerUser;
+const {register: userRegister} = triggerUser;
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
@@ -92,7 +93,6 @@ const SLTextSubmit = styled(SLText)`
 class Register extends Component {
 
   props: {
-    regStatus: Object,
     userRegister: Function,
     navigation: Object,
     nodeStatus: Object,
@@ -108,9 +108,9 @@ class Register extends Component {
     super(props);
 
     this.state = {
-      username: 'fengtest',
-      password: '',
-      confirmPass: '',
+      username: 'feng',
+      password: '1',
+      confirmPass: '1',
 
       refcode: 'fengtest1',
       referrer: 'fengtest1',
@@ -121,7 +121,7 @@ class Register extends Component {
       errorPass: '',
       errorConfirm: '',
 
-      isLoading: true,
+      isOpen: false,
     };
   }
 
@@ -158,6 +158,9 @@ class Register extends Component {
     const referrer = this.state.registrar;
     const registrar = null; //this.state.registrar;
     const referrer_percent = this.state.referrer_percent;
+
+    // 先打开模式对话框，接收消息
+    this.setState({isOpen: true});
 
     try {
 
@@ -211,15 +214,15 @@ class Register extends Component {
 
 	render() {
 
-		const { regStatus, navigation, currentAccount, nodeStatus } = this.props;
-    console.log("=====[Register.js]::render - ", regStatus, currentAccount, nodeStatus);
+		const { navigation, currentAccount, nodeStatus } = this.props;
+    console.log("=====[Register.js]::render - ", currentAccount, nodeStatus);
 
-    const isLoading = regStatus.isRegister;
-    const loadingProps = isLoading ? {size: 'large'} : '';
+    const isLoading = false;
+    const loadingProps = isLoading ? {size: 'large'} : {};
 
 		return (
 			<ScrollView contentContainerStyle={styles.container}>
-        {this.state.isLoading && <TransactionConfirmModal onCancel={() => this.setState({isLoading: false})}/>}
+        {this.state.isOpen && <LoadingRegisterModal onChange={(open) => this.setState({isOpen: !!open})} navigation={navigation} />}
         <View style={styles.contentView} >
           <View style={{backgroundColor: 'white', width: SCREEN_WIDTH, alignItems: 'center'}}>
             <Text style={{color: 'black', fontSize: 30, marginVertical: 10, fontWeight: '300', marginTop: 10}}>登录</Text>
@@ -411,7 +414,5 @@ const mapStateToProps = (state) => ({
 });
 
 export const RegisterScreen = connect(mapStateToProps, {
-  usersInit,
   userRegister,
-  userLogin,
 })(Register);

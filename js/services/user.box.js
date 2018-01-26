@@ -13,7 +13,7 @@
 //import WalletUnlockActions from "actions/WalletUnlockActions";
 //import PrivateKeyActions from "actions/PrivateKeyActions";
 //import AccountActions from "actions/AccountActions";
-import {ChainStore, PrivateKey, key, Aes} from "assetfunjs/es";
+import {ChainStore, PrivateKey, key, Aes, FetchChain} from "assetfunjs/es";
 import {Apis, ChainConfig} from "assetfunjs-ws";
 //import AddressIndex from "stores/AddressIndex";
 
@@ -21,7 +21,7 @@ import application_api from "./ApplicationApi";
 import { faucetAddress as faucet_address } from "../env";
 
 let aes_private = null;
-let _passwordKey =  {"AFT5aNtKtnEnsQTxuyTZWT2nCAxWeDijj1hKr7vH2k2tTTQ5wFrBL": PrivateKey.fromWif("5KPvHg16A1GiYD5icwfVhFj75up2BXepukW9f9SMKyumcGXsc22")};
+let _passwordKey =  null; //{"AFT5aNtKtnEnsQTxuyTZWT2nCAxWeDijj1hKr7vH2k2tTTQ5wFrBL": PrivateKey.fromWif("5KPvHg16A1GiYD5icwfVhFj75up2BXepukW9f9SMKyumcGXsc22")};
 // let transaction;
 
 let TRACE = false;
@@ -266,6 +266,121 @@ class UsersBox {
     let pubKey = privKey.toPublicKey().toString();
 
     return {privKey, pubKey};
+  }
+
+    /** This also serves as 'unlock' */
+    validatePassword( password, unlock = false, account = null, roles = ["active", "owner", "memo"] ) {
+        if (account) {
+            let id = 0;
+            function setKey(role, priv, pub) {
+                if (!_passwordKey) _passwordKey = {};
+                _passwordKey[pub] = priv;
+
+                console.log("=====[users.box.js]::validatePassword - setKey > ", id, role, priv, pub);
+                id++;
+                /*PrivateKeyStore.setPasswordLoginKey({
+                    pubkey: pub,
+                    import_account_names: [account],
+                    encrypted_key: null,
+                    id,
+                    brainkey_sequence: null
+                }); */
+            }
+
+            /* Check if the user tried to login with a private key */
+            let fromWif;
+            try {
+                fromWif = PrivateKey.fromWif(password);
+            } catch(err) {
+
+            }
+            let acc = ChainStore.getAccount(account);
+            let key;
+            if (fromWif) {
+                key = {privKey: fromWif, pubKey: fromWif.toPublicKey().toString()};
+            }
+
+            /* Test the pubkey for each role against either the wif key, or the password generated keys */
+            roles.forEach(role => {
+                if (!fromWif) {
+                    key = this.generateKeyFromPassword(account, role, password);
+                }
+
+                let foundRole = false;
+
+                if (acc) {
+                    if (role === "memo") {
+                        if (acc.getIn(["options", "memo_key"]) === key.pubKey) {
+                            setKey(role, key.privKey, key.pubKey);
+                            foundRole = true;
+                        }
+                    } else {
+                        acc.getIn([role, "key_auths"]).forEach(auth => {
+                            if (auth.get(0) === key.pubKey) {
+                                setKey(role, key.privKey, key.pubKey);
+                                foundRole = true;
+                                return false;
+                            }
+                        });
+
+                        if (!foundRole) {
+                            let alsoCheckRole = role === "active" ? "owner" : "active";
+                            acc.getIn([alsoCheckRole, "key_auths"]).forEach(auth => {
+                                if (auth.get(0) === key.pubKey) {
+                                    setKey(alsoCheckRole, key.privKey, key.pubKey);
+                                    foundRole = true;
+                                    return false;
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+
+            return !!_passwordKey;
+
+        } else {
+            let wallet = this.state.wallet;
+            try {
+                let password_private = PrivateKey.fromSeed( password );
+                let password_pubkey = password_private.toPublicKey().toPublicKeyString();
+                if(wallet.password_pubkey !== password_pubkey) return false;
+                if( unlock ) {
+                    let password_aes = Aes.fromSeed( password );
+                    let encryption_plainbuffer = password_aes.decryptHexToBuffer( wallet.encryption_key );
+                    aes_private = Aes.fromSeed( encryption_plainbuffer );
+                }
+                return true;
+            } catch(e) {
+                console.error(e);
+                return false;
+            }
+        }
+    }
+
+
+  loginUser = (username, password) => {
+    const account_name = username;
+    console.log("=====[users.box.js]::loginUser - param: ", account_name, password);
+
+    return FetchChain("getAccount", username).then((ret) => {
+      console.log("=====[users.box.js]::loginUser - : getAccount is : ", ret);
+
+      let result = null;
+      let error = null;
+      if(this.validatePassword(password, true, username)) {
+        console.log("=====[users.box.js]::loginUser - : _passwordKey", _passwordKey);
+        result = {private: _passwordKey, username: username};
+      } else {
+        console.error("=====[users.box.js]::loginUser - : _passwordKey", _passwordKey);
+        error = "invalid password";
+      }
+
+      return {response: result, error: error};
+    }).catch(error => {
+      console.error("=====[users.box.js]::loginUser - : getAccount is : err ", error);
+      return {response: null, error: error || 'Something bad happened'};
+    });
   }
 
 }

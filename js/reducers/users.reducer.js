@@ -1,18 +1,17 @@
 
-import { USERS, USERS_LOGIN, USERS_REGISTER, USER_UNLOCK, TRIGGER_USERS_REGISTER, TRIGGER_USERS_LOGIN } from "../actions";
+import { USERS, USERS_LOGIN, USERS_REGISTER, USER_UNLOCK, RESET_TRIGGER_USERS, TRIGGER_USERS_REGISTER, TRIGGER_USERS_LOGIN } from "../actions";
 
 export const initialUsersState = {
 	inited: null, 
-	regStatus: {
-		username: '',
-		regInfo: [],
+	entityReg: {
 		isRegister: false,
+		raw: {},
+		transaction: [],
 	},
-	registers: [],
-	loginStatus: {
-		username: '',
-		password: '',
+	entityLogin: {
 		isLogin: false,
+		raw: {},
+		transaction: [],
 	},
 	isLocked: true,
 };
@@ -41,14 +40,30 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 				inited: -1,
 			};
 		}
+		case RESET_TRIGGER_USERS:
+		{
+			return {
+				...state,
+				entityReg: {
+					isRegister: false,
+					raw: {},
+					transaction: [],
+				},
+				entityLogin: {
+					isLogin: false,
+					raw: {},
+					transaction: [],
+				}
+			}
+		}
 		case TRIGGER_USERS_REGISTER:
 		{
 			return {
 				...state,
-				regStatus: {
-					username: action.username || '',
-					regInfo: action.regInfo || [],
+				entityReg: {
 					isRegister: action.username ? true : false,
+					raw: action || {},
+					transaction: [],
 				}
 			}
 		}
@@ -56,11 +71,11 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 		{
 			return {
 				...state,
-				loginStatus: {
-					username: action.username || '',
-					password: action.password || '',
+				entityLogin: {
 					isLogin: action.username ? true : false,
-				},
+					raw: action || {},
+					transaction: [],
+				}
 			}
 		}
 		case USERS_REGISTER.SUCCESS:
@@ -70,8 +85,25 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 			const reg_status = (action.type === USERS_REGISTER.REQUEST) ? true : false; //!state.isRegister;
 			return {
 				...state,
-				registers: [...state.registers, {...action}],
-				isRegister: reg_status
+				entityReg: {
+					isRegister: reg_status,
+					raw: state.entityReg.raw,
+					transaction: [{...action}, ...state.entityReg.transaction],
+				}
+			};
+		}
+		case USERS_LOGIN.SUCCESS:
+		case USERS_LOGIN.REQUEST:
+		case USERS_LOGIN.FAILURE: 
+		{
+			const login_status = (action.type === USERS_LOGIN.REQUEST) ? true : false; //!state.isRegister;
+			return {
+				...state,
+				entityLogin: {
+					isLogin: login_status,
+					raw: state.entityLogin.raw,
+					transaction: [{...action}, ...state.entityLogin.transaction],
+				}
 			};
 		}
 
@@ -82,13 +114,6 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 			};
 		}
 		case USER_UNLOCK.SUCCESS: {
-			return {
-				...state,
-				pending: {...state.pending, unlock: false},
-				...action.payload,
-			}
-		}
-		case USERS_LOGIN.SUCCESS: {
 			return {
 				...state,
 				pending: {...state.pending, unlock: false},

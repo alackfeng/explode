@@ -1,5 +1,6 @@
 
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { View, Text } from "react-native";
 import Modal from "react-native-modal";
 import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
@@ -50,6 +51,11 @@ const styles = StyleSheet.create({
 
 class TransactionConfirm extends Component {
 
+
+  props: {
+    onChange: PropTypes.func.isRequired,
+  }
+
 	constructor() {
 		super();
 
@@ -60,13 +66,17 @@ class TransactionConfirm extends Component {
     this.onCancel = this.onCancel.bind(this);
 	}
 
+  onConfirm = () => {
+    alert('this.props.onChange(true)');
+  }
+
   onCancel = () => {
-    this.props.onCancel();
+    this.props.onChange(false);
   }
 
 	render() {
 
-    const { onCancel } = this.props;
+    const { onChange } = this.props;
 
 		return (
 		<View style={styles.container}>
@@ -74,7 +84,7 @@ class TransactionConfirm extends Component {
 			<Modal 
 				style={styles.modalContent}
 				isVisible={true}
-				transparent={true}
+				transparent
 			>
 				<View style={{flex: 1}}>
           <Text style={{textAlign: 'center'}}>I am the modal content!</Text>    
@@ -85,7 +95,7 @@ class TransactionConfirm extends Component {
 		        clear
 		        textStyle={{color: 'rgba(78, 116, 289, 1)'}}
 		        containerStyle={styles.button}
-		        onPress={() => this.setState({isLoading: false})}
+		        onPress={this.onConfirm}
 		      /> 
 	        <Button
 		        text="Cancel"

@@ -12,6 +12,8 @@ const { user, repo, starred, stargazers } = actions;
 
 const { userRegister, userLogin, appSaveKey } = actions;
 
+import { ChainStore, FetchChain } from "assetfunjs/es";
+
 /***************************** Subroutines ************************************/
 // resuable fetch Subroutine
 // entity :  user | repo | starred | stargazers
@@ -33,7 +35,7 @@ function* fetchEntity(entity, apiFn, id, info) {
 	
 // yeah! we can also bind Generators
 export const callUserRegister    = fetchEntity.bind(null, userRegister, usersBox.createAccountWithPassword)
-export const callUserLogin       = fetchEntity.bind(null, userLogin, api.fetchUser)
+export const callUserLogin       = fetchEntity.bind(null, userLogin, usersBox.loginUser)
 
 
 // 保存私钥
@@ -50,18 +52,43 @@ function* saveKey(generateKey, account_name, password, response) {
 
 export const callSaveKey = saveKey.bind(null, usersBox.generateKeyFromPassword);
 
+function* fetchAccount(username) {
+
+	try {
+
+		console.log("=====[users.saga.js]::fetchAccount - fetch user <", username);
+		const res = yield call(FetchChain, "getAccount", username);
+		/*.then((ret) => {
+	    console.log("=====[users.saga.js]::fetchAccount - createAccount : getAccount is : ", ret);
+	  }).catch(err => {
+	    console.error("=====[users.saga.js]::fetchAccount - createAccount : getAccount is : err ", err);
+	  });*/
+
+	  console.log("=====[users.saga.js]::fetchAccount - createAccount : getAccount is : ", JSON.stringify(res));
+
+	} catch ( e ) {
+		console.error("=====[users.saga.js]::register catch error : ", e);
+
+	}
+
+}
+
 // load user unless it is cached
 function* register(username, regInfo, requiredFields) {
 	
 	try {
 
-		const user = yield select(getUser, username)
+		const { user } = yield select(getUser, username)
 		console.log("=====[users.saga.js]::register - exists user: ", user)
 		if (!user || requiredFields.some(key => !user.hasOwnProperty(key))) {
 			
 			const {response, error} = yield call(callUserRegister, username, regInfo);
+			yield call(fetchAccount, username);
+
 			if(response) { // save key
 				console.log("=====[users.saga.js]::register - register user <", username, "> ok : ", response);
+
+				
 				yield call(callSaveKey, username, regInfo.password, response);
 			}
 		}
@@ -77,11 +104,30 @@ function* login(username, password, requiredFields) {
 	
 	try {
 
-		const user = yield select(getUser, username)
-		console.log("=====[users.saga.js]::login - exists user: ", user)
+		let { user } = yield select(getUser, username)
+		
+		user = user && user.length ? user[0] : null;
+		
 
 		if (!user || requiredFields.some(key => !user.hasOwnProperty(key))) {
-			 yield call(callUserLogin, username, password)
+
+			console.log("=====[users.saga.js]::login - not exists user: ", user)
+			 const {response, error} = yield call(callUserLogin, username, password)
+
+			 if(response) { // save key
+				console.log("=====[users.saga.js]::login - login user <", username, "> ok : ", response);
+
+				let saveKeys = [];
+				Object.keys(response.private).forEach((key) => {
+					saveKeys.push({privKey: response.private[key].toWif(), pubKey: key});
+				});
+
+				yield put( appSaveKey(username, saveKeys));
+			}
+
+		} else {
+			console.log("=====[users.saga.js]::login - exists user: ", user);
+			//用户存在，验证密码有效性
 		}
 
 	} catch ( e ) {

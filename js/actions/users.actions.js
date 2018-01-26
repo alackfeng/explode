@@ -14,6 +14,8 @@ export const USERS_INIT = 'USERS_INIT';
 export const TRIGGER_USERS_LOGIN		= 'TRIGGER_USERS_LOGIN';
 export const TRIGGER_USERS_REGISTER		= 'TRIGGER_USERS_REGISTER';
 
+export const RESET_TRIGGER_USERS = 'RESET_TRIGGER_USERS';
+
 /*
 // users relation action call
 user 相关action触发调用
@@ -49,6 +51,7 @@ export const triggerUser = {
 	init: (state => action(USERS_INIT, {state})),
 	login: ((username, password, requiredFields = []) => action(TRIGGER_USERS_LOGIN, {username, password, requiredFields})),
 	register: ((username, regInfo = {}, requiredFields = []) => action(TRIGGER_USERS_REGISTER, {username, regInfo, requiredFields})),
+	reset: ((oper) => action(RESET_TRIGGER_USERS, {oper})),
 }
 //export const usersInit 			= state => action(USERS_INIT, {state});
 //export const callUserLogin		= (login, password) => action(TRIGGER_USERS_LOGIN, {login, password});

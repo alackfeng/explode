@@ -10,3 +10,5 @@ export * from "./LoadingScreen";
 export * from "./SwipeableView";
 
 export * from "./TransactionConfirmModal";
+export * from "./LoadingRegister";
+export * from "./LoadingLogin";

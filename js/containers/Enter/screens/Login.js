@@ -1,5 +1,6 @@
 
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -7,12 +8,12 @@ import { View, Text, ScrollView, Dimensions } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
 import { Icon, Button, Input } from 'react-native-elements';
 
-import { ViewContainer, StyleSheet } from "../../../components";
+import { ViewContainer, StyleSheet, LoadingLoginModal } from "../../../components";
+import { triggerUser } from "../../../actions";
+const {login: userLogin} = triggerUser;
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
-import { triggerUser } from "../../../actions";
-const {init: usersInit, register: userRegister, login: userLogin} = triggerUser;
 
 
 const styles = StyleSheet.create({
@@ -78,8 +79,10 @@ class Login extends Component {
     super();
 
     this.state = {
-      username: 'fengyue1',
-      password: '123456789',
+      username: 'feng1',
+      password: '1',
+
+      isOpen: false,
     };
 
     this.userLogin  = this.userLogin.bind(this);
@@ -100,6 +103,9 @@ class Login extends Component {
     //  });
     //}
 
+    // 先打开模式对话框，接收消息
+    this.setState({isOpen: true});
+
     try {
 
       this.props.userLogin(username, password);
@@ -111,11 +117,12 @@ class Login extends Component {
 
 	render() {
 
-		const { navigation, nodeStatus, loginStatus } = this.props;
-    console.info("=====[Login.js]::render - login status : ", loginStatus);
+		const { navigation, nodeStatus } = this.props;
+    console.info("=====[Login.js]::render - login status : ");
 
 		return (
       <ScrollView contentContainerStyle={styles.container}>
+        {this.state.isOpen && <LoadingLoginModal onChange={(open) => this.setState({isOpen: !!open})} navigation={navigation} />}
         <View style={styles.contentView} >
           <View style={{backgroundColor: 'rgba(46, 50, 72, 1)', width: SCREEN_WIDTH, alignItems: 'center'}}>
             <Text style={{color: 'white', fontSize: 30, marginVertical: 10, fontWeight: '300', marginTop: 10}}>登录</Text>
@@ -176,7 +183,7 @@ class Login extends Component {
                 buttonStyle={{height: 50, width: 200, backgroundColor: 'black', borderWidth: 2, borderColor: 'white', borderRadius: 30}}
                 containerStyle={{marginVertical: 10}}
                 textStyle={{fontWeight: 'bold'}}
-                onPress={() => resetNavigationTo('Main', navigation)} //onPress={this.userLogin}
+                onPress={this.userLogin} // onPress={() => resetNavigationTo('Main', navigation)} //
               />
               <Button
                 text="     跳转到注册"
@@ -196,7 +203,6 @@ class Login extends Component {
 
 
 const mapStateToProps = (state) => ({
-  loginStatus: state.users.loginStatus,
   currentAccount: state.app.currentAccount,
   nodeStatus: state.app.nodeStatus,
 });

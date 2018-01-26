@@ -9,6 +9,8 @@ import { Text, Card, ButtonGroup, Tile, Col, Row, Icon, List, ListItem, Avatar, 
 import { ViewContainer, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
 
+import { ChainStore, FetchChain } from "assetfunjs/es";
+
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
@@ -80,12 +82,38 @@ class Center extends Component {
 			selectedIndex: 0,
 			value: 0.5,
 			dataSource: ds.cloneWithRows(listMenu2),
+
+			currentAccount: null,
 		};
 
 		this.updateIndex 	= this.updateIndex.bind(this);
 		this.renderRow 		= this.renderRow.bind(this);
 		this.onPressItem 	= this.onPressItem.bind(this);
 		
+	}
+
+	componentDidMount() {
+
+		const { currentAccount } = this.props;
+
+		if(currentAccount) {
+      FetchChain("getAccount", currentAccount).then((ret) => {
+      	const assetObj = ChainStore.getObject("1.3.0", true);
+        console.log("=====[Center.js]::componentDidMount - : getAccount is : ", JSON.stringify(ret.get("balances")), JSON.stringify(assetObj), JSON.stringify(ret));
+        this.setState({currentAccount: ret});
+
+      }).catch(err => {
+        console.error("=====[Center.js]::componentDidMount - : getAccount is : err ", err);
+      })
+
+      FetchChain("getObject", "1.3.0").then((ret) => {
+        console.log("=====[Center.js]::componentDidMount - : getObject is : ", JSON.stringify(ret));
+
+      }).catch(err => {
+        console.error("=====[Center.js]::componentDidMount - : getObject is : err ", err);
+      })
+
+		}
 	}
 
 
@@ -126,7 +154,7 @@ class Center extends Component {
 		const buttons = ['Button1', 'Button2'];
 		const { selectedIndex } = this.state;
 
-		console.log("=====[Center.js]::render - navigation - >:", navigation.state.routeName);
+		console.log("=====[Center.js]::render - navigation - >:", this.state.currentAccount);
 
     	return (
     	<ViewContainer>
