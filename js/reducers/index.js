@@ -10,7 +10,7 @@ import usersReducer from "./users.reducer";
 
 //import { enterReducer } from "../containers/Enter/reducer";
 //import { walletReducer } from "../containers/Users/wallet.reducer";
-import { settingsReducer } from "../containers/Users/settings.reducer";
+//import { settingsReducer } from "../containers/Users/settings.reducer";
 
 export default {
   app: appReducer,

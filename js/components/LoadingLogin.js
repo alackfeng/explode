@@ -133,7 +133,7 @@ class LoadingLogin extends Component {
           <Text>{this.showRegStatus()}</Text>
           {/*isRegister &&*/ <RegInfo info={entity.raw}/>}
 
-          {entity.transaction.length && <Transaction trans={entity.transaction[0]} />}
+          {entity.transaction.length > 0 && <Transaction trans={entity.transaction[0]} />}
           <View style={{backgroundColor: 'yellow', borderWidth: 1, borderColor: 'yellow'}}/>
           {entity.transaction.length>1 && entity.transaction[1] && <Transaction trans={entity.transaction[1]} />}
         </View>

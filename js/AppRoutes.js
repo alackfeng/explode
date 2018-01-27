@@ -13,6 +13,7 @@ import Translation from './containers/Translation';
 import { WelcomeScreen, SplashScreen, LoginScreen, RegisterScreen, NodeScreen } from "./containers/Enter";
 
 import { CenterScreen, SettingsScreen } from "./containers/Users";
+import { AssetsManageScreen } from "./containers/Assets";
 
 import Ionicons from "react-native-vector-icons/MaterialIcons";
 
@@ -54,6 +55,20 @@ const sharedRoutes = {
   },
 };
 
+const AssetsStackNavigator = StackNavigator(
+  {
+    Manage: {
+      screen: AssetsManageScreen,
+      navigationOptions: {
+        title: 'Assets Manage',
+      },
+    },
+    ...sharedRoutes,
+  },
+  {
+    headerMode: 'none',
+  }
+);
 const UsersStackNavigator = StackNavigator(
   {
     Center: {
@@ -92,10 +107,10 @@ export const AppRoutes = {
     },
   },
   Assets: {
-    screen: Translation,
+    screen: AssetsStackNavigator, //Translation,
     path: 'assets',
     navigationOptions: {
-      title: 'news',
+      title: 'Assets',
       tabBarLabel: translate('menu.tab.news', locale),
       tabBarIcon: getIcon('explore'),
     },
