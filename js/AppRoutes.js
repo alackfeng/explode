@@ -12,7 +12,7 @@ import NotFound from './containers/NotFound';
 import Translation from './containers/Translation';
 import { WelcomeScreen, SplashScreen, LoginScreen, RegisterScreen, NodeScreen } from "./containers/Enter";
 
-import { CenterScreen, SettingsScreen } from "./containers/Users";
+import { CenterScreen, SettingsScreen, TransferScreen } from "./containers/Users";
 import { AssetsManageScreen } from "./containers/Assets";
 
 import Ionicons from "react-native-vector-icons/MaterialIcons";
@@ -51,6 +51,12 @@ const sharedRoutes = {
     screen: NodeScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
+    }),
+  },
+  Transfer: {
+    screen: TransferScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Transfer',
     }),
   },
 };

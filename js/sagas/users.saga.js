@@ -4,6 +4,7 @@ import { delay } from "redux-saga";
 import { take, put, call, fork, select, all } from 'redux-saga/effects'
 import { api, history,  } from '../services';
 import usersBox from "../services/user.box";
+import WalletDb from "../services/WalletDb";
 import * as actions from '../actions';
 import { getUser, getRepo, getStarredByUser, getStargazersByRepo } from '../reducers/selectors';
 
@@ -50,7 +51,7 @@ function* saveKey(generateKey, account_name, password, response) {
     //yield put( appSaveKey(account_name, {type: "active", privKey: active_private.toWif(), pubKey: active_private.toPublicKey().toString()}) );
 }
 
-export const callSaveKey = saveKey.bind(null, usersBox.generateKeyFromPassword);
+export const callSaveKey = saveKey.bind(null, WalletDb.generateKeyFromPassword);
 
 function* fetchAccount(username) {
 
@@ -78,10 +79,15 @@ function* register(username, regInfo, requiredFields) {
 	
 	try {
 
-		const { user } = yield select(getUser, username)
-		console.log("=====[users.saga.js]::register - exists user: ", user)
+		let { user } = yield select(getUser, username);
+		user = user && user.length ? user[0] : null;
+
+		
+
 		if (!user || requiredFields.some(key => !user.hasOwnProperty(key))) {
 			
+			console.log("=====[users.saga.js]::register - not exists user: ", user)
+
 			const {response, error} = yield call(callUserRegister, username, regInfo);
 			yield call(fetchAccount, username);
 
@@ -91,6 +97,9 @@ function* register(username, regInfo, requiredFields) {
 				
 				yield call(callSaveKey, username, regInfo.password, response);
 			}
+		} else {
+			console.log("=====[users.saga.js]::register - exists user: ", user);
+			//用户存在，验证密码有效性
 		}
 
 	} catch ( e ) {
@@ -104,8 +113,7 @@ function* login(username, password, requiredFields) {
 	
 	try {
 
-		let { user } = yield select(getUser, username)
-		
+		let { user } = yield select(getUser, username);
 		user = user && user.length ? user[0] : null;
 		
 

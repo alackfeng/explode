@@ -127,4 +127,4 @@ class Splash extends Component {
 	}
 }
 
-export const SplashScreen = Splash;
+export const SplashScreen = connect(mapStateToProps)(Splash);

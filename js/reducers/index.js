@@ -7,6 +7,7 @@ import AppNavigator from '../navigator';
 import appReducer from "./app.reducer";
 import homeReducer from "./home.reducer";
 import usersReducer from "./users.reducer";
+import commReducer from "./comm.reducer";
 
 //import { enterReducer } from "../containers/Enter/reducer";
 //import { walletReducer } from "../containers/Users/wallet.reducer";
@@ -20,6 +21,7 @@ export default {
   },
   home: homeReducer,
   users: usersReducer, 
+  comm: commReducer,
   //enter: enterReducer,
   //wallet: walletReducer,
   //settings: settingsReducer,

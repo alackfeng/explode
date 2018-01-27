@@ -5,7 +5,8 @@ import { api, history } from '../services';
 import * as actions from '../actions';
 import { getUser, getRepo, getStarredByUser, getStargazersByRepo } from '../reducers/selectors';
 
-import {watchUserLogin, watchUserRegister } from "./users.saga";
+import { watchUserLogin, watchUserRegister } from "./users.saga";
+import { watchTransaction } from "./comm.saga";
 
 // each entity defines 3 creators { request, success, failure }
 const { user, repo, starred, stargazers } = actions;
@@ -93,5 +94,6 @@ export default function* root() {
 		//fork(watchLoadUserPage),
 		fork(watchUserRegister),
 		fork(watchUserLogin),
+		fork(watchTransaction),
 	]);
 }

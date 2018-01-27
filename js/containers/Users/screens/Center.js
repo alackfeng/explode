@@ -96,7 +96,7 @@ class Center extends Component {
 
 		const { currentAccount } = this.props;
 
-		if(currentAccount) {
+		if(0 && currentAccount) {
       FetchChain("getAccount", currentAccount).then((ret) => {
       	const assetObj = ChainStore.getObject("1.3.0", true);
         console.log("=====[Center.js]::componentDidMount - : getAccount is : ", JSON.stringify(ret.get("balances")), JSON.stringify(assetObj), JSON.stringify(ret));
