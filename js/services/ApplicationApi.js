@@ -1,4 +1,5 @@
 
+import WalletDb from "./WalletDb";
 import {Aes, ChainValidation, TransactionBuilder, TransactionHelper, ops, FetchChain, ChainStore} from "assetfunjs/es";
 
 
@@ -92,6 +93,8 @@ class ApplicationApi {
         let memo_sender = propose_account || from_account;
 
         //let unlock_promise = WalletUnlockActions.unlock();
+        // 临时加载私钥，要提取到锁级别验证
+        WalletDb.validatePassword("1", true, "feng1");
 
         return Promise.all([
             FetchChain("getAccount", from_account),
@@ -186,15 +189,17 @@ class ApplicationApi {
                     tr.add_operation( transfer_op );
                 }
 
-                return tr; //返回交易对象，再确认提交
-                /*return WalletDb.process_transaction(
+                // 返回签名的交易对象，再二次确认提交 //return tr; 
+                return WalletDb.process_transaction(
                     tr,
                     null, //signer_private_keys,
-                    broadcast
-                );*/
+                    broadcast,
+                    // true, or false, for second confirm
+                );
             });
         });
   }
+
 
   issue_asset(
         to_account,

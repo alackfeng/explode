@@ -16,6 +16,9 @@ export const APP_FOREVER_UPDATE_NODES = 'APP_FOREVER_UPDATE_NODES';
 export const TRANSACTION_COMMON           = createRequestTypes('TRANSACTION_COMMON');
 export const TRIGGER_TRANSACTION_COMMON   = 'TRIGGER_TRANSACTION_COMMON';
 export const CLOSE_TRANSACTION_COMMON     = 'CLOSE_TRANSACTION_COMMON';
+export const TRIGGER_SECOND_CONFIRM       = 'TRIGGER_SECOND_CONFIRM';
+export const TRIGGER_SECOND_CONFIRM_YES   = 'TRIGGER_SECOND_CONFIRM_YES';
+export const TRIGGER_SECOND_CONFIRM_NO    = 'TRIGGER_SECOND_CONFIRM_NO';
 
 /*
 // app relation action call
@@ -70,6 +73,7 @@ export const transCommon = {
 // 触发交易使用
 export const triggerTrans = {
   handle: ((username, method, parameters = {}, requiredFields = []) => action(TRIGGER_TRANSACTION_COMMON, {username, method, parameters, requiredFields})),
-  close: (() => action(CLOSE_TRANSACTION_COMMON, {})),
+  close: ((reason) => action(CLOSE_TRANSACTION_COMMON, {reason})),
+  confirm: ((event, method = "broadcast") => action(TRIGGER_SECOND_CONFIRM, {event, method})),
 }
 

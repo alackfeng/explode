@@ -33,7 +33,7 @@ let dictJson, AesWorker;
 class WalletDB {
 
 	constructor() {
-        console.log("=====[users.box.js]::constructor - call ");
+        console.log("=====[WalletDB]::constructor - call ");
 
 		this.state = { 
             wallet: {chain_id: "c6a9402f3aa854a533888ee3293e244c2f988261268e3fb36d8df359d6919288"}, 
@@ -41,13 +41,21 @@ class WalletDB {
             keys: {"AFT5aNtKtnEnsQTxuyTZWT2nCAxWeDijj1hKr7vH2k2tTTQ5wFrBL": "5KPvHg16A1GiYD5icwfVhFj75up2BXepukW9f9SMKyumcGXsc22"}
         };
 
-        this.confirm_transactions = 0; // second confirm
+        this.confirm_transactions = true; // second confirm
+
+
+
 	}
 
 
-    process_transaction(tr, signer_pubkeys, broadcast, extra_keys = []) {
+    broadcast_second_confirm(tr, broadcast_callback = ()=>null) {
+        console.log("=====[WalletDB]::broadcast_second_confirm - call ", tr);
+        return tr.broadcast(broadcast_callback);
+    }
+
+    process_transaction(tr, signer_pubkeys, broadcast, second_confirm = true, extra_keys = []) {
         const passwordLogin = true; //state.enter.isAuthenticated ; //SettingsStore.getState().settings.get("passwordLogin");
-        console.log("=====[users.box.js]::process_transaction - passwordLogin : ", Apis.instance().chain_id, passwordLogin);
+        console.log("=====[WalletDb.js]::process_transaction - passwordLogin : ", Apis.instance().chain_id, passwordLogin);
 
         if(!passwordLogin && Apis.instance().chain_id !== this.state.wallet.chain_id)
             return Promise.reject("Mismatched chain_id; expecting " +
@@ -77,7 +85,7 @@ class WalletDB {
                 }
 
                 return tr.get_potential_signatures().then( ({pubkeys, addys})=> {
-                    console.log("=====[users.box.js]::process_transaction - get_potential_signatures: ", {pubkeys, addys});
+                    console.log("=====[WalletDb.js]::process_transaction - get_potential_signatures: ", {pubkeys, addys});
 
                     let my_pubkeys = pubkeys; //PrivateKeyStore.getPubkeys_having_PrivateKey(pubkeys.concat(extra_keys), addys);
 
@@ -96,17 +104,17 @@ class WalletDB {
                                 // This should not happen, get_required_signatures will only
                                 // returned keys from my_pubkeys
                                 throw new Error("Missing signing key for " + pubkey_string)
-                            console.log("=====[users.box.js]::process_transaction - private_key : ", private_key, pubkey_string);
+                            console.log("=====[WalletDb.js]::process_transaction - private_key : ", private_key, pubkey_string);
                             tr.add_signer(private_key, pubkey_string)
                         }
                     })
                 }).then(()=> {
                     if(broadcast) {
-                        if(this.confirm_transactions) {
+                        if(second_confirm && this.confirm_transactions) {
                             //let p = new Promise((resolve, reject) => {
                             //    ; //TransactionConfirmActions.confirm(tr, resolve, reject)
                             //})
-                            return Promise.resolve({type: "confirm_transactions", transaction: tr});
+                            return Promise.resolve(tr);
                         }
                         else
                             return tr.broadcast()
@@ -133,7 +141,7 @@ class WalletDB {
         if(! public_key) return null;
         if(public_key.Q)
             public_key = public_key.toPublicKeyString();
-        console.log("=====[users.box.js]::createAccountWithPassword - getTcomb_byPubkey : ", public_key);
+        console.log("=====[WalletDb.js]::createAccountWithPassword - getTcomb_byPubkey : ", public_key);
         return this.state.keys[public_key];
     }
 
@@ -166,7 +174,7 @@ class WalletDB {
                 if (!_passwordKey) _passwordKey = {};
                 _passwordKey[pub] = priv;
 
-                console.log("=====[users.box.js]::validatePassword - setKey > ", id, role, priv, pub);
+                console.log("=====[WalletDb.js]::validatePassword - setKey > ", id, role, priv, pub);
                 id++;
                 /*PrivateKeyStore.setPasswordLoginKey({
                     pubkey: pub,

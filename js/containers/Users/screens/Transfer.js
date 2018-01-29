@@ -8,7 +8,7 @@ import { View, Text, ScrollView, Dimensions } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
 import { Icon, Button, Input } from 'react-native-elements';
 
-import { ViewContainer, StyleSheet, LoadingLoginModal } from "../../../components";
+import { ViewContainer, StyleSheet, TransactionConfirmModal } from "../../../components";
 import { triggerTrans } from "../../../actions";
 const {handle: sendTransfer} = triggerTrans;
 
@@ -22,6 +22,8 @@ class Transfer extends Component {
       toUser: 'feng4',
       amount: '10',
       asset_type: 'AFT',
+
+      isOpen: false,
     };
 
     this.onPressTransfer  = this.onPressTransfer.bind(this);
@@ -33,6 +35,9 @@ class Transfer extends Component {
 
     console.log("=====[Transfer.js]::onPressTransfer - param > ", fromUser, toUser, amount);
     
+    // 先打开模式对话框，接收消息
+    this.setState({isOpen: true});
+
     this.props.sendTransfer(fromUser, 'transfer', {
       from_account: fromUser, 
       to_account: toUser, 
@@ -47,10 +52,11 @@ class Transfer extends Component {
 
   render() {
 
-    const { currentAccount } = this.props;
+    const { currentAccount, navigation } = this.props;
 
     return (
       <ViewContainer>
+        {this.state.isOpen && <TransactionConfirmModal onChange={(open) => this.setState({isOpen: !!open})} navigation={navigation} />}
         <Text>Hello Transfer</Text>
         <View style={{backgroundColor: 'rgba(46, 50, 72, 1)', width: SCREEN_WIDTH, alignItems: 'center'}}>
           <View style={styles.overlay}>

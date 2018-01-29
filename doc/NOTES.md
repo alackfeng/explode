@@ -15,6 +15,20 @@
 ####
 
 
+#### 20180129 -: 
+##### 二次确认问题汇总：
+```sh
+1. 是否都要经过二次确认
+{response: {type: 'second_confirm', transaction: tr, extra: extra}, error: null}
+{response: {type: 'origin_confirm', transaction: tr, extra: extra}, error: null}
+
+2. 二次确认时，delay等待支持，并接收confirm or cancel。confirm继续broadcase(),否则退出
+3. 每次启动APP把私钥相当信息加载到内存中用于签名验证
+4. 提案的流程暂时未处理，有点复杂，
+5. 增强交易对话框与saga流程的交互性，包括打开对话框、展示流程信息、关闭对话框、超时关闭等
+```
+
+
 #### 20180127 -: 
 ##### 新增资产管理页面用于测试，
 ##### 尝试统一交易处理流程，解决打包交易与私钥管理，互相交互问题

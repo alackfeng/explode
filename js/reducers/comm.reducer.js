@@ -4,6 +4,7 @@ import { TRANSACTION_COMMON, TRIGGER_TRANSACTION_COMMON, CLOSE_TRANSACTION_COMMO
 export const initialState = {
 	trans: {
 		isOpen: false,
+		reason: null,
 		raw: {},
 		transaction: [],
 	},
@@ -26,7 +27,14 @@ const commReducer = (state = initialState, action = {}) => {
 			}
 		}
 		case CLOSE_TRANSACTION_COMMON: {
-			return initialState;
+			return {
+				...state,
+				trans: {
+					...state.trans,
+					isOpen: false,
+					reason: action.reason,
+				}
+			}
 		}
 		case TRANSACTION_COMMON.SUCCESS:
 		case TRANSACTION_COMMON.REQUEST:
