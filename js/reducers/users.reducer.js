@@ -1,8 +1,7 @@
 
-import { USERS, USERS_LOGIN, USERS_REGISTER, USER_UNLOCK, RESET_TRIGGER_USERS, TRIGGER_USERS_REGISTER, TRIGGER_USERS_LOGIN } from "../actions";
+import { USERS_LOGIN, USERS_REGISTER, USERS_UNLOCK, LOAD_USERS, TRIGGER_USERS_REGISTER, TRIGGER_USERS_LOGIN, TRIGGER_USERS_UNLOCK, RESET_TRIGGER_USERS } from "../actions";
 
 export const initialUsersState = {
-	inited: null, 
 	entityReg: {
 		isRegister: false,
 		raw: {},
@@ -21,25 +20,6 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 	console.log(">>>>>[users.reducer.js]::usersReducer - ", action.type, action);
 
 	switch (action.type) {
-		case USERS.REQUEST: {	// USERS
-			return {
-				...state,
-				inited: 0,
-			};
-		}
-		case USERS.SUCCESS: {
-			return {
-				...state,
-				inited: 1,
-				pending: {...state.pending, inited: 1}
-			};
-		}
-		case USERS.ERROR: {
-			return {
-				...state,
-				inited: -1,
-			};
-		}
 		case RESET_TRIGGER_USERS:
 		{
 			return {
@@ -107,19 +87,20 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 			};
 		}
 
-		case USER_UNLOCK.REQUEST: {
+		case USERS_UNLOCK.REQUEST: {
 			return {
 				...state,
 				pending: {...state.pending, unlock: 1}
 			};
 		}
-		case USER_UNLOCK.SUCCESS: {
+		case USERS_UNLOCK.SUCCESS: {
 			return {
 				...state,
 				pending: {...state.pending, unlock: false},
 				...action.payload,
 			}
 		}
+		case LOAD_USERS:
 		default:
 			return state;
 	}

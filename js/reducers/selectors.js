@@ -1,12 +1,11 @@
 
 export const getUser = (state, login) => {
-	let user = {};
-	//console.log("---------------------accounts ", state.app.accounts);
-	user = state.app.accounts.filter(obj => { 
-		//console.log("---------------------account ", obj);
+	if(!state || !login) {
+		return {};
+	}
+	const user = state.app.authAccounts.filter(obj => { 
 		return (obj.username === login); 
-	}); 
-	//console.log("---------------------account ", user);
+	});
 	return { user };
 };
 export const getRepo = (state, fullName) => state.entities.repos[fullName]

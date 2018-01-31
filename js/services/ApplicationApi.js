@@ -131,7 +131,7 @@ class ApplicationApi {
 
             let memo_from_privkey;
             if(encrypt_memo && memo ) {
-                // memo_from_privkey = WalletDb.getPrivateKey(memo_from_public);
+                memo_from_privkey = WalletDb.getPrivateKey(memo_from_public);
 
                 if(! memo_from_privkey) {
                     throw new Error("Missing private memo key for sender: " + memo_sender)

@@ -46,7 +46,7 @@ const persistConfig = {
     //'app',
     'nav',
     'comm',
-    'users',
+    //'users',
   ],
   storage: storageEngine
 };

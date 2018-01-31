@@ -6,12 +6,23 @@ import { SET_APP_READY, SET_APP_LOCALE, APP_FOREVER_SAVE_KEY, APP_FOREVER_INIT_N
 app 相关全局设置存储在本地上，
 */
 
+export type AuthAccount = {
+  username: string,
+  chain_id: string,
+  encrypted_key: string,
+  password_pubkey: string,
+  keys: {
+    pubKey: string //"privKey"
+  }
+};
+
+
 const initState = {
   appReady: false,
   locale: 'en',
   users: {},
   transactions: [],
-  accounts: [],
+  authAccounts: [],
   currentAccount: null,
   nodesApi: [],
   nodeStatus: {
@@ -43,7 +54,7 @@ export default function appReducer(state = initState, action) {
     case APP_FOREVER_SAVE_KEY: {
       return {
         ...state,
-        accounts: [...state.accounts, {username: action.username, keys: action.keys}],
+        authAccounts: [...state.authAccounts, {username: action.username, authAccount: action.keys}],
         currentAccount: action.username,
       }
     }

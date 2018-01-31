@@ -12,14 +12,6 @@ import { ViewContainer, StyleSheet, LoadingRegisterModal } from "../../../compon
 import { triggerUser } from "../../../actions";
 const {register: userRegister} = triggerUser;
 
-import { ChainStore, FetchChain } from "assetfunjs/es";
-
-import Modal from "react-native-modal";
-
-
-//import { LockScreen } from "./Lock";
-//import { NodeScreen } from "./Node";
-
 const SLView = styled.View`
   flex: 1;
   flex-direction: column;
@@ -108,7 +100,7 @@ class Register extends Component {
     super(props);
 
     this.state = {
-      username: 'feng',
+      username: 'feng2',
       password: '1',
       confirmPass: '1',
 
@@ -165,18 +157,6 @@ class Register extends Component {
     try {
 
       this.props.userRegister(username, {username, password, registrar, referrer, referrer_percent, refcode});
-      /*.then((res) => {
-
-        console.log("=====[Register.js]::userRegister - createAccount return : ok ", res);
-        FetchChain("getAccount", res).then((ret) => {
-          console.log("=====[Register.js]::userRegister - createAccount : getAccount is : ", ret);
-        }).catch(err => {
-          console.error("=====[Register.js]::userRegister - createAccount : getAccount is : err ", err);
-        })
-      }).catch( err => {
-
-        console.log("=====[Register.js]::userRegister - createAccount return : error - ", err);
-      });*/
 
     } catch ( e ) {
       console.error("=====[Register.js]::userRegister - error : ", e.err_no);
@@ -333,22 +313,6 @@ class Register extends Component {
           </View>
           {nodeStatus && <View><Text>{nodeStatus.url} > {nodeStatus.status} </Text></View>}
         </View>
-        {/*isLoading && (
-        <Modal 
-          isVisible={this.state.isLoading} 
-          width={300} 
-          height={300}
-          transparent={false}
-        >
-          <Text>Hello from Modal!</Text>
-          <Button
-            text="Cancel"
-            clear
-            textStyle={{color: 'rgba(78, 116, 289, 1)'}}
-            containerStyle={{marginTop: 20,marginVertical:20}}
-            onPress={() => this.setState({isLoading: false})}
-          />
-        </Modal>)*/}
       </ScrollView>
 		);
 	}
@@ -408,7 +372,6 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state) => ({
-  regStatus: state.users.regStatus,
   currentAccount: state.app.currentAccount,
   nodeStatus: state.app.nodeStatus,
 });

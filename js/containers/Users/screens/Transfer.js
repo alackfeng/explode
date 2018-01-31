@@ -41,11 +41,12 @@ class Transfer extends Component {
     this.props.sendTransfer(fromUser, 'transfer', {
       from_account: fromUser, 
       to_account: toUser, 
-      amount: amount, 
+      amount: amount * 100000000, 
       asset: asset_type,
-      memo: null,
+      memo: "send you",
       propose_account: null,
       fee_asset_id: "1.3.0",
+      // encrypt_memo: false,
     });
 
   }

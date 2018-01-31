@@ -2,34 +2,22 @@
 
 import { action, createRequestTypes, REQUEST, SUCCESS, FAILURE  } from "./types";
 
-import { createActionSet } from "../libs";
-
 // users action type
-export const USERS				= createRequestTypes('USERS');
 export const USERS_LOGIN 		= createRequestTypes('USERS_LOGIN');
-export const USERS_REGISTER 	= createRequestTypes('USERS_REGISTER');
-export const USER_UNLOCK		= createRequestTypes('USER_UNLOCK');
+export const USERS_REGISTER = createRequestTypes('USERS_REGISTER');
+export const USERS_UNLOCK		= createRequestTypes('USERS_UNLOCK');
 
-export const USERS_INIT = 'USERS_INIT';
-export const TRIGGER_USERS_LOGIN		= 'TRIGGER_USERS_LOGIN';
+export const TRIGGER_USERS_LOGIN			= 'TRIGGER_USERS_LOGIN';
 export const TRIGGER_USERS_REGISTER		= 'TRIGGER_USERS_REGISTER';
+export const TRIGGER_USERS_UNLOCK			= 'TRIGGER_USERS_UNLOCK';
 
-export const RESET_TRIGGER_USERS = 'RESET_TRIGGER_USERS';
+export const LOAD_USERS 							= 'LOAD_USERS';
+export const RESET_TRIGGER_USERS 			= 'RESET_TRIGGER_USERS';
 
 /*
 // users relation action call
 user 相关action触发调用
 */
-
-//import UsersBox  from "./users.box";
-
-
-export const user = {
-	request: login => action(USERS[REQUEST], {login}),
-	success: (login, response) => action(USERS[SUCCESS], {login, response}),
-	failure: (login, error) => action(USERS[FAILURE], {login, error}),
-}
-
 
 export const userRegister = {
 	request: (username, regInfo) => (
@@ -45,70 +33,20 @@ export const userLogin = {
 	failure: (username, error) => action(USERS_LOGIN[FAILURE], {username, error}),
 }
 
-
+export const userUnlock = {
+	request: login => action(USERS_UNLOCK[REQUEST], {login}),
+	success: (login, response) => action(USERS_UNLOCK[SUCCESS], {login, response}),
+	failure: (login, error) => action(USERS_UNLOCK[FAILURE], {login, error}),
+}
 
 export const triggerUser = {
-	init: (state => action(USERS_INIT, {state})),
 	login: ((username, password, requiredFields = []) => action(TRIGGER_USERS_LOGIN, {username, password, requiredFields})),
 	register: ((username, regInfo = {}, requiredFields = []) => action(TRIGGER_USERS_REGISTER, {username, regInfo, requiredFields})),
+	unlock: ((username, password, requiredFields = []) => action(TRIGGER_USERS_UNLOCK, {username, password, requiredFields})),
+	load: (state => action(LOAD_USERS, {state})),
 	reset: ((oper) => action(RESET_TRIGGER_USERS, {oper})),
 }
-//export const usersInit 			= state => action(USERS_INIT, {state});
-//export const callUserLogin		= (login, password) => action(TRIGGER_USERS_LOGIN, {login, password});
-//export const callUserRegister 	= (username, regInfo = []) => action(TRIGGER_USERS_REGISTER, {username, regInfo});
 
-
-/*
-export const createAccount = 
-	(account_name, password, registrar, referrer, referrer_percent, refcode) => {
-
-	return (dispatch, getState) => {
-
-		console.log("=====[users.actions.js]::createAccount - param: ", dispatch, getState().users.inited);
-
-		dispatch({type: USERS_REGISTER.PENDING});
-
-		dispatch(unLock());
-
-		// call api register
-		return UsersBox.createAccountWithPassword(dispatch, getState(), account_name, password, registrar, referrer, referrer_percent, refcode)
-			.then((res) => {
-				
-				console.log("=====[users.actions.js]::createAccount - ", res);
-				// store sucess
-				dispatch({
-					type: USERS_REGISTER.SUCCESS,
-					payload: res,
-				});
-
-				// 
-				return account_name;
-			});
-
-	};
-};
-
-export const loginAccount = (account_name, password) => {
-	console.log("=====[users.actions.js]::loginAccount - param: ", account_name, password);
-	return {
-		type: USERS_LOGIN.SUCCESS,
-		payload: {
-			username: account_name,
-			password: password,
-		}
-	}
-}
-
-export const unLock = () => {
-	
-
-	return (dispatch, getState) => {
-
-		console.log("=====[users.actions.js]::unLock - param: ", getState().users.inited);
-		dispatch({type: USER_UNLOCK.PENDING});
-	};
-};
-*/
 
 
 

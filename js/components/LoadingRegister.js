@@ -117,6 +117,9 @@ class LoadingRegister extends Component {
     const { onChange, entityReg, navigation } = this.props;
     console.log("=====[LoadingRegister.js]::render - entity : ", entityReg);
 
+    //if(!entityReg || !entityReg.isRegister)
+    //  return null;
+
     const isRegister = (entityReg && entityReg.isRegister) || false;
 
 		return (

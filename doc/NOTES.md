@@ -14,6 +14,18 @@
 
 ####
 
+#### 20180130 -: 
+##### APP启动加载store初始化数据，如私钥等
+##### 钱包管理数据结构整理
+
+```sh
+1. 锁存在于内存中，而不是持久化上，
+2. faucet_address 可通过WalletDb去取配置，at users.box.js
+3. 
+ChainStore.getAccountRefsOfKey(pubkey), 获取KEY -> get_key_references
+```
+##### 增强安全性，如锁校验等
+
 
 #### 20180129 -: 
 ##### 二次确认问题汇总：
