@@ -12,9 +12,6 @@ import { ViewContainer, StyleSheet, LoadingLoginModal } from "../../../component
 import { triggerUser } from "../../../actions";
 const {login: userLogin} = triggerUser;
 
-import { ChainStore, FetchChain } from "assetfunjs/es";
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -94,14 +91,6 @@ class Login extends Component {
     const { username, password } = this.state;
     console.log("=====[Login.js]::userLogin - ", username, password);
     e.preventDefault();
-
-    const accountObj = ChainStore.getAccount(this.state.username);
-    console.log("=====[Login.js]::userLogin - account_ - ", this.state.username, JSON.stringify(accountObj));
-    //if(account_) {
-    //  this.setState({
-    //    currentAccount: account_,
-    //  });
-    //}
 
     // 先打开模式对话框，接收消息
     this.setState({isOpen: true});

@@ -12,7 +12,11 @@ export const initialUsersState = {
 		raw: {},
 		transaction: [],
 	},
-	isLocked: true,
+	entityUnLock: {
+		isUnLock: false,
+		raw: {},
+		transaction: [],
+	},
 };
 
 const usersReducer = (state = initialUsersState, action = {}) => {
@@ -86,19 +90,19 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 				}
 			};
 		}
-
-		case USERS_UNLOCK.REQUEST: {
+		case USERS_UNLOCK.SUCCESS:
+		case USERS_UNLOCK.REQUEST:
+		case USERS_UNLOCK.FAILURE:
+		{
+			const unlock_status = (action.type === USERS_UNLOCK.REQUEST) ? true : false; //!state.isRegister;
 			return {
 				...state,
-				pending: {...state.pending, unlock: 1}
+				entityUnLock: {
+					isUnLock: unlock_status,
+					raw: state.entityUnLock.raw,
+					transaction: [{...action}, ...state.entityUnLock.transaction],
+				}
 			};
-		}
-		case USERS_UNLOCK.SUCCESS: {
-			return {
-				...state,
-				pending: {...state.pending, unlock: false},
-				...action.payload,
-			}
 		}
 		case LOAD_USERS:
 		default:

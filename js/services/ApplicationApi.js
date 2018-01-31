@@ -94,7 +94,8 @@ class ApplicationApi {
 
         //let unlock_promise = WalletUnlockActions.unlock();
         // 临时加载私钥，要提取到锁级别验证
-        WalletDb.validatePassword("1", true, "feng1");
+        //WalletDb.validatePassword("1", true, "feng1");
+        //if( WalletDb.isLocked() ) throw new Error("wallet locked");
 
         return Promise.all([
             FetchChain("getAccount", from_account),

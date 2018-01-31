@@ -42,7 +42,7 @@ export const userUnlock = {
 export const triggerUser = {
 	login: ((username, password, requiredFields = []) => action(TRIGGER_USERS_LOGIN, {username, password, requiredFields})),
 	register: ((username, regInfo = {}, requiredFields = []) => action(TRIGGER_USERS_REGISTER, {username, regInfo, requiredFields})),
-	unlock: ((username, password, requiredFields = []) => action(TRIGGER_USERS_UNLOCK, {username, password, requiredFields})),
+	unlock: ((username, extra, requiredFields = []) => action(TRIGGER_USERS_UNLOCK, {username, extra, requiredFields})),
 	load: (state => action(LOAD_USERS, {state})),
 	reset: ((oper) => action(RESET_TRIGGER_USERS, {oper})),
 }

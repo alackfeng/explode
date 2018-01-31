@@ -9,7 +9,7 @@ import WalletDb from "../services/WalletDb";
 import { getUser } from '../reducers/selectors';
 
 import * as actions from '../actions';
-const { userRegister, userLogin, appSaveKey } = actions;
+const { userRegister, userLogin, userUnlock,  appSaveKey } = actions;
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
@@ -19,45 +19,28 @@ const TRACE = false;
 
 function* fetchEntity(entity, apiFn, id, info) {
   yield put( entity.request(id, info) )
-  const {response, error} = yield call(apiFn, id, info)
-  console.warn("=====[users.saga.js]::fetchEntity - response, ", response, error);
+  const {response, error, extradata} = yield call(apiFn, id, info)
+  console.warn("=====[users.saga.js]::fetchEntity - response, ", response, error, extradata);
 
   if(response)
     yield put( entity.success(id, response) )
   else
     yield put( entity.failure(id, error) )
   
-  return {response, error};
+  return {response, error, extradata};
 }
 	
 // yeah! we can also bind Generators
 export const callUserRegister    = fetchEntity.bind(null, userRegister, usersBox.createAccountWithPassword)
 export const callUserLogin       = fetchEntity.bind(null, userLogin, usersBox.loginUser)
-
-
-// 保存私钥
-function* saveKeys(savekeys, account_name, password, response) {
-	
-	// 保存私钥到缓存中，并返回
-	let { auth } = yield call(savekeys, account_name, password, response);
-	console.log("=====[users.saga.js]::saveKeys - < ", account_name, auth);
-
-	// 持久化到store中
-	if(auth) {
-		yield put( appSaveKey(account_name, auth) );
-	} else {
-		throw new Error("save key error");
-	}
-  
-}
-export const callSaveKeys = saveKeys.bind(null, WalletDb.saveKeys);
-
+export const callUserUnLock 		 = fetchEntity.bind(null, userUnlock, WalletDb.unLock);
 
 
 /*
  * 内部流程
  * checkLocalUser(username) - 检验用户是否存在于本地
  * fetchAccount(username)		- 检验区块是否存在用户
+ * saveKeys 								- 注册后保存私钥到store中
 */
 
 function* checkLocalUser(username) {
@@ -82,6 +65,40 @@ function* fetchAccount(username) {
 		return {};
 	}
 }
+
+// 保存私钥
+function* saveKeys(savekeys, account_name, password, response) {
+	
+	// 保存私钥到缓存中，并返回
+	let { auth } = yield call(savekeys, account_name, password, response);
+	console.log("=====[users.saga.js]::saveKeys - < ", account_name, auth);
+
+	// 持久化到store中
+	if(auth) {
+		yield put( appSaveKey(account_name, auth) );
+	} else {
+		throw new Error("save key error");
+	}
+}
+export const callSaveKeys = saveKeys.bind(null, WalletDb.saveKeys);
+
+// 验证用户密码有效性 validatePassword
+function* validatePassword(checkValid, account, password, unlock = false) {
+	console.log("=====[users.saga.js]::validatePassword - < ", account, unlock);
+	return { };
+}
+export const checkValidatePassword = validatePassword.bind(null, WalletDb.validatePassword);
+
+
+function* unlockUser(unLock, username, extra, user) {
+
+	let { res } = yield call(unLock, user, extra);
+	console.log("=====[users.saga.js]::unlockUser - < ", username, res);
+
+	return { res };
+}
+//export const callUserUnLock = unlockUser.bind(null, WalletDb.unLock);
+
 
 /*
  * 用户注册主流程主逻辑：
@@ -113,11 +130,11 @@ function* register(username, regInfo, requiredFields) {
 			}
 
 			// 3. 调用注册通用流程
-			const {response, error} = yield call(callUserRegister, username, regInfo);
+			const {response, error, extradata} = yield call(callUserRegister, username, regInfo);
 			if(response) { 
 				// 4. 注册成功返回，保存私钥到本地 save key
 				console.log("=====[users.saga.js]::register - user Register <", username, "> ok : ", response);
-				yield call(callSaveKeys, username, regInfo.password, response);
+				yield call(callSaveKeys, username, regInfo.password, null);
 
 			} else {
 				// 5. 注册返回错误，通知UI?，
@@ -156,35 +173,89 @@ function* login(username, password, requiredFields) {
 		// 1. 检验用户是否存在于本地
 		const user = yield call(checkLocalUser, username);
 
-		if (!user || requiredFields.some(key => !user.hasOwnProperty(key))) {
+		if (user || !user || requiredFields.some(key => !user.hasOwnProperty(key))) {
 
 			console.log("=====[users.saga.js]::login - not exists user: ", user)
-			 const {response, error} = yield call(callUserLogin, username, password)
+			 const {response, error, extradata} = yield call(callUserLogin, username, password)
 
 			 if(response) { // save key
 				console.log("=====[users.saga.js]::login - login user <", username, "> ok : ", response);
 
-				let saveKeys = [];
-				Object.keys(response.private).forEach((key) => {
-					saveKeys.push({privKey: response.private[key].toWif(), pubKey: key});
-				});
+				//let saveKeys = [];
+				//Object.keys(response.private).forEach((key) => {
+				//	saveKeys.push({privKey: response.private[key].toWif(), pubKey: key});
+				// });
+				if(extradata) {
+					console.log("=====[users.saga.js]::login - login user <", username, "> ok save keys : ", extradata);
+					yield call(callSaveKeys, username, password, extradata);
+					//yield put( appSaveKey(username, extradata));
+				} else {
+					alert("Login user Private not OK???");
+				}
 
-				yield put( appSaveKey(username, saveKeys));
+				
 			}
 
 		} else {
-			console.log("=====[users.saga.js]::login - exists user: ", user);
-			//用户存在，验证密码有效性
+			//用户存在，验证密码有效性 validatePassword
+			let { valid } = yield call(checkValidatePassword, username, password, true);
+			console.log("=====[users.saga.js]::login - exists user: ", user, ", check valid - ", valid);
+			if(valid) {
+				yield put( userRegister.success(username, "local exists user") );
+			} else {
+				alert("login user not check valid!!!");
+			}
+
 		}
 
 	} catch ( e ) {
-		console.error("=====[users.saga.js]::login catch error : ", e.message);
+		console.error("=====[users.saga.js]::login catch error : ", e || e.message);
 
 		//设置到缓存中用于界面提示
 		yield put( userLogin.failure(username, e.message) );
 	}
 }
 
+/*
+ * 用户解锁主流程主逻辑：
+ * 入参：
+ * 	- username 	用户名
+ * 	- extra	附加信息，密码，锁etc
+ * 	- requiredFields 	必选参数校验
+ * 出参：无
+ * 返回：无，进入下一个循环
+ * 异常：记录流程日志，返回给界面显示
+*/
+function* unlock(username, extra, requiredFields) {
+	
+	try {
+
+		// 1. 检验用户是否存在于本地
+		const user = yield call(checkLocalUser, username);
+
+		if (user || requiredFields.some(key => !user.hasOwnProperty(key))) {
+
+			console.log("=====[users.saga.js]::login - not exists user: ", user)
+			const {response, error, extradata} = yield call(callUserUnLock, user, extra)
+
+			console.log("=====[users.saga.js]::login - unlock user <", username, "> ok : ", response, error, extradata);
+
+
+		} else {
+
+			console.log("=====[users.saga.js]::login - not exists user: ", user, ", Notification UI");
+			alert("local not exists user");
+			//yield put( userRegister.failure(username, "local not exists user") );
+
+		}
+
+	} catch ( e ) {
+		console.error("=====[users.saga.js]::login catch error : ", e || e.message);
+
+		//设置到缓存中用于界面提示
+		yield put( userUnlock.failure(username, e.message) );
+	}
+}
 
 
 /******************************************************************************/
@@ -238,4 +309,29 @@ export function* watchUserLogin() {
 		}
 	}
 }
+
+// trigger user unlock
+export function* watchUserUnLock() {
+	if(TRACE) console.log("=====[users.saga.js]::watchUserUnLock - ");
+	
+	while(true) {
+		try {
+
+		console.log("=====[users.saga.js]::watchUserUnLock - loop");
+
+		const {username, extra, requiredFields = []} = yield take(actions.TRIGGER_USERS_UNLOCK);
+		console.log("=====[users.saga.js]::watchUserUnLock - loop unlock info - ++++>", username, extra);
+
+		yield fork(unlock, username, extra, requiredFields);
+
+		} catch( e ) {
+			//const delay_1000 = yield delay(1000);
+			console.info("=====[users.saga.js]::watchUserUnLock catch error : ", e);
+			console.error("=====[users.saga.js]::watchUserUnLock catch error : ", "delay_1000", e.message);
+			continue;
+
+		}
+	}
+}
+
 

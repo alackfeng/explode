@@ -142,6 +142,29 @@ A20. View //require('expo').LinearGradient
 vi /Users/assetfun/source/code/explode/node_modules/react-native-elements/src/buttons/Button.js
 ```
 
+```sh
+Q21. Your browser does not support window.crypto
+/Users/assetfun/source/code/aftradeapp/node_modules/secure-random/lib/secure-random.js
+A21. 
+
+
+/Users/assetfun/source/code/explode/node_modules/secure-random/lib/secure-random.js =>
+
+----------
+var crypto = window.crypto || window.msCrypto
+// if (!crypto) throw new Error("Your browser does not support window.crypto.")
+if(!crypto) {
+  return nodeRandom(count, options)
+} else
+
+return browserRandom(count, options)
+
+----------
+function nodeRandom(count, options) {
+  var crypto = require('crypto') || require('crypto-browserify')
+
+```
+
 
 
 

@@ -11,6 +11,8 @@ import { Colors } from "../../../libs/Colors";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
+import { UnLockModal } from "../../../components";
+
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
@@ -158,6 +160,7 @@ class Center extends Component {
 
     	return (
     	<ViewContainer>
+    		<UnLockModal />
     		<View style={styles.userContainer} >
     			<Icon color="white" name="invert-colors" size={62} />
     			<Text style={styles.heading}>{currentAccount ? currentAccount : "Welcome?"}</Text>

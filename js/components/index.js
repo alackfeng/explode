@@ -12,3 +12,4 @@ export * from "./SwipeableView";
 export * from "./TransactionConfirmModal";
 export * from "./LoadingRegister";
 export * from "./LoadingLogin";
+export * from "./UnLockModal";

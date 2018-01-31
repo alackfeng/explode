@@ -52,9 +52,17 @@ export default function appReducer(state = initState, action) {
       };
     }
     case APP_FOREVER_SAVE_KEY: {
+
+      let original = state.authAccounts.filter(key => {
+        ///console.log("--------------------- original ", key);
+        if(!key || !key.username || !action.username)
+          return;
+        return (key.username !== action.username);
+      });
+
       return {
         ...state,
-        authAccounts: [...state.authAccounts, {username: action.username, authAccount: action.keys}],
+        authAccounts: [...original, {username: action.username, authAccount: action.keys}],
         currentAccount: action.username,
       }
     }

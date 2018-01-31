@@ -64,6 +64,8 @@ function* transaction(username, method, parameters, requiredFields) {
 		// 验证交易属性是否存在，后期优化 method->parameters[]
 		if (user /*|| requiredFields.some(key => !user.hasOwnProperty(key))*/) {
 
+			// 增加解锁功能？？？
+
 			console.log("=====[comm.saga.js]::transaction - exists user: ", user, ", Begin handle transaction...")
 			
 			// 调用交易流程

@@ -4,7 +4,7 @@ export const getUser = (state, login) => {
 		return {};
 	}
 	const user = state.app.authAccounts.filter(obj => { 
-		return (obj.username === login); 
+		return (obj && obj.username === login); 
 	});
 	return { user };
 };

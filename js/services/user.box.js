@@ -5,6 +5,8 @@ import WalletDb from "./WalletDb";
 import ApplicationApi from "./ApplicationApi";
 let application_api = new ApplicationApi();
 
+import { ChainStore, FetchChain } from "assetfunjs/es";
+
 let TRACE = false;
 
 class UsersBox {
@@ -127,9 +129,10 @@ class UsersBox {
 
   loginUser = (username, password) => {
     const account_name = username;
-    console.log("=====[users.box.js]::loginUser - param: ", account_name, password);
+    console.log("=====[users.box.js]::loginUser - param: ", account_name);
 
-    return FetchChain("getAccount", username).then((ret) => {
+    let timeout = 19000;
+    return FetchChain("getAccount", username, timeout).then((ret) => {
       console.log("=====[users.box.js]::loginUser - : getAccount is : ", ret);
 
       let result = null;
@@ -137,13 +140,16 @@ class UsersBox {
       let validPassword = WalletDb.validatePassword(password, true, username);
       if(!!validPassword) {
         console.log("=====[users.box.js]::loginUser - : validPassword", validPassword);
-        result = {private: validPassword, username: username};
+        WalletDb.setPasswordKeys(keys => {
+          result = keys;
+        });
+        // result = {private: validPassword, username: username};
       } else {
         console.error("=====[users.box.js]::loginUser - : validPassword", validPassword);
         error = "invalid password";
       }
 
-      return {response: result, error: error};
+      return {response: "ok", error: error, extradata: result};
     }).catch(error => {
       console.error("=====[users.box.js]::loginUser - : getAccount is : err ", error);
       return {response: null, error: error || 'Something bad happened'};
