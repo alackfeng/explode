@@ -81,7 +81,8 @@ class Node extends Component {
 			query: '',
       searchStart: false,
       searchFocus: false,
-      nodeList: nodeList
+      nodeList: nodeList,
+      ds: ds,
 		};
 
 		this.search 	 	= this.search.bind(this);
@@ -99,7 +100,8 @@ class Node extends Component {
 			this.state.statusList.length && this.state.statusList.push(nextProps.nodeStatus);
 
 			this.setState({
-				statusList: this.state.statusList.length ? this.state.statusList : [nextProps.nodeStatus]
+				statusList: this.state.statusList.length ? this.state.statusList : [nextProps.nodeStatus],
+				dataSource: this.state.ds.cloneWithRows(nextProps.nodeList),
 			});
 		}
 	}
@@ -108,9 +110,10 @@ class Node extends Component {
 		
 		const { nodeStatus } = this.props;
 		// call someting, example api to node
-		this.setState({statusList: []});
+		this.setState({statusList: [nodeStatus]});
 		
 		if(nodeStatus.url && nodeStatus.status === 'open') {
+			console.log("+++++[Node.js]::nodeConnect - ", nodeStatus.url, nodeStatus.status, ", Not use nodeTransition!!!");
 			return;
 		}
 
@@ -125,16 +128,17 @@ class Node extends Component {
 
 	}
 
-	updateRpcConnectionStatus(status) {
-		console.log("=====[Node.js]::updateRpcConnectionStatus - status - ", status);
-		this.props.updateRpcConnectionStatus(status);
+	updateRpcConnectionStatus(status, url) {
+		console.log("=====[Node.js]::updateRpcConnectionStatus - status - ", status, url);
+		this.props.updateRpcConnectionStatus(status, url);
 	}
 
 	renderRow(rowData, sectionID, rowID) {
 
+		const { nodeStatus } = this.props;
 
 		return (
-			<NodeItem item={rowData} index={rowID} updateConnect={this.updateConnect} />
+			<NodeItem item={rowData} index={rowID} updateConnect={this.updateConnect} linknode={nodeStatus} />
 		);
 	}
 
@@ -173,7 +177,7 @@ class Node extends Component {
   	});
 
   	this.props.nodeConnect(null, connectUrl);
-  	this.props.updateRpcConnectionStatus('reset', connectUrl);
+  	//this.props.updateRpcConnectionStatus('reset', connectUrl);
   	//if(this.props.updateRpcConnectionStatus)
   	//	this.props.updateRpcConnectionStatus('open');
   }

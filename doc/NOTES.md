@@ -14,6 +14,18 @@
 
 ####
 
+#### 20180201 -: 
+##### 节点连接功能梳理：
+```sh
+1. APP启动时自动 
+	初始化节点配置: this.props.dispatch(initConnect([], null))
+	监听连接状态：Apis.setRpcConnectionStatusCallback(this.updateRpcConnectionStatusCallback.bind(this));
+	尝试连接节点：willTransitionTo(null, null, nodeTransition);
+	刷新节点延迟：
+2. 
+
+```
+
 #### 20180130 -: 
 ##### APP启动加载store初始化数据，如私钥等
 ##### 钱包管理数据结构整理

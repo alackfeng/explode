@@ -21,7 +21,7 @@ import { Apis } from "assetfunjs-ws";
 
 import { nodeList } from "./env";
 
-
+const TRACE = false;
 
 const NavigationWrappedApp = URIWrapper(AppNavigator);
 
@@ -35,7 +35,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-
+    console.log("=====[App.js]::constructor - init ", props);
   }
 
   componentWillMount() {
@@ -47,12 +47,11 @@ class App extends Component {
   componentDidMount() {
     //if(appReady) {
 
-      console.log("=====[App.js]::componentDidMount - init");
+      console.log("=====[App.js]::componentDidMount - init appReady - ", this.props.appReady);
 
       // app启动时直接尝试连接节点
-
       let nodeTransition = (res, nodeList) => {
-        console.log("+++++[App.js]::nodeConnect - call api...", res);
+        console.log("=====[App.js]::nodeConnect - call api...", res);
         const url = res;
         this.props.dispatch(nodeConnect(nodeList, url));
       };
@@ -64,9 +63,9 @@ class App extends Component {
     //}
   }
 
-  updateRpcConnectionStatusCallback = (status) => {
-    console.log("=====[App.js]::updateRpcConnectionStatusCallback - ", status);
-    this.props.dispatch(updateRpcConnectionStatus(status));
+  updateRpcConnectionStatusCallback = (status, url) => {
+    console.log("=====[App.js]::updateRpcConnectionStatusCallback - ", status, url);
+    this.props.dispatch(updateRpcConnectionStatus(status, url));
   }
 
 

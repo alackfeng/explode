@@ -16,11 +16,17 @@ export type AuthAccount = {
   }
 };
 
+export type nodesApi = {
+  url: string,
+  location: string,
+  status: string,
+  latency: int,
+};
+
 
 const initState = {
   appReady: false,
   locale: 'en',
-  users: {},
   transactions: [],
   authAccounts: [],
   currentAccount: null,
@@ -36,7 +42,7 @@ const initState = {
  */
 export default function appReducer(state = initState, action) {
 
-  //DEBUG console.log(">>>>>[app.reducer.js]::appReducer - ", action.type, action);
+  console.log(">>>>>[app.reducer.js]::appReducer - ", action.type, action);
 
   switch (action.type) {
     case SET_APP_READY: {
@@ -71,7 +77,7 @@ export default function appReducer(state = initState, action) {
         ...state,
         nodesApi: action.nodes,
         nodeStatus: {
-          url: action.url,
+          url: null, // not use action.url,
           status: null,
         }
       }
@@ -82,16 +88,23 @@ export default function appReducer(state = initState, action) {
         nodesApi: action.nodes ? action.nodes : state.nodesApi,
         nodeStatus: {
           url: action.url,
-          status: state.nodeStatus.status
+          status: action.url !== state.nodeStatus.url ? 'reset' : state.nodeStatus.status
         }
       }
     }
     case APP_FOREVER_CHANGE_RPC_STATUS: {
+
+      if(action.url !== state.nodeStatus.url) {
+        return state;
+      }
+
+      //只变更相应url的状态
+      let changeStatus = (action.status === 'reconnect' ? state.nodeStatus.status  : action.status);
       return {
         ...state,
         nodeStatus: {
           url: action.url ? action.url : state.nodeStatus.url,
-          status: action.status,
+          status: changeStatus,
         }
       }
     }

@@ -25,6 +25,7 @@
   "dependencies": {
     "animated": "^0.2.1",
     "assetfunjs": "git+https://github.com/alackfeng/assetfunjs.git",
+    "assetfunjs-ws": "file:../assetfunjs-ws",
     "es6-promise": "^4.2.2",
     "humps": "^2.0.1",
     "isomorphic-fetch": "^2.2.1",

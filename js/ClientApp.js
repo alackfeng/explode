@@ -17,7 +17,7 @@ store.runSaga(rootSaga).done.then(() => {
 	console.error('sagas error : ', e.message);
 });
 
-//DEBUG console.log("==================== store", getStore(), rootSaga);
+console.log("==================== store", "store", "**************\n", "rootSaga");
 
 const ClientApp = () => {
   return (

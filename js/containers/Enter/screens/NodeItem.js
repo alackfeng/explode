@@ -29,10 +29,11 @@ class NodeInfo extends Component {
 
 	render() {
 
-		const { item, index } = this.props;
+		const { item, index, linknode } = this.props;
 		// console.log("=====[NodeItem.js]::render - node item > ", item, index);
+		let status = linknode.url === item.url ? linknode.status : item.status;
 
-		const subTitle = `${item.url} - <${item.status} : ${item.latency}>`;
+		const subTitle = `${item.url} - <${status} : ${item.latency}>`;
 
 		return (
 			<NodeWrap>

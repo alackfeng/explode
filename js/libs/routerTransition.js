@@ -2,8 +2,8 @@ import {Apis, Manager} from "assetfunjs-ws";
 import {ChainStore} from "assetfunjs/es";
 
 // Stores
-import { AsyncStorage } from "react-native";
-import iDB from "./idb-instance";
+//import { AsyncStorage } from "react-native";
+//import iDB from "./idb-instance";
 //import AccountRefsStore from "stores/AccountRefsStore";
 //import WalletManagerStore from "stores/WalletManagerStore";
 //import WalletDb from "stores/WalletDb";
@@ -53,9 +53,13 @@ const reNodeList = (urls, latencies) => {
     let nodes = [];
     nodeList.map(a => {
         if(!!latencies[a.url]) {
-            a.latency = latencies[a.url];    
+            a.latency = latencies[a.url];   
+            a.status = 'can'; 
+        } else {
+            a.latency = 0;   
+            a.status = 'offline'; 
         }
-        console.log("---------------->>>>>>>>>>>. NODE ", a);
+        // console.log("---------------->>>>>>>>>>>. App.NODE ", a);
         nodes.push(a);
     });
     return nodes;
@@ -78,7 +82,7 @@ const willTransitionTo = (nextState, replaceState, callback) => {
     if (!connectionString) connectionString = urls[0];
     if (connectionString.indexOf("fake.automatic-selection") !== -1) connectionString = urls[0];
 
-    console.log("=====[routerTransition.js]::willTransitionTo - begin ", connectionString);
+    console.log("=====[routerTransition.js]::App.willTransitionTo - begin ", connectionString);
 
     if (!connectionManager) connectionManager = new Manager({url: connectionString, urls});
     /* if (nextState.location.pathname === "/init-error") {
@@ -104,12 +108,13 @@ const willTransitionTo = (nextState, replaceState, callback) => {
     } */
     let connectionCheckPromise = !apiLatenciesCount ? connectionManager.checkConnections() : null;
     Promise.all([connectionCheckPromise]).then((res => {
-        console.log("=====[routerTransition.js]::willTransitionTo - connectionCheckPromise -  ", res);
+        console.log("=====[routerTransition.js]::App.willTransitionTo - connectionCheckPromise -  ", res);
 
         if (connectionCheckPromise && res[0]) {
             let [latencies] = res;
-            console.log("Connection latencies:", latencies);
+            console.log("=====[routerTransition.js]::App.willTransitionTo - Connection latencies:", latencies);
             urls = filterAndSortURLs(0, latencies);
+            console.log("=====[routerTransition.js]::App.willTransitionTo - Connection latencies:", urls);
             // ss.set("apiLatencies", latencies);
             connectionManager.urls = urls;
             callback(connectionManager.url, reNodeList(urls, latencies));
@@ -117,13 +122,13 @@ const willTransitionTo = (nextState, replaceState, callback) => {
         connectionManager.connectWithFallback(connect).then(() => {
             var db;
             try {
-                console.log("=====[routerTransition.js]::willTransitionTo - db -  ", global.AsyncStorage);
+                console.log("=====[routerTransition.js]::App.willTransitionTo - db -  ", global.AsyncStorage);
                 //db = iDB.init_instance(window.openDatabase ? (global.AsyncStorage || localStorage || global.shimIndexedDB || indexedDB) : indexedDB).init_promise;
             } catch(err) {
                 console.log("db init error:", err);
             }
 
-            console.log("=====[routerTransition.js]::willTransitionTo - connectWithFallback -  ", 
+            console.log("=====[routerTransition.js]::App.willTransitionTo - connectWithFallback -  ", 
                 connectionManager.url, connectionManager.urls.indexOf(connectionManager.url));
 
             return Promise.all([db]).then(() => {
@@ -159,7 +164,7 @@ const willTransitionTo = (nextState, replaceState, callback) => {
                 });
             }); */
         }).catch( error => {
-            console.error("----- App.willTransitionTo error ----->", error, (new Error).stack);
+            console.error("=====[routerTransition.js]::App.willTransitionTo error ----->", error, (new Error).stack);
             if(error.name === "InvalidStateError") {
                 if (__ELECTRON__) {
                     ; //replaceState("/dashboard");
@@ -169,6 +174,15 @@ const willTransitionTo = (nextState, replaceState, callback) => {
             } else {
                 ;//replaceState("/init-error");
                 callback("init-error");
+                let url = connectionManager.urls[0] || connectionString;
+                Apis.reset(url, true).init_promise.then(()=>{
+                    
+                    console.log("=====[routerTransition.js]::App.willTransitionTo - reset url :", url);
+
+                }).catch(err => {
+                    console.error("err:", err);
+                    return callback("reset-error");
+                });
             }
         });
 
@@ -179,12 +193,17 @@ const willTransitionTo = (nextState, replaceState, callback) => {
 
     // Every 25 connections we check the latencies of the full list of nodes
     if (connect && !apiLatenciesCount && !connectionCheckPromise) connectionManager.checkConnections().then((res) => {
-        console.log("=====[routerTransition.js]::willTransitionTo - Connection latencies:", res);
+        console.log("=====[routerTransition.js]::App.willTransitionTo - Connection latencies:", res);
         //ss.set("apiLatencies", res);
-        callback(connectionManager.url, res);
+        if(res && res[0]) {
+            let [latencies] = res;
+            let urls = filterAndSortURLs(0, latencies);
+            callback(connectionManager.url, reNodeList(urls, latencies));
+        }
+        
     });
 
-    console.log("=====[routerTransition.js]::willTransitionTo - end ");
+    console.log("=====[routerTransition.js]::App.willTransitionTo - end ");
 };
 
 export default willTransitionTo;
