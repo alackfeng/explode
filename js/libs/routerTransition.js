@@ -19,7 +19,7 @@ let apiLatenciesCount = 0; //Object.keys(apiLatencies).length;
 //import PrivateKeyActions from "actions/PrivateKeyActions";
 //import {subjectInitCfg} from "actions/SubjectActions";
 
-ChainStore.setDispatchFrequency(20);
+ChainStore.setDispatchFrequency(10);
 
 let connect = true;
 let connectionManager;
@@ -90,6 +90,7 @@ const willTransitionTo = (nextState, replaceState, callback) => {
         .then(() => {
             var db;
             try {
+
                 db = iDB.init_instance(window.openDatabase ? (shimIndexedDB || indexedDB) : indexedDB).init_promise;
             } catch(err) {
                 console.log("db init error:", err);
@@ -117,12 +118,24 @@ const willTransitionTo = (nextState, replaceState, callback) => {
             console.log("=====[routerTransition.js]::App.willTransitionTo - Connection latencies:", urls);
             // ss.set("apiLatencies", latencies);
             connectionManager.urls = urls;
-            callback(connectionManager.url, reNodeList(urls, latencies));
+            // 初始化节点信息
+            callback(connectionManager.url, reNodeList(urls, latencies), 'init');
         }
         connectionManager.connectWithFallback(connect).then(() => {
             var db;
             try {
                 console.log("=====[routerTransition.js]::App.willTransitionTo - db -  ", global.AsyncStorage);
+                console.log("=====[App.js]::componentDidMount111111111 - ChainStore.init synced ok -1 ", Apis.instance().db_api);
+
+                ChainStore.init().then(() => {
+                  console.log("=====[App.js]::componentDidMount111111111 - ChainStore.init synced ok - ", Apis.instance().chain_id);
+                  //this.setState({synced: true});
+
+                }).catch(error => {
+                  let syncFail = ChainStore.subError && (ChainStore.subError.message === "ChainStore sync error, please check your system clock") ? true : false;
+                  console.error("=====[App.js]::componentDidMount111111111 - ChainStore.init synced error -", syncFail, error, ChainStore.subError);
+                });
+
                 //db = iDB.init_instance(window.openDatabase ? (global.AsyncStorage || localStorage || global.shimIndexedDB || indexedDB) : indexedDB).init_promise;
             } catch(err) {
                 console.log("db init error:", err);
@@ -137,7 +150,8 @@ const willTransitionTo = (nextState, replaceState, callback) => {
                     chainId: Apis.instance().chain_id
                 }); */
 
-                callback(connectionManager.url, null);
+                // 连接节点
+                callback(connectionManager.url, null, 'connect');
 
 
             });

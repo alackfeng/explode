@@ -106,7 +106,7 @@ class AssetsList extends Component {
 		console.log("=====[AssetList.js]::render - ", "navigation");
 
 		if(!this.state.dataSource)
-			return null;
+			return <ViewContainer><Text>No Data Balance</Text></ViewContainer>;;
 
 		return (
 			<ViewContainer>

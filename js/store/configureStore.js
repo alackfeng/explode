@@ -24,7 +24,7 @@ import { isDebuggingInChrome } from "../env";
 
 import storageEngine from './storageEngine';
 import reducers from '../reducers';
-import { SET_APP_READY } from '../actions';
+import { SET_APP_READY, initConnect } from '../actions';
 
 // add support redux saga
 import 'regenerator-runtime/runtime';
@@ -97,6 +97,8 @@ function init() {
   store = generateStore(preloadedState);
   persistStore(store, null, () => {
     // called when rehydration complete
+
+    store.dispatch(initConnect([], null)); //清理节点数据
     store.dispatch({
       type: SET_APP_READY,
       appReady: true,

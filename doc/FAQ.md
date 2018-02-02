@@ -156,7 +156,6 @@ var crypto = window.crypto || window.msCrypto
 if(!crypto) {
   return nodeRandom(count, options)
 } else
-
 return browserRandom(count, options)
 
 ----------

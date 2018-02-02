@@ -10,6 +10,11 @@ import { SwipeableView } from "../../../components";
 
 import { Button, Icon } from 'react-native-elements';
 
+
+import {Apis} from "assetfunjs-ws";
+import {ChainStore} from "assetfunjs/es";
+
+
 const mapStateToProps = state => ({
   isAuthenticated: state.app.currentAccount,
 });
@@ -63,10 +68,22 @@ class Splash extends Component {
     console.log("=====[Splash.js]::componentDidMount - isAuthenticated - ", isAuthenticated);
 
     if(isAuthenticated) { // 已经使用过直接跳转到主导航
-      resetNavigationTo('Main', navigation);
+
+      //resetNavigationTo('Main', navigation);
     } else { // 否则显示splash页面，钱包介绍说明
       //resetNavigationTo('Login', navigation);
     }
+
+               /*console.log("=====[routerTransition.js]::App.willTransitionTo - db -  ", global.AsyncStorage);
+                ChainStore.init().then(() => {
+                  console.log("=====[App.js]::componentDidMount111111111 - ChainStore.init synced ok - ", Apis.instance().chain_id);
+                  //this.setState({synced: true});
+
+                }).catch(error => {
+                  let syncFail = ChainStore.subError && (ChainStore.subError.message === "ChainStore sync error, please check your system clock") ? true : false;
+                  console.error("=====[App.js]::componentDidMount111111111 - ChainStore.init synced error -", syncFail, error, ChainStore.subError);
+                }); */
+
   }
 
   setModalVisible = (login) => {
