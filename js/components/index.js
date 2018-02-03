@@ -13,3 +13,7 @@ export * from "./TransactionConfirmModal";
 export * from "./LoadingRegister";
 export * from "./LoadingLogin";
 export * from "./UnLockModal";
+export * from "./Header";
+export * from "./TableHistory";
+export * from "./HeaderAccount";
+export * from "./HeaderSearchBar";

@@ -8,7 +8,7 @@ import { View, Text, ScrollView, Dimensions } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
 import { Icon, Button, Input } from 'react-native-elements';
 
-import { ViewContainer, StyleSheet, LoadingLoginModal } from "../../../components";
+import { ViewContainer, StyleSheet, LoadingLoginModal, Header, HeaderAccount, HeaderSearchBar } from "../../../components";
 import { triggerUser } from "../../../actions";
 const {login: userLogin} = triggerUser;
 
@@ -21,6 +21,7 @@ class AssetsManage extends Component {
 	constructor() {
 		super();
 
+    this.onSearchAssets = this.onSearchAssets.bind(this);
 	}
 
   isNodeLinked = () => {
@@ -28,6 +29,11 @@ class AssetsManage extends Component {
     console.log("=====[AssetsManage.js]::isNodeLinked - ", currentAccount, nodeStatus.url, nodeStatus.status);
     return (!!currentAccount && !!nodeStatus.url && !!nodeStatus.status);
   }
+
+  onSearchAssets(content) {
+    alert("onSearchAssets:  " + content);
+  }
+
   render() {
 
     const { currentAccount, nodeStatus } = this.props;
@@ -37,6 +43,9 @@ class AssetsManage extends Component {
 
     return (
       <ViewContainer>
+        <HeaderSearchBar onSearch={this.onSearchAssets}/>
+        <HeaderAccount />
+        <Header node/>
         <AssetsList navigation={this.props.navigation} account={currentAccount} />
       </ViewContainer>
     );

@@ -8,9 +8,9 @@ export const zh = {
 	},
 	menu: {
 		tab: {
-			home: "首页|资讯",
+			home: "首页",
 			relation: "发行ICO",
-			news: "资产管理",
+			news: "通证列表",
 			wallet: "用户中心",
 			"404": "找不到"
 		}

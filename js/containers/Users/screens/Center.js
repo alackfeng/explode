@@ -4,18 +4,16 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 
 import { Dimensions, View, ScrollView, Image, TouchableHighlight, ListView } from "react-native";
-import { Text, Card, ButtonGroup, Tile, Col, Row, Icon, List, ListItem, Avatar, Badge } from "react-native-elements";
+import { Button, Text, Card, ButtonGroup, Tile, Col, Row, Icon, List, ListItem, Avatar, Badge } from "react-native-elements";
 
 import { ViewContainer, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
-import { resetNavigationTo } from "../../../libs/help";
+import { resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../../libs/help";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
 import { UnLockModal } from "../../../components";
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 const CustBadge = (props) => {
 
@@ -24,82 +22,42 @@ const CustBadge = (props) => {
 
 const listMenu = [
 	{
-		title: 'Settings',
-		icon: 'av-timer',
-		subtitle: '设置属性',
-		nav: {
-			title: 'Settings',
-			user: 'me',
-		}
-	},
-	{
 		title: 'Nodes',
-		icon: 'flight-takeoff',
-		subtitle: '节点信息',
+		icon: 'public',
+		subtitle: '接入点设置',
 		nav: {
 			title: 'Nodes',
 			user: 'me',
 		}
 	},
 	{
-		title: 'Main',
-		icon: 'fingerprint',
-		subtitle: 'CEO',
-		nav: false,
+		title: 'History',
+		icon: 'receipt',
+		subtitle: '交易记录',
+		nav: true,
 	},
 ];
-
-const listMenu2 = [
-	{
-		name: 'Amy Farha',
-		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-		subtitle: 'Vice President',
-		callback: function (id) { alert("menu1", id)}
-	},
-	{
-		name: 'Chris Jackson',
-		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-		subtitle: 'Vice Chairman',
-		callback: function (id) { alert("menu2", id)}
-	},
-	{
-		name: 'Amanda Martin',
-		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
-		subtitle: 'CEO',
-		callback: function (id) { alert("menu3", id)}
-	},
-];
-
-const log = () => console.log('this is an example method');
 
 class Center extends Component {
 
 	constructor() {
 		super();
 
-		const ds = new ListView.DataSource({
-			rowHasChanged: (r1, r2) => r1 !== r2,
-		});
-
 		this.state = {
-			selectedIndex: 0,
-			value: 0.5,
-			dataSource: ds.cloneWithRows(listMenu2),
-
 			currentAccount: null,
 		};
 
-		this.updateIndex 	= this.updateIndex.bind(this);
-		this.renderRow 		= this.renderRow.bind(this);
 		this.onPressItem 	= this.onPressItem.bind(this);
+		this.onPressQuit	= this.onPressQuit.bind(this);
 		
 	}
 
 	componentDidMount() {
 
 		const { currentAccount } = this.props;
-
-		if(0 && currentAccount) {
+		// 验证账号是否登录呢？？？
+		
+		/*if(currentAccount) {
       FetchChain("getAccount", currentAccount).then((ret) => {
       	const assetObj = ChainStore.getObject("1.3.0", true);
         console.log("=====[Center.js]::componentDidMount - : getAccount is : ", JSON.stringify(ret.get("balances")), JSON.stringify(assetObj), JSON.stringify(ret));
@@ -115,8 +73,7 @@ class Center extends Component {
       }).catch(err => {
         console.error("=====[Center.js]::componentDidMount - : getObject is : err ", err);
       })
-
-		}
+		}*/
 	}
 
 
@@ -131,31 +88,14 @@ class Center extends Component {
 		}
 	}
 
-	updateIndex(selectedIndex) {
-		this.setState({ selectedIndex });
-	}
-
-	renderRow(rowData, sectionID, rowID) {
-		//console.log("ssssssss -  ssss ", sectionID, this);
-		return (
-			<ListItem
-				key={rowID}
-				roundAvatar
-				title={rowData.name}
-				subtitle={rowData.subtitle}
-				icon={{ name: rowData.icon }}
-				//avatar={{uri:rowData.avatar_url}}
-				badge={{ element: <CustBadge index={rowID}/> }}
-				onPress={() => this.onPressItem(rowData)}
-			/>
-		);
+	onPressQuit() {
+		const { navigation } = this.props;
+		resetNavigationTo('Login', navigation);
 	}
 
 	render() {
 
 		const { navigation, currentAccount } = this.props;
-		const buttons = ['Button1', 'Button2'];
-		const { selectedIndex } = this.state;
 
 		console.log("=====[Center.js]::render - navigation - >:", this.state.currentAccount);
 
@@ -166,29 +106,29 @@ class Center extends Component {
     			<Icon color="white" name="invert-colors" size={62} />
     			<Text style={styles.heading}>{currentAccount ? currentAccount : "Welcome?"}</Text>
     		</View>
-    		<ScrollView contentContainerStyle={styles.container} >
+    		<ScrollView contentContainerStyle={styles.listContainer} >
     			<List>
     				{listMenu.map((l, i) => (
 
 						<ListItem
-							leftIcon={{ name: l.icon, style: {color: 'blue'} }}
+							leftIcon={{ name: l.icon, style: {color: 'rgba(35,82,164,1)'} }}
 							key={i}
-							title={l.title}
-							titleStyle={{color: 'red'}}
-							subtitle={l.subtitle}
-			                rightTitle='11:00am'
-			                rightTitleStyle={{color: 'green'}}
-			                onPress={() => this.onPressItem(l, navigation)}
+							title={l.subtitle}
+							titleStyle={{color: 'rgba(40,65,89,1)'}}
+              onPress={() => this.onPressItem(l, navigation)}
 						/>
     				))}
     			</List>
-				<List>
-					<ListView
-					renderRow={this.renderRow}
-					dataSource={this.state.dataSource}
-					/>
-				</List>
     		</ScrollView>
+    		<View style={styles.logoutContainer}>
+    			<Button
+            text="退  出"
+            textStyle={{color: 'rgba(229,109,57,1)'}}
+            buttonStyle={{height: 50, width: SCREEN_WIDTH, backgroundColor: 'rgba(255,255,255,0.3)', borderWidth: 2, borderColor: 'white', borderRadius: 0, zIndex: 10}}
+            containerStyle={{marginTop: 20,marginVertical:20}}
+            onPress={this.onPressQuit}
+          />
+    		</View>
     	</ViewContainer>
 		);
 	}
@@ -196,17 +136,26 @@ class Center extends Component {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flexGrow: 1,
+	listContainer: {
+		//flexGrow: 2,
 		//justifyContent: 'center',
 		//alignItems: 'center',
-		backgroundColor: 'red',
+		backgroundColor: 'white',
+		//height: 300,
 	},
 	userContainer: {
 		//flex: 1,
-		//backgroundColor: '#F5FCFF',
+		//flex: 1,
+		backgroundColor: 'rgba(35,82,164,1)',
 		height: 100,
+		marginTop: 30,
 	},
+	logoutContainer: {
+		//flex: 1,
+		height: 50,
+		backgroundColor: 'white',
+	},
+
 	heading: {
 		color: 'white',
 		marginTop: 10,

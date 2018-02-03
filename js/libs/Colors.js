@@ -75,7 +75,10 @@ const THEME_COLORS = {
   primaryDark: '#262626',
 
   // legacy
-  inactiveText: "#9B9B9B"
+  inactiveText: "#9B9B9B",
+
+  // aft专用
+  menuBlue: "rgba(35,82,164,1)",
 };
 
 const LOCATION_COLORS = {

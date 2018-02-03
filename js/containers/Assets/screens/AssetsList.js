@@ -110,10 +110,6 @@ class AssetsList extends Component {
 
 		return (
 			<ViewContainer>
-				<Header>
-					<Text>hello AssetList </Text>
-				</Header>
-
 				<ListContainer>
 					<List>
 			      <ListView

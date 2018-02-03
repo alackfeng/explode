@@ -12,7 +12,7 @@ import NotFound from './containers/NotFound';
 import Translation from './containers/Translation';
 import { WelcomeScreen, SplashScreen, LoginScreen, RegisterScreen, NodeScreen } from "./containers/Enter";
 
-import { CenterScreen, SettingsScreen, TransferScreen } from "./containers/Users";
+import { CenterScreen, SettingsScreen, TransferScreen, HistoryScreen } from "./containers/Users";
 import { AssetsManageScreen } from "./containers/Assets";
 
 import Ionicons from "react-native-vector-icons/MaterialIcons";
@@ -27,7 +27,7 @@ const getIcon = (name) => {
   const comp = ({ tintColor, focused }) => (
     <Icon
       name={!focused ? name : name }
-      size={26}
+      size={24}
       style={{
         color: tintColor,
       }}
@@ -59,6 +59,12 @@ const sharedRoutes = {
       title: 'Transfer',
     }),
   },
+  History: {
+    screen: HistoryScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Operation History',
+    }),
+  }
 };
 
 const AssetsStackNavigator = StackNavigator(
@@ -99,17 +105,8 @@ export const AppRoutes = {
     path: 'home',
     navigationOptions: {
       title: 'home news',
-      tabBarLabel: translate('menu.tab.home', locale),
+      tabBarLabel: 'ssss', //translate('menu.tab.home', locale),
       tabBarIcon: getIcon('home'),
-    },
-  },
-  Ico: {
-    screen: IconsGrid,
-    path: 'ico',
-    navigationOptions: {
-      title: 'ico issue',
-      tabBarLabel: translate('menu.tab.relation', locale),
-      tabBarIcon: getIcon('supervisor-account'),
     },
   },
   Assets: {
@@ -118,7 +115,7 @@ export const AppRoutes = {
     navigationOptions: {
       header: null, //title: 'Assets',
       tabBarLabel: translate('menu.tab.news', locale),
-      tabBarIcon: getIcon('explore'),
+      tabBarIcon: getIcon('view-list'),
     },
   },
   Users: {
@@ -127,7 +124,7 @@ export const AppRoutes = {
     navigationOptions: {
       header: null, //title: 'user center',
       tabBarLabel: translate('menu.tab.wallet', locale),
-      tabBarIcon: getIcon('fingerprint'),
+      tabBarIcon: getIcon('account-circle'),
     },
   },
   NotFound: {
