@@ -112,7 +112,7 @@ class Node extends Component {
 		// call someting, example api to node
 		this.setState({statusList: [nodeStatus]});
 		
-		if(nodeStatus.url && nodeStatus.status === 'open') {
+		if(nodeStatus.url) {
 			console.log("+++++[Node.js]::nodeConnect - ", nodeStatus.url, nodeStatus.status, ", Not use nodeTransition!!!");
 			return;
 		}

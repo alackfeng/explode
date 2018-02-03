@@ -8,6 +8,7 @@ import { Text, Card, ButtonGroup, Tile, Col, Row, Icon, List, ListItem, Avatar, 
 
 import { ViewContainer, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
+import { resetNavigationTo } from "../../../libs/help";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 

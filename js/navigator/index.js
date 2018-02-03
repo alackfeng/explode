@@ -27,7 +27,7 @@ const AppNavigator = StackNavigator({
     screen: AppDrawerDrawer
   }
 }, {
-  headerMode: 'none',
+  headerMode: 'screen',
   URIPrefix: 'aftbomb://',
   cardStyle: {
     backgroundColor: 'transparent',

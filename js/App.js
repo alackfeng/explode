@@ -70,7 +70,10 @@ class App extends Component {
       let nodeTransition = (res, nodeList, st) => {
         console.log("=====[App.js]::nodeConnect - call api...", res, st, appReady, this.state.connected, this.state.synced);
         const url = res;
-        this.props.dispatch(nodeConnect(nodeList, url));
+
+        if(st === 'init') {
+          this.props.dispatch(nodeConnect(nodeList, url));
+        }
 
         //获取数据
         if(st === 'connect') {
@@ -89,7 +92,7 @@ class App extends Component {
       willTransitionTo(null, null, nodeTransition);
 
       // listen status callback
-      //Apis.setRpcConnectionStatusCallback(this.updateRpcConnectionStatusCallback.bind(this));
+      Apis.setRpcConnectionStatusCallback(this.updateRpcConnectionStatusCallback.bind(this));
       //console.log("=====[App.js]::componentDidMount - init Apis instance - ", Apis.instance().chain_id);
     //}
   }

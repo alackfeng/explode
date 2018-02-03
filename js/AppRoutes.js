@@ -72,7 +72,7 @@ const AssetsStackNavigator = StackNavigator(
     ...sharedRoutes,
   },
   {
-    headerMode: 'none',
+    headerMode: 'screen',
   }
 );
 const UsersStackNavigator = StackNavigator(
@@ -80,13 +80,13 @@ const UsersStackNavigator = StackNavigator(
     Center: {
       screen: CenterScreen,
       navigationOptions: {
-        title: 'User Center',
+        header: null,
       },
     },
     ...sharedRoutes,
   },
   {
-    headerMode: 'none',
+    headerMode: 'screen',
   }
 );
 
@@ -116,7 +116,7 @@ export const AppRoutes = {
     screen: AssetsStackNavigator, //Translation,
     path: 'assets',
     navigationOptions: {
-      title: 'Assets',
+      header: null, //title: 'Assets',
       tabBarLabel: translate('menu.tab.news', locale),
       tabBarIcon: getIcon('explore'),
     },
@@ -125,7 +125,7 @@ export const AppRoutes = {
     screen: UsersStackNavigator, //RegisterScreen, //WelcomeScreen, //NodeScreen,
     path: 'users',
     navigationOptions: {
-      title: 'user center',
+      header: null, //title: 'user center',
       tabBarLabel: translate('menu.tab.wallet', locale),
       tabBarIcon: getIcon('fingerprint'),
     },
