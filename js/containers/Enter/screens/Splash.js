@@ -74,16 +74,6 @@ class Splash extends Component {
       //resetNavigationTo('Login', navigation);
     }
 
-               /*console.log("=====[routerTransition.js]::App.willTransitionTo - db -  ", global.AsyncStorage);
-                ChainStore.init().then(() => {
-                  console.log("=====[App.js]::componentDidMount111111111 - ChainStore.init synced ok - ", Apis.instance().chain_id);
-                  //this.setState({synced: true});
-
-                }).catch(error => {
-                  let syncFail = ChainStore.subError && (ChainStore.subError.message === "ChainStore sync error, please check your system clock") ? true : false;
-                  console.error("=====[App.js]::componentDidMount111111111 - ChainStore.init synced error -", syncFail, error, ChainStore.subError);
-                }); */
-
   }
 
   setModalVisible = (login) => {
@@ -93,14 +83,7 @@ class Splash extends Component {
 
 	render() {
 
-    const { navigation } = this.props;
-
-    if(0)
-      return (
-        <ViewContainer>
-          <SwipeableView />
-        </ViewContainer>
-      );
+    const { navigation, isAuthenticated } = this.props;
 
 		return (
 			<ViewContainer>

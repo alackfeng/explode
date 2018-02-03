@@ -45,35 +45,12 @@ class App extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
-    console.log("=====[App.js]::componentWillReceiveProps - props > : ", nextProps, nextState);
-
-    if(0 && !this.state.synced && this.state.connected && nextProps.appReady) {
-          ChainStore.init().then(() => {
-            console.log("=====[App.js]::componentDidMount - ChainStore.init synced ok - ", Apis.instance().chain_id);
-            this.setState({synced: true});
-
-          }).catch(error => {
-            let syncFail = ChainStore.subError && (ChainStore.subError.message === "ChainStore sync error, please check your system clock") ? true : false;
-            console.error("=====[App.js]::componentDidMount - ChainStore.init synced error -", syncFail, error, ChainStore.subError);
-          });
-    }
-
+  componentWillReceiveProps(nextProps) {
+    console.log("=====[App.js]::componentWillReceiveProps - props > : ", nextProps);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     console.log("=====[App.js]::componentWillReceiveProps - props > : ", nextProps, nextState);
-
-    if(0 && !nextState.synced && nextState.connected && nextProps.appReady) {
-        ChainStore.init().then(() => {
-          console.log("=====[App.js]::componentDidMount - ChainStore.init synced ok - ", Apis.instance().chain_id);
-          this.setState({synced: true});
-
-        }).catch(error => {
-          let syncFail = ChainStore.subError && (ChainStore.subError.message === "ChainStore sync error, please check your system clock") ? true : false;
-          console.error("=====[App.js]::componentDidMount - ChainStore.init synced error -", syncFail, error, ChainStore.subError);
-        });
-    }
     return true;
   }
 
@@ -91,18 +68,13 @@ class App extends Component {
 
       // app启动时直接尝试连接节点
       let nodeTransition = (res, nodeList, st) => {
-        console.log("=====[App.js]::nodeConnect - call api...", res, st, appReady);
+        console.log("=====[App.js]::nodeConnect - call api...", res, st, appReady, this.state.connected, this.state.synced);
         const url = res;
         this.props.dispatch(nodeConnect(nodeList, url));
 
         //获取数据
         if(st === 'connect') {
-          this.setState({
-            connected: true,
-            synced: true,
-          })
-        }
-        if(0 && st === 'connect') {
+          this.setState({connected: true})
           ChainStore.init().then(() => {
             console.log("=====[App.js]::componentDidMount - ChainStore.init synced ok - ", Apis.instance().chain_id);
             this.setState({synced: true});
@@ -136,11 +108,11 @@ class App extends Component {
       nav,
     } = this.props;
 
-    console.log("=====[App.js]::App ready - ", appReady, " , nav - ", JSON.stringify(nav.routes.length));
+    console.log("=====[App.js]::App ready - ", appReady, this.state.synced, this.state.connected, " , nav - ", JSON.stringify(nav.routes.length));
 
     
     // launch screen
-    if(!appReady || !this.state.synced) {
+    if(!appReady || !this.state.synced || !this.state.connected) {
       console.log("=====[App.js]::App appReady - ", appReady);
       return <LaunchScreen />
     }

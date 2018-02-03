@@ -125,16 +125,6 @@ const willTransitionTo = (nextState, replaceState, callback) => {
             var db;
             try {
                 console.log("=====[routerTransition.js]::App.willTransitionTo - db -  ", global.AsyncStorage);
-                console.log("=====[App.js]::componentDidMount111111111 - ChainStore.init synced ok -1 ", Apis.instance().db_api);
-
-                ChainStore.init().then(() => {
-                  console.log("=====[App.js]::componentDidMount111111111 - ChainStore.init synced ok - ", Apis.instance().chain_id);
-                  //this.setState({synced: true});
-
-                }).catch(error => {
-                  let syncFail = ChainStore.subError && (ChainStore.subError.message === "ChainStore sync error, please check your system clock") ? true : false;
-                  console.error("=====[App.js]::componentDidMount111111111 - ChainStore.init synced error -", syncFail, error, ChainStore.subError);
-                });
 
                 //db = iDB.init_instance(window.openDatabase ? (global.AsyncStorage || localStorage || global.shimIndexedDB || indexedDB) : indexedDB).init_promise;
             } catch(err) {

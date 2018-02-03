@@ -3,17 +3,28 @@
 
 import React, { Component } from "react";
 
-import { Dimensions, StyleSheet, View, Image } from "react-native";
+import { Dimensions, StyleSheet, View, Text, Image, ImageBackground } from "react-native";
 
-const WIN_WIDTH = Dimensions.get("window").width,
-	WIN_HEIGHT = Dimensions.get("window").height;
+import { Tile } from "react-native-elements";
+
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
+import { ViewContainer } from "../components";
 
 class LaunchScreen extends Component {
 	render() {
 		return (
-			<View style={[styles.container, this.props.style]}>
-				<Image source={require("./img/launchscreen.png")} style={styles.image} />
-			</View>
+			<ViewContainer>
+				<Tile
+					imageSrc={require('./img/launchscreen.png')}
+					imageContainerStyle={styles.image}
+					title="ASSETFUN"
+					titleStyle={styles.title}
+					caption="与区块连接中"
+					captionStyle={styles.caption}
+					featured
+				>
+				</Tile>
+			</ViewContainer>
 		);
 	}
 };
@@ -21,15 +32,17 @@ class LaunchScreen extends Component {
 const styles = {
 	container: {
 		flex: 1,
-		backgroundColor: 'rgba(251, 249, 240, 1)'
+		backgroundColor: 'rgba(251, 249, 240, 1)',
 	},
 	image: {
-		position: 'absolute',
-		left: 0,
-		top: 0,
-		width: WIN_WIDTH,
-		height: WIN_HEIGHT,
-		resizeMode: 'cover'
+		width: SCREEN_WIDTH,
+		height: SCREEN_HEIGHT,
+	},
+	title: {
+		color: 'rgba(0,0,255,0.7)',
+	},
+	caption: {
+		color: 'rgba(0,0,255,0.3)'
 	}
 };
 
