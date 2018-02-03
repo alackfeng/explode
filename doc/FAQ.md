@@ -151,16 +151,35 @@ A21.
 /Users/assetfun/source/code/explode/node_modules/secure-random/lib/secure-random.js =>
 
 ----------
-var crypto = window.crypto || window.msCrypto
-// if (!crypto) throw new Error("Your browser does not support window.crypto.")
-if(!crypto) {
-  return nodeRandom(count, options)
-} else
-return browserRandom(count, options)
+    var crypto = window.crypto || window.msCrypto
+    if (!crypto) { 
+      //  粗旷的实现，在ios|android上使用
+      return normalRandom(count, options);  //throw new Error("Your browser does not support window.crypto.")
+    }
+    else
+      return browserRandom(count, options)
 
 ----------
-function nodeRandom(count, options) {
-  var crypto = require('crypto') || require('crypto-browserify')
+function normalRandom(count, options) {
+  
+  var nativeArr = new Array(count);
+  for (var i = 0; i < count; i++) {
+    nativeArr[i] = Math.floor(Math.random() * 256);
+  }
+
+  switch (options.type) {
+    case 'Array':
+      return [].slice.call(nativeArr)
+    case 'Buffer':
+      try { var b = new Buffer(1) } catch(e) { throw new Error('Buffer not supported in this environment. Use Node.js or Browserify for browser support.')}
+      return new Buffer(nativeArr)
+    case 'Uint8Array':
+      return nativeArr
+    default:
+      throw new Error(options.type + " is unsupported.")
+  }
+
+}
 
 ```
 
