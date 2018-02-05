@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Image, ListView, View, Text, ScrollView, Dimensions } from "react-native";
-import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
+import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../../libs";
 import { SearchBar, List, ListItem, Icon, Button, Input } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, LoadingLoginModal } from "../../../components";
@@ -48,17 +48,27 @@ class AssetsList extends Component {
 			dataSource: null, //ds.cloneWithRows(assetsList),
 			accountBalance: null,
 			accountHistory: null,
+			symbols: null,
+			balances: null,
 		};
 
 		this.renderRow 	= this.renderRow.bind(this);
 		this.navTo 			= this.navTo.bind(this);
 
+		this.update			= this.update.bind(this);
+
+	}
+
+	componentWillUnmount() {
+		ChainStore.unsubscribe(this.update); // update
 	}
 
 	componentWillMount() {
 		// alert("ddddd");
 		const { account } = this.props;
 		console.log("=====[AssetList.js]::componentDidMount - account ", account);
+
+		ChainStore.subscribe(this.update); // update
 
   	FetchChain("getAccount", account).then((res) => {
   		const accountObj = res; //ChainStore.getAccount(account);
@@ -68,11 +78,23 @@ class AssetsList extends Component {
       console.log("=====[AssetList.js]::componentDidMount - account : getAccount is : ", //JSON.stringify(res), 
       	"\n*******\n",JSON.stringify(accountBalance), "---", JSON.stringify(accountHistory));
       if(accountBalance) {
+
+      		let asset_types = [];
       		let balances = [];
       		accountBalance.forEach((a, asset_type) => {
       			balances.push({type: asset_type, asset: a});
+      			asset_types.push(asset_type);
       		});
-					this.setState({accountBalance, accountHistory, dataSource: this.state.ds.cloneWithRows(balances)});	
+
+      		// FetchChain
+      		FetchChain("getObject", asset_types).then(res => {
+      			console.log("=====[AssetList.js]::componentDidMount - getObject : accountBalance is : ", asset_types, res.size, "+++++++++++");
+      			this.setState({symbols: res && res.get("symbol"), dataSource: this.state.ds.cloneWithRows(balances)});
+      		}).catch(err => {
+      			console.error("=====[AssetList.js]::componentDidMount - getObject : accountBalance is : ", err);
+      		});
+
+					this.setState({accountBalance, accountHistory, balances});	
       }      
 
     }).catch(err => {
@@ -82,13 +104,17 @@ class AssetsList extends Component {
 		this.setState({refresh: true});
 	}
 
-	navTo(url) {
+	update(nextProps = null) {
+		console.info("=====[AssetList.js]::update - ChainStore::subscribe : ************** nextProps ", nextProps);
+	}
+
+	navTo(url, params) {
 		const { navigation } = this.props;
 		// console.log("=====[AssetList.js]::navTo - ", navigation);
 
 		if(navigation) {
 			//alert(url);
-			navigation.navigate(url);
+			navigation.navigate(url, params);
 		}
 	} 
 	renderRow(rowData, sectionID, rowID) {
@@ -110,7 +136,7 @@ class AssetsList extends Component {
 
 		return (
 			<ViewContainer>
-				<ListContainer>
+				<ScrollView>
 					<List>
 			      <ListView
 			      	ref="ListView"
@@ -119,7 +145,7 @@ class AssetsList extends Component {
 			        renderRow={this.renderRow}
 			      />
 			    </List>
-				</ListContainer>
+				</ScrollView>
 			</ViewContainer>
 		);
 	}

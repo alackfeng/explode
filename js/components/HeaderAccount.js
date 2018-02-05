@@ -13,10 +13,10 @@ type Props = {
 };
 
 const ViewHeader = styled.View`
-  margin-top: 10;
+  margin-top: 0;
   margin-left: 0;
   margin-right: 0;
-  margin-bottom: 10;
+  margin-bottom: 0;
   border-bottom-color: ${Colors.white};
   border-bottom-width: 1;
   height: 100;
@@ -35,12 +35,10 @@ class Account extends Component {
 		return (
 			<ViewHeader>
 				<Tile
-					imageSrc={require('./img/launchscreen.png')}
+					imageSrc={require('./images/account-background.jpg')}
 					imageContainerStyle={styles.image}
 					title={account}
 					titleStyle={styles.title}
-					caption={account}
-					captionStyle={styles.caption}
 					featured
 				/>
 			</ViewHeader>
@@ -58,10 +56,10 @@ const styles = {
 		height: 100,
 	},
 	title: {
-		color: 'rgba(0,0,255,0.7)',
+		color: 'white',
 	},
 	caption: {
-		color: 'rgba(0,0,255,0.3)'
+		color: 'white'
 	}
 };
 

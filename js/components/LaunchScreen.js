@@ -15,7 +15,7 @@ class LaunchScreen extends Component {
 		return (
 			<ViewContainer>
 				<Tile
-					imageSrc={require('./img/launchscreen.png')}
+					imageSrc={require('./images/launchscreen.png')}
 					imageContainerStyle={styles.image}
 					title="ASSETFUN"
 					titleStyle={styles.title}

@@ -22,6 +22,7 @@ class Asset extends Component {
 		this.state = {
 			balanceObject: null,
 			asset: null,
+			symbol: null,
 		};
 
 	}
@@ -31,10 +32,10 @@ class Asset extends Component {
 
 		const balanceObject = ChainStore.getObject(item.asset);
 		const asset_type = balanceObject.get("asset_type");
-		const asset = ChainStore.getAsset(asset_type);
+		const asset = ChainStore.getObject(asset_type);
 
 		console.log("=====[AssetItem.js]::componentWillMount - balanceObject > ", JSON.stringify(balanceObject), asset_type, JSON.stringify(asset));
-		this.setState({balanceObject, asset});
+		this.setState({balanceObject, asset, symbol: asset && asset.get("symbol")});
 	}
 
 	onPressNavTo() {
@@ -42,17 +43,17 @@ class Asset extends Component {
 
 		console.log("=====[AssetItem.js]::onPressNavTo - press > ", item, index);
 		if(nav)
-			this.props.nav('Transfer');
+			this.props.nav('Transfer', {item: item, index: index});
 
 	}
 
 	render() {
 
 		const { item, index } = this.props;
-		const { balanceObject, asset } = this.state;
-		console.log("=====[NodeItem.js]::render - node item > ", item, index);
+		const { balanceObject, asset, symbol } = this.state;
+		console.log("=====[AssetItem.js]::render - node item > ", item, index, symbol);
 
-		const subTitle = `资产类型:${item.type} 余额${balanceObject.get("balance")/100000000}AFT>拥有者<${balanceObject.get("owner")}>`;
+		const subTitle = `${balanceObject.get("balance")/100000000} ${symbol}`;
 
 		return (
 			<AssetItemWrap>
@@ -63,9 +64,12 @@ class Asset extends Component {
 					title={item.type}
 					subtitle={subTitle}
 					icon={{ name: item.icon }}
-					rightIcon={{ name: 'cloud-upload'}}
+					rightIcon={{ name: 'trending-up'}}
+					rightTitle={"转帐"}
+					rightTitleStyle={{color: 'rgba(35,82,164,1)'}}
 					onPressRightIcon={this.onPressNavTo}
-					//avatar={{uri:rowData.avatar_url}}
+					avatar={require('../images/aft-account.png')}
+					avatarStyle={{backgroundColor: 'blue'}}
 					//badge={{ element: <CustBadge index={rowID}/> }}
 					//onPress={() => this.onPressItem(rowData)}
 				/>

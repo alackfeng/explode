@@ -45,7 +45,6 @@ class AssetsManage extends Component {
       <ViewContainer>
         <HeaderSearchBar onSearch={this.onSearchAssets}/>
         <HeaderAccount />
-        <Header node/>
         <AssetsList navigation={this.props.navigation} account={currentAccount} />
       </ViewContainer>
     );
