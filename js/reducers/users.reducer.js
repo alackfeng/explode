@@ -66,16 +66,29 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 		case TRIGGER_USERS_UNLOCK:
 		{
 
-
-			return {
-				...state,
-				entityUnLock: {
-					isOpen: (action.extra && action.extra.isOpen) || false,
-					isUnLock: action.username ? true : false,
-					raw: action || {},
-					transaction: [],
+			if(action.extra && (action.extra.type === 'open' || action.extra.type === 'close')) {
+				const isOpen = action.extra.type === 'open';
+				return {
+					...state,
+					entityUnLock: {
+						isOpen: isOpen || false,
+						isUnLock: state.entityUnLock.isUnLock || false,
+						raw: {},
+						transaction: [],
+					}
+				}				
+			} else {
+				return {
+					...state,
+					entityUnLock: {
+						isOpen: state.entityUnLock.isOpen || false,
+						isUnLock: action.username ? true : false,
+						raw: action || {},
+						transaction: [],
+					}
 				}
 			}
+
 		}
 		case USERS_REGISTER.SUCCESS:
 		case USERS_REGISTER.REQUEST:
@@ -109,10 +122,12 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 		case USERS_UNLOCK.REQUEST:
 		case USERS_UNLOCK.FAILURE:
 		{
-			const unlock_status = (action.type === USERS_UNLOCK.REQUEST) ? true : false; //!state.isRegister;
+			const isopen_status = (action.type === USERS_UNLOCK.SUCCESS) ? false : state.entityUnLock.isOpen;
+			const unlock_status = (action.type === USERS_UNLOCK.SUCCESS) ? true : false;
 			return {
 				...state,
 				entityUnLock: {
+					isOpen: isopen_status,
 					isUnLock: unlock_status,
 					raw: state.entityUnLock.raw,
 					transaction: [{...action}, ...state.entityUnLock.transaction],

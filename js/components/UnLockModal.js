@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, Keyboard } from "react-native";
 import Modal from "react-native-modal";
 import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
 
 import { Icon, Button, Input, Divider } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet } from "../components";
-import { triggerUser } from "../actions";
+import { triggerUser, USERS_UNLOCK } from "../actions";
 const {unlock: sendUnLock} = triggerUser;
 
 const modalTop = SCREEN_HEIGHT / 2;
@@ -67,8 +67,6 @@ class UnLock extends Component {
     this.state = {
       username: props.currentAccount || '',
       password: '',
-
-      isClose: false,
     }
 
     this.onCancel   = this.onCancel.bind(this);
@@ -77,31 +75,57 @@ class UnLock extends Component {
 
   onConfirm() {
     
-    this.props.sendUnLock(this.state.username, {
-      username: this.state.username,
+    const username = this.state.username || this.props.currentAccount;
+
+    this.props.sendUnLock(username, {
+      username: username,
       password: this.state.password,
-      unlock: true,
+      type: 'unlock',
     });
   }
 
   onCancel() {
+
+    const username = this.state.username || this.props.currentAccount;
     
-    this.setState({isClose: true}); 
-    ///this.props.sendUnLock(this.state.username, {
-    //  unlock: false,
-    //}); 
+    this.props.sendUnLock(username, {
+      type: 'close',
+    }); 
+  }
+
+  showMessage() {
+    const { entityUnLock: entity } = this.props;
+    console.log("=====[UnLockModal.js]::showMessage - entity : ", entity);
+
+    let show_msg = JSON.stringify(entity);
+
+    let entityReq = null;
+    let entityOk = null;
+    let entityErr = null;
+    let entityObj = entity.transaction.length && entity.transaction.map((item, index) => {
+      console.log("=====[UnLockModal.js]::showMessage - entity : ", item, index);
+      if(item.type === USERS_UNLOCK.FAILURE) entityErr  = item.error;
+      if(item.type === USERS_UNLOCK.REQUEST) entityReq  = item.response;
+      if(item.type === USERS_UNLOCK.SUCCESS) entityOk   = '解锁处理中';
+
+    });
+
+    console.log("=====[UnLockModal.js]::showMessage - entity : ", entityObj, entityReq, entityOk, entityErr);
+
+    return { ok: entityOk, err: entityErr, req: entityReq };
   }
 
   render() {
 
-    const { onChange, entityUnLock: entity, navigation, isOpen } = this.props;
-    const { isClose } = this.state;
+    const { onChange, entityUnLock: entity, navigation, isOpen, currentAccount } = this.props;
 
-    console.log("=====[LoadingLogin.js]::render - entity : ", entity);
+    
 
     const isUnLock = (entity && entity.isUnLock) || false;
-    if(isOpen && isClose)
+    if(!isOpen)
       return null;
+
+    const { ok, err, req } = this.showMessage(); 
 
     return (
     <View style={styles.container}>
@@ -111,9 +135,10 @@ class UnLock extends Component {
         transparent
       >
         
-        <View style={{height: 30, backgroundColor: 'white', marginBottom: 10, alignItems: 'center'}}>
-          <Text style={{textAlign: 'center', fontWeight: 10, fontSize: 20}}>解锁账号</Text>
+        <View style={{height: 100, backgroundColor: 'white', marginBottom: 10, alignItems: 'center'}}>
+          <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 20}}>解锁账号</Text>
           <Divider style={{ backgroundColor: 'rgba(35,82,164,1)', width: SCREEN_WIDTH*0.5 }} />
+          <View><Text>{ ok || err || req }</Text></View>
         </View>
         
         <View style={{backgroundColor: 'rgba(255, 255, 255, 1)', alignItems: 'center'}}>
@@ -141,7 +166,7 @@ class UnLock extends Component {
                 this.passwordInput.focus();
               }}
               blurOnSubmit={false}
-              value={this.state.username}
+              value={this.state.username || currentAccount}
             />
           </View>
           <View style={styles.overlay}>
@@ -161,11 +186,11 @@ class UnLock extends Component {
               keyboardAppearance="light"
               keyboardType="default"
               secureTextEntry={true}
-              returnKeyType="next"
+              returnKeyType="done"
               ref={ input => this.passwordInput = input }
               onChangeText={ text => this.setState({password: text})}
               onSubmitEditing={() => {
-                this.passwordInput.focus();
+                Keyboard.dismiss();
               }}
               blurOnSubmit={false}
               value={this.state.password}

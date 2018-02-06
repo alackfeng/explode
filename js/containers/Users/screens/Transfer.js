@@ -65,10 +65,12 @@ class Transfer extends Component {
       return;
     }
 
+ 
+    // 先解锁再
     if(!this.props.isUnLock) {
       // 先解锁，再发交易
       this.props.sendUnLock(this.props.currentAccount, {
-        isOpen: true
+        type: 'open'
       });
       
       return;

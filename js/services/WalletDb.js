@@ -136,14 +136,14 @@ class WalletDB {
   unLock(user, extra) {
     console.log("=====[WalletDb.js]::unLock - : ", user, extra);
 
-    const { username, password, unlock } = extra;
+    const { username, password, type } = extra;
 
     let res = null;
     
-    if(unlock) {
+    if(type === 'unlock') {
 
       if(user.username !== username || !password) {
-        throw new Error("unlock error")
+        return {error: "unlock error"};
       }
 
       const auth_user_object = user.authAccount;
@@ -151,7 +151,7 @@ class WalletDB {
       // 密码有效性
       let password_private = PrivateKey.fromSeed( password );
       let password_pubkey = password_private.toPublicKey().toPublicKeyString();
-      if(auth_user_object.password_pubkey !== password_pubkey) return { response : "unlock false" };
+      if(auth_user_object.password_pubkey !== password_pubkey) return { error : "unlock false" };
 
       // 设置缓存
       console.log("=====[WalletDb.js]::unLock - auth_user_object : ", auth_user_object);
@@ -174,7 +174,7 @@ class WalletDB {
       res = "lock success";
     }
 
-    console.log("=====[WalletDb.js]::unLock - : ", unlock, this.state.auth, this.state.keys, aes_private);
+    console.log("=====[WalletDb.js]::unLock - : ", type, this.state.auth, this.state.keys, aes_private);
     return { response: res };
   }
 

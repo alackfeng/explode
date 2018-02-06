@@ -20,7 +20,7 @@ const TRACE = false;
 function* fetchEntity(entity, apiFn, id, info) {
   yield put( entity.request(id, info) )
   const {response, error, extradata} = yield call(apiFn, id, info)
-  console.warn("=====[users.saga.js]::fetchEntity - response, ", response, error, extradata);
+  console.info("=====[users.saga.js]::fetchEntity - response, ", response, error, extradata);
 
   if(response)
     yield put( entity.success(id, response) )
@@ -235,7 +235,7 @@ function* unlock(username, extra, requiredFields) {
 
 		if (user || requiredFields.some(key => !user.hasOwnProperty(key))) {
 
-			console.log("=====[users.saga.js]::login - not exists user: ", user)
+			console.log("=====[users.saga.js]::login - exists user: ", user, "unlock it!")
 			const {response, error, extradata} = yield call(callUserUnLock, user, extra)
 
 			console.log("=====[users.saga.js]::login - unlock user <", username, "> ok : ", response, error, extradata);
@@ -322,10 +322,12 @@ export function* watchUserUnLock() {
 		const {username, extra, requiredFields = []} = yield take(actions.TRIGGER_USERS_UNLOCK);
 		console.log("=====[users.saga.js]::watchUserUnLock - loop unlock info - ++++>", username, extra);
 
-		if(extra && extra.isOpen) {
+		// 打开关闭解锁Modal
+		if(extra && (extra.type === 'open' || extra.type === 'close')) {
 			// 打开UnlockModal
 		} //
-		else 
+		else
+			// 触发解锁 
 			yield fork(unlock, username, extra, requiredFields);
 
 		} catch( e ) {

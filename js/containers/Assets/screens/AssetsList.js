@@ -66,10 +66,10 @@ class AssetsList extends Component {
 	componentWillMount() {
 		// alert("ddddd");
 		const { account } = this.props;
-		console.log("=====[AssetList.js]::componentDidMount - account ", account);
+		console.log("=====[AssetList.js]::componentDidMount - account----------------------------------- ", account);
 
 		ChainStore.subscribe(this.update); // update
-
+		
   	FetchChain("getAccount", account).then((res) => {
   		const accountObj = res; //ChainStore.getAccount(account);
   		const accountBalance = accountObj && accountObj.get("balances");
