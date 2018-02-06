@@ -15,7 +15,7 @@ class LaunchScreen extends Component {
 		return (
 			<ViewContainer>
 				<Tile
-					imageSrc={require('./images/launchscreen.png')}
+					imageSrc={require('./images/launchscreen.jpg')}
 					imageContainerStyle={styles.image}
 					title="ASSETFUN"
 					titleStyle={styles.title}
@@ -32,17 +32,17 @@ class LaunchScreen extends Component {
 const styles = {
 	container: {
 		flex: 1,
-		backgroundColor: 'rgba(251, 249, 240, 1)',
+		backgroundColor: 'white',
 	},
 	image: {
 		width: SCREEN_WIDTH,
 		height: SCREEN_HEIGHT,
 	},
 	title: {
-		color: 'rgba(0,0,255,0.7)',
+		color: 'white',
 	},
 	caption: {
-		color: 'rgba(0,0,255,0.3)'
+		color: 'white'
 	}
 };
 

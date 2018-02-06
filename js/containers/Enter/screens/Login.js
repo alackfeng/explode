@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(35,82,164,0.7)',
   },
   triangleLeft: {
     position: 'absolute',
@@ -110,15 +110,14 @@ class Login extends Component {
     console.info("=====[Login.js]::render - login status : ");
 
 		return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ViewContainer>
         {this.state.isOpen && <LoadingLoginModal onChange={(open) => this.setState({isOpen: !!open})} navigation={navigation} />}
         <View style={styles.contentView} >
-          <View style={{backgroundColor: 'rgba(46, 50, 72, 1)', width: SCREEN_WIDTH, alignItems: 'center'}}>
-            <Text style={{color: 'white', fontSize: 30, marginVertical: 10, fontWeight: '300', marginTop: 10}}>登录</Text>
-    				<Text style={styles.welcome} >Welcome to Aftrade Enter</Text>
+          <View style={{width: SCREEN_WIDTH*0.8}}>
+            <Text style={{color: 'white', fontSize: 20, marginVertical: 10, fontWeight: 'bold', marginTop: 10}}>登录</Text>
             <View style={styles.overlay}>
               <Input
-                containerStyle={{borderWidth: 1, borderColor: 'white', borderLeftWidth: 0, height: 50, width: SCREEN_WIDTH - 80, backgroundColor: 'white'}}
+                containerStyle={{borderWidth: 0, borderColor: 'white', borderBottomWidth: 1, height: 50, width: SCREEN_WIDTH*0.8}}
                 icon={
                   <Icon
                     name='person'
@@ -127,7 +126,7 @@ class Login extends Component {
                   />
                 }
                 placeholder="Username"
-                placeholderTextColor="black"
+                placeholderTextColor="white"
                 autoCapitalize="none"
                 autoCorrect={false}
                 keyboardAppearance="light"
@@ -144,7 +143,7 @@ class Login extends Component {
             </View>
             <View style={[styles.overlay, { marginBottom: 30, marginTop: 1 }]}>
               <Input
-                containerStyle={{borderWidth: 1, borderColor: 'white', borderLeftWidth: 0, height: 50, width: SCREEN_WIDTH - 80, backgroundColor: 'white'}}
+                containerStyle={{borderWidth: 0, borderColor: 'white', borderBottomWidth: 1, height: 50, width: SCREEN_WIDTH*0.8, backgroundColor: 'transparent'}}
                 icon={
                   <Icon
                   name='lock'
@@ -153,7 +152,7 @@ class Login extends Component {
                 />
                 }
                 placeholder="Password"
-                placeholderTextColor="black"
+                placeholderTextColor="white"
                 autoCapitalize="none"
                 keyboardAppearance="light"
                 secureTextEntry={true}
@@ -166,26 +165,25 @@ class Login extends Component {
                 value={this.state.password}
               />
             </View>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: SCREEN_WIDTH * 0.8}}>
               <Button
                 text ='登  录'
-                buttonStyle={{height: 50, width: 200, backgroundColor: 'black', borderWidth: 2, borderColor: 'white', borderRadius: 30}}
-                containerStyle={{marginVertical: 10}}
-                textStyle={{fontWeight: 'bold'}}
+                buttonStyle={{height: 50, width: SCREEN_WIDTH*0.5, backgroundColor: 'transparent', borderWidth: 1, borderColor: 'white', borderRadius: 5}}
+                textStyle={{fontWeight: 'bold', fontSize: 25}}
+                containerStyle={{marginLeft: 20}}
                 onPress={this.userLogin} // onPress={() => resetNavigationTo('Main', navigation)} //
               />
               <Button
-                text="     跳转到注册"
+                text="注册"
                 clear
-                textStyle={{color: 'rgba(78, 116, 289, 1)'}}
-                containerStyle={{marginTop: 20,marginVertical:20}}
+                textStyle={{color: 'white'}}
                 onPress={() => resetNavigationTo('Register', navigation)}
               />
             </View>
-            {nodeStatus && <View style={{backgroundColor: 'red'}}><Text>{nodeStatus.url} > {nodeStatus.status} </Text></View>}
+            {!nodeStatus && <View style={{backgroundColor: 'red'}}><Text>{nodeStatus.url} > {nodeStatus.status} </Text></View>}
           </View>
         </View>
-      </ScrollView>
+      </ViewContainer>
 		);
 	}
 }

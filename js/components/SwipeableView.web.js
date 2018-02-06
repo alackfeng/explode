@@ -31,7 +31,7 @@ export const SwipeableView = () => (
 		<div style={Object.assign({}, styles.slide, styles.slide1)}>
       <Image
         style={styles.logo}
-        source={require('../containers/Enter/images/logo-black.png')}
+        source={require('../containers/Enter/images/reglogin-background.png')}
       />
       slide n°1
     </div>

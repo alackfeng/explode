@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Text, View, StatusBar, TextInput, TouchableHighlight, ActivityIndicator, ScrollView, Dimensions } from "react-native";
-import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
+import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../../libs";
 import { Icon, Button, Input, Overlay } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, LoadingRegisterModal } from "../../../components";
@@ -204,23 +204,22 @@ class Register extends Component {
 			<ScrollView contentContainerStyle={styles.container}>
         {this.state.isOpen && <LoadingRegisterModal onChange={(open) => this.setState({isOpen: !!open})} navigation={navigation} />}
         <View style={styles.contentView} >
-          <View style={{backgroundColor: 'white', width: SCREEN_WIDTH, alignItems: 'center'}}>
-            <Text style={{color: 'black', fontSize: 30, marginVertical: 10, fontWeight: '300', marginTop: 10}}>登录</Text>
-            <Text style={styles.welcome} >Welcome to Aftrade Register</Text>
+          <View style={{backgroundColor: 'transparent', width: SCREEN_WIDTH, alignItems: 'center'}}>
+            <Text style={{color: 'white', fontSize: 20, marginVertical: 10, fontWeight: 'bold', marginTop: 10}}>注册</Text>
             <View style={[styles.overlay, { marginBottom: 30, marginTop: 1 }]}>
             <Input
-              containerStyle={{borderRadius: 40, borderWidth: 1, borderColor: 'rgba(110, 120, 170, 1)', height: 50, width: SCREEN_WIDTH - 50, marginVertical: 10}}
+              containerStyle={{borderRadius: 0, borderBottomWidth: 1, borderColor: 'white', height: 50, width: SCREEN_WIDTH * 0.8, marginVertical: 10}}
               icon={
                 <Icon
                   name='person'
-                  color='rgba(110, 120, 170, 1)'
+                  color='white'
                   size={25}
                 />
               }
               iconContainerStyle={{marginLeft: 20}}
-              placeholder="Username"
+              placeholder="账号名称"
               placeholderTextColor="rgba(110, 120, 170, 1)"
-              inputStyle={{marginLeft: 10, color: 'black'}}
+              inputStyle={{marginLeft: 10, color: 'white'}}
               autoCapitalize="none"
               autoCorrect={false}
               keyboardAppearance="light"
@@ -237,18 +236,18 @@ class Register extends Component {
               onChangeText={this.onChangeUserName}
             />
             <Input
-              containerStyle={{borderRadius: 40, borderWidth: 1, borderColor: 'rgba(110, 120, 170, 1)', height: 50, width: SCREEN_WIDTH - 50, marginVertical: 10}}
+              containerStyle={{borderRadius: 0, borderBottomWidth: 1, borderColor: 'white', height: 50, width: SCREEN_WIDTH * 0.8, marginVertical: 10}}
               icon={
                 <Icon
                   name='lock'
-                  color='rgba(110, 120, 170, 1)'
+                  color='white'
                   size={25}
                 />
               }
               iconContainerStyle={{marginLeft: 20}}
               placeholder="Password"
-              placeholderTextColor="rgba(110, 120, 170, 1)"
-              inputStyle={{marginLeft: 10, color: 'black'}}
+              placeholderTextColor="white"
+              inputStyle={{marginLeft: 10, color: 'white'}}
               autoCapitalize="none"
               keyboardAppearance="light"
               secureTextEntry={true}
@@ -266,18 +265,18 @@ class Register extends Component {
               onChangeText={this.onChangePassword}
             />
             <Input
-              containerStyle={{borderRadius: 40, borderWidth: 1, borderColor: 'rgba(110, 120, 170, 1)', height: 50, width: SCREEN_WIDTH - 50, marginTop: 10, marginBottom: 30}}
+              containerStyle={{borderRadius: 0, borderBottomWidth: 1, borderColor: 'white', height: 50, width: SCREEN_WIDTH * 0.8, marginVertical: 10}}
               icon={
                 <Icon
                   name='lock'
-                  color='rgba(110, 120, 170, 1)'
+                  color='white'
                   size={25}
                 />
               }
               iconContainerStyle={{marginLeft: 20}}
               placeholder="Confirm Password"
-              placeholderTextColor="rgba(110, 120, 170, 1)"
-              inputStyle={{marginLeft: 10, color: 'black'}}
+              placeholderTextColor="white"
+              inputStyle={{marginLeft: 10, color: 'white'}}
               autoCapitalize="none"
               keyboardAppearance="light"
               secureTextEntry={true}
@@ -292,26 +291,24 @@ class Register extends Component {
               onChangeText={this.onChangeConfirmPass}
             />
             </View>
-            <View style={{flexDirection: 'row'}}>
+              <View style={{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: SCREEN_WIDTH * 0.8}}>
               <Button
                 text ='注  册'
-                buttonStyle={{height: 50, width: 200, backgroundColor: 'black', borderWidth: 2, borderColor: 'white', borderRadius: 30}}
-                containerStyle={{marginVertical: 10}}
+                buttonStyle={{marginBottom: 10, height: 50, width: SCREEN_WIDTH * 0.5, backgroundColor: 'transparent', borderWidth: 1, borderColor: 'white', borderRadius: 5}}
                 textStyle={{fontWeight: 'bold'}}
+                containerStyle={{marginLeft: 20}}
                 onPress={this.userRegister}
                 loading={isLoading}
                 loadingProps={loadingProps}
               />
               <Button
-                text="   跳转到登录"
+                text="登录"
                 clear
-                textStyle={{color: 'rgba(78, 116, 289, 1)'}}
-                containerStyle={{marginTop: 20,marginVertical:20}}
+                textStyle={{color: 'white'}}
                 onPress={() => resetNavigationTo('Login', navigation)}
               />
-            </View>
+              </View>
           </View>
-          {nodeStatus && <View><Text>{nodeStatus.url} > {nodeStatus.status} </Text></View>}
         </View>
       </ScrollView>
 		);
@@ -323,15 +320,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flexWrap: 'nowrap',
     backgroundColor: '#F5FCFF',
-    height: '100%',
+    height: SCREEN_HEIGHT,
   },
   contentView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(35,82,164,0.7)',
   },
   triangleLeft: {
     position: 'absolute',

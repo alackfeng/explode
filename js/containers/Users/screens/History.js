@@ -29,7 +29,7 @@ class History extends Component {
 		const { currentAccount } = this.props;
 
 		if(currentAccount) {
-      /*FetchChain("getAccount", currentAccount).then((ret) => {
+      FetchChain("getAccount", currentAccount).then((ret) => {
         if(TRACE) console.log("=====[History.js]::componentDidMount - : FetchChain:getAccount is : ", JSON.stringify(ret.get("balances")), JSON.stringify(ret));
         const accountObj = ret;
         const accountHistory = accountObj && accountObj.get ? ret.get("history") : null;
@@ -38,7 +38,7 @@ class History extends Component {
 
       }).catch(err => {
         console.error("=====[History.js]::componentDidMount - : FetchChain:getAccount is : err ", err);
-      })*/
+      })
 		}
 	}
 
