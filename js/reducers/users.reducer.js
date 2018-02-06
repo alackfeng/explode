@@ -13,6 +13,7 @@ export const initialUsersState = {
 		transaction: [],
 	},
 	entityUnLock: {
+		isOpen: false,
 		isUnLock: false,
 		raw: {},
 		transaction: [],
@@ -57,6 +58,20 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 				...state,
 				entityLogin: {
 					isLogin: action.username ? true : false,
+					raw: action || {},
+					transaction: [],
+				}
+			}
+		}
+		case TRIGGER_USERS_UNLOCK:
+		{
+
+
+			return {
+				...state,
+				entityUnLock: {
+					isOpen: (action.extra && action.extra.isOpen) || false,
+					isUnLock: action.username ? true : false,
 					raw: action || {},
 					transaction: [],
 				}

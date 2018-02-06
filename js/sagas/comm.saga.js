@@ -34,7 +34,7 @@ function perfParamStore(parameters) {
 function* fetchEntity(entity, apiFn, id, info) {
   yield put( entity.request(id, perfParamStore(info)) )
   const {response, error} = yield call(apiFn, id, info)
-  console.warn("=====[comm.saga.js]::fetchEntity - response, ", response, error);
+  console.info("=====[comm.saga.js]::fetchEntity - response, ", response, error);
 
   if(response)
     yield put( entity.success(id, perfParamStore(response)) )

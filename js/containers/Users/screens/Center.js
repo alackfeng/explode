@@ -12,8 +12,6 @@ import { resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../../libs/he
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
-import { UnLockModal } from "../../../components";
-
 
 const CustBadge = (props) => {
 
@@ -101,7 +99,6 @@ class Center extends Component {
 
     	return (
     	<ViewContainer>
-    		<UnLockModal />
     		<View style={styles.userContainer} >
     			<Icon color="white" name="invert-colors" size={62} />
     			<Text style={styles.heading}>{currentAccount ? currentAccount : "Welcome?"}</Text>

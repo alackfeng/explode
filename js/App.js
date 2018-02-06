@@ -5,6 +5,7 @@ import { View, Text } from "react-native";
 import LaunchScreen from "./components/LaunchScreen";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
+import { ViewContainer, UnLockModal } from "./components";
 
 
 import {
@@ -122,11 +123,14 @@ class App extends Component {
 
     // enter app
     return (
+    <ViewContainer>
+      <UnLockModal />
       <NavigationWrappedApp
         dispatch={dispatch}
         state={nav}
         appReady={appReady}
       />
+    </ViewContainer>
     );
   };
 

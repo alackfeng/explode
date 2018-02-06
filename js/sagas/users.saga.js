@@ -322,7 +322,11 @@ export function* watchUserUnLock() {
 		const {username, extra, requiredFields = []} = yield take(actions.TRIGGER_USERS_UNLOCK);
 		console.log("=====[users.saga.js]::watchUserUnLock - loop unlock info - ++++>", username, extra);
 
-		yield fork(unlock, username, extra, requiredFields);
+		if(extra && extra.isOpen) {
+			// 打开UnlockModal
+		} //
+		else 
+			yield fork(unlock, username, extra, requiredFields);
 
 		} catch( e ) {
 			//const delay_1000 = yield delay(1000);

@@ -9,8 +9,9 @@ import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
 import { Icon, Button, Input, List, ListItem } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, TransactionConfirmModal } from "../../../components";
-import { triggerTrans } from "../../../actions";
+import { triggerTrans, triggerUser } from "../../../actions";
 const {handle: sendTransfer} = triggerTrans;
+const {unlock: sendUnLock} = triggerUser;
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
@@ -22,8 +23,8 @@ class Transfer extends Component {
 
     this.state = {
       fromUser: '',
-      toUser: '',
-      amount: '',
+      toUser: 'feng41',
+      amount: '1',
       asset_type: '',
       memoText: '',
       isOpen: false,
@@ -58,6 +59,21 @@ class Transfer extends Component {
 
     console.log("=====[Transfer.js]::onPressTransfer - param > ", fromUser, toUser, amount);
     
+
+    // 检验有效性
+    if(!fromUser || !toUser || !amount || !asset_type) {
+      return;
+    }
+
+    if(!this.props.isUnLock) {
+      // 先解锁，再发交易
+      this.props.sendUnLock(this.props.currentAccount, {
+        isOpen: true
+      });
+      
+      return;
+    }
+
     // 先打开模式对话框，接收消息
     this.setState({isOpen: true});
 
@@ -238,8 +254,10 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   currentAccount: state.app.currentAccount,
   nodeStatus: state.app.nodeStatus,
+  isUnLock: state.users.entityUnLock.isUnLock
 });
 
 export const TransferScreen = connect(mapStateToProps, {
   sendTransfer,
+  sendUnLock,
 })(Transfer);
