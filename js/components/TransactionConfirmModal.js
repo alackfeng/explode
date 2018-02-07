@@ -11,8 +11,8 @@ import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs"
 import { Button, Divider } from "react-native-elements";
 
 import { ViewContainer, StyleSheet } from "../components";
-import { triggerTrans, TRIGGER_SECOND_CONFIRM_YES, TRIGGER_SECOND_CONFIRM_NO } from "../actions";
-const {confirm: secondConfirm } = triggerTrans;
+import { triggerTrans, TRIGGER_TRANSACTION_COMMON, TRIGGER_SECOND_CONFIRM_YES, TRIGGER_SECOND_CONFIRM_NO } from "../actions";
+const {confirm: secondConfirm, close: transClose } = triggerTrans;
 
 import { ChainTypes } from "assetfunjs/es";
 const { operations } = ChainTypes;
@@ -121,6 +121,51 @@ class TransactionDetails extends Component {
   }
 }
 
+class TransactionDetail extends Component {
+
+
+  transDetails() {
+    const { entity } = this.props;
+    if(!entity.transaction || !entity.transaction.length) {
+      //console.log("=====[TransactionConfirmModal.js]::transDetails - ", entity.transaction);
+      return {};
+    }
+
+    let rows = entity.transaction.map((item, index) => {
+      return <View key={index}><Text style={{backgroundColor: index%2 !== 0 ? 'red': 'yellow'}}>{JSON.stringify(item)}</Text></View>;
+    });
+
+    return {details: rows};
+  }
+
+  transRaw() {
+    const { status, entity } = this.props;
+    if(!entity || !entity.raw || entity.raw.type !== TRIGGER_TRANSACTION_COMMON) {
+      return {};
+    }
+    return {type: entity.raw.type, name: entity.raw.username, referrer: entity.raw.referrer};
+  }
+
+  render() {
+
+    const { status, entity } = this.props;
+
+    const { details } = this.transDetails();
+    const {type, name, referrer} = this.transRaw();
+
+    //console.log("=====[TransactionConfirmModal.js]::transDetails - rows : ", details);
+
+    return (
+      <ScrollView style={{backgroundColor: 'lightblue'}}>
+        <Text style={{backgroundColor: 'gray'}}>{type}: {name} - {referrer}</Text>
+        <Divider style={{ backgroundColor: 'blue' }} />
+        {details}
+      </ScrollView>
+    );
+  }
+}
+
+
 class TransactionConfirm extends Component {
 
 
@@ -159,12 +204,12 @@ class TransactionConfirm extends Component {
 
     const { entityTrans: entity } = this.props;
 
-    if(entity && entity.isOpen) { //打开触发关闭
+    if(entity && entity.isOpen) //打开触发关闭
       this.props.secondConfirm(TRIGGER_SECOND_CONFIRM_NO);
-    } else {
-      this.props.onChange(false); //直接关闭
-    }
-}
+    //} else {
+      this.props.transClose('closure'); //直接关闭
+    //}
+  }
 
   showTranStatus = () => {
     const { entityTrans: entity } = this.props;
@@ -180,6 +225,11 @@ class TransactionConfirm extends Component {
 
     const { onChange, entityTrans: entity, navigation } = this.props;
     console.log("=====[TransactionConfirmModal.js]::render - entity : ", entity);
+
+    const isOpen = entity && entity.isOpen || false;
+    if(!isOpen) {
+      return null;
+    }
 
     const {status, tip} = this.showTranStatus();
 
@@ -198,11 +248,9 @@ class TransactionConfirm extends Component {
             <Text>{tip}</Text>
             <Divider style={{ backgroundColor: 'blue' }} />
           </View>
-          {/*isOpen && <RegInfo info={entity.raw}/>*/}
+
           <TransactionDetails entity={entity} status={status} />
-          {/*entity.transaction.length > 0 && <Transaction trans={entity.transaction[0]} />*/}
-          {/*<View style={{backgroundColor: 'yellow', borderWidth: 1, borderColor: 'yellow'}}/>*/}
-          {/*entity.transaction.length>1 && entity.transaction[1] && <Transaction trans={entity.transaction[1]} />*/}
+          <TransactionDetail entity={entity} />
         </View>
         
         <View style={{flexDirection: 'row'}}>
@@ -234,5 +282,6 @@ const mapStateToProps = (state) => ({
 
 export const TransactionConfirmModal = connect(mapStateToProps, {
   secondConfirm,
+  transClose,
 })(TransactionConfirm);
 

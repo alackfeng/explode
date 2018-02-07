@@ -137,8 +137,8 @@ class UnLock extends Component {
         
         <View style={{height: 100, backgroundColor: 'white', marginBottom: 10, alignItems: 'center'}}>
           <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 20}}>解锁账号</Text>
-          <Divider style={{ backgroundColor: 'rgba(35,82,164,1)', width: SCREEN_WIDTH*0.5 }} />
-          <View><Text>{ ok || err || req }</Text></View>
+          <Divider style={{ backgroundColor: 'rgba(35,82,164,1)', width: SCREEN_WIDTH*0.5, marginBottom: 20 }} />
+          <View><Text style={{color: 'red'}}>{ ok || err || req }</Text></View>
         </View>
         
         <View style={{backgroundColor: 'rgba(255, 255, 255, 1)', alignItems: 'center'}}>

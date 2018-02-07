@@ -82,7 +82,7 @@ function* transaction(username, method, parameters, requiredFields) {
 					// 调用交易流程
 
 					const { timeout, waitBroad } = yield race({
-						timeout: call(delay, 100000),
+						timeout: call(delay, 10000),
 						waitBroad: take(actions.TRIGGER_SECOND_CONFIRM),
 					});
 

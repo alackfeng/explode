@@ -171,16 +171,9 @@ class Node extends Component {
   	console.log("++++++[Node.js]::updateConnect - node - ", connectUrl);
 
   	
-  	Apis.reset(connectUrl, true).init_promise
-  	.then(()=> {
-  		console.log("++++++[Node.js]::updateConnect - apis::reset - ", this);
-
-  	});
+  	Apis.reset(connectUrl, true); //去掉注释的内容（init_promise），内存、CPU不再高涨
 
   	this.props.nodeConnect(null, connectUrl);
-  	//this.props.updateRpcConnectionStatus('reset', connectUrl);
-  	//if(this.props.updateRpcConnectionStatus)
-  	//	this.props.updateRpcConnectionStatus('open');
   }
 
   getNodes = () => {

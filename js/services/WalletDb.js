@@ -143,7 +143,7 @@ class WalletDB {
     if(type === 'unlock') {
 
       if(user.username !== username || !password) {
-        return {error: "unlock error"};
+        return {error: "unlock error, username not equre"};
       }
 
       const auth_user_object = user.authAccount;
@@ -151,7 +151,7 @@ class WalletDB {
       // 密码有效性
       let password_private = PrivateKey.fromSeed( password );
       let password_pubkey = password_private.toPublicKey().toPublicKeyString();
-      if(auth_user_object.password_pubkey !== password_pubkey) return { error : "unlock false" };
+      if(auth_user_object.password_pubkey !== password_pubkey) return { error : "unlock false, invalid password" };
 
       // 设置缓存
       console.log("=====[WalletDb.js]::unLock - auth_user_object : ", auth_user_object);

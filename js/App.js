@@ -5,7 +5,7 @@ import { View, Text } from "react-native";
 import LaunchScreen from "./components/LaunchScreen";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
-import { ViewContainer, UnLockModal } from "./components";
+import { ViewContainer, UnLockModal, TransactionConfirmModal } from "./components";
 
 
 import {
@@ -104,6 +104,10 @@ class App extends Component {
   }
 
 
+  nodeOK() {
+    const { nodeStatus } = this.props;
+    return true; //(nodeStatus.status === 'open');
+  }
 
   render() {
     const {
@@ -116,7 +120,7 @@ class App extends Component {
 
     
     // launch screen
-    if(!appReady || !this.state.synced || !this.state.connected) {
+    if(!appReady || !this.state.synced || !this.state.connected || !this.nodeOK()) {
       console.log("=====[App.js]::App appReady - ", appReady);
       return <LaunchScreen />
     }
@@ -125,6 +129,7 @@ class App extends Component {
     return (
     <ViewContainer>
       <UnLockModal />
+      <TransactionConfirmModal />
       <NavigationWrappedApp
         dispatch={dispatch}
         state={nav}
@@ -140,6 +145,7 @@ function mapStateToProps(state) {
   return {
     appReady: state.app.appReady,
     nav: state.nav,
+    nodeStatus: state.app.nodeStatus,
   };
 }
 

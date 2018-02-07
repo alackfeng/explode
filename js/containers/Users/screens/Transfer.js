@@ -27,7 +27,6 @@ class Transfer extends Component {
       amount: '1',
       asset_type: '',
       memoText: '',
-      isOpen: false,
 
       balanceObject: null,
       asset: null,
@@ -76,9 +75,6 @@ class Transfer extends Component {
       return;
     }
 
-    // 先打开模式对话框，接收消息
-    this.setState({isOpen: true});
-
     this.props.sendTransfer(fromUser, 'transfer', {
       from_account: fromUser, 
       to_account: toUser, 
@@ -103,7 +99,6 @@ class Transfer extends Component {
 
     return (
       <ViewContainer>
-        {this.state.isOpen && <TransactionConfirmModal onChange={(open) => this.setState({isOpen: !!open})} navigation={navigation} />}
         <View style={styles.titleContainer}>
           <ListItem
             containerStyle={{height: 100}}
