@@ -1,5 +1,5 @@
 
-import { SET_APP_READY, SET_APP_LOCALE, APP_FOREVER_SAVE_KEY, APP_FOREVER_INIT_NODES, APP_FOREVER_UPDATE_NODES, APP_FOREVER_CHANGE_RPC_STATUS } from '../actions';
+import { SET_APP_READY, SET_APP_LOCALE, APP_FOREVER_SAVE_KEY, APP_FOREVER_USER_QUIT, APP_FOREVER_INIT_NODES, APP_FOREVER_UPDATE_NODES, APP_FOREVER_CHANGE_RPC_STATUS } from '../actions';
 
 /*
 // redux trigger
@@ -27,7 +27,6 @@ export type nodesApi = {
 const initState = {
   appReady: false,
   locale: 'en',
-  transactions: [],
   authAccounts: [],
   currentAccount: null,
   nodesApi: [],
@@ -56,6 +55,23 @@ export default function appReducer(state = initState, action) {
         ...state,
         locale: action.locale,
       };
+    }
+    case APP_FOREVER_USER_QUIT: {
+
+      let original = state.authAccounts.filter(key => {
+        ///console.log("--------------------- original ", key);
+        if(!key || !key.username || !action.username)
+          return;
+        return (key.username !== action.username);
+      });
+
+      let account = original.length ? original[0].username : null;
+
+      return {
+        ...state,
+        authAccounts: [...original],
+        currentAccount: account,
+      }
     }
     case APP_FOREVER_SAVE_KEY: {
 

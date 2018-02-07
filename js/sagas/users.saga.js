@@ -125,33 +125,36 @@ function* register(username, regInfo, requiredFields) {
 			const { account } = {}; // temporary PS: yield call(fetchAccount, username);
 			if(account) {
 				console.log("=====[users.saga.js]::register - fetchAccount : ", username, "OK, ~Notification UI Block User exists");
-				yield put( userRegister.success(username, "Block exists user") );
+				yield put( userRegister.notify(username, {id: 1000001, message: "Block exists user, Please Login!"}) );
 				return;
 			}
 
-			// 3. 调用注册通用流程
+			// 4. 调用注册通用流程
 			const {response, error, extradata} = yield call(callUserRegister, username, regInfo);
 			if(response) { 
-				// 4. 注册成功返回，保存私钥到本地 save key
+
+				// 5. 注册成功返回，保存私钥到本地 save key
 				console.log("=====[users.saga.js]::register - user Register <", username, "> ok : ", response);
 				yield call(callSaveKeys, username, regInfo.password, null);
+				// notify
+				yield put( userRegister.notify({id: 1000003, message: "Save Keys SUCESS, CONFIRM!"}) );
 
 			} else {
-				// 5. 注册返回错误，通知UI?，
+				// 6. 注册返回错误，通知UI?，已经在上面通用流程处理了，不用重复
 				console.log("=====[users.saga.js]::register - user Register <", username, "> error : ", error);
 			}
 		} else {
 
-			// 3. 用户存在，验证密码有效性
+			// 3. 本地用户存在，已经登录过通知UI登录（验证密码有效性？）
 			console.log("=====[users.saga.js]::register - exists user: ", user, ", ~Notification UI Local User exists");
-			alert("local exists user, check password Valid");
-			yield put( userRegister.success(username, "local exists user") );
+			alert("Local exists user, Please Login！");
+			yield put( userRegister.notify(username, {id: 1000002, message: "Local exists user, Please Login"}) );
 		}
 
 	} catch ( e ) {
 		console.error("=====[users.saga.js]::register catch error : ", e || e.message);
 		
-		//设置到缓存中用于界面提示
+		//注册时接收到异常通知UI，设置到缓存中用于界面提示
 		yield put( userRegister.failure(username, e.message) );
 	}
 }
@@ -181,19 +184,18 @@ function* login(username, password, requiredFields) {
 			 if(response) { // save key
 				console.log("=====[users.saga.js]::login - login user <", username, "> ok : ", response);
 
-				//let saveKeys = [];
-				//Object.keys(response.private).forEach((key) => {
-				//	saveKeys.push({privKey: response.private[key].toWif(), pubKey: key});
-				// });
 				if(extradata) {
+					
 					console.log("=====[users.saga.js]::login - login user <", username, "> ok save keys : ", extradata);
 					yield call(callSaveKeys, username, password, extradata);
-					//yield put( appSaveKey(username, extradata));
+					// notify
+					yield put( userLogin.notify({id: 1000003, message: "Save Keys SUCESS, CONFIRM!"}) );
+
 				} else {
 					alert("Login user Private not OK???");
+					yield put( userLogin.notify({id: 1000004, message: "Login user Private not OK???"}) );
 				}
 
-				
 			}
 
 		} else {

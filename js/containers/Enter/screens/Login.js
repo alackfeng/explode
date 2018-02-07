@@ -180,7 +180,7 @@ class Login extends Component {
                 onPress={() => resetNavigationTo('Register', navigation)}
               />
             </View>
-            {!nodeStatus && <View style={{backgroundColor: 'red'}}><Text>{nodeStatus.url} > {nodeStatus.status} </Text></View>}
+            {nodeStatus && <View style={{backgroundColor: 'gray', marginTop: 10}}><Text>{nodeStatus.url} > {nodeStatus.status} </Text></View>}
           </View>
         </View>
       </ViewContainer>

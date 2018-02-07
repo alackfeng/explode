@@ -144,12 +144,13 @@ class UsersBox {
           result = keys;
         });
         // result = {private: validPassword, username: username};
+        return {response: "ok", error: error, extradata: result};
       } else {
         console.error("=====[users.box.js]::loginUser - : validPassword", validPassword);
         error = "invalid password";
       }
 
-      return {response: "ok", error: error, extradata: result};
+      return {response: null, error: error, extradata: result};
     }).catch(error => {
       console.error("=====[users.box.js]::loginUser - : getAccount is : err ", error);
       return {response: null, error: error || 'Something bad happened'};

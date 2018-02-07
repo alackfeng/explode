@@ -1,6 +1,6 @@
 
 
-import { action, createRequestTypes, REQUEST, SUCCESS, FAILURE  } from "./types";
+import { action, createRequestTypes, REQUEST, SUCCESS, FAILURE, EVENT  } from "./types";
 
 // users action type
 export const USERS_LOGIN 		= createRequestTypes('USERS_LOGIN');
@@ -24,6 +24,7 @@ export const userRegister = {
 		action(USERS_REGISTER[REQUEST], {username, regInfo})),
 	success: (username, response) => action(USERS_REGISTER[SUCCESS], {username, response}),
 	failure: (username, error) => action(USERS_REGISTER[FAILURE], {username, error}),
+	notify: (username, event) => action(USERS_REGISTER[EVENT], {username, event}),
 }
 
 export const userLogin = {
@@ -31,12 +32,14 @@ export const userLogin = {
 		action(USERS_LOGIN[REQUEST], {username, password})),
 	success: (username, response) => action(USERS_LOGIN[SUCCESS], {username, response}),
 	failure: (username, error) => action(USERS_LOGIN[FAILURE], {username, error}),
+	notify: (username, event) => action(USERS_LOGIN[EVENT], {username, event}),
 }
 
 export const userUnlock = {
 	request: login => action(USERS_UNLOCK[REQUEST], {login}),
 	success: (login, response) => action(USERS_UNLOCK[SUCCESS], {login, response}),
 	failure: (login, error) => action(USERS_UNLOCK[FAILURE], {login, error}),
+	notify: (username, event) => action(USERS_UNLOCK[EVENT], {username, event}),
 }
 
 export const triggerUser = {

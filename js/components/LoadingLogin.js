@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, ScrollView } from "react-native";
 import Modal from "react-native-modal";
 import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
 
-import { Button } from "react-native-elements";
+import { Button, Divider } from "react-native-elements";
 
 import { ViewContainer, StyleSheet } from "../components";
 import { triggerUser, TRIGGER_USERS_LOGIN } from "../actions";
@@ -52,24 +52,49 @@ const styles = StyleSheet.create({
   }
 });
 
+class TransactionDetails extends Component {
 
 
-const RegInfo = ({ info }: Props) => (
-  <View style={{backgroundColor: 'red'}}>
-    <Text style={{textAlign: 'center'}}>{info.type}</Text>
-    <Text style={{textAlign: 'center'}}>{info.username}</Text>
-    <Text style={{textAlign: 'center'}}>{info.regInfo && info.regInfo.password}</Text>
-  </View>
-);
+  transDetails() {
+    const { entity } = this.props;
+    if(!entity.transaction || !entity.transaction.length) {
+      //console.log("=====[LoadingLogin.js]::transDetails - ", entity.transaction);
+      return {};
+    }
 
-const Transaction = ({ trans }: Props) => (
-  <View style={{backgroundColor: 'lightblue'}}>
-    <Text style={{textAlign: 'center'}}>{trans.type}</Text>
-    <Text style={{textAlign: 'center'}}>{trans.username}</Text>
-    <Text style={{textAlign: 'center'}}>{JSON.stringify(trans.error)}</Text>
-    {/*<Text style={{textAlign: 'center'}}>{JSON.stringify(trans.response)}</Text>*/}
-  </View>
-);
+    let rows = entity.transaction.map((item, index) => {
+      return <View key={index}><Text style={{backgroundColor: index%2 !== 0 ? 'red': 'yellow'}}>{JSON.stringify(item)}</Text></View>;
+    });
+
+    return {details: rows};
+  }
+
+  transRaw() {
+    const { status, entity } = this.props;
+    if(!entity || !entity.raw || entity.raw.type !== TRIGGER_USERS_LOGIN) {
+      return {};
+    }
+    return {type: entity.raw.type, name: entity.raw.username, referrer: entity.raw.referrer};
+  }
+
+  render() {
+
+    const { status, entity } = this.props;
+
+    const { details } = this.transDetails();
+    const {type, name, referrer} = this.transRaw();
+
+    //console.log("=====[LoadingLogin.js]::transDetails - rows : ", details);
+
+    return (
+      <ScrollView style={{backgroundColor: 'lightblue'}}>
+        <Text style={{backgroundColor: 'gray'}}>{type}: {name} - {referrer}</Text>
+        <Divider style={{ backgroundColor: 'blue' }} />
+        {details}
+      </ScrollView>
+    );
+  }
+}
 
 class LoadingLogin extends Component {
 
@@ -112,12 +137,34 @@ class LoadingLogin extends Component {
     return status;
   }
 
+  showLoginStatus = () => {
+    const { entityLogin: entity } = this.props;
+
+    let isLogin = (entity && entity.isLogin) || false;
+    let tip  = !isLogin?"登录中":"登录完成";
+  
+    tip = (entity.transaction.length && entity.transaction[0].type === 'USERS_LOGIN_FAILURE') ? "登录错误啦！！！" : tip;
+    tip = (entity.transaction.length && entity.transaction[0].type === 'USERS_LOGIN_EVENT') ? "事件通知啦！！！" : tip;
+
+    const success = entity.transaction.length && entity.transaction.filter(item => item.type === 'USERS_LOGIN_SUCCESS'); 
+    console.log("=====[LoadingRegister.js]::showLoginStatus - success : ", success);
+    if(success.length) {
+      tip = "登录完成";
+      isLogin = true;
+    }
+    
+    //? "注册完成" : tip;
+
+    return {status: isLogin, tip};
+  }
+
+
   render() {
 
     const { onChange, entityLogin: entity, navigation } = this.props;
     console.log("=====[LoadingLogin.js]::render - entity : ", entity);
 
-    const isRegister = (entity && entity.isLogin) || false;
+    const {status, tip} = this.showLoginStatus();
 
     return (
     <View style={styles.container}>
@@ -128,14 +175,15 @@ class LoadingLogin extends Component {
       >
         
         <View style={{flex: 1}}>
-          <Text style={{textAlign: 'center'}}>I am the modal content!</Text>
-          <ActivityIndicator animating={isRegister} />
-          <Text>{this.showRegStatus()}</Text>
-          {/*isRegister &&*/ <RegInfo info={entity.raw}/>}
+          <Text style={{textAlign: 'center', fontSize: 25}}>登录流程</Text>
+          
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 10}}>
+            <ActivityIndicator animating={!!!status} />
+            <Text>{tip}</Text>
+            <Divider style={{ backgroundColor: 'blue' }} />
+          </View>
 
-          {entity.transaction.length > 0 && <Transaction trans={entity.transaction[0]} />}
-          <View style={{backgroundColor: 'yellow', borderWidth: 1, borderColor: 'yellow'}}/>
-          {entity.transaction.length>1 && entity.transaction[1] && <Transaction trans={entity.transaction[1]} />}
+          <TransactionDetails entity={entity} />
         </View>
         
         <View style={{flexDirection: 'row'}}>

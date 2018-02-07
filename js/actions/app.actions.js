@@ -2,15 +2,16 @@
 import { action, createRequestTypes, REQUEST, SUCCESS, FAILURE  } from "./types";
 
 // app action type 
-export const DO_STUFF 		= 'DO_STUFF';
-export const GET_RANDOM 	= 'GET_RANDOM';
-export const SET_APP_READY 	= 'SET_APP_READY';
-export const SET_APP_LOCALE	= 'SET_APP_LOCALE';
+export const DO_STUFF 		      = 'DO_STUFF';
+export const GET_RANDOM 	      = 'GET_RANDOM';
+export const SET_APP_READY 	    = 'SET_APP_READY';
+export const SET_APP_LOCALE	    = 'SET_APP_LOCALE';
 
-export const APP_FOREVER_SAVE_KEY = 'APP_FOREVER_SAVE_KEY';
-export const APP_FOREVER_INIT_NODES = 'APP_FOREVER_INIT_NODES';
-export const APP_FOREVER_CHANGE_RPC_STATUS = 'APP_FOREVER_CHANGE_RPC_STATUS';
-export const APP_FOREVER_UPDATE_NODES = 'APP_FOREVER_UPDATE_NODES';
+export const APP_FOREVER_USER_QUIT          = 'APP_FOREVER_USER_QUIT';
+export const APP_FOREVER_SAVE_KEY           = 'APP_FOREVER_SAVE_KEY';
+export const APP_FOREVER_INIT_NODES         = 'APP_FOREVER_INIT_NODES';
+export const APP_FOREVER_CHANGE_RPC_STATUS  = 'APP_FOREVER_CHANGE_RPC_STATUS';
+export const APP_FOREVER_UPDATE_NODES       = 'APP_FOREVER_UPDATE_NODES';
 
 // 交易统一处理流程，需要进行二次确认的，
 export const TRANSACTION_COMMON           = createRequestTypes('TRANSACTION_COMMON');
@@ -59,6 +60,7 @@ export function doSomeStuff() {
   };
 }
 
+export const appUserQuit = (username, keys=[]) => action(APP_FOREVER_USER_QUIT, {username, keys})
 export const appSaveKey = (username, keys=[]) => action(APP_FOREVER_SAVE_KEY, {username, keys})
 export const updateRpcConnectionStatus = (status, url) => action(APP_FOREVER_CHANGE_RPC_STATUS, {status, url});
 export const initConnect = (nodes, url) => action(APP_FOREVER_INIT_NODES, {nodes, url});

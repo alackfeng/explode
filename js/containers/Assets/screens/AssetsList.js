@@ -139,6 +139,7 @@ class AssetsList extends Component {
 				<ScrollView>
 					<List>
 			      <ListView
+			      	enableEmptySections
 			      	ref="ListView"
 			      	style={styles.container}
 			        dataSource={this.state.dataSource}

@@ -170,6 +170,7 @@ class Node extends Component {
 
   	console.log("++++++[Node.js]::updateConnect - node - ", connectUrl);
 
+  	
   	Apis.reset(connectUrl, true).init_promise
   	.then(()=> {
   		console.log("++++++[Node.js]::updateConnect - apis::reset - ", this);
@@ -229,6 +230,7 @@ class Node extends Component {
 				<ListContainer>
 					<List>
 			      <ListView
+			      	enableEmptySections
 			        renderRow={this.renderRow}
 			        dataSource={this.state.dataSource}
 			      />

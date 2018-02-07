@@ -11,7 +11,7 @@ import { Colors } from "../../../libs/Colors";
 import { resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../../libs/help";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
-
+import { appUserQuit } from "../../../actions";
 
 const CustBadge = (props) => {
 
@@ -87,7 +87,11 @@ class Center extends Component {
 	}
 
 	onPressQuit() {
-		const { navigation } = this.props;
+		const { navigation, currentAccount } = this.props;
+		console.log("=====[Center.js]::onPressQuit -  - >:", currentAccount);
+		if(currentAccount) {
+			this.props.appUserQuit(currentAccount);
+		}
 		resetNavigationTo('Login', navigation);
 	}
 
@@ -166,7 +170,7 @@ const mapStateToProps = (state) => ({
 });
 
 export const CenterScreen = connect(mapStateToProps, {
-
+	appUserQuit,
 })(Center);
 
 

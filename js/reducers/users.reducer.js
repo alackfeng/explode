@@ -1,7 +1,7 @@
 
 import { USERS_LOGIN, USERS_REGISTER, USERS_UNLOCK, LOAD_USERS, TRIGGER_USERS_REGISTER, TRIGGER_USERS_LOGIN, TRIGGER_USERS_UNLOCK, RESET_TRIGGER_USERS } from "../actions";
 
-export const initialUsersState = {
+export const initialState = {
 	entityReg: {
 		isRegister: false,
 		raw: {},
@@ -20,24 +20,29 @@ export const initialUsersState = {
 	},
 };
 
-const usersReducer = (state = initialUsersState, action = {}) => {
+const usersReducer = (state = initialState, action = {}) => {
 	
 	console.log(">>>>>[users.reducer.js]::usersReducer - ", action.type, action);
 
 	switch (action.type) {
+
 		case RESET_TRIGGER_USERS:
 		{
+			
+			const reg = action.oper === TRIGGER_USERS_REGISTER ? initialState.entityReg : state.entityReg;
+			const login = action.oper === TRIGGER_USERS_LOGIN ? initialState.entityLogin : state.entityLogin;
+			const unlock = action.oper === TRIGGER_USERS_UNLOCK ? initialState.entityUnLock : state.entityUnLock;
+
 			return {
 				...state,
 				entityReg: {
-					isRegister: false,
-					raw: {},
-					transaction: [],
+					...reg
 				},
 				entityLogin: {
-					isLogin: false,
-					raw: {},
-					transaction: [],
+					...login
+				},
+				entityUnLock: {
+					...unlock
 				}
 			}
 		}
@@ -93,8 +98,9 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 		case USERS_REGISTER.SUCCESS:
 		case USERS_REGISTER.REQUEST:
 		case USERS_REGISTER.FAILURE: 
+		case USERS_REGISTER.EVENT:
 		{
-			const reg_status = (action.type === USERS_REGISTER.REQUEST) ? true : false; //!state.isRegister;
+			const reg_status = (action.type === USERS_REGISTER.SUCCESS) ? true : false;
 			return {
 				...state,
 				entityReg: {
@@ -107,8 +113,9 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 		case USERS_LOGIN.SUCCESS:
 		case USERS_LOGIN.REQUEST:
 		case USERS_LOGIN.FAILURE: 
+		case USERS_LOGIN.EVENT:
 		{
-			const login_status = (action.type === USERS_LOGIN.REQUEST) ? true : false; //!state.isRegister;
+			const login_status = (action.type === USERS_LOGIN.SUCCESS) ? true : false;
 			return {
 				...state,
 				entityLogin: {
@@ -121,6 +128,7 @@ const usersReducer = (state = initialUsersState, action = {}) => {
 		case USERS_UNLOCK.SUCCESS:
 		case USERS_UNLOCK.REQUEST:
 		case USERS_UNLOCK.FAILURE:
+		case USERS_UNLOCK.EVENT:
 		{
 			const isopen_status = (action.type === USERS_UNLOCK.SUCCESS) ? false : state.entityUnLock.isOpen;
 			const unlock_status = (action.type === USERS_UNLOCK.SUCCESS) ? true : false;
