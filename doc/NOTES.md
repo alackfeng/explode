@@ -14,6 +14,10 @@
 
 ####
 
+#### 20180208 -: 
+##### 增加gulp boilerplate 支持编译
+npm install --save-dev gulp run-sequence shelljs lodash.assign lodash.isequal yargs fs-extra
+
 #### 20180207 -: 
 ##### 登录注册流程优化，可正常使用
 ##### 解锁流程优化，
