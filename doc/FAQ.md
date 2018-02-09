@@ -183,6 +183,17 @@ function normalRandom(count, options) {
 
 ```
 
+```sh
+Q22. The above error occurred in the <ReactNativeModal> component, Uncaught TypeError: Cannot read property 'addListener' of undefined
+A22.     
+
+
+    /Users/assetfun/source/aftapp/explode-app/node_modules/react-native-modal/src/index.js
+
+    if(DeviceEventEmitter)
+      DeviceEventEmitter.addListener('didUpdateDimensions', this._handleDimensionsUpdate);
+```
+
 
 
 

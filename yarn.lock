@@ -362,28 +362,7 @@ assert@^1.1.1:
 
 "assetfunjs@git+https://github.com/alackfeng/assetfunjs.git":
   version "1.1.0"
-  uid "9896a4f630b1714157a2e0e00a0ac34e3cf48f48"
   resolved "git+https://github.com/alackfeng/assetfunjs.git#9896a4f630b1714157a2e0e00a0ac34e3cf48f48"
-  dependencies:
-    assetfunjs-ws "git+https://github.com/alackfeng/assetfunjs-ws.git"
-    babel-plugin-add-module-exports "^0.2.1"
-    babel-preset-es2015 "^6.18.0"
-    babel-preset-stage-1 "^6.16.0"
-    bigi "^1.4.1"
-    bs58 "^3.0.0"
-    bytebuffer "^5.0.0"
-    create-hash "git+https://github.com/alackfeng/create-hash.git"
-    create-hmac "^1.1.4"
-    crypto-js "^3.1.9-1"
-    deep-equal "^1.0.1"
-    ecurve "^1.0.2"
-    event-emitter "^0.3.4"
-    immutable "^3.7.6"
-    secure-random "git+https://github.com/alackfeng/secure-random.git"
-
-"assetfunjs@https://github.com/alackfeng/assetfunjs.git":
-  version "1.1.0"
-  resolved "https://github.com/alackfeng/assetfunjs.git#9896a4f630b1714157a2e0e00a0ac34e3cf48f48"
   dependencies:
     assetfunjs-ws "git+https://github.com/alackfeng/assetfunjs-ws.git"
     babel-plugin-add-module-exports "^0.2.1"
@@ -2120,15 +2099,6 @@ create-ecdh@^4.0.0:
 create-hash@^1.1.0, create-hash@^1.1.2, "create-hash@git+https://github.com/alackfeng/create-hash.git":
   version "1.1.3"
   resolved "git+https://github.com/alackfeng/create-hash.git#258f789e3cc7740932f22f973582accb65e1fb49"
-  dependencies:
-    cipher-base "^1.0.1"
-    inherits "^2.0.1"
-    ripemd160 "^2.0.0"
-    sha.js "^2.4.0"
-
-"create-hash@https://github.com/alackfeng/create-hash.git":
-  version "1.1.3"
-  resolved "https://github.com/alackfeng/create-hash.git#258f789e3cc7740932f22f973582accb65e1fb49"
   dependencies:
     cipher-base "^1.0.1"
     inherits "^2.0.1"
@@ -6299,9 +6269,9 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
-react-native-elements@^1.0.0-beta:
-  version "1.0.0-beta2"
-  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.0.0-beta2.tgz#39f1f98e9cb6e05facd71a955bcf8796705fe520"
+react-native-elements@1.0.0-beta:
+  version "1.0.0-beta"
+  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.0.0-beta.tgz#e518712864fe296f4a226f900125e062bd89916c"
   dependencies:
     lodash.isempty "^4.4.0"
     lodash.times "^4.3.2"
