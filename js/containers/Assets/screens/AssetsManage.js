@@ -12,8 +12,8 @@ import { ViewContainer, StyleSheet, LoadingLoginModal, Header, HeaderAccount, He
 import { triggerUser } from "../../../actions";
 const {login: userLogin} = triggerUser;
 
-import Talks from "../../Enter/screens/Talks";
-import Nested from "../../Enter/screens/Nested";
+//import Talks from "../../Enter/screens/Talks";
+//import Nested from "../../Enter/screens/Nested";
 import { AssetsListWrap as AssetsList } from "./AssetsList";
 
 class AssetsManage extends Component {

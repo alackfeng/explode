@@ -9,7 +9,6 @@ import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../..
 import { SearchBar, List, ListItem, Icon, Button, Input } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, LoadingLoginModal } from "../../../components";
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { AssetItem } from "./AssetItem";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
