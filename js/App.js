@@ -26,6 +26,9 @@ import { nodeList } from "./env";
 
 const TRACE = false;
 
+console.disableYellowBox = true;
+console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
+
 const NavigationWrappedApp = URIWrapper(AppNavigator);
 
 class App extends Component {
@@ -86,6 +89,9 @@ class App extends Component {
           }).catch(error => {
             let syncFail = ChainStore.subError && (ChainStore.subError.message === "ChainStore sync error, please check your system clock") ? true : false;
             console.error("=====[App.js]::componentDidMount - ChainStore.init synced error -", syncFail, error, ChainStore.subError);
+
+            // 同步节点失败，更新状态
+            this.props.dispatch(updateRpcConnectionStatus(syncFail ? 'clock' : 'error', url));
           });
         } 
       };
@@ -106,7 +112,9 @@ class App extends Component {
 
   nodeOK() {
     const { nodeStatus } = this.props;
-    return true; //(nodeStatus.status === 'open');
+    const { synced, connected } = this.state;
+
+    return synced && connected && (nodeStatus.status === 'open');
   }
 
   render() {
@@ -120,7 +128,7 @@ class App extends Component {
 
     
     // launch screen
-    if(!appReady || !this.state.synced || !this.state.connected || !this.nodeOK()) {
+    if(!appReady || !this.nodeOK()) {
       console.log("=====[App.js]::App appReady - ", appReady);
       return <LaunchScreen />
     }
