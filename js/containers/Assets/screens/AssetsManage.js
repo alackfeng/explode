@@ -27,7 +27,7 @@ class AssetsManage extends Component {
   isNodeLinked = () => {
     const { currentAccount, nodeStatus } = this.props;
     console.log("=====[AssetsManage.js]::isNodeLinked - ", currentAccount, nodeStatus.url, nodeStatus.status);
-    return (!!currentAccount && !!nodeStatus.url && !!nodeStatus.status);
+    return (!!currentAccount && !!nodeStatus.url && nodeStatus.status === 'open');
   }
 
   onSearchAssets(content) {
@@ -38,16 +38,20 @@ class AssetsManage extends Component {
 
     const { currentAccount, nodeStatus } = this.props;
 
-    if(!this.isNodeLinked())
-      return <ViewContainer><Text>No Data</Text></ViewContainer>;
-
-    return (
+    if(!this.isNodeLinked()) {
+      console.log("=====[AssetsManage.js]::render - ", currentAccount, nodeStatus.url, nodeStatus.status);
+      return (<ViewContainer><Text>No Data</Text></ViewContainer>);
+    } else {
+      return (
       <ViewContainer>
         <HeaderSearchBar onSearch={this.onSearchAssets}/>
         <HeaderAccount />
-        <AssetsList navigation={this.props.navigation} account={currentAccount} />
+        <AssetsList navigation={this.props.navigation} account={currentAccount} node={nodeStatus} />
       </ViewContainer>
-    );
+      );
+    }
+
+    
   }
 }
 

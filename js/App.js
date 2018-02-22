@@ -122,7 +122,8 @@ class App extends Component {
     const { nodeStatus } = this.props;
     const { synced, connected } = this.state;
 
-    return synced && connected && (nodeStatus.status === 'open');
+    // 暂时不判断这些状态，默认行为
+    return 1 || synced && connected && (nodeStatus.status === 'open');
   }
 
   render() {

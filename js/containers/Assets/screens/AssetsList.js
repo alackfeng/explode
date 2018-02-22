@@ -56,6 +56,8 @@ class AssetsList extends Component {
 
 		this.update			= this.update.bind(this);
 
+		console.log("=====[AssetList.js]::constructor - account----------------------------------- ", "account");
+
 	}
 
 	componentWillUnmount() {
@@ -64,11 +66,15 @@ class AssetsList extends Component {
 
 	componentWillMount() {
 		// alert("ddddd");
-		const { account } = this.props;
-		console.log("=====[AssetList.js]::componentDidMount - account----------------------------------- ", account);
+		const { account, node } = this.props;
+		console.log("=====[AssetList.js]::componentDidMount - account----------------------------------- ", account, node);
 
 		ChainStore.subscribe(this.update); // update
 		
+		if(!this.isNodeLinked()) {
+			return;
+		}
+
   	FetchChain("getAccount", account).then((res) => {
   		const accountObj = res; //ChainStore.getAccount(account);
   		const accountBalance = accountObj && accountObj.get("balances");
@@ -102,6 +108,12 @@ class AssetsList extends Component {
 
 		this.setState({refresh: true});
 	}
+
+	isNodeLinked = () => {
+    const { currentAccount, node: nodeStatus } = this.props;
+    console.log("=====[AssetList.js]::isNodeLinked - ", currentAccount, nodeStatus.url, nodeStatus.status);
+    return (!!currentAccount && !!nodeStatus.url && nodeStatus.status === 'open');
+  }
 
 	update(nextProps = null) {
 		console.info("=====[AssetList.js]::update - ChainStore::subscribe : ************** nextProps ", nextProps);
