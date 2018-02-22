@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import LaunchScreen from "./components/LaunchScreen";
+
+//import { SplashScreen as LaunchScreen } from "./components/SplashScreen";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 import { ViewContainer, UnLockModal, TransactionConfirmModal } from "./components";
@@ -56,7 +58,7 @@ class App extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log("=====[App.js]::componentWillReceiveProps - props > : ", nextProps, nextState);
+    console.log("=====[App.js]::shouldComponentUpdate - props > : ", nextProps, nextState);
     return true;
   }
 
@@ -69,7 +71,9 @@ class App extends Component {
   componentDidMount() {
     //if(appReady) {
 
-      //SplashScreen.hide();
+      if(Platform.OS !== 'web') {
+        SplashScreen.hide();
+      }
 
       console.log("=====[App.js]::componentDidMount - init appReady - ", this.props.appReady);
       let appReady = this.props.appReady;

@@ -17,3 +17,6 @@ export * from "./Header";
 export * from "./TableHistory";
 export * from "./HeaderAccount";
 export * from "./HeaderSearchBar";
+
+
+export * from "./SplashScreen";

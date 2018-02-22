@@ -11,14 +11,22 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
 import { ViewContainer } from "../components";
 
 import SplashTile from "./SplashTile";
-
+import { resetNavigationTo } from "../libs/help";
 
 const TRACE = false;
 
-class LaunchScreen extends Component {
+export class SplashScreen extends Component {
+
+  props: {
+    navigation: Object,
+  }
+
+	onPressloginAndReg = (login) => {
+
+    resetNavigationTo(login ? 'Login' : 'Register', this.props.navigation);
+  }
 
 	render() {
-
 
 		return (
 			<ViewContainer>
@@ -28,8 +36,6 @@ class LaunchScreen extends Component {
 					imageContainerStyle={styles.image}
 					title="ASSETFUN"
 					titleStyle={styles.title}
-					caption={ "与区块连接中" }
-					captionStyle={styles.caption}
 					featured
 					height={SCREEN_HEIGHT}
 					width={SCREEN_WIDTH}
@@ -37,7 +43,21 @@ class LaunchScreen extends Component {
 					childrenContainerStyle={styles.children}
 					icon={{source: require('./images/aftlogo.png')}}
 					iconStyle={styles.icon}
-				> 
+				>
+					<Button
+            text ='登  录'
+            buttonStyle={styles.button}
+            textStyle={{fontWeight: 'bold'}}
+            containerStyle={{marginLeft: 0}}
+            onPress={this.onPressloginAndReg}
+          />
+          <Button
+            text ='注  册'
+            buttonStyle={styles.button}
+            textStyle={{fontWeight: 'bold'}}
+            containerStyle={{marginLeft: 0}}
+            onPress={this.onPressloginAndReg}
+          />  
 				</SplashTile>
 			</ViewContainer>
 		);
@@ -60,15 +80,18 @@ const styles = {
 	title: {
 		color: 'white',
 	},
-	caption: {
-		color: 'red'
-	},
 	children: {
 		flex: 0.3,
+	},
+	button: {
+		marginBottom: 10, 
+		height: 50, 
+		width: SCREEN_WIDTH * 0.8, 
+		backgroundColor: 'transparent', 
+		borderWidth: 1, 
+		borderColor: 'white', 
+		borderRadius: 5
 	}
 };
 
-LaunchScreen.__cards__ = define => {
-	define("Default", _ => <LaunchScreen />);
-};
-export default LaunchScreen;
+

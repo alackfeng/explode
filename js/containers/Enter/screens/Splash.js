@@ -6,7 +6,7 @@ import { Colors } from "../../../libs/Colors";
 import { translate, locale } from "../../../libs";
 import { resetNavigationTo } from "../../../libs/help";
 
-import { SwipeableView } from "../../../components";
+import { SwipeableView, SplashScreen as SplashScreenA } from "../../../components";
 
 import { Button, Icon } from 'react-native-elements';
 
@@ -20,41 +20,6 @@ const mapStateToProps = state => ({
 });
 
 const styles = StyleSheet.create({
-  swipeable: {
-    flexWrap: 'nowrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    height: '100%',
-  },
-  slide: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 50,
-  },
-  slide1: {
-    backgroundColor: Colors.lightBlue,
-  },
-  slide2: {
-    backgroundColor: Colors.lightPurple,
-  },
-  slide3: {
-    backgroundColor: Colors.orange,
-  },
-  slide4: {
-    backgroundColor: Colors.darkGreen,
-  },
-  signInContainer: {
-    position: 'absolute',
-    left: 0,
-    bottom: 80,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    alignContent: 'center',
-  },
 });
 
 class Splash extends Component {
@@ -76,52 +41,13 @@ class Splash extends Component {
 
   }
 
-  setModalVisible = (login) => {
-
-    resetNavigationTo(login ? 'Login' : 'Register', this.props.navigation);
-  }
-
 	render() {
 
     const { navigation, isAuthenticated } = this.props;
 
 		return (
 			<ViewContainer>
-        <SwipeableView />
-        <View style={styles.signInContainer}>
-          <Button
-            text="登录"
-            icon={
-              <Icon
-                name='3d-rotation'
-                size={15}
-                color='white'
-              />
-            }
-            iconContainerStyle={{marginRight: 10}}
-            textStyle={{fontWeight: '700'}}
-            buttonStyle={{backgroundColor: 'rgba(90, 154, 230, 1)', width: 130, borderColor: 'transparent', borderWidth: 0, borderRadius: 30}}
-            containerStyle={{marginTop: 20}}
-            onPress={() => this.setModalVisible(true)}
-          />
-          <Button
-            text="注册"
-            icon={
-              <Icon
-                name='3d-rotation'
-                size={15}
-                color='white'
-              />
-            }
-            iconRight
-            iconContainerStyle={{marginLeft: 10}}
-            textStyle={{fontWeight: '700'}}
-            buttonStyle={{backgroundColor: 'rgba(199, 43, 98, 1)', width: 150, borderColor: 'transparent', borderWidth: 0, borderRadius: 30}}
-            containerStyle={{marginTop: 20}}
-            onPress={() => this.setModalVisible(false)}
-          />
-        </View>
-        
+        <SplashScreenA navigation={navigation} />
 			</ViewContainer>
 		);
 	}
