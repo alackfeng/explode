@@ -12,6 +12,23 @@
 *	react|react-native
 *	react-native-cli: 2.0.1
 
+
+
+####
+
+#### 20180221 -: 
+##### 
+##### react-native-splash-screen解决启动白屏现象
+
+```sh
+1. 准备icon and launch images, 通过网址生成图标： https://apetools.webprofusion.com/app/#/tools/imagegorilla
+2. 添加到app中，
+3. 安装 https://github.com/crazycodeboy/react-native-splash-screen/blob/master/README.zh.md
+yarn add react-native-splash-screen
+react-native link react-native-splash-screen
+4. 
+```
+
 ####
 
 #### 20180208 -: 

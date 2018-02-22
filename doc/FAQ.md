@@ -105,7 +105,7 @@ A14. npm install --save path-to-regexp
 ```sh
 Q15. No bundle URL present.
 Make sure you're running a packager server or have included a .jsbundle file in your application bundle.
-A15. 
+A15. 多半是环境问题，如使用网络代理
 ```
 
 
@@ -195,5 +195,32 @@ A22.
 ```
 
 
+```sh
+Q23. React Native version mismatch. JavaScript version: 0.52.0 Native version: 0.50.4
+A23. yarn add react-native@0.52.0
+```
 
+```sh
+Q24. Cannot find module 'metro-bundler/src/blacklist'
+A24. metro-bundler改成metro
+```
+
+```sh
+Q25. Metro Bundler has encountered an internal error, please check your terminal error output for more details
+A25. 降低NODE版本到8
+brew install node@8
+brew switch node@8 8.9.3_1
+brew unlink node
+brew link node@8
+echo 'export PATH="/usr/local/opt/node@8/bin:$PATH"' >> ~/.bash_profile
+```
+
+```sh
+Q26. Unable to start activity ComponentInfo{com.aftbomb/com.aftbomb.MainActivity}: java.lang.UnsupportedOperationException: Can't convert value at index 35 to color: type=0x1
+A26. vi /Users/assetfun/source/aftapp/explode-app/android/app/src/main/res/values/colors.xml =>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_dark"></color>
+</resources>
+```
 

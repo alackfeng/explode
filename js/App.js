@@ -24,6 +24,8 @@ import { Apis } from "assetfunjs-ws";
 
 import { nodeList } from "./env";
 
+import SplashScreen from 'react-native-splash-screen';
+
 const TRACE = false;
 
 console.disableYellowBox = true;
@@ -66,6 +68,8 @@ class App extends Component {
 
   componentDidMount() {
     //if(appReady) {
+
+      //SplashScreen.hide();
 
       console.log("=====[App.js]::componentDidMount - init appReady - ", this.props.appReady);
       let appReady = this.props.appReady;
