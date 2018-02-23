@@ -8,7 +8,7 @@ import { View, Text, ScrollView, Dimensions } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
 import { Icon, Button, Input } from 'react-native-elements';
 
-import { ViewContainer, StyleSheet, LoadingLoginModal } from "../../../components";
+import { ViewContainer, StyleSheet, LoadingLoginModal, LoginPage } from "../../../components";
 import { triggerUser } from "../../../actions";
 const {login: userLogin} = triggerUser;
 
@@ -108,6 +108,15 @@ class Login extends Component {
 
 		const { navigation, nodeStatus } = this.props;
     console.info("=====[Login.js]::render - login status : ");
+
+    if(true) {
+      return (
+        <ViewContainer>
+          {this.state.isOpen && <LoadingLoginModal onChange={(open) => this.setState({isOpen: !!open})} navigation={navigation} />}
+          <LoginPage navigation={navigation} />
+        </ViewContainer>
+      );
+    }
 
 		return (
       <ViewContainer>

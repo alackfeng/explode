@@ -20,3 +20,5 @@ export * from "./HeaderSearchBar";
 
 
 export * from "./SplashScreen";
+export * from "./RegisterPage";
+export * from "./LoginPage";

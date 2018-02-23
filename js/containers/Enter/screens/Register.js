@@ -8,7 +8,7 @@ import { Text, View, StatusBar, TextInput, TouchableHighlight, ActivityIndicator
 import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../../libs";
 import { Icon, Button, Input, Overlay } from 'react-native-elements';
 
-import { ViewContainer, StyleSheet, LoadingRegisterModal } from "../../../components";
+import { ViewContainer, StyleSheet, LoadingRegisterModal, RegisterPage } from "../../../components";
 import { triggerUser } from "../../../actions";
 const {register: userRegister} = triggerUser;
 
@@ -197,11 +197,20 @@ class Register extends Component {
 		const { navigation, currentAccount, nodeStatus } = this.props;
     console.log("=====[Register.js]::render - ", currentAccount, nodeStatus);
 
+    if(true) {
+      return (
+        <ViewContainer>
+          {this.state.isOpen && <LoadingRegisterModal onChange={(open) => this.setState({isOpen: !!open})} navigation={navigation} />}
+          <RegisterPage />
+        </ViewContainer>
+      );
+    }
+
     const isLoading = false;
     const loadingProps = isLoading ? {size: 'large'} : {};
 
 		return (
-			<ScrollView contentContainerStyle={styles.container}>
+			<ViewContainer>
         {this.state.isOpen && <LoadingRegisterModal onChange={(open) => this.setState({isOpen: !!open})} navigation={navigation} />}
         <View style={styles.contentView} >
           <View style={{backgroundColor: 'transparent', width: SCREEN_WIDTH, alignItems: 'center'}}>
@@ -310,7 +319,7 @@ class Register extends Component {
               </View>
           </View>
         </View>
-      </ScrollView>
+      </ViewContainer>
 		);
 	}
 }

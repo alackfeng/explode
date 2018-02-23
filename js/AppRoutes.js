@@ -148,13 +148,13 @@ export const StackRoutes = {
   Register: {
     screen: RegisterScreen,
     navigationOptions: {
-      header: null,
+      title: 'AFT',
     },
   },
   Login: {
     screen: LoginScreen,
     navigationOptions: {
-      header: null,
+      title: 'AFT',
     },
   },
   Welcome: {

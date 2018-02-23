@@ -23,7 +23,9 @@ export class SplashScreen extends Component {
 
 	onPressloginAndReg = (login) => {
 
-    resetNavigationTo(login ? 'Login' : 'Register', this.props.navigation);
+		if(this.props.navigation)
+			this.props.navigation.navigate(login ? 'Login' : 'Register');
+    //resetNavigationTo(login ? 'Login' : 'Register', this.props.navigation);
   }
 
 	render() {
@@ -49,14 +51,14 @@ export class SplashScreen extends Component {
             buttonStyle={styles.button}
             textStyle={{fontWeight: 'bold'}}
             containerStyle={{marginLeft: 0}}
-            onPress={this.onPressloginAndReg}
+            onPress={()=>this.onPressloginAndReg(true)}
           />
           <Button
             text ='注  册'
             buttonStyle={styles.button}
             textStyle={{fontWeight: 'bold'}}
             containerStyle={{marginLeft: 0}}
-            onPress={this.onPressloginAndReg}
+            onPress={()=>this.onPressloginAndReg(false)}
           />  
 				</SplashTile>
 			</ViewContainer>
