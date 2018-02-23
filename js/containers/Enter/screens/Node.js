@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { ListView, Text, Dimensions, FlatList } from "react-native";
+import { ListView, Text, Dimensions, FlatList, ScrollView } from "react-native";
 import { Colors, SCREEN_WIDTH, normalize } from "../../../libs";
 import { SearchBar, List, ListItem } from "react-native-elements";
 import { ViewContainer, StyleSheet } from "../../../components";
@@ -228,7 +228,9 @@ class Node extends Component {
 			        dataSource={this.state.dataSource}
 			      />
 			    </List>
+			    <ScrollView>
 			    { showStatusList }
+			    </ScrollView>
 				</ListContainer>
 			</ViewContainer>
 		);

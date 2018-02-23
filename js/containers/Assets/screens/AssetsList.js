@@ -110,7 +110,7 @@ class AssetsList extends Component {
 	}
 
 	isNodeLinked = () => {
-    const { currentAccount, node: nodeStatus } = this.props;
+    const { account: currentAccount, node: nodeStatus } = this.props;
     console.log("=====[AssetList.js]::isNodeLinked - ", currentAccount, nodeStatus.url, nodeStatus.status);
     return (!!currentAccount && !!nodeStatus.url && nodeStatus.status === 'open');
   }

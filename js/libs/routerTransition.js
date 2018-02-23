@@ -119,6 +119,7 @@ const willTransitionTo = (nextState, replaceState, callback) => {
             // ss.set("apiLatencies", latencies);
             connectionManager.urls = urls;
             // 初始化节点信息
+            if(connectionManager.url) //有值才初始化
             callback(connectionManager.url, reNodeList(urls, latencies), 'init');
         }
         connectionManager.connectWithFallback(connect).then(() => {
@@ -177,15 +178,16 @@ const willTransitionTo = (nextState, replaceState, callback) => {
                 }
             } else {
                 ;//replaceState("/init-error");
-                callback("init-error");
+                callback(connectionManager.url, null, 'init-error');
+
                 let url = connectionManager.urls[0] || connectionString;
                 Apis.reset(url, true).init_promise.then(()=>{
                     
                     console.log("=====[routerTransition.js]::App.willTransitionTo - reset url :", url);
 
                 }).catch(err => {
-                    console.error("err:", err);
-                    return callback("reset-error");
+                    console.error("reset-error:", connectionManager.url, err);
+                    return callback(connectionManager.url, null, 'reset-error');
                 });
             }
         });
@@ -197,12 +199,12 @@ const willTransitionTo = (nextState, replaceState, callback) => {
 
     // Every 25 connections we check the latencies of the full list of nodes
     if (connect && !apiLatenciesCount && !connectionCheckPromise) connectionManager.checkConnections().then((res) => {
-        console.log("=====[routerTransition.js]::App.willTransitionTo - Connection latencies:", res);
+        console.log("=====[routerTransition.js]::App.willTransitionTo - Connection latencies e:", res);
         //ss.set("apiLatencies", res);
         if(res && res[0]) {
             let [latencies] = res;
             let urls = filterAndSortURLs(0, latencies);
-            callback(connectionManager.url, reNodeList(urls, latencies));
+            callback(connectionManager.url, reNodeList(urls, latencies), 'check');
         }
         
     });

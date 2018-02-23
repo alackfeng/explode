@@ -38,7 +38,10 @@ class AssetsManage extends Component {
 
     const { currentAccount, nodeStatus } = this.props;
 
-    if(!this.isNodeLinked()) {
+    const isLinked = this.isNodeLinked();
+    console.log("=====[AssetsManage.js]::render - ", currentAccount, nodeStatus.url, nodeStatus.status, isLinked);
+
+    if(!isLinked) {
       console.log("=====[AssetsManage.js]::render - ", currentAccount, nodeStatus.url, nodeStatus.status);
       return (<ViewContainer><Text>No Data</Text></ViewContainer>);
     } else {

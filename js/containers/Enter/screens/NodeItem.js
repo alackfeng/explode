@@ -6,7 +6,7 @@ import styled from "styled-components/native";
 import { ListItem } from "react-native-elements";
 
 const NodeWrap = styled.View`
-	background-color: yellow;
+	background-color: rgba(35,82,164,1);
 `;
 
 class NodeInfo extends Component {
@@ -19,11 +19,15 @@ class NodeInfo extends Component {
 	}
 
 	onPressUpConnect() {
-		const { item, index, updateConnect } = this.props;
+		const { item, index, updateConnect, linknode } = this.props;
 
 		console.log("=====[NodeItem.js]::onPressUpConnect - press > ", item, index);
-		if(updateConnect)
+
+		let status = linknode.url === item.url ? linknode.status : item.status;
+
+		if(status !== 'open' && updateConnect) {
 			this.props.updateConnect(item.url);
+		}
 
 	}
 
