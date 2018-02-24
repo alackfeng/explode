@@ -5,7 +5,7 @@ import React, { Component } from "react";
 
 import { Dimensions, StyleSheet, View, Image, ImageBackground, Platform } from "react-native";
 
-import { Tile, Button, Text, Icon, Input } from "react-native-elements";
+import { Tile, Button, Text, Icon, Input, Divider } from "react-native-elements";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
 import { ViewContainer } from "../components";
@@ -14,6 +14,8 @@ import SplashTile from "./SplashTile";
 import { resetNavigationTo } from "../libs/help";
 
 import { AccountInput } from "./utils";
+import { ChainValidation } from "assetfunjs/es";
+
 
 const TRACE = false;
 
@@ -35,27 +37,69 @@ export class LoginPage extends Component {
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 
+	checkValidUserName = (text) => {
+
+		let account_name = text.trim();
+
+		if(account_name === "")
+			return {value: account_name, error: "账号名为空"};
+
+		// 以字母开头并可包含数字，破折号可选，长度3-63字节。如(a-z)[-](0-9)
+		if(ChainValidation.is_account_name_error(account_name))
+			return {value: account_name, error: "账号名以字母开头并可包含数字"};
+
+		return {value: account_name, error: null};
+	}
+
+
 	onChangeUserName = (text) => {
 
     console.log("=====[LoginPage.js]::onChangeUserName - ", text);
 
-    if(!text || text.length <= 5) {
-      this.setState({username: text, errorName: "包含字母和数字"});
+		const {value, error} = this.checkValidUserName(text);
+    if(error) {
+      this.setState({username: value, errorName: error});
     } else 
-      this.setState({username: text, errorName: ''});
+      this.setState({username: value, errorName: ''});
   }
 
   onChangePassword = (text) => {
     console.log("=====[LoginPage.js]::onChangePassword - ", text);
 
-    if(!text || text.length <= 5) {
-      this.setState({password: text, errorPass: "小于等于13位"});
+    if(!text) {
+      this.setState({password: text, errorPass: "密码不能为空"});
     } else 
       this.setState({password: text, errorPass: ''});  
   }
 
-	onSubmit = (text) => {
-		console.log("=====[LoginPage.js]::onSubmit - ", text);
+	onSubmit = (e) => {
+		console.log("=====[LoginPage.js]::onSubmit - ", e);
+
+		const { username, password, errorName, errorPass } = this.state;
+
+    console.log("=====[LoginPage.js]::userLogin - ", username, password);
+    if(e) e.preventDefault();
+
+    if(!username || !password) {
+      console.error("=====[LoginPage.js]::userLogin - null params: ", username, password);
+      this.setState({errorPass: "请重新检查!!!"});
+      return;
+    }
+
+    if(errorName || errorPass ) {
+    	this.setState({errorPass: "请重新检查!!!!"});
+    	return;
+    }
+
+    try {
+
+      this.props.handle(username, password);
+
+    } catch ( e ) {
+      console.error("=====[LoginPage.js]::userLogin - error : ", e);
+    }
+
+
   }
 
 	render() {
@@ -76,7 +120,7 @@ export class LoginPage extends Component {
 					//icon={{source: require('./images/aftlogo.png')}}
 					//iconStyle={styles.icon}
 				>
-
+					<View style={{flex: 2}}>
 					<AccountInput
 
 						onChange={this.onChangeUserName}
@@ -87,12 +131,15 @@ export class LoginPage extends Component {
 	          password={this.state.password}
 	          errorPass={this.state.errorPass}
 					/>
+					</View>
+					<View style={{flex: 1}}></View>
+					<View style={{flex: 1}}>
 					<Button
-            text ='注  册'
+            text ='登  录'
             buttonStyle={styles.button}
             textStyle={{fontWeight: 'bold'}}
-            containerStyle={{marginTop: 0, height: 50}}
-            onPress={this.onSubmit}
+            containerStyle={{marginTop: 10, height: 50}}
+            onPress={()=> this.onSubmit()}
           />
           <Button
             text ='注  册'
@@ -100,7 +147,8 @@ export class LoginPage extends Component {
             textStyle={{fontWeight: 'bold'}}
             containerStyle={{marginTop: 0}}
             onPress={()=>resetNavigationTo('Register', this.props.navigation)}
-          />  
+          />
+          </View>
 				</SplashTile>
 			</ViewContainer>
 		);
@@ -123,14 +171,24 @@ const styles = StyleSheet.create({
 		color: 'white',
 	},
 	children: {
-		flex: 0.9,
+		...Platform.select({
+			web: {
+				flex: 1
+			},
+      ios: {
+        flex: 1
+      },
+      android: {
+        flex: 1
+      },
+    }),
 	},
 	button: {
 		marginBottom: 10, 
 		height: 50, 
 		width: SCREEN_WIDTH * 0.8, 
 		backgroundColor: 'transparent', 
-		borderWidth: 1, 
+		borderWidth: 2, 
 		borderColor: 'white', 
 		borderRadius: 5
 	},
