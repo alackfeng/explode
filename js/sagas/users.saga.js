@@ -125,7 +125,7 @@ function* register(username, regInfo, requiredFields) {
 			const { account } = {}; // temporary PS: yield call(fetchAccount, username);
 			if(account) {
 				console.log("=====[users.saga.js]::register - fetchAccount : ", username, "OK, ~Notification UI Block User exists");
-				yield put( userRegister.notify(username, {id: 1000001, message: "Block exists user, Please Login!"}) );
+				yield put( userRegister.notify(username, {id: 1100001, message: "Block exists user, Please Login!"}) );
 				return;
 			}
 
@@ -137,7 +137,7 @@ function* register(username, regInfo, requiredFields) {
 				console.log("=====[users.saga.js]::register - user Register <", username, "> ok : ", response);
 				yield call(callSaveKeys, username, regInfo.password, null);
 				// notify
-				yield put( userRegister.notify({id: 1000003, message: "Save Keys SUCESS, CONFIRM!"}) );
+				yield put( userRegister.notify(username, {id: 1100003, message: "Save Keys SUCESS, CONFIRM!"}) );
 
 			} else {
 				// 6. 注册返回错误，通知UI?，已经在上面通用流程处理了，不用重复
@@ -147,8 +147,8 @@ function* register(username, regInfo, requiredFields) {
 
 			// 3. 本地用户存在，已经登录过通知UI登录（验证密码有效性？）
 			console.log("=====[users.saga.js]::register - exists user: ", user, ", ~Notification UI Local User exists");
-			alert("Local exists user, Please Login！");
-			yield put( userRegister.notify(username, {id: 1000002, message: "Local exists user, Please Login"}) );
+			//alert("Local exists user, Please Login！");
+			yield put( userRegister.notify(username, {id: 1100002, message: "Local exists user, Please Login"}) );
 		}
 
 	} catch ( e ) {
@@ -189,11 +189,11 @@ function* login(username, password, requiredFields) {
 					console.log("=====[users.saga.js]::login - login user <", username, "> ok save keys : ", extradata);
 					yield call(callSaveKeys, username, password, extradata);
 					// notify
-					yield put( userLogin.notify({id: 1000003, message: "Save Keys SUCESS, CONFIRM!"}) );
+					yield put( userLogin.notify({id: 1200001, message: "Save Keys SUCESS, CONFIRM!"}) );
 
 				} else {
 					alert("Login user Private not OK???");
-					yield put( userLogin.notify({id: 1000004, message: "Login user Private not OK???"}) );
+					yield put( userLogin.notify({id: 1200002, message: "Login user Private not OK???"}) );
 				}
 
 			}

@@ -1,5 +1,5 @@
 
-import { USERS_LOGIN, USERS_REGISTER, USERS_UNLOCK, LOAD_USERS, TRIGGER_USERS_REGISTER, TRIGGER_USERS_LOGIN, TRIGGER_USERS_UNLOCK, RESET_TRIGGER_USERS } from "../actions";
+import { USERS_LOGIN, USERS_REGISTER, USERS_UNLOCK, LOAD_USERS, TRIGGER_USERS_REGISTER, TRIGGER_USERS_LOGIN, TRIGGER_USERS_UNLOCK, RESET_TRIGGER_USERS, SEARCH_ACCOUNT } from "../actions";
 
 export const initialState = {
 	entityReg: {
@@ -18,6 +18,10 @@ export const initialState = {
 		raw: {},
 		transaction: [],
 	},
+	entitySearch: {
+		searchTerm: '',
+		searchAccounts: []
+	}
 };
 
 const usersReducer = (state = initialState, action = {}) => {
@@ -141,6 +145,15 @@ const usersReducer = (state = initialState, action = {}) => {
 					transaction: [{...action}, ...state.entityUnLock.transaction],
 				}
 			};
+		}
+		case SEARCH_ACCOUNT: {
+			return {
+				...state,
+				entitySearch: {
+					searchTerm: action.searchTerm,
+					searchAccounts: action.searchAccounts,
+				}
+			}
 		}
 		case LOAD_USERS:
 		default:

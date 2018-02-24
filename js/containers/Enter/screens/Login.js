@@ -109,7 +109,7 @@ class Login extends Component {
 		const { navigation, nodeStatus } = this.props;
     console.info("=====[Login.js]::render - login status : ");
 
-    if(true) {
+    if(false) {
       return (
         <ViewContainer>
           {this.state.isOpen && <LoadingLoginModal onChange={(open) => this.setState({isOpen: !!open})} navigation={navigation} />}

@@ -1,6 +1,8 @@
 
 
 import { action, createRequestTypes, REQUEST, SUCCESS, FAILURE, EVENT  } from "./types";
+import AccountApi from "../services/AccountApi";
+
 
 // users action type
 export const USERS_LOGIN 		= createRequestTypes('USERS_LOGIN');
@@ -13,6 +15,8 @@ export const TRIGGER_USERS_UNLOCK			= 'TRIGGER_USERS_UNLOCK';
 
 export const LOAD_USERS 							= 'LOAD_USERS';
 export const RESET_TRIGGER_USERS 			= 'RESET_TRIGGER_USERS';
+
+export const SEARCH_ACCOUNT 					= 'SEARCH_ACCOUNT';
 
 /*
 // users relation action call
@@ -48,6 +52,41 @@ export const triggerUser = {
 	unlock: ((username, extra, requiredFields = []) => action(TRIGGER_USERS_UNLOCK, {username, extra, requiredFields})),
 	load: (state => action(LOAD_USERS, {state})),
 	reset: ((oper) => action(RESET_TRIGGER_USERS, {oper})),
+}
+
+
+/*
+ * 搜索账号是否存在于区块上，不走SAGA模式，直接promise-> redux
+*/
+
+let accountSearchLock = {};
+
+export const accountSearch = (start_symbol, limit = 50) => {
+
+	let uid = `${start_symbol}+${limit}`;
+
+	return dispatch => {
+
+		if(!accountSearchLock[uid]) {
+			accountSearchLock[uid] = true;
+
+			return AccountApi.lookupAccounts(start_symbol, limit)
+			.then(result => {
+				console.info("[user.action.js]::accountSearch - get result : ", result);
+				accountSearchLock[uid] = false;
+				dispatch({
+					type: SEARCH_ACCOUNT,
+					searchTerm: start_symbol,
+					searchAccounts: result, 
+				})
+
+			}).catch(error => {
+				console.error("[user.action.js]::accountSearch - error : ", error);
+			})
+		}
+		
+
+	}
 }
 
 

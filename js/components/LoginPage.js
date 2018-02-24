@@ -13,7 +13,7 @@ import { ViewContainer } from "../components";
 import SplashTile from "./SplashTile";
 import { resetNavigationTo } from "../libs/help";
 
-import { AccountPasswordInput } from "./utils";
+import { AccountInput } from "./utils";
 
 const TRACE = false;
 
@@ -77,7 +77,7 @@ export class LoginPage extends Component {
 					//iconStyle={styles.icon}
 				>
 
-					<AccountPasswordInput
+					<AccountInput
 
 						onChange={this.onChangeUserName}
 	          username={this.state.username}
@@ -88,10 +88,10 @@ export class LoginPage extends Component {
 	          errorPass={this.state.errorPass}
 					/>
 					<Button
-            text ='登  录'
+            text ='注  册'
             buttonStyle={styles.button}
             textStyle={{fontWeight: 'bold'}}
-            containerStyle={{marginTop: 0}}
+            containerStyle={{marginTop: 0, height: 50}}
             onPress={this.onSubmit}
           />
           <Button
@@ -123,17 +123,7 @@ const styles = StyleSheet.create({
 		color: 'white',
 	},
 	children: {
-		...Platform.select({
-			web: {
-				flex: 0.5
-			},
-      ios: {
-        flex: 0.5
-      },
-      android: {
-        flex: 0.55
-      },
-    }),
+		flex: 0.9,
 	},
 	button: {
 		marginBottom: 10, 

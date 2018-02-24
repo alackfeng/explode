@@ -147,7 +147,7 @@ class UsersBox {
         return {response: "ok", error: error, extradata: result};
       } else {
         console.error("=====[users.box.js]::loginUser - : validPassword", validPassword);
-        error = "invalid password";
+        error = {id: 1200003, message: "invalid password"};
       }
 
       return {response: null, error: error, extradata: result};

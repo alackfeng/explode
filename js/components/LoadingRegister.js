@@ -17,6 +17,8 @@ const {reset: resetRegister} = triggerUser;
 const modalTop = SCREEN_HEIGHT / 2;
 const modalLeft = SCREEN_WIDTH / 2;
 
+const TRACE = false;
+
 const styles = StyleSheet.create({
   container: {
   	position: 'absolute',
@@ -111,13 +113,36 @@ class LoadingRegister extends Component {
 
     this.onCancel   = this.onCancel.bind(this);
     this.onConfirm  = this.onConfirm.bind(this);
+    this.isExistRegister = this.isExistRegister.bind(this);
+
 	}
+
+  isExistRegister = () => {
+
+    const { entityReg: entity } = this.props;
+
+    const notify = entity.transaction.length && entity.transaction.filter(item => item.type === 'USERS_REGISTER_EVENT'); 
+    console.log("=====[LoadingRegister.js]::isExistRegister - notifcation event : ", notify);
+    
+    if(notify.length && notify[0].event && (notify[0].event.id === 1100001 || notify[0].event.id === 1100002)) {
+      
+      return true;
+    } else {
+      
+      return false;
+    }
+  }
 
   onConfirm = () => {
     const { navigation } = this.props;
 
-    //alert('this.props.onChange(true)');
-    resetNavigationTo('Main', navigation);
+    // 账号已经存在，直接转到登录
+    if(this.isExistRegister()) {
+      resetNavigationTo('Login', navigation);
+    } else {
+      
+      resetNavigationTo('Main', navigation);
+    }
 
     // 退出对话框
     this.onCancel();
@@ -141,6 +166,11 @@ class LoadingRegister extends Component {
     console.log("=====[LoadingRegister.js]::showRegStatus - success : ", success);
     if(success.length) {
       tip = "注册完成";
+      isRegister = true;
+    }
+
+    if(this.isExistRegister()) {
+      tip = "已经注册过，登录试试";
       isRegister = true;
     }
     
@@ -176,19 +206,19 @@ class LoadingRegister extends Component {
             <Divider style={{ backgroundColor: 'blue' }} />
           </View>
 
-          <TransactionDetails entity={entity} />
+          {TRACE && <TransactionDetails entity={entity} />}
         </View>
 				
         <View style={{flexDirection: 'row'}}>
           <Button
-		        text="Confirm"
+		        text="登录"
 		        clear
 		        textStyle={{color: 'rgba(78, 116, 289, 1)'}}
 		        containerStyle={styles.button}
 		        onPress={this.onConfirm}
 		      /> 
 	        <Button
-		        text="Cancel"
+		        text="取消"
 		        clear
 		        textStyle={{color: 'rgba(78, 116, 289, 1)'}}
 		        containerStyle={styles.button}

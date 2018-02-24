@@ -15,6 +15,8 @@ import { resetNavigationTo } from "../libs/help";
 
 import { AccountPasswordInput, PrivacyService } from "./utils";
 
+import { ChainValidation } from "assetfunjs/es";
+
 const TRACE = false;
 
 export class RegisterPage extends Component {
@@ -28,11 +30,19 @@ export class RegisterPage extends Component {
       password: '',
       confirmPass: '',
 
+      refcode: 'fengtest1',
+      referrer: 'fengtest1',
+      registrar: 'fengtest1',
+      referrer_percent: 0,
+
       errorName: '',
       errorPass: '',
       errorConfirm: '',
 
       checkedPrivacy: false,
+      errorChecked: false,
+
+      searchEntity: [],
 		}
 
 		this.onChangeUserName = this.onChangeUserName.bind(this);
@@ -43,23 +53,62 @@ export class RegisterPage extends Component {
 
 	}
 
+	checkValidUserName = (text) => {
+
+		let account_name = text.toLowerCase();
+		account_name = account_name.match(/[a-z0-9\.-]+/);
+		account_name = account_name ? account_name[0].trim() : null;
+
+		if(account_name === "")
+			return {value: account_name, error: "账号名为空"};
+
+		// 以字母开头并可包含数字，破折号可选，长度3-63字节。如(a-z)[-](0-9)
+		if(ChainValidation.is_account_name_error(account_name))
+			return {value: account_name, error: "账号名以字母开头并可包含数字"};
+
+		//搜索账号是否已经注册过了，
+		if(this.props.search)
+			this.props.search(account_name);
+		
+		let account = this.props.searchEntity.searchAccounts.filter(a => a[0] === account_name);
+		console.log("[RegisterPage.js]::checkValidUserName - searchEntity : ", account.length, this.props.searchEntity);
+		if(account.length)
+			return {value: account_name, error: "账号名已被注册"};
+
+		return {value: account_name, error: null};
+	}
+
+	checkValidPassword = (text) => {
+
+		let password = text ? text.trim() : null;
+
+		var regex = new RegExp('(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,63}');
+		if(!regex.test(password)) {
+			return {value: password, error: "密码中必须包含大小写字母&数字&特称字符，至少8个字符，最多63个字符"};
+		}
+
+		return {value: password, error: null};
+	}
+
 	onChangeUserName = (text) => {
 
     console.log("=====[RegisterPage.js]::onChangeUserName - ", text);
 
-    if(!text || text.length <= 5) {
-      this.setState({username: text, errorName: "包含字母和数字"});
+    const {value, error} = this.checkValidUserName(text);
+    if(error) {
+      this.setState({username: value, errorName: error});
     } else 
-      this.setState({username: text, errorName: ''});
+      this.setState({username: value, errorName: ''});
   }
 
   onChangePassword = (text) => {
     console.log("=====[RegisterPage.js]::onChangePassword - ", text);
 
-    if(!text || text.length <= 5) {
-      this.setState({password: text, errorPass: "小于等于13位"});
+    const {value, error} = this.checkValidPassword(text);
+    if(error) {
+      this.setState({password: value, errorPass: error});
     } else 
-      this.setState({password: text, errorPass: ''});  
+      this.setState({password: value, errorPass: ''});  
   }
 
   onChangeConfirmPass = (text) => {
@@ -72,11 +121,47 @@ export class RegisterPage extends Component {
   }
 
   onCheckedPrivacy = () => {
-  	this.setState({checkedPrivacy: !this.state.checkedPrivacy});  
+  	this.setState({checkedPrivacy: !this.state.checkedPrivacy, errorChecked: this.state.checkedPrivacy});  
   }
 
- 	onSubmit = (text) => {
-		console.log("=====[RegisterPage.js]::onSubmit - ", text);
+ 	onSubmit = (e) => {
+		const { username, password, confirmPass, checkedPrivacy, errorName, errorPass, errorConfirm } = this.state;
+    console.log("=====[RegisterPage.js]::userRegister - ", username, password);
+
+    e.preventDefault();
+
+    
+    if(!username || !password || password !== confirmPass) {
+      console.error("=====[RegisterPage.js]::userRegister - password not equal to confirmPass", username, password);
+      this.setState({errorConfirm: "请重新检查!!!"});
+      return;
+    }
+
+    if(errorName || errorPass || errorConfirm /*|| !checkedPrivacy */ ) {
+    	this.setState({errorConfirm: "请重新检查!!!!"});
+    	return;
+    }
+
+    if(!checkedPrivacy) {
+    	this.setState({errorChecked: "请阅读并同意服务和隐私条款"});
+    	return;
+    }
+
+    const refcode = this.state.refcode;
+    const referrer = this.state.registrar;
+    const registrar = null; //this.state.registrar;
+    const referrer_percent = this.state.referrer_percent;
+
+    try {
+
+    	if(this.props.handle)
+      	this.props.handle(username, {username, password, registrar, referrer, referrer_percent, refcode});
+      else
+      	throw Error("userRegister function not defined!!!");
+
+    } catch ( e ) {
+      console.error("=====[RegisterPage.js]::userRegister - error : ", e.message || e.err_no);
+    }
   }
 
 
@@ -115,6 +200,7 @@ export class RegisterPage extends Component {
 					<PrivacyService 
 						checked={this.state.checkedPrivacy}
 						onChecked={this.onCheckedPrivacy}
+						errorChecked={this.state.errorChecked}
 					/>
 					<Button
             text ='注  册'
