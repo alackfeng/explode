@@ -19,7 +19,7 @@ const ViewHeader = styled.View`
   margin-bottom: 0;
   border-bottom-color: ${Colors.white};
   border-bottom-width: 1;
-  height: 100;
+  height: 120;
 `;
 
 class Account extends Component {
@@ -53,7 +53,7 @@ const styles = {
 	},
 	image: {
 		width: SCREEN_WIDTH,
-		height: 100,
+		height: 120,
 	},
 	title: {
 		color: 'white',

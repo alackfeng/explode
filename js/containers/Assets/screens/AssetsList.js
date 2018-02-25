@@ -10,66 +10,54 @@ import { SearchBar, List, ListItem, Icon, Button, Input } from 'react-native-ele
 
 import { ViewContainer, StyleSheet, LoadingLoginModal } from "../../../components";
 import { AssetItem } from "./AssetItem";
+import _ from "lodash";
 
-import { ChainStore, FetchChain } from "assetfunjs/es";
-
-
-const Header = styled.View`
-	background-color: red;
-`;
-
-const ListContainer = styled.View`
-`;
+//import { ChainStore, FetchChain } from "assetfunjs/es";
+let increment_seq = 1;
 
 class AssetsList extends Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 
-		let assetsList = [
-        'Simplicity Matters',
-        'Hammock Driven Development',
-        'Value of Values',
-        'Are We There Yet?',
-        'The Language of the System',
-        'Design, Composition, and Performance',
-        'Clojure core.async',
-        'The Functional Database',
-        'Deconstructing the Database',
-        'Hammock Driven Development',
-        'Value of Values'
-      ];
-
-		var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+		var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 === r2 });
+		const balances = this.getAssetsList(props);
 
 		this.state = {
 			ds: ds,
-			dataSource: null, //ds.cloneWithRows(assetsList),
-			accountBalance: null,
-			accountHistory: null,
-			symbols: null,
-			balances: null,
+			dataSource: balances ? ds.cloneWithRows(balances) : null,
+			balances: balances,
 		};
 
 		this.renderRow 	= this.renderRow.bind(this);
 		this.navTo 			= this.navTo.bind(this);
 
-		this.update			= this.update.bind(this);
+		console.log("=====[AssetList.js]::constructor - assetsList-- : ", props.assetsList, balances);
 
-		console.log("=====[AssetList.js]::constructor - account----------------------------------- ", "account");
+	}
+
+	componentWillReceiveProps(nextProps) {
+
+		//if(nextProps.assetsList) {
+		//	this.setState(dataSource: this.state.ds.cloneWithRows(nextProps.assetsList));
+		//}
+		const balances = this.getAssetsList(nextProps);
+
+		const dataSource = balances ? this.state.ds.cloneWithRows(balances) : this.state.dataSource;
+		this.setState({dataSource, balances});
 
 	}
 
 	componentWillUnmount() {
-		ChainStore.unsubscribe(this.update); // update
+		//ChainStore.unsubscribe(this.update); // update
 	}
 
 	componentWillMount() {
 		// alert("ddddd");
 		const { account, node } = this.props;
-		console.log("=====[AssetList.js]::componentDidMount - account----------------------------------- ", account, node);
-
-		ChainStore.subscribe(this.update); // update
+		//console.log("=====[AssetList.js]::componentDidMount - account-- ", account, node);
+		/*
+		//ChainStore.subscribe(this.update); // update
 		
 		if(!this.isNodeLinked()) {
 			return;
@@ -106,7 +94,7 @@ class AssetsList extends Component {
       console.error("=====[AssetList.js]::componentDidMount - account : getAccount is : err ", err);
     })
 
-		this.setState({refresh: true});
+		this.setState({refresh: true}); */
 	}
 
 	isNodeLinked = () => {
@@ -117,6 +105,7 @@ class AssetsList extends Component {
 
 	update(nextProps = null) {
 		console.info("=====[AssetList.js]::update - ChainStore::subscribe : ************** nextProps ", nextProps);
+		this.setState({refresh: true});
 	}
 
 	navTo(url, params) {
@@ -129,21 +118,42 @@ class AssetsList extends Component {
 		}
 	} 
 	renderRow(rowData, sectionID, rowID) {
-		const { accountBalance, accountHistory } = this.state;
+		const { assetsList: accountBalance } = this.props;
 
 		return (
 			<AssetItem item={rowData} index={rowID} nav={this.navTo} balances={accountBalance} />
 		);
 	}
 
+	getAssetsList = (props, ds) => {
+		const { assetsList: accountBalance } = props || this.props;
+
+		if(accountBalance && accountBalance.size) {
+			let balances = [];
+  		accountBalance.forEach((a, asset_type) => {
+  			increment_seq = increment_seq + 1;
+  			balances.push({type: asset_type, asset: a, incr: increment_seq});
+  		});
+
+			console.log("=====[AssetList.js]::getAssetsList - ", balances);
+  		return balances;
+		}
+		
+		return null;
+
+	}
+
 	render() {
 
-		const { onScroll = () => {}, navigation  } = this.props;
+		const { onScroll = () => {}, navigation, assetsList } = this.props;
 
-		console.log("=====[AssetList.js]::render - ", "navigation");
+		console.log("=====[AssetList.js]::render - ", assetsList, this.state.dataSource);
+
+		//const balances = this.getAssetsList();
+		//const dataSource = balances ? this.state.ds.cloneWithRows(balances) : this.state.dataSource;
 
 		if(!this.state.dataSource)
-			return <ViewContainer><Text>No Data Balance</Text></ViewContainer>;;
+			return <ViewContainer><Text>No Data Balance</Text></ViewContainer>;
 
 		return (
 			<ViewContainer>
@@ -162,11 +172,6 @@ class AssetsList extends Component {
 		);
 	}
 }
-
-const AVATAR_SIZE = 120;
-const ROW_HEIGHT = 60;
-const PARALLAX_HEADER_HEIGHT = 350;
-const STICKY_HEADER_HEIGHT = 70;
 
 const styles = StyleSheet.create({
 

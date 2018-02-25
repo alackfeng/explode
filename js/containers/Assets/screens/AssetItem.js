@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { View, Text } from "react-native";
 import styled from "styled-components/native";
 
-import { ListItem } from "react-native-elements";
+import { ListItem, Button } from "react-native-elements";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
@@ -32,7 +32,7 @@ class Asset extends Component {
 
 		const balanceObject = ChainStore.getObject(item.asset);
 		const asset_type = balanceObject.get("asset_type");
-		const asset = ChainStore.getObject(asset_type);
+		const asset = ChainStore.getAsset(asset_type);
 
 		console.log("=====[AssetItem.js]::componentWillMount - balanceObject > ", JSON.stringify(balanceObject), asset_type, JSON.stringify(asset));
 		this.setState({balanceObject, asset, symbol: asset && asset.get("symbol")});
@@ -45,6 +45,15 @@ class Asset extends Component {
 		if(nav)
 			this.props.nav('Transfer', {item: item, index: index});
 
+	}
+
+	rightTitle = () => {
+		return <Button 
+			buttonStyle={{backgroundColor: 'transparent'}} 
+			textStyle={{fontWeight: 'bold', color: 'rgba(35,82,164,0.7)'}} 
+			text="转帐" 
+			onPress={this.onPressNavTo} 
+		/>;
 	}
 
 	render() {
@@ -65,13 +74,13 @@ class Asset extends Component {
 					subtitle={subTitle}
 					icon={{ name: item.icon }}
 					rightIcon={{ name: 'trending-up'}}
-					rightTitle={"转帐"}
+					rightTitle={'转账'}
 					rightTitleStyle={{color: 'rgba(35,82,164,1)'}}
 					onPressRightIcon={this.onPressNavTo}
 					avatar={require('../images/aft-account.png')}
 					avatarStyle={{backgroundColor: 'blue'}}
 					//badge={{ element: <CustBadge index={rowID}/> }}
-					//onPress={() => this.onPressItem(rowData)}
+					onPress={() => this.onPressNavTo()}
 				/>
 			</AssetItemWrap>
 		);

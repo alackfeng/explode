@@ -136,6 +136,8 @@ function* register(username, regInfo, requiredFields) {
 				// 5. 注册成功返回，保存私钥到本地 save key
 				console.log("=====[users.saga.js]::register - user Register <", username, "> ok : ", response);
 				yield call(callSaveKeys, username, regInfo.password, null);
+
+
 				// notify
 				yield put( userRegister.notify(username, {id: 1100003, message: "Save Keys SUCESS, CONFIRM!"}) );
 
@@ -188,6 +190,11 @@ function* login(username, password, requiredFields) {
 					
 					console.log("=====[users.saga.js]::login - login user <", username, "> ok save keys : ", extradata);
 					yield call(callSaveKeys, username, password, extradata);
+
+					// 提前获取账号相关信息
+					yield fork(fetchAccount, username);
+
+
 					// notify
 					yield put( userLogin.notify({id: 1200001, message: "Save Keys SUCESS, CONFIRM!"}) );
 
