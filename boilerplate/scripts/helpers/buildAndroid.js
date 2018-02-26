@@ -7,7 +7,7 @@ const shell = require('shelljs');
 function buildAndroid(resolve, reject) {
   const suffix = process.platform === 'win32' ? '.bat' : '';
   const cmd = path.join(process.cwd(), 'android', `gradlew${suffix}`);
-  const mode = global.settings.production ? 'Production' : 'Debug';
+  const mode = global.settings.production ? 'Release' : 'Debug';
   const code = shell.exec(`${cmd} assemble${mode}`, {
     cwd: path.join(process.cwd(), 'android'),
   }).code;

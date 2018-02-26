@@ -224,3 +224,9 @@ A26. vi /Users/assetfun/source/aftapp/explode-app/android/app/src/main/res/value
 </resources>
 ```
 
+```sh
+Q27. 01:22:43.077 [ERROR] [org.gradle.api.Project] ERROR: D:\Android\wlApp\android\app\build\intermediates\res\merged\release\drawable-hdpi\node_modules_reactnavigation_src_views_assets_backicon.png uncompiled PNG file passed as argument. Must be compiled first into .flat file.
+A27. vi /Users/assetfun/source/aftapp/explode-app/android/gradle.properties => 
+android.enableAapt2=false
+```
+
