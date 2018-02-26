@@ -184,6 +184,7 @@ const willTransitionTo = (nextState, replaceState, callback) => {
                 Apis.reset(url, true).init_promise.then(()=>{
                     
                     console.log("=====[routerTransition.js]::App.willTransitionTo - reset url :", url);
+                    callback(url, null, 'connect');
 
                 }).catch(err => {
                     console.error("reset-error:", connectionManager.url, err);

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Text, ScrollView, Dimensions } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
-import { Icon, Button, Input } from 'react-native-elements';
+import { Icon, Button, Input, Overlay } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, LoadingLoginModal, Header, TableHistory } from "../../../components";
 
@@ -23,16 +23,37 @@ class History extends Component {
 			accountHistory: null,
 		}
 
+		this.update = this.update.bind(this);
+
 	}
-	componentDidMount() {
+
+	componentWillUnmount() {
+    ChainStore.unsubscribe(this.update); // update
+  }
+
+  componentWillMount() {
+    
+    ChainStore.subscribe(this.update); // update
+
+    this.fetchHistoryList();
+
+  }
+
+  update(nextProps = null) {
+    console.info("=====[History.js]::update - ChainStore::subscribe : ************** nextProps ", nextProps);
+
+    this.fetchHistoryList();
+  }
+
+	fetchHistoryList() {
 
 		const { currentAccount } = this.props;
 
 		if(currentAccount) {
       FetchChain("getAccount", currentAccount).then((ret) => {
         if(TRACE) console.log("=====[History.js]::componentDidMount - : FetchChain:getAccount is : ", JSON.stringify(ret.get("balances")), JSON.stringify(ret));
-        const accountObj = ret;
-        const accountHistory = accountObj && accountObj.get ? ret.get("history") : null;
+        const accountObj = ret; //ChainStore.getAccount(currentAccount);
+        const accountHistory = accountObj && accountObj.get ? accountObj.get("history") : null;
 
         this.setState({accountHistory});
 
@@ -48,11 +69,21 @@ class History extends Component {
 		const { accountHistory } = this.state;
 		if(TRACE) console.info("=====[History.js]::render - : render >  ", currentAccount, accountHistory);
 
+		const isValid = !!accountHistory;
+
 		return (
 			<ViewContainer>
 				<Header account={currentAccount} />
-				<Text>hi History, {currentAccount}</Text>
-				<TableHistory history={accountHistory} />
+				<Overlay
+				  isVisible={ !isValid }
+				  windowBackgroundColor='transparent'
+				  overlayBackgroundColor='red'
+				  width='auto'
+				  height='auto'
+				>
+				  <Text>数据加载中...</Text>
+				</Overlay>
+				{accountHistory && <TableHistory history={accountHistory} />}
 			</ViewContainer>
 		);
 	}
