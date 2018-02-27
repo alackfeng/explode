@@ -15,10 +15,29 @@
 
 ####
 
+
+```sh
+
+##### IOS打包
+1. 生成jsbundle
+mkdir -p ./ios/bundle;
+react-native bundle --entry-file ./index.ios.js --bundle-output ./ios/bundle/index.ios.jsbundle --platform ios --assets-dest ./ios/bundle --dev false
+2. 将之前打包好的jsbundle和assets拖入xcode工程下面, 注意一定要选择 Create folder references：
+3. Xcode -> Product -> Scheme -> release
+3. Xcode -> Product -> Archive
+ 
+or: react-native run-ios --configuration Release
+
+4. 转化成.ipa
+mkdir -p ~/Desktop/aftbomb-dist; mkdir -p ~/Desktop/aftbomb-dist/Payload;
+cp -rf ./ios/build/Build/Products/Release-iphonesimulator/aftbomb.app ~/Desktop/aftbomb-dist/Payload/aftbomb.app
+cd ~/Desktop/aftbomb-dist
+zip -r aftbomb.ipa Payload
+
+```
+
 #### 20180222 -: 
 ##### 优化引导页界面
-
-
 
 ####
 
