@@ -3,12 +3,15 @@
 
 import React, { Component } from "react";
 
-import { Dimensions, StyleSheet, View, Text, Image, ImageBackground } from "react-native";
+import { Dimensions, StyleSheet, View, Text, Image, ImageBackground, ActivityIndicator } from "react-native";
 
 import { Tile, Button } from "react-native-elements";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
 import { ViewContainer } from "../components";
+import { loadingAnimation } from "../libs/help";
+import { Colors as colors } from "../libs/Colors";
+
 
 import SplashTile from "./SplashTile";
 
@@ -17,19 +20,28 @@ const TRACE = false;
 
 class LaunchScreen extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      animating: true,
+    };
+  }
+
+  componentDidMount() {
+    //loadingAnimation(this.state.fadeAnimValue).start();
+  }
+
 	render() {
 
 
 		return (
 			<ViewContainer>
 				<SplashTile
-					containerStyle={styles.container1}
+					containerStyle={styles.container}
 					imageSrc={require('./images/launchscreen.jpg')}
 					imageContainerStyle={styles.image}
 					title="ASSETFUN"
 					titleStyle={styles.title}
-					caption={ "与区块连接中" }
-					captionStyle={styles.caption}
 					featured
 					height={SCREEN_HEIGHT}
 					width={SCREEN_WIDTH}
@@ -38,6 +50,13 @@ class LaunchScreen extends Component {
 					icon={{source: require('./images/aftlogo.png')}}
 					iconStyle={styles.icon}
 				> 
+          <Text style={styles.centering}>与区块连接中</Text>
+					<ActivityIndicator
+            style={[styles.centering, {height: 80}]}
+            animating={this.state.animating}
+            size="large"
+            color={colors.salmon}
+          />
 				</SplashTile>
 			</ViewContainer>
 		);
@@ -60,12 +79,15 @@ const styles = {
 	title: {
 		color: 'white',
 	},
-	caption: {
-		color: 'red'
-	},
 	children: {
-		flex: 0.3,
-	}
+		backgroundColor: 'transparents',
+	},
+  centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+    color: colors.salmon,
+  },
 };
 
 LaunchScreen.__cards__ = define => {
