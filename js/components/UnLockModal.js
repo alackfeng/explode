@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Text, ActivityIndicator, Keyboard } from "react-native";
 import Modal from "react-native-modal";
-import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
+import { Colors as colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
 
 import { Icon, Button, Input, Divider } from 'react-native-elements';
 
@@ -49,7 +49,13 @@ const styles = StyleSheet.create({
   bottomModal: {
     justifyContent: "flex-end",
     margin: 0
-  }
+  },
+  centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+    color: colors.salmon,
+  },
 });
 
 
@@ -67,6 +73,8 @@ class UnLock extends Component {
     this.state = {
       username: props.currentAccount || '',
       password: '',
+
+      animating: false,
     }
 
     this.onCancel   = this.onCancel.bind(this);
@@ -74,8 +82,19 @@ class UnLock extends Component {
   }
 
   onConfirm() {
+
+    const { entityUnLock: entity } = this.props;
+
     
     const username = this.state.username || this.props.currentAccount;
+
+    this.setState({animating: true});
+
+    const isUnLock = (entity && entity.isUnLock) || false;
+    if(isUnLock) {
+      this.onCancel();
+      return;
+    }
 
     this.props.sendUnLock(username, {
       username: username,
@@ -88,6 +107,8 @@ class UnLock extends Component {
 
     const username = this.state.username || this.props.currentAccount;
     
+    this.setState({animating: false});
+
     this.props.sendUnLock(username, {
       type: 'close',
     }); 
@@ -104,9 +125,10 @@ class UnLock extends Component {
     let entityErr = null;
     let entityObj = entity.transaction.length && entity.transaction.map((item, index) => {
       console.log("=====[UnLockModal.js]::showMessage - entity : ", item, index);
-      if(item.type === USERS_UNLOCK.FAILURE) entityErr  = item.error;
-      if(item.type === USERS_UNLOCK.REQUEST) entityReq  = item.response;
-      if(item.type === USERS_UNLOCK.SUCCESS) entityOk   = '解锁处理中';
+      if(item.type === USERS_UNLOCK.FAILURE) entityErr  = '解锁失败！'; //item.error;
+      if(item.type === USERS_UNLOCK.REQUEST) entityReq  = '解锁处理中'; //item.response;
+      if(item.type === USERS_UNLOCK.SUCCESS) entityOk   = '恭喜您，解锁成功！开启交易之旅';
+      if(item.type === USERS_UNLOCK.EVENT)   entityErr  = '解锁失败！账号丢了'; //item.error;
 
     });
 
@@ -126,6 +148,12 @@ class UnLock extends Component {
       return null;
 
     const { ok, err, req } = this.showMessage(); 
+    let animating = !!(req || err || ok);
+    if(animating) {
+      animating = (err || ok) ? false : true;
+    } else {
+      animating = this.state.animating || false;
+    }
 
     return (
     <View style={styles.container}>
@@ -138,7 +166,15 @@ class UnLock extends Component {
         <View style={{height: 100, backgroundColor: 'white', marginBottom: 10, alignItems: 'center'}}>
           <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 20}}>解锁账号</Text>
           <Divider style={{ backgroundColor: 'rgba(35,82,164,1)', width: SCREEN_WIDTH*0.5, marginBottom: 20 }} />
-          <View><Text style={{color: 'red'}}>{ ok || err || req }</Text></View>
+          <View style={{flexDirection: 'column'}}>
+            <Text style={{color: err?'red': 'blue'}}>{ ok || err || req }</Text>
+            <ActivityIndicator
+              style={[styles.centering, {height: 50}]}
+              animating={animating}
+              size="large"
+              color={colors.salmon}
+            />
+          </View>
         </View>
         
         <View style={{backgroundColor: 'rgba(255, 255, 255, 1)', alignItems: 'center'}}>

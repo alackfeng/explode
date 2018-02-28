@@ -134,7 +134,7 @@ const usersReducer = (state = initialState, action = {}) => {
 		case USERS_UNLOCK.FAILURE:
 		case USERS_UNLOCK.EVENT:
 		{
-			const isopen_status = (action.type === USERS_UNLOCK.SUCCESS) ? false : state.entityUnLock.isOpen;
+			const isopen_status = (action.type === USERS_UNLOCK.SUCCESS) ? true /*false*/ : state.entityUnLock.isOpen;
 			const unlock_status = (action.type === USERS_UNLOCK.SUCCESS) ? true : false;
 			return {
 				...state,

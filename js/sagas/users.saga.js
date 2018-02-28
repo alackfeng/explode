@@ -254,7 +254,7 @@ function* unlock(username, extra, requiredFields) {
 
 			console.log("=====[users.saga.js]::login - not exists user: ", user, ", Notification UI");
 			alert("local not exists user");
-			yield put( userUnlock.notify(username, {id: 1000005, message: "local not exists user"}) );
+			yield put( userUnlock.notify(username, {id: 1300001, message: "local not exists user"}) );
 
 		}
 
