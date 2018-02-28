@@ -104,12 +104,14 @@ class Transfer extends Component {
       return;
     }
 
+    const amount_ = Utils.replace( amount );
+
     this.props.sendTransfer(fromUser, 'transfer', {
       from_account: fromUser, 
       to_account: toUser, 
-      amount: amount * 100000000, 
+      amount: parseInt(Number(amount_) * 100000000, 10), 
       asset: asset_type,
-      memo: memoText,
+      memo: memoText ? new Buffer(memoText, "utf-8") : memoText,
       propose_account: null,
       fee_asset_id: "1.3.0",
       // encrypt_memo: false,

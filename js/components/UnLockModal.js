@@ -235,7 +235,7 @@ class UnLock extends Component {
         </View>
         <View style={{flexDirection: 'row'}}>
           <Button
-            text ='解锁'
+            text = {!!ok ? '确认' : '解锁'}
             buttonStyle={{height: 50, width: 100, backgroundColor: 'blue', borderWidth: 1, borderColor: 'white', borderRadius: 5}}
             containerStyle={{marginVertical: 10}}
             textStyle={{fontWeight: 'bold'}}

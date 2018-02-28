@@ -67,7 +67,7 @@ const RegInfo = ({ info }: Props) => (
 );
 
 const Transaction = ({ trans }: Props) => (
-  <View style={{backgroundColor: 'lightblue'}}>
+  <View style={{backgroundColor: 'lightblue', height: SCREEN_HEIGHT*0.5}}>
     <Text style={{textAlign: 'center'}}>{trans.type}</Text>
     <Text style={{textAlign: 'center'}}>{trans.username}</Text>
     <Text style={{textAlign: 'center'}}>{trans.method}</Text>
@@ -102,8 +102,8 @@ class TransactionDetails extends Component {
         case "transfer":
           rows.push(<View key={0}><Text>来自于: {details.parameters.from_account}</Text></View>);
           rows.push(<View key={1}><Text>发往: {details.parameters.to_account}</Text></View>);
-          rows.push(<View key={2}><Text>金额: {details.parameters.amount} {details.parameters.asset}</Text></View>);
-          rows.push(<View key={3}><Text>备注: {details.parameters.memo}</Text></View>);
+          rows.push(<View key={2}><Text>金额: {details.parameters.amount/100000000} {details.parameters.asset}</Text></View>);
+          rows.push(<View key={3}><Text>备注: {details.parameters.memo.toString()}</Text></View>);
           break;
         default: 
           rows.push(<View><Text>未有相关操作！！！</Text></View>);
@@ -114,7 +114,7 @@ class TransactionDetails extends Component {
     ///console.log("=====[TransactionConfirmModal.js]::transDetails - rows : ", rows);
 
     return (
-      <ScrollView style={{backgroundColor: 'lightblue'}}>
+      <ScrollView style={{backgroundColor: 'lightblue', height: SCREEN_HEIGHT*0.3}}>
         {rows}
       </ScrollView>
     );
