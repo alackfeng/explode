@@ -9,12 +9,15 @@ import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
 import { Icon, Button, List, ListItem, Avatar } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, TransactionConfirmModal } from "../../../components";
-import { triggerTrans, triggerUser } from "../../../actions";
+import { triggerTrans, triggerUser, accountSearch } from "../../../actions";
 const {handle: sendTransfer} = triggerTrans;
 const {unlock: sendUnLock} = triggerUser;
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 import Input from "../../../components/RNWInput";
+import { Utils } from "../../../libs/Utils";
+
+const MEMO_LIMIT = 120;
 
 
 class Transfer extends Component {
@@ -34,9 +37,16 @@ class Transfer extends Component {
       item: null,
       index: null,
       asset_name: null,
+
+      searchEntity: [],
+
+      errorName: '',
     };
 
     this.onPressTransfer  = this.onPressTransfer.bind(this);
+    this.searchAccount = this.searchAccount.bind(this);
+    this.onChangeAmount = this.onChangeAmount.bind(this);
+    this.onChangeMemo = this.onChangeMemo.bind(this);
 
 	}
 
@@ -56,6 +66,23 @@ class Transfer extends Component {
 
   }
 
+  checkFininsh = () => {
+    const { fromUser, toUser, amount, asset_type, memoText } = this.state;
+
+    // 检验有效性
+    if(!fromUser || !toUser || !amount || !asset_type) {
+      alert("请重新检查!!!!");
+      return false;
+    }
+
+    if(!this.props.currentAccount) {
+      alert("获得当前用户失败，请重新进入！");
+      return false;
+    }
+
+    return true;
+  }
+
   onPressTransfer() {
     const { fromUser, toUser, amount, asset_type, memoText } = this.state;
 
@@ -63,11 +90,10 @@ class Transfer extends Component {
     
 
     // 检验有效性
-    if(!fromUser || !toUser || !amount || !asset_type) {
+    if(!this.checkFininsh()) {
       return;
     }
 
- 
     // 先解锁再
     if(!this.props.isUnLock) {
       // 先解锁，再发交易
@@ -91,16 +117,86 @@ class Transfer extends Component {
 
   }
 
+  searchAccount = (name) => {
+    console.log("[Transfer.js]::searchAccount - entity : ", this.props.searchEntity);
+    this.props.accountSearch(name);
+  }
+
+  checkValidUserName = (text) => {
+
+    let account_name = text.trim();
+
+    if(account_name === "")
+      return {value: account_name, error: "账号名为空"};
+
+    //搜索账号是否已经注册过了，
+    if(this.searchAccount)
+      this.searchAccount(account_name);
+    
+    let account = this.props.searchEntity.searchAccounts.filter(a => a[0] === account_name);
+    console.log("[Transfer.js]::checkValidUserName - searchEntity : ", account.length, this.props.searchEntity);
+    if(0 === account.length)
+      return {value: account_name, error: "账号名未存在区块链上"};
+
+    return {value: account_name, error: null};
+  }
+
+  onChangeUserName = (text) => {
+
+    console.log("=====[Transfer.js]::onChangeUserName - ", text);
+
+    const {value, error} = this.checkValidUserName(text);
+    if(error) {
+      this.setState({toUser: value, errorName: error});
+    } else 
+      this.setState({toUser: value, errorName: ''});
+  }
+
+  checkValidAmount = (text) => {
+
+    // 验证是否金额数字，并且小数点后8位
+    if(text && ! /^(\d+,?)+(\.[0-9]{0,8})?$/.test(text))
+      return {ret: false, valid_amount: this.state.amount};
+
+    let amount = Utils.formatAmount(text);
+    
+    return Utils.checkValidAmount(amount, 0, 90000000, 8);
+  }
+
+  onChangeAmount = (text) => {
+
+    console.log("=====[Transfer.js]::onChangeAmount - ", text);
+
+    const {ret, valid_amount} = this.checkValidAmount(text);
+    if(!ret) {
+      this.setState({amount: valid_amount, errorAmount: ''});
+    } else 
+      this.setState({amount: valid_amount, errorAmount: ''});
+  }
+
+  onChangeMemo = (text) => {
+    
+    let memo = text.trim();
+
+    if(memo.length <= MEMO_LIMIT) {
+      this.setState({memoText: memo});
+    } else {
+      //this.setState({memoText: this.state.memoText})
+    }
+  }
+
+
+
   render() {
 
     const { currentAccount, navigation } = this.props;
-    const { item, index, asset_name } = this.state;
+    const { item, index, asset_name, errorName } = this.state;
     const { balanceObject, asset, asset_type } = this.state;
     const subTitle = `${balanceObject.get("balance")/100000000} ${asset_type}`;
 
     console.log("=====[Transfer.js]::render - navigation : ", navigation);
 
-    let assetName =  item.type;
+    const assetName = asset_name && (JSON.parse(asset_name).main || JSON.parse(asset_name).main.short_name) || item.type;
 
     return (
       <ViewContainer>
@@ -120,8 +216,8 @@ class Transfer extends Component {
         </View>
 
 
-
-        <View style={{backgroundColor: 'white', width: SCREEN_WIDTH, alignItems: 'center'}}>
+        <ScrollView>
+        <View style={{backgroundColor: 'transparent', width: SCREEN_WIDTH, alignItems: 'center'}}>
           <View style={styles.overlay}>
             <Input
               containerStyle={[styles.inputContainer, {backgroundColor: 'gray'}]}
@@ -169,12 +265,14 @@ class Transfer extends Component {
               keyboardType="default"
               returnKeyType="next"
               ref={ input => this.touserInput = input }
-              onChangeText={ text => this.setState({toUser: text})}
+              onChangeText={ this.onChangeUserName }
               onSubmitEditing={() => {
                 this.amountInput.focus();
               }}
               blurOnSubmit={false}
               value={this.state.toUser}
+              displayError={!!errorName}
+              errorMessage={errorName || ''}
             />
           </View>
           <View style={styles.overlay}>
@@ -196,7 +294,7 @@ class Transfer extends Component {
               keyboardType="default"
               returnKeyType="next"
               ref={ input => this.amountInput = input }
-              onChangeText={ text => this.setState({amount: text})}
+              onChangeText={ this.onChangeAmount }
               onSubmitEditing={() => {
                 this.memoInput.focus();
               }}
@@ -224,13 +322,14 @@ class Transfer extends Component {
               keyboardType="default"
               returnKeyType="done"
               ref={ input => this.memoInput = input }
-              onChangeText={ text => this.setState({memoText: text})}
+              onChangeText={ this.onChangeMemo }
               onSubmitEditing={() => {
                 //this.commitInput.focus();
                 Keyboard.dismiss()
               }}
               blurOnSubmit={false}
               value={this.state.memoText}
+              multiline={true}
             />
           </View>
         </View>
@@ -244,7 +343,7 @@ class Transfer extends Component {
             onPress={this.onPressTransfer}
           />
         </View>
-
+        </ScrollView>
       </ViewContainer>
     );
   }
@@ -294,10 +393,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   currentAccount: state.app.currentAccount,
   nodeStatus: state.app.nodeStatus,
-  isUnLock: state.users.entityUnLock.isUnLock
+  isUnLock: state.users.entityUnLock.isUnLock,
+  searchEntity: state.users.entitySearch,
 });
 
 export const TransferScreen = connect(mapStateToProps, {
   sendTransfer,
   sendUnLock,
+  accountSearch,
 })(Transfer);
