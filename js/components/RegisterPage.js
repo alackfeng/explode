@@ -3,7 +3,7 @@
 
 import React, { Component } from "react";
 
-import { Dimensions, StyleSheet, View, Image, ImageBackground } from "react-native";
+import { Dimensions, StyleSheet, View, Image, ImageBackground, ScrollView } from "react-native";
 
 import { Tile, Button, Text, Icon, Input } from "react-native-elements";
 

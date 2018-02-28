@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Text, ScrollView, Dimensions, Keyboard } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
-import { Icon, Button, Input, List, ListItem } from 'react-native-elements';
+import { Icon, Button, List, ListItem, Avatar } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, TransactionConfirmModal } from "../../../components";
 import { triggerTrans, triggerUser } from "../../../actions";
@@ -14,6 +14,7 @@ const {handle: sendTransfer} = triggerTrans;
 const {unlock: sendUnLock} = triggerUser;
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
+import Input from "../../../components/RNWInput";
 
 
 class Transfer extends Component {
@@ -32,6 +33,7 @@ class Transfer extends Component {
       asset: null,
       item: null,
       index: null,
+      asset_name: null,
     };
 
     this.onPressTransfer  = this.onPressTransfer.bind(this);
@@ -47,7 +49,8 @@ class Transfer extends Component {
       const asset_type = balanceObject.get("asset_type");
       const asset = ChainStore.getObject(asset_type);
 
-      this.setState({fromUser: currentAccount, item, index, balanceObject, asset, asset_type: asset&&asset.get("symbol")})
+      this.setState({fromUser: currentAccount, item, index, balanceObject, asset, 
+        asset_type: asset&&asset.get("symbol"), asset_name: asset && asset.getIn(['options', 'description'])})
     }
     
 
@@ -91,28 +94,29 @@ class Transfer extends Component {
   render() {
 
     const { currentAccount, navigation } = this.props;
-    const { item, index } = this.state;
+    const { item, index, asset_name } = this.state;
     const { balanceObject, asset, asset_type } = this.state;
     const subTitle = `${balanceObject.get("balance")/100000000} ${asset_type}`;
 
     console.log("=====[Transfer.js]::render - navigation : ", navigation);
 
+    let assetName =  item.type;
+
     return (
       <ViewContainer>
         <View style={styles.titleContainer}>
-          <ListItem
-            containerStyle={{height: 100}}
-            hideChevron
-            key={1}
-            //roundAvatar
-            title={item.type}
-            subtitle={subTitle}
-            icon={{ name: item.icon }}
-            avatar={require('../../Assets/images/aft-account.png')}
-            avatarStyle={{backgroundColor: 'blue'}}
-            //badge={{ element: <CustBadge index={rowID}/> }}
-            //onPress={() => this.onPressItem(rowData)}
-          />
+          <View style={styles.avatarContainer}>
+            <Avatar
+              large
+              source={require('../../../components/images/aftlogo.png')}
+              onPress={() => console.log("Works!")}
+              activeOpacity={0.7}
+            />
+          </View>
+          <View style={styles.itemContainer}>
+            <Text style={styles.itemStyle}>{assetName}</Text>
+            <Text style={styles.itemStyle}>{subTitle}</Text>
+          </View>
         </View>
 
 
@@ -120,7 +124,7 @@ class Transfer extends Component {
         <View style={{backgroundColor: 'white', width: SCREEN_WIDTH, alignItems: 'center'}}>
           <View style={styles.overlay}>
             <Input
-              containerStyle={{marginTop: 10, borderWidth: 1, borderColor: 'rgba(223,223,223,1)', height: 50, width: SCREEN_WIDTH - 56, backgroundColor: 'white'}}
+              containerStyle={[styles.inputContainer, {backgroundColor: 'gray'}]}
               icon={
                 <Icon
                   name='person'
@@ -128,6 +132,7 @@ class Transfer extends Component {
                   size={25}
                 />
               }
+              rightText="AFT账号"
               placeholder="From"
               placeholderTextColor="black"
               autoCapitalize="none"
@@ -147,14 +152,15 @@ class Transfer extends Component {
           </View>
           <View style={styles.overlay}>
             <Input
-              containerStyle={{marginTop: 10, borderWidth: 1, borderColor: 'rgba(223,223,223,1)', height: 50, width: SCREEN_WIDTH - 56, backgroundColor: 'white'}}
+              containerStyle={styles.inputContainer}
               icon={
                 <Icon
-                  name='person'
+                  name='person-outline'
                   color='black'
                   size={25}
                 />
               }
+              rightText="收款账号"
               placeholder="To"
               placeholderTextColor="black"
               autoCapitalize="none"
@@ -173,14 +179,15 @@ class Transfer extends Component {
           </View>
           <View style={styles.overlay}>
             <Input
-              containerStyle={{marginTop: 10, borderWidth: 1, borderColor: 'rgba(223,223,223,1)', height: 50, width: SCREEN_WIDTH - 56, backgroundColor: 'white'}}
+              containerStyle={styles.inputContainer}
               icon={
                 <Icon
-                  name='person'
+                  name='account-balance'
                   color='black'
                   size={25}
                 />
               }
+              rightText={`${asset_type}金额`}
               placeholder="Amount"
               placeholderTextColor="black"
               autoCapitalize="none"
@@ -199,14 +206,15 @@ class Transfer extends Component {
           </View>
           <View style={styles.overlay}>
             <Input
-              containerStyle={{marginTop: 10, borderWidth: 1, borderColor: 'rgba(223,223,223,1)', height: 150, width: SCREEN_WIDTH - 56, backgroundColor: 'white'}}
+              containerStyle={[styles.inputContainer, {height: 150}]}
               icon={
                 <Icon
-                  name='person'
+                  name='assignment'
                   color='black'
                   size={25}
                 />
               }
+              rightText="备注"
               inputStyle={{height: 130, textAlign: 'justify'}}
               placeholder="Memo"
               placeholderTextColor="black"
@@ -230,7 +238,7 @@ class Transfer extends Component {
           <Button
             text ='转账'
             ref={ input => this.commitInput = input }
-            buttonStyle={{height: 50, width: 200, backgroundColor: 'rgba(35,82,164,1)', borderWidth: 1, borderColor: 'white', borderRadius: 5}}
+            buttonStyle={styles.buttonStyle}
             containerStyle={{marginVertical: 10}}
             textStyle={{fontWeight: 'bold'}}
             onPress={this.onPressTransfer}
@@ -244,7 +252,42 @@ class Transfer extends Component {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    height: 100,
+    height: 80,
+    width: SCREEN_WIDTH,
+    flexDirection: 'row',
+    marginLeft: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    marginRight: 10,
+  },
+  avatarContainer: {
+    backgroundColor: 'transparent',
+  },
+  itemContainer: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginLeft: 10,
+  },
+  itemStyle: {
+    fontWeight: 'bold',
+    fontSize: 22,
+    color: 'rgba(171, 189, 219, 1)',
+  },
+  inputContainer: {
+    marginTop: 10, 
+    borderWidth: 1, 
+    borderColor: 'rgba(223,223,223,1)', 
+    height: 50, 
+    width: SCREEN_WIDTH-20, 
+    backgroundColor: 'white'
+  },
+  buttonStyle: {
+    height: 50, 
+    width: 200, 
+    backgroundColor: 'rgba(35,82,164,1)', 
+    borderWidth: 1, 
+    borderColor: 'white', 
+    borderRadius: 5
   }
 });
 

@@ -23,6 +23,7 @@ class Asset extends Component {
 			balanceObject: null,
 			asset: null,
 			symbol: null,
+			asset_name: null,
 		};
 
 	}
@@ -35,7 +36,7 @@ class Asset extends Component {
 		const asset = ChainStore.getAsset(asset_type);
 
 		console.log("=====[AssetItem.js]::componentWillMount - balanceObject > ", JSON.stringify(balanceObject), asset_type, JSON.stringify(asset));
-		this.setState({balanceObject, asset, symbol: asset && asset.get("symbol")});
+		this.setState({balanceObject, asset, symbol: asset && asset.get("symbol"), asset_name: asset && asset.getIn(['options', 'description'])});
 	}
 
 	onPressNavTo() {
@@ -59,10 +60,12 @@ class Asset extends Component {
 	render() {
 
 		const { item, index } = this.props;
-		const { balanceObject, asset, symbol } = this.state;
+		const { balanceObject, asset, asset_name, symbol } = this.state;
 		console.log("=====[AssetItem.js]::render - node item > ", item, index, symbol);
 
 		const subTitle = `${balanceObject.get("balance")/100000000} ${symbol}`;
+		const assetName = asset_name && (JSON.parse(asset_name).main || JSON.parse(asset_name).main.short_name) || item.type;
+
 
 		return (
 			<AssetItemWrap>
@@ -70,7 +73,7 @@ class Asset extends Component {
 					//hideChevron
 					key={index}
 					//roundAvatar
-					title={item.type}
+					title={assetName}
 					subtitle={subTitle}
 					icon={{ name: item.icon }}
 					rightIcon={{ name: 'trending-up'}}

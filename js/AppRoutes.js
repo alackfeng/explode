@@ -149,13 +149,17 @@ export const StackRoutes = {
     screen: RegisterScreen,
     navigationOptions: {
       title: 'AFT',
+      headerStyle: { backgroundColor: 'antiquewhite'},
+      headerTitleStyle: { color: 'white' },
     },
   },
   Login: {
     screen: LoginScreen,
-    navigationOptions: {
+    navigationOptions: ({navigation,screenProps}) => ({
       title: 'AFT',
-    },
+      headerStyle: { backgroundColor: !screenProps ? screenProps.themeColor : 'antiquewhite'},
+      headerTitleStyle: { color: 'white' },
+    }),
   },
   Welcome: {
     screen: WelcomeScreen,
