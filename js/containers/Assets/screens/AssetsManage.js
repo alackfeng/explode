@@ -8,7 +8,7 @@ import { View, Text, ScrollView, Dimensions } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
 import { Icon, Button, Input } from 'react-native-elements';
 
-import { ViewContainer, StyleSheet, LoadingLoginModal, Header, HeaderAccount, HeaderSearchBar } from "../../../components";
+import { ViewContainer, StyleSheet, LoadingLoginModal, Header, HeaderAccount, HeaderSearchBar, LoadingData } from "../../../components";
 import { triggerUser } from "../../../actions";
 const {login: userLogin} = triggerUser;
 
@@ -115,7 +115,7 @@ class AssetsManage extends Component {
 
     if(!isLinked) {
       console.log("=====[AssetsManage.js]::render - ", currentAccount, nodeStatus.url, nodeStatus.status);
-      return (<ViewContainer><Text>还没有通证，请刷新试试？</Text></ViewContainer>);
+      return <LoadingData message={"节点尚未连接上，请稍等..."} />;
     } else {
       return (
       <ViewContainer>

@@ -6,6 +6,7 @@ export * from "./ViewContainer";
 export * from "./Icon";
 export * from "./CustomTabBar";
 export * from "./LoadingScreen";
+export * from "./LoadingData";
 
 export * from "./SwipeableView";
 

@@ -13,13 +13,11 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>
-        Welcome to React Native, OK
+        ASSETFUN
       </Text>
-      <Text style={styles.instructions}>
-        To get started, edit index.*.js
+      <Text style={[styles.instructions, {fontSize: 50}]}>
+        为了您的健康少玩手机，多看书，骚年，LOL
       </Text>
-      <Random />
-      <LoadingScreen />
     </View>
   );
 };

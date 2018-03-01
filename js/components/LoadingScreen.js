@@ -45,6 +45,9 @@ export class LoadingScreen extends Component {
   }
 
   render() {
+
+    const { message } = this.props;
+    
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>

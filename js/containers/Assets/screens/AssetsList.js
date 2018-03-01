@@ -8,7 +8,7 @@ import { Image, ListView, View, Text, ScrollView, Dimensions } from "react-nativ
 import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../../libs";
 import { SearchBar, List, ListItem, Icon, Button, Input } from 'react-native-elements';
 
-import { ViewContainer, StyleSheet, LoadingLoginModal } from "../../../components";
+import { ViewContainer, StyleSheet, LoadingLoginModal, LoadingData } from "../../../components";
 import { AssetItem } from "./AssetItem";
 import _ from "lodash";
 
@@ -153,7 +153,7 @@ class AssetsList extends Component {
 		//const dataSource = balances ? this.state.ds.cloneWithRows(balances) : this.state.dataSource;
 
 		if(!this.state.dataSource)
-			return <ViewContainer><Text>No Data Balance</Text></ViewContainer>;
+			return <LoadingData message={"数据加载中..."} />;
 
 		return (
 			<ViewContainer>
