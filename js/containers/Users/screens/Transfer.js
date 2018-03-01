@@ -27,8 +27,8 @@ class Transfer extends Component {
 
     this.state = {
       fromUser: '',
-      toUser: 'feng41',
-      amount: '1',
+      toUser: '',
+      amount: '',
       asset_type: '',
       memoText: '',
 
@@ -47,6 +47,7 @@ class Transfer extends Component {
     this.searchAccount = this.searchAccount.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
     this.onChangeMemo = this.onChangeMemo.bind(this);
+    this.findAccount = this.findAccount.bind(this);
 
 	}
 
@@ -64,6 +65,17 @@ class Transfer extends Component {
     }
     
 
+  }
+
+  componentWillReceiveProps(nextProps) {
+    
+    // 增强用户是否存在查找
+    if(this.state.errorName) {
+      console.log("[Transfer.js]::componentWillReceiveProps - response searchAccount, so try to find it, account > ", this.state.toUser);
+      const {value, error} = this.findAccount(this.state.toUser, nextProps);
+      if(!error)
+        this.setState({toUser: value, errorName: error});
+    };
   }
 
   checkFininsh = () => {
@@ -104,6 +116,8 @@ class Transfer extends Component {
       return;
     }
 
+    const memoText_ = memoText.trim();
+
     const precision = 100000000;
     const amount_ = Utils.replace( amount );
     let multi_factor = amount_.split(".")[1] ? amount_.split(".")[1].length : 0;
@@ -116,7 +130,7 @@ class Transfer extends Component {
       to_account: toUser, 
       amount: parseInt(trans_amount, 10), 
       asset: asset_type,
-      memo: memoText ? new Buffer(memoText, "utf-8") : memoText,
+      memo: memoText_ ? new Buffer(memoText_, "utf-8") : memoText_,
       propose_account: null,
       fee_asset_id: "1.3.0",
       // encrypt_memo: false,
@@ -127,6 +141,16 @@ class Transfer extends Component {
   searchAccount = (name) => {
     console.log("[Transfer.js]::searchAccount - entity : ", this.props.searchEntity);
     this.props.accountSearch(name);
+  }
+
+  findAccount = (account_name, props) => {
+    const { searchEntity } = props || this.props;
+    let account = searchEntity.searchAccounts.filter(a => a[0] === account_name);
+    console.log("[Transfer.js]::findAccount - searchEntity : ", account.length, searchEntity);
+    if(0 === account.length)
+      return {value: account_name, error: "账号名未存在区块链上"};
+
+    return {value: account_name, error: null};
   }
 
   checkValidUserName = (text) => {
@@ -140,12 +164,7 @@ class Transfer extends Component {
     if(this.searchAccount)
       this.searchAccount(account_name);
     
-    let account = this.props.searchEntity.searchAccounts.filter(a => a[0] === account_name);
-    console.log("[Transfer.js]::checkValidUserName - searchEntity : ", account.length, this.props.searchEntity);
-    if(0 === account.length)
-      return {value: account_name, error: "账号名未存在区块链上"};
-
-    return {value: account_name, error: null};
+    return this.findAccount(account_name);
   }
 
   onChangeUserName = (text) => {
@@ -183,7 +202,7 @@ class Transfer extends Component {
 
   onChangeMemo = (text) => {
     
-    let memo = text.trim();
+    let memo = text;//.trim();
 
     if(memo.length <= MEMO_LIMIT) {
       this.setState({memoText: memo});

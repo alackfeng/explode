@@ -78,7 +78,13 @@ export const accountSearch = (start_symbol, limit = 50) => {
 					type: SEARCH_ACCOUNT,
 					searchTerm: start_symbol,
 					searchAccounts: result, 
-				})
+				})	
+
+				return {
+					type: SEARCH_ACCOUNT,
+					searchTerm: start_symbol,
+					searchAccounts: result, 
+				};
 
 			}).catch(error => {
 				console.error("[user.action.js]::accountSearch - error : ", error);

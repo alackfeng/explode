@@ -63,7 +63,13 @@ const styles = StyleSheet.create({
   bottomModal: {
     justifyContent: "flex-end",
     margin: 0
-  }
+  },
+  detailsContainer: {
+    backgroundColor: 'transparent', 
+    marginTop: 30, 
+    height: SCREEN_HEIGHT*0.5, 
+    width: SCREEN_WIDTH*0.8
+  },
 });
 
 
@@ -117,7 +123,7 @@ class TransactionDetail extends Component {
     ///console.log("=====[TransactionConfirmModal.js]::transDetails - rows : ", rows);
 
     return (
-      <ScrollView style={{backgroundColor: 'transparent', marginTop: 30, height: SCREEN_HEIGHT*0.5}}>
+      <ScrollView style={styles.detailsContainer}>
         {rows}
       </ScrollView>
     );

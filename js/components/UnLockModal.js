@@ -56,6 +56,22 @@ const styles = StyleSheet.create({
     padding: 8,
     color: colors.salmon,
   },
+  inputContainer: {
+    borderWidth: 0, 
+    borderColor: 'rgba(223,223,223,1)', 
+    borderBottomWidth: 2, 
+    height: 50, 
+    backgroundColor: 'white',
+    width: SCREEN_WIDTH*0.8 - 40,
+  },
+  buttonStyle: {
+    height: 50, 
+    width: 100, 
+    backgroundColor: 'blue', 
+    borderWidth: 1, 
+    borderColor: 'white', 
+    borderRadius: 5
+  },
 });
 
 
@@ -180,7 +196,7 @@ class UnLock extends Component {
         <View style={{backgroundColor: 'rgba(255, 255, 255, 1)', alignItems: 'center'}}>
           <View style={styles.overlay}>
             <Input
-              containerStyle={{borderWidth: 0, borderColor: 'rgba(223,223,223,1)', borderBottomWidth: 2, height: 50, backgroundColor: 'white'}}
+              containerStyle={styles.inputContainer}
               icon={
                 <Icon
                   name='person'
@@ -207,7 +223,7 @@ class UnLock extends Component {
           </View>
           <View style={styles.overlay}>
             <Input
-              containerStyle={{borderWidth: 0, borderColor: 'rgba(223,223,223,1)', borderBottomWidth: 2, height: 50, backgroundColor: 'white'}}
+              containerStyle={styles.inputContainer}
               icon={
                 <Icon
                   name='person'
@@ -236,14 +252,14 @@ class UnLock extends Component {
         <View style={{flexDirection: 'row'}}>
           <Button
             text = {!!ok ? '确认' : '解锁'}
-            buttonStyle={{height: 50, width: 100, backgroundColor: 'blue', borderWidth: 1, borderColor: 'white', borderRadius: 5}}
+            buttonStyle={styles.buttonStyle}
             containerStyle={{marginVertical: 10}}
             textStyle={{fontWeight: 'bold'}}
             onPress={this.onConfirm}
           />
           <Button
             text ='取消'
-            buttonStyle={{height: 50, width: 100, backgroundColor: 'blue', borderWidth: 1, borderColor: 'white', borderRadius: 5}}
+            buttonStyle={styles.buttonStyle}
             containerStyle={{marginVertical: 10}}
             textStyle={{fontWeight: 'bold'}}
             onPress={this.onCancel}
