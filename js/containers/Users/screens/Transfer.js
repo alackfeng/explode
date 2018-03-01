@@ -104,12 +104,17 @@ class Transfer extends Component {
       return;
     }
 
+    const precision = 100000000;
     const amount_ = Utils.replace( amount );
+    let multi_factor = amount_.split(".")[1] ? amount_.split(".")[1].length : 0;
+    let trans_amount = multi_factor === 0 ? (Number(amount_) * precision) : (Number(amount_.replace(".", ""))*precision/Math.pow(10, multi_factor));
+    console.log("=====[Transfer.js]::onPressTransfer - multi_factor: ", multi_factor, " precision: ", precision, " trans_amount: ", trans_amount);
+
 
     this.props.sendTransfer(fromUser, 'transfer', {
       from_account: fromUser, 
       to_account: toUser, 
-      amount: parseInt(Number(amount_) * 100000000, 10), 
+      amount: parseInt(trans_amount, 10), 
       asset: asset_type,
       memo: memoText ? new Buffer(memoText, "utf-8") : memoText,
       propose_account: null,
