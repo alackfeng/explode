@@ -22,5 +22,14 @@ export const en = {
 			signInButton: "SIGN IN",
 			registerInButton: "REGISTER",
 		}
-	}
+	},
+	advisable_message: {
+    "subject_profile_creator_vote_min": "Voting is below minimum line",
+    "Insufficient_Balance": "Insufficient Balance",
+    "Vote_is_unavailable_for_this_subject": "Voting closed",
+    "Vote_is_closed_for_this_subject": "Voting closed",
+    "everyone_can_vote": "You have reached the limit of 5 betting times. Please select another prediction",
+    "insufficient_balance": "Insufficient Balance",
+    "default": "Assetfun is coming with little donkey lol..."
+  }
 };

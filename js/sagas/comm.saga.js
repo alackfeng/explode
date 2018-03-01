@@ -82,7 +82,7 @@ function* transaction(username, method, parameters, requiredFields) {
 					// 调用交易流程
 
 					const { timeout, waitBroad } = yield race({
-						timeout: call(delay, 10000),
+						timeout: call(delay, 100000),
 						waitBroad: take(actions.TRIGGER_SECOND_CONFIRM),
 					});
 
@@ -99,7 +99,7 @@ function* transaction(username, method, parameters, requiredFields) {
 							const {response: responseB, error} = yield call(callBroadcast, method, {transaction: response.transaction});
 							console.log("=====[comm.saga.js]::transaction - transaction user <", username, ">:-broadcast ok : ", responseB, error);
 
-							yield put(triggerTrans.close('normal')); //关闭交易对话框
+							// not use, yield put(triggerTrans.close('normal')); //关闭交易对话框
 						}
 						if(waitBroad.event === actions.TRIGGER_SECOND_CONFIRM_NO) { // 取消广播，
 							

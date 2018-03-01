@@ -45,7 +45,7 @@ const persistConfig = {
   blacklist: [
     //'app',
     'nav',
-    //'comm',
+    'comm',
     'users',
   ],
   storage: storageEngine

@@ -6,12 +6,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Text, ActivityIndicator, ScrollView } from "react-native";
 import Modal from "react-native-modal";
-import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
+import { Colors as colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from "../libs";
 
 import { Button, Divider } from "react-native-elements";
 
 import { ViewContainer, StyleSheet } from "../components";
-import { triggerTrans, TRIGGER_TRANSACTION_COMMON, TRIGGER_SECOND_CONFIRM_YES, TRIGGER_SECOND_CONFIRM_NO } from "../actions";
+import { triggerTrans, TRIGGER_TRANSACTION_COMMON, TRIGGER_SECOND_CONFIRM, TRIGGER_SECOND_CONFIRM_YES, TRIGGER_SECOND_CONFIRM_NO, TRANSACTION_COMMON } from "../actions";
 const {confirm: secondConfirm, close: transClose } = triggerTrans;
 
 import { ChainTypes } from "assetfunjs/es";
@@ -20,6 +20,16 @@ const ops = Object.keys(operations);
 
 const modalTop = SCREEN_HEIGHT / 2;
 const modalLeft = SCREEN_WIDTH / 2;
+
+const advisable_message = {
+  "subject_profile_creator_vote_min": "Voting is below minimum line",
+  "Insufficient_Balance": "Insufficient Balance",
+  "Vote_is_unavailable_for_this_subject": "Voting closed",
+  "Vote_is_closed_for_this_subject": "Voting closed",
+  "everyone_can_vote": "You have reached the limit of 5 betting times. Please select another prediction",
+  "insufficient_balance": "Insufficient Balance",
+  "default": "Assetfun is coming with little donkey lol..."
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -58,31 +68,24 @@ const styles = StyleSheet.create({
 
 
 
-const RegInfo = ({ info }: Props) => (
-  <View style={{backgroundColor: 'red'}}>
-    <Text style={{textAlign: 'center'}}>{info.type}</Text>
-    <Text style={{textAlign: 'center'}}>{info.username}</Text>
-    <Text style={{textAlign: 'center'}}>{info.regInfo && info.regInfo.password}</Text>
-  </View>
-);
+class TransactionItem extends Component {
+  render() {
+    const { index, title, content } = this.props;
+    return (
+    <View style={{flexDirection: 'row', backgroundColor: index%2 ? 'red' : 'lightblue'}}>
+      <View style={{marginLeft: 30, height: 30, alignItems: 'flex-start', justifyContent: 'center', flex: 1}}><Text style={{textAlign: 'center'}}>{title}</Text></View>
+      <View style={{marginLeft: 5, height: 30, alignItems: 'flex-start', justifyContent: 'center', flex: 3}}><Text style={{}}>{content}</Text></View>
+    </View>
+    );
+  }
+}
 
-const Transaction = ({ trans }: Props) => (
-  <View style={{backgroundColor: 'lightblue', height: SCREEN_HEIGHT*0.5}}>
-    <Text style={{textAlign: 'center'}}>{trans.type}</Text>
-    <Text style={{textAlign: 'center'}}>{trans.username}</Text>
-    <Text style={{textAlign: 'center'}}>{trans.method}</Text>
-    <Text style={{textAlign: 'center'}}>{trans.error && JSON.stringify(trans.error)}</Text>
-    <Text style={{textAlign: 'center'}}>{trans.parameters && trans.parameters.transaction && JSON.stringify(trans.parameters.transaction.operations[0])}</Text>
-    <Text style={{textAlign: 'center'}}>{trans.response && JSON.stringify(trans.response.type)}</Text>
-  </View>
-);
-
-class TransactionDetails extends Component {
+class TransactionDetail extends Component {
 
 
   transDetails() {
     const { status, entity } = this.props;
-    if(status && entity.raw) {
+    if(entity.raw) {
       console.log("=====[TransactionConfirmModal.js]::transDetails - ", entity.raw);
       return { details: entity.raw}
     }
@@ -100,13 +103,13 @@ class TransactionDetails extends Component {
     if(details) {
       switch (ops.filter(item => item === "transfer")[0]) {
         case "transfer":
-          rows.push(<View key={0}><Text>来自于: {details.parameters.from_account}</Text></View>);
-          rows.push(<View key={1}><Text>发往: {details.parameters.to_account}</Text></View>);
-          rows.push(<View key={2}><Text>金额: {details.parameters.amount/100000000} {details.parameters.asset}</Text></View>);
-          rows.push(<View key={3}><Text>备注: {details.parameters.memo.toString()}</Text></View>);
+          rows.push(<TransactionItem key={0} index={0} title={"来自于"} content={details.parameters.from_account} />);
+          rows.push(<TransactionItem key={1} index={1} title={"发往"} content={details.parameters.to_account} />);
+          rows.push(<TransactionItem key={2} index={2} title={"金额"} content={`${details.parameters.amount/100000000} ${details.parameters.asset}`} />);
+          rows.push(<TransactionItem key={3} index={3} title={"备注"} content={details.parameters.memo.toString()} />);
           break;
         default: 
-          rows.push(<View><Text>未有相关操作！！！</Text></View>);
+          rows.push(<TransactionItem key={0} index={0} title={"请查阅"} content={"未有相关操作！！！"} />)
           break;
       }
     }
@@ -114,52 +117,8 @@ class TransactionDetails extends Component {
     ///console.log("=====[TransactionConfirmModal.js]::transDetails - rows : ", rows);
 
     return (
-      <ScrollView style={{backgroundColor: 'lightblue', height: SCREEN_HEIGHT*0.3}}>
+      <ScrollView style={{backgroundColor: 'transparent', marginTop: 30, height: SCREEN_HEIGHT*0.5}}>
         {rows}
-      </ScrollView>
-    );
-  }
-}
-
-class TransactionDetail extends Component {
-
-
-  transDetails() {
-    const { entity } = this.props;
-    if(!entity.transaction || !entity.transaction.length) {
-      //console.log("=====[TransactionConfirmModal.js]::transDetails - ", entity.transaction);
-      return {};
-    }
-
-    let rows = entity.transaction.map((item, index) => {
-      return <View key={index}><Text style={{backgroundColor: index%2 !== 0 ? 'red': 'yellow'}}>{JSON.stringify(item)}</Text></View>;
-    });
-
-    return {details: rows};
-  }
-
-  transRaw() {
-    const { status, entity } = this.props;
-    if(!entity || !entity.raw || entity.raw.type !== TRIGGER_TRANSACTION_COMMON) {
-      return {};
-    }
-    return {type: entity.raw.type, name: entity.raw.username, referrer: entity.raw.referrer};
-  }
-
-  render() {
-
-    const { status, entity } = this.props;
-
-    const { details } = this.transDetails();
-    const {type, name, referrer} = this.transRaw();
-
-    //console.log("=====[TransactionConfirmModal.js]::transDetails - rows : ", details);
-
-    return (
-      <ScrollView style={{backgroundColor: 'lightblue'}}>
-        <Text style={{backgroundColor: 'gray'}}>{type}: {name} - {referrer}</Text>
-        <Divider style={{ backgroundColor: 'blue' }} />
-        {details}
       </ScrollView>
     );
   }
@@ -170,7 +129,6 @@ class TransactionConfirm extends Component {
 
 
   props: {
-    onChange: PropTypes.func.isRequired,
     entityLogin: PropTypes.any,
   }
 
@@ -184,16 +142,25 @@ class TransactionConfirm extends Component {
 
   componentWillReceiveProps(nextProps) {
     console.log("=====[TransactionConfirmModal.js]::componentWillReceiveProps - props > : ", nextProps);
-    const { entityTrans: entity } = nextProps;
-    if(entity && !entity.isOpen) {
-      // 觖发关闭状态
-      if(nextProps.onChange)
-        nextProps.onChange(false);
-    }
+
   }
 
   onConfirm = () => {
-    const { navigation } = this.props;
+    const { entityTrans: entity } = this.props;
+
+    // 防止二次触发,已请求后不再触发
+    let broadcastSuccess = entity.transaction.length && entity.transaction.filter(item => item.type === TRANSACTION_COMMON.REQUEST);
+    if(broadcastSuccess.length && broadcastSuccess[0].method === 'broadcast') {
+      this.onCancel();
+      return;
+    }
+
+    // 有错误不再广播，直接关闭
+    let tranFailure = entity.transaction.length && entity.transaction.filter(item => item.type === TRANSACTION_COMMON.FAILURE);
+    if(tranFailure.length) {
+      this.onCancel();
+      return;
+    }
 
     // 正在处理中，不要再点击，要限制一下
     this.props.secondConfirm(TRIGGER_SECOND_CONFIRM_YES);
@@ -214,16 +181,61 @@ class TransactionConfirm extends Component {
   showTranStatus = () => {
     const { entityTrans: entity } = this.props;
 
-    const isOpen = (entity && entity.isOpen) || false;
-    let tip  = isOpen?"交易进行中":"交易完成";
+    let status = false;
+    let tip  = null;
+
+    // stack first
+    let entityObj = entity.transaction.length && entity.transaction[0];
+    console.log("[TransactionConfirmModal.js]::showTranStatus - entityObj: ", entityObj);
+    switch(entityObj.type) {
+      case TRIGGER_TRANSACTION_COMMON:
+      case TRANSACTION_COMMON.REQUEST:
+        {
+          tip = (entityObj.method !== 'broadcast') ? "交易请求打包中" : "交易广播中";
+          status = (entityObj.method !== 'broadcast') ? false : true;
+        }
+        break;
+      case TRANSACTION_COMMON.SUCCESS:
+        tip = (entityObj.method !== 'broadcast') ? "交易已生成并打包，可广播." : "交易广播成功";
+        break;
+      case TRANSACTION_COMMON.FAILURE: 
+        {
+
+          let message = entityObj.error && entityObj.error.message || entityObj.error;
+          console.warn("[TransactionConfirmModal.js]::showTranStatus - TRANSACTION_COMMON.FAILURE: ", JSON.stringify(message));
+          let find_key = null;
+          Object.keys(advisable_message).forEach((key) => {
+            if(key) {
+              key = key.trim().replace(/_/g, " ");
+              if(new RegExp(key, 'i').test(message)) {
+                find_key = "advisable_message." + key.trim().replace(/ /g, "_");
+              }
+            }
+          });
+          find_key = find_key ? find_key : "advisable_message.default";
+
+          tip = (entityObj.method !== 'broadcast') 
+          ? ("交易生成出错啦！请检测。" + JSON.stringify(message)) 
+          : ("广播失败：" + translate(find_key, locale));
+        }
+        break;
+      case TRIGGER_SECOND_CONFIRM: 
+        {
+          tip = (entityObj.event === TRIGGER_SECOND_CONFIRM_YES) ? "交易广播中" : "取消交易";
+          status = (entityObj.event === TRIGGER_SECOND_CONFIRM_YES) ? true: false;
+        }
+      break;
+      default:
+      break;
+    }
 
     //tip = (entity.transaction.length && entity.transaction[0].type === 'USERS_REGISTER_FAILURE') ? "登录错误啦！！！" : status;
-    return {status: isOpen, tip};
+    return {status, tip};
   }
 
   render() {
 
-    const { onChange, entityTrans: entity, navigation } = this.props;
+    const { entityTrans: entity, navigation } = this.props;
     console.log("=====[TransactionConfirmModal.js]::render - entity : ", entity);
 
     const isOpen = entity && entity.isOpen || false;
@@ -241,28 +253,29 @@ class TransactionConfirm extends Component {
         transparent
       >
         
-        <View style={{flex: 1}}>
-          <Text style={{textAlign: 'center', fontSize: 25}}>交易二次确认</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 10}}>
-            <ActivityIndicator animating={status} />
-            <Text>{tip}</Text>
-            <Divider style={{ backgroundColor: 'blue' }} />
+        <View style={{flex: 1, marginTop: 15}}>
+          <View style={{alignItems: 'center'}}>
+            <Text style={{textAlign: 'center', fontSize: 25}}>交易二次确认</Text>
+            <Divider style={{ backgroundColor: 'blue', height: 2, marginTop: 1, width: SCREEN_WIDTH*0.4 }} />
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
+            {status && <ActivityIndicator animating={status} size="large" color={colors.salmon} />}
+            <Text style={{textAlign: 'center', color: 'red', marginLeft: 10}} numberOfLines={10}>{tip}</Text>
           </View>
 
-          <TransactionDetails entity={entity} status={status} />
           <TransactionDetail entity={entity} />
         </View>
         
         <View style={{flexDirection: 'row'}}>
           <Button
-            text="Confirm"
+            text="确认"
             clear
             textStyle={{color: 'rgba(78, 116, 289, 1)'}}
             containerStyle={styles.button}
             onPress={this.onConfirm}
           /> 
           <Button
-            text="Cancel"
+            text="取消"
             clear
             textStyle={{color: 'rgba(78, 116, 289, 1)'}}
             containerStyle={styles.button}

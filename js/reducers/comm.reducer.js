@@ -30,7 +30,8 @@ const commReducer = (state = initialState, action = {}) => {
 			return {
 				...state,
 				trans: {
-					...state.trans,
+					trans: [], //应该清理历史 ...state.trans,
+					raw: {},
 					isOpen: false,
 					reason: action.reason,
 				}
