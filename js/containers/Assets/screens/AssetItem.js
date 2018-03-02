@@ -12,6 +12,8 @@ const AssetItemWrap = styled.View`
 	background-color: white;
 `;
 
+const TRACE = false;
+
 class Asset extends Component {
 
 	constructor() {
@@ -26,16 +28,28 @@ class Asset extends Component {
 			asset_name: null,
 		};
 
+		this.updateAsset = this.updateAsset.bind(this);
+
+	}
+
+	componentWillReceiveProps(nextProps) {
+
+		this.updateAsset(nextProps);
 	}
 
 	componentWillMount() {
-		const { item } = this.props;
+		
+		this.updateAsset();
+	}
 
+	updateAsset = (props) => {
+
+		const { item } = props || this.props;
 		const balanceObject = ChainStore.getObject(item.asset);
 		const asset_type = balanceObject.get("asset_type");
 		const asset = ChainStore.getAsset(asset_type);
 
-		console.log("=====[AssetItem.js]::componentWillMount - balanceObject > ", JSON.stringify(balanceObject), asset_type, JSON.stringify(asset));
+		if(TRACE) console.log("=====[AssetItem.js]::updateAsset - balanceObject > ", JSON.stringify(balanceObject), asset_type, JSON.stringify(asset));
 		this.setState({balanceObject, asset, symbol: asset && asset.get("symbol"), asset_name: asset && asset.getIn(['options', 'description'])});
 	}
 

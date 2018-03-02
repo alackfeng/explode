@@ -17,6 +17,7 @@ import { AssetsListWrap as AssetsList } from "./AssetsList";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
+const TRACE = false;
 
 class AssetsManage extends Component {
 
@@ -45,10 +46,16 @@ class AssetsManage extends Component {
 
   }
 
+  update(nextProps = null) {
+    if(TRACE) console.info("=====[AssetsManage.js]::update - ChainStore::subscribe : ************** nextProps ", nextProps);
+
+    this.fetchAssetlist();
+  }
+
   fetchAssetlist = () => {
     const { currentAccount: account, nodeStatus: node } = this.props;
 
-    console.log("=====[AssetsManage.js]::fetchAssetlist - account----------------------------------- ", account, node);
+    if(TRACE) console.log("=====[AssetsManage.js]::fetchAssetlist - account----------------------------------- ", account, node);
 
 
     if(!this.isNodeLinked()) {
@@ -64,7 +71,7 @@ class AssetsManage extends Component {
 
       }
 
-      console.log("=====[AssetsManage.js]::fetchAssetlist - account : getAccount Balances is : ", this.state.accountBalanceX === accountBalance, JSON.stringify(accountBalance));
+      if(TRACE) console.log("=====[AssetsManage.js]::fetchAssetlist - account : getAccount Balances is : ", this.state.accountBalanceX === accountBalance, JSON.stringify(accountBalance));
       if(accountBalance) {
 
           let asset_types = [];
@@ -77,7 +84,7 @@ class AssetsManage extends Component {
           // FetchChain
           FetchChain("getAsset", asset_types).then(res => {
             
-            console.info("=====[AssetsManage.js]::fetchAssetlist - getAsset : accountBalance is : ", res);
+            if(TRACE) console.info("=====[AssetsManage.js]::fetchAssetlist - getAsset : accountBalance is : ", res);
             this.setState({accountBalance, balances});  
           }).catch(err => {
             console.error("=====[AssetsManage.js]::fetchAssetlist - getAsset : accountBalance is : ", err);
@@ -90,15 +97,9 @@ class AssetsManage extends Component {
 
   }
 
-  update(nextProps = null) {
-    console.info("=====[AssetsManage.js]::update - ChainStore::subscribe : ************** nextProps ", nextProps);
-
-    this.fetchAssetlist();
-  }
-
   isNodeLinked = () => {
     const { currentAccount, nodeStatus } = this.props;
-    console.log("=====[AssetsManage.js]::isNodeLinked - ", currentAccount, nodeStatus.url, nodeStatus.status);
+    if(TRACE) console.log("=====[AssetsManage.js]::isNodeLinked - ", currentAccount, nodeStatus.url, nodeStatus.status);
     return (!!currentAccount && !!nodeStatus.url && nodeStatus.status === 'open');
   }
 
@@ -109,9 +110,11 @@ class AssetsManage extends Component {
   render() {
 
     const { currentAccount, nodeStatus } = this.props;
+    const { accountBalance } = this.state;
 
     const isLinked = this.isNodeLinked();
-    console.log("=====[AssetsManage.js]::render - ", currentAccount, nodeStatus.url, nodeStatus.status, isLinked);
+    if(TRACE) console.log("=====[AssetsManage.js]::render - ", currentAccount, nodeStatus.url, nodeStatus.status, isLinked);
+    console.log("=====[AssetsManage.js]::render - accountBalance: > ", JSON.stringify(accountBalance));
 
     if(!isLinked) {
       console.log("=====[AssetsManage.js]::render - ", currentAccount, nodeStatus.url, nodeStatus.status);
@@ -121,7 +124,10 @@ class AssetsManage extends Component {
       <ViewContainer>
         <HeaderSearchBar onSearch={this.onSearchAssets}/>
         <HeaderAccount />
-        <AssetsList navigation={this.props.navigation} account={currentAccount} node={nodeStatus} assetsList={this.state.accountBalance} />
+        {!!accountBalance 
+          ? <AssetsList navigation={this.props.navigation} account={currentAccount} node={nodeStatus} assetsList={accountBalance} />
+          : <LoadingData message={"数据加载中"} />
+        }
       </ViewContainer>
       );
     }

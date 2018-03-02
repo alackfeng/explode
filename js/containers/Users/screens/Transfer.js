@@ -19,6 +19,7 @@ import { Utils } from "../../../libs/Utils";
 
 const MEMO_LIMIT = 120;
 
+const TRACE = false;
 
 class Transfer extends Component {
 
@@ -49,10 +50,33 @@ class Transfer extends Component {
     this.onChangeMemo = this.onChangeMemo.bind(this);
     this.findAccount = this.findAccount.bind(this);
 
+    this.update = this.update.bind(this);
+    this.updateAsset = this.updateAsset.bind(this);
+
 	}
 
+  componentWillUnmount() {
+    ChainStore.unsubscribe(this.update); // update
+  }
+
   componentWillMount() {
-    const { navigation, currentAccount } = this.props;
+    
+    ChainStore.subscribe(this.update); // update
+
+    this.updateAsset();
+
+  }
+
+  update(nextProps = null) {
+    if(TRACE) console.info("=====[Transfer.js]::update - ChainStore::subscribe : ************** nextProps ", nextProps);
+
+    this.updateAsset();
+  }
+
+
+  updateAsset = (props) => {
+
+    const { navigation, currentAccount } = props || this.props;
     if(navigation && navigation.state.params) {
       const { item, index } = navigation.state.params;
 
@@ -63,8 +87,6 @@ class Transfer extends Component {
       this.setState({fromUser: currentAccount, item, index, balanceObject, asset, 
         asset_type: asset&&asset.get("symbol"), asset_name: asset && asset.getIn(['options', 'description'])})
     }
-    
-
   }
 
   componentWillReceiveProps(nextProps) {

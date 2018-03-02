@@ -26,7 +26,7 @@ class AssetsList extends Component {
 		this.state = {
 			ds: ds,
 			dataSource: balances ? ds.cloneWithRows(balances) : null,
-			balances: balances,
+			db: balances,
 		};
 
 		this.renderRow 	= this.renderRow.bind(this);
@@ -43,8 +43,8 @@ class AssetsList extends Component {
 		//}
 		const balances = this.getAssetsList(nextProps);
 
-		const dataSource = balances ? this.state.ds.cloneWithRows(balances) : this.state.dataSource;
-		this.setState({dataSource, balances});
+		const dataSource = balances ? this.state.dataSource.cloneWithRows(balances) : this.state.dataSource;
+		this.setState({dataSource, balances, db: balances});
 
 	}
 
@@ -129,10 +129,17 @@ class AssetsList extends Component {
 		const { assetsList: accountBalance } = props || this.props;
 
 		if(accountBalance && accountBalance.size) {
-			let balances = [];
+			
+			let balances = this.state && this.state.db ? this.state.db.slice(0) : [];
+
   		accountBalance.forEach((a, asset_type) => {
-  			increment_seq = increment_seq + 1;
-  			balances.push({type: asset_type, asset: a, incr: increment_seq});
+  			const balance = balances.filter(item => (item.type === asset_type && item.asset === a));
+  			if(balance && balance.length) {
+  				//balances.set({type: asset_type, asset: a});
+  			} else {
+  				balances.push({type: asset_type, asset: a});
+  			}
+  			console.log("======================: ", balance.length);
   		});
 
 			console.log("=====[AssetList.js]::getAssetsList - ", balances);
@@ -147,10 +154,11 @@ class AssetsList extends Component {
 
 		const { onScroll = () => {}, navigation, assetsList } = this.props;
 
-		console.log("=====[AssetList.js]::render - ", assetsList, this.state.dataSource);
-
 		//const balances = this.getAssetsList();
-		//const dataSource = balances ? this.state.ds.cloneWithRows(balances) : this.state.dataSource;
+		//const dataSource = balances ? this.state.dataSource.cloneWithRows(balances.slice(0)) : this.state.dataSource;
+		
+		console.log("=====[AssetList.js]::render - ", assetsList, this.state.dataSource, this.state.ds, this.state.balances);
+
 
 		if(!this.state.dataSource)
 			return <LoadingData message={"数据加载中..."} />;
