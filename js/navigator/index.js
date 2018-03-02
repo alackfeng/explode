@@ -1,7 +1,7 @@
-import TabNavigator from './TabNavigator';
+//import TabNavigator from './TabNavigator';
 import { TabRoutes, MainRoutes, MenuRoutes } from './TabRoutes';
 import sharedTabBarOptions from './sharedTabBarOptions';
-import { /*TabNavigator, */StackNavigator, DrawerNavigator } from "react-navigation";
+import { TabNavigator, StackNavigator, DrawerNavigator } from "react-navigation";
 import TabBarComponent from "./TabBarComponent";
 
 const AppTabNavigator = TabNavigator(TabRoutes, {

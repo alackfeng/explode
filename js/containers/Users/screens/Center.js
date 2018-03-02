@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
 		//flex: 1,
 		height: 50,
 		backgroundColor: 'white',
+		marginBottom: 50,
 	},
 
 	heading: {

@@ -118,6 +118,17 @@ export const AppRoutes = {
       tabBarIcon: getIcon('view-list'),
     },
   },
+  Hist: {
+    screen: HistoryScreen,
+    path: 'hist',
+    navigationOptions: {
+      title: 'history',
+      headerStyle: { backgroundColor: 'white'},
+      headerTitleStyle: { color: 'rgba(40,65,89,1)', textAlign: 'center'},
+      tabBarLabel: translate('menu.tab.hist', locale),
+      tabBarIcon: getIcon('receipt'),
+    },
+  },
   Users: {
     screen: UsersStackNavigator, //RegisterScreen, //WelcomeScreen, //NodeScreen,
     path: 'users',

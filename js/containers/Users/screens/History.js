@@ -8,7 +8,7 @@ import { View, Text, ScrollView, Dimensions } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
 import { Icon, Button, Input, Overlay } from 'react-native-elements';
 
-import { ViewContainer, StyleSheet, LoadingLoginModal, Header, TableHistory } from "../../../components";
+import { ViewContainer, StyleSheet, LoadingLoginModal, Header, TableHistory, LoadingData } from "../../../components";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
@@ -21,6 +21,7 @@ class History extends Component {
 
 		this.state = {
 			accountHistory: null,
+			accountId: null,
 		}
 
 		this.update = this.update.bind(this);
@@ -40,7 +41,7 @@ class History extends Component {
   }
 
   update(nextProps = null) {
-    console.info("=====[History.js]::update - ChainStore::subscribe : ************** nextProps ", nextProps);
+    if(TRACE) console.info("=====[History.js]::update - ChainStore::subscribe : ************** nextProps ", nextProps);
 
     this.fetchHistoryList();
   }
@@ -55,10 +56,11 @@ class History extends Component {
         const accountObj = ret; //ChainStore.getAccount(currentAccount);
         const accountHistory = accountObj && accountObj.get ? accountObj.get("history") : null;
 
-        this.setState({accountHistory});
+        this.setState({accountId: accountObj.get("id"), accountHistory});
 
       }).catch(err => {
         console.error("=====[History.js]::componentDidMount - : FetchChain:getAccount is : err ", err);
+        this.fetchHistoryList();
       })
 		}
 	}
@@ -66,24 +68,24 @@ class History extends Component {
 	render() {
 
 		const { currentAccount } = this.props;
-		const { accountHistory } = this.state;
+		const { accountHistory, accountId } = this.state;
 		if(TRACE) console.info("=====[History.js]::render - : render >  ", currentAccount, accountHistory);
 
 		const isValid = !!accountHistory;
 
 		return (
 			<ViewContainer>
-				<Header account={currentAccount} />
+				<Header account={false} />
 				<Overlay
 				  isVisible={ !isValid }
 				  windowBackgroundColor='transparent'
-				  overlayBackgroundColor='red'
+				  overlayBackgroundColor='transparent'
 				  width='auto'
 				  height='auto'
 				>
-				  <Text>数据加载中...</Text>
+				  <LoadingData message={"数据加载中..."} size="large" />
 				</Overlay>
-				{accountHistory && <TableHistory history={accountHistory} />}
+				{accountHistory && <TableHistory history={accountHistory} account={accountId} />}
 			</ViewContainer>
 		);
 	}

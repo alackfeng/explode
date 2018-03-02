@@ -11,6 +11,7 @@ export const zh = {
 			home: "首页",
 			relation: "发行ICO",
 			news: "通证列表",
+			hist: "交易历史",
 			wallet: "用户中心",
 			"404": "找不到"
 		}

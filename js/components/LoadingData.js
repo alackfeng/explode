@@ -21,12 +21,12 @@ export class LoadingData extends Component {
 
   render() {
 
-    const { message } = this.props;
+    const { message, size } = this.props;
     
     return (
       <ViewContainer>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
-          <ActivityIndicator animating={this.state.animating} size="large" color={colors.salmon} />
+          <ActivityIndicator animating={this.state.animating} size={size || "large"} color={colors.salmon} />
           <Text style={{textAlign: 'center', color: 'red', marginLeft: 10}} numberOfLines={10}>{message}</Text>
         </View>
       </ViewContainer>

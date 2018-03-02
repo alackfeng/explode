@@ -11,6 +11,7 @@ export const en = {
 			home: "Home News",
 			relation: "Ico Issue",
 			news: "Assets Manage",
+			hist: "Transaction History",
 			wallet: "User Center",
 			"404": "Not Found"
 		}

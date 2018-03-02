@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { ListView, Text, Dimensions, FlatList } from "react-native";
+import { ListView, Text, Dimensions, FlatList, View } from "react-native";
 import { Colors, SCREEN_WIDTH, normalize } from "../libs";
 import { SearchBar, List, ListItem } from "react-native-elements";
 import { ViewContainer, StyleSheet } from "../components";
@@ -13,16 +13,35 @@ type Props = {
 };
 
 const ViewHeader = styled.View`
-  margin-top: 10;
+  margin-top: 20;
   margin-left: 10;
   margin-right: 10;
   margin-bottom: 10;
   border-bottom-color: ${Colors.black};
   border-bottom-width: 1;
-  height: 20;
+  height: 30;
+`;
+
+const AccountText = styled.Text`
+	font-size: 20;
 `;
 
 class HeaderLink extends Component {
+
+	constructor(props) {
+		super(props);
+
+		this.renderHeader = this.renderHeader.bind(this);
+
+	}
+	renderHeader() {
+    return <View style={styles.header}>
+    	<Text style={styles.headerTitle}>类型</Text>
+    	<Text style={styles.headerTitle}>数量</Text>
+    	<Text style={styles.headerTitle}>对方账号</Text>
+    	<Text style={styles.headerTitle}>时间</Text>
+    </View>;
+  }
 
 	render() {
 
@@ -34,12 +53,33 @@ class HeaderLink extends Component {
 
 		return (
 			<ViewHeader>
-				{account && <Text> 当前帐号：{account}</Text> }
+				{account && <AccountText> 当前帐号：{account}</AccountText> }
 				{node && <Text>Block Link Node -: {nodeStatus.url} {nodeStatus.status} </Text>}
+				{this.renderHeader()}
 			</ViewHeader>
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+	header: {
+		backgroundColor:'white', 
+		height:50, 
+		flexDirection: 'row', 
+		alignItems: 'center', 
+		justifyContent: 'space-around',
+		borderBottomWidth: 0.5,
+		borderTopWidth: 0.5,
+		borderBottomColor: 'rgba(40,65,89,1)',
+		borderTopColor: 'rgba(40,65,89,1)',
+		marginBottom: 10,
+	},
+	headerTitle: {
+		color: 'rgba(102,102,102,1)', 
+		fontSize:20, 
+		textAlign:'center'
+	},
+});
 
 const mapStateToProps = (state) => ({
 	nodeStatus: state.app.nodeStatus,

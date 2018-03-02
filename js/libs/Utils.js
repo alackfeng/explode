@@ -6,6 +6,26 @@ var {object_type, operations} = ChainTypes;
 
 export const Utils = {
 
+  get_asset_precision: (precision) => {
+    precision = precision.toJS ? precision.get("precision") : precision;
+    return Math.pow(10, precision);
+  },
+
+  get_asset_amount: function(amount, asset) {
+    if (amount === 0) return amount;
+    if (!amount) return null;
+    return amount / this.get_asset_precision(asset.toJS ? asset.get("precision") : asset.precision);
+  },
+
+  calc_block_time(block_number, globalObject, dynGlobalObject) {
+    if (!globalObject || !dynGlobalObject) return null;
+    const block_interval = globalObject.get("parameters").get("block_interval");
+    const head_block = dynGlobalObject.get("head_block_number");
+    const head_block_time = new Date(dynGlobalObject.get("time") + "+00:00");
+    const seconds_below = (head_block - block_number) * block_interval;
+    return new Date(head_block_time - seconds_below * 1000);
+  },
+    
   formatAmount(v) {
     // TODO: use asset's precision to format the number
     if (!v) v = "";

@@ -23,3 +23,6 @@ export * from "./HeaderSearchBar";
 export * from "./SplashScreen";
 export * from "./RegisterPage";
 export * from "./LoginPage";
+
+export * from "./AccountOBJ";
+export * from "./AssetOBJ";
