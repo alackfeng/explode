@@ -92,7 +92,9 @@ class Center extends Component {
 		if(currentAccount) {
 			this.props.appUserQuit(currentAccount);
 		}
-		resetNavigationTo('Login', navigation);
+		if(navigation)
+			navigation.navigate('Login');
+		//resetNavigationTo('Login', navigation);
 	}
 
 	render() {
@@ -125,8 +127,8 @@ class Center extends Component {
     			<Button
             text="退  出"
             textStyle={{color: 'rgba(229,109,57,1)'}}
-            buttonStyle={{height: 50, width: SCREEN_WIDTH, backgroundColor: 'rgba(255,255,255,0.3)', borderWidth: 2, borderColor: 'white', borderRadius: 0, zIndex: 10}}
-            containerStyle={{marginTop: 20,marginVertical:20}}
+            buttonStyle={styles.buttonStyle}
+            containerStyle={{marginTop: 0, height: 100}}
             onPress={this.onPressQuit}
           />
     		</View>
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
 	logoutContainer: {
 		//flex: 1,
 		height: 50,
-		backgroundColor: 'white',
+		backgroundColor: 'transparent',
 		marginBottom: 50,
 	},
 
@@ -164,6 +166,20 @@ const styles = StyleSheet.create({
 		fontSize: 22,
 		textAlign: 'center',
 	},
+	buttonStyle: {
+		marginBottom: 0, 
+		height: 50, 
+		width: SCREEN_WIDTH, 
+		backgroundColor: 'transparent', 
+		borderBottomWidth: 1, 
+		borderBottomColor: 'rgba(0,0,0,0.1)', 
+		borderTopWidth: 1, 
+		borderTopColor: 'rgba(0,0,0,0.1)', 		
+		borderRadius: 0,
+		elevation: 0,
+		zIndex: 10,
+	},
+
 });
 
 const mapStateToProps = (state) => ({

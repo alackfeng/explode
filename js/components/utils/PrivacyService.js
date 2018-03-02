@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
 		borderRadius: 0, 
 		borderBottomWidth: 0.1, 
 		borderColor: 'white', 
+    elevation: 0,
 	}
 });
 

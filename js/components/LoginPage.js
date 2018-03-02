@@ -133,7 +133,7 @@ export class LoginPage extends Component {
 					/>
 					</View>
 					<View style={{flex: 1}}></View>
-					<View style={{flex: 1}}>
+					<View style={{flex: 1.2}}>
 					<Button
             text ='登  录'
             buttonStyle={styles.button}
@@ -190,7 +190,8 @@ const styles = StyleSheet.create({
 		backgroundColor: 'transparent', 
 		borderWidth: 2, 
 		borderColor: 'white', 
-		borderRadius: 5
+		borderRadius: 5,
+		elevation: 0,
 	},
 	button2: {
 		marginBottom: 10, 
@@ -199,7 +200,8 @@ const styles = StyleSheet.create({
 		backgroundColor: 'transparent', 
 		borderWidth: 0, 
 		borderColor: 'white', 
-		borderRadius: 0
+		borderRadius: 0,
+		elevation: 0,
 	}
 });
 

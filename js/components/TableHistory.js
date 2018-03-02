@@ -164,11 +164,11 @@ class TableHistoryWrap extends Component {
 
 		return (
 			<ViewContainer>
-				{isValid && <ScrollView>
+				{isValid && <ScrollView style={styles.container}>
 		      <ListView
 		      	enableEmptySections
 		      	ref="ListView"
-		      	style={styles.container}
+		      	style={styles.container1}
 		        dataSource={new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(history.toJS())	}
 		        renderRow={this.renderRow}
 		        //renderHeader={this.renderHeader}
@@ -182,6 +182,9 @@ class TableHistoryWrap extends Component {
 }
 
 const styles = StyleSheet.create({
+	container: {
+		marginTop: 0,
+	},
 	header: {
 		backgroundColor:'white', 
 		height:50, 
@@ -192,7 +195,6 @@ const styles = StyleSheet.create({
 		borderTopWidth: 0,
 		borderBottomColor: 'rgba(40,65,89,1)',
 		borderTopColor: 'rgba(40,65,89,1)',
-		marginBottom: 10,
 	},
 	headerTitle: {
 		color: 'rgba(102,102,102,1)', 
@@ -205,12 +207,12 @@ const styles = StyleSheet.create({
 		flexDirection: 'row', 
 		alignItems: 'center', 
 		justifyContent: 'space-around',
-		borderBottomWidth: 1,
+		borderBottomWidth: 0,
 		borderBottomColor: 'rgba(40,65,89,1)',
 	},
 	column: {
 		color: 'rgba(40,65,89,1)', 
-		fontSize:20, 
+		fontSize:15, 
 		textAlign:'center',
 
 	}

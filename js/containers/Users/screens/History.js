@@ -69,7 +69,7 @@ class History extends Component {
 
 		const { currentAccount } = this.props;
 		const { accountHistory, accountId } = this.state;
-		if(TRACE) console.info("=====[History.js]::render - : render >  ", currentAccount, accountHistory);
+		if(!TRACE) console.info("=====[History.js]::render - : render >  ", currentAccount, accountHistory);
 
 		const isValid = !!accountHistory;
 

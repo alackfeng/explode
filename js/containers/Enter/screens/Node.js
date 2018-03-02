@@ -54,8 +54,8 @@ const SLViewText = styled.View`
 
 const SLText = styled.Text`
 	text-align: left;
-	color: ${Colors.iceberg};
-	margin-top: 10;
+	color: red;
+	margin-top: 30;
 `;
 
 const SLListView = styled.ListView`
@@ -214,7 +214,7 @@ class Node extends Component {
 							  icon={{ type: 'font-awesome', name: 'search' }}
 							  placeholder='Type Here...'
 							/> */}
-							<Text style={{textAlign: 'center'}}>区块节点信息：</Text>
+							<Text style={{textAlign: 'center', color: 'red'}}>区块节点信息：</Text>
 						</SearchContainer>
 					</SearchBarWrapper>
 				</Header>

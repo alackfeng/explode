@@ -17,6 +17,8 @@ const {reset: resetLogin} = triggerUser;
 const modalTop = SCREEN_HEIGHT / 2;
 const modalLeft = SCREEN_WIDTH / 2;
 
+const TRACE = false;
+
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
@@ -112,12 +114,33 @@ class LoadingLogin extends Component {
     this.onConfirm  = this.onConfirm.bind(this);
   }
 
+  isExistLogin = () => {
+
+    const { entityLogin: entity } = this.props;
+
+    const notify = entity.transaction.length && entity.transaction.filter(item => item.type === 'USERS_LOGIN_SUCCESS'); 
+    console.log("=====[LoadingLogin.js]::isExistLogin - notifcation event : ", notify);
+    
+    if(notify.length) {
+      
+      return true;
+    } else {
+      
+      return false;
+    }
+  }
+
   onConfirm = () => {
     const { navigation } = this.props;
 
-    //alert('this.props.onChange(true)');
-    resetNavigationTo('Main', navigation);
-
+    // 账号已经存在，直接转到登录
+    if(this.isExistLogin()) {
+      resetNavigationTo('Main', navigation);
+    } else {
+      
+      //resetNavigationTo('Main', navigation);
+    }
+    
     // 退出对话框
     this.onCancel();
   }
@@ -133,7 +156,7 @@ class LoadingLogin extends Component {
     const isLogin = (entity && entity.isLogin) || false;
     let status  = isLogin?"登录中":"登录完成";
 
-    status = (entity.transaction.length && entity.transaction[0].type === 'USERS_REGISTER_FAILURE') ? "登录错误啦！！！" : status;
+    status = (entity.transaction.length && entity.transaction[0].type === 'USERS_LOGIN_FAILURE') ? "登录错误啦！！！" : status;
     return status;
   }
 
@@ -183,7 +206,7 @@ class LoadingLogin extends Component {
             <Divider style={{ backgroundColor: 'blue' }} />
           </View>
 
-          <TransactionDetails entity={entity} />
+          {TRACE && <TransactionDetails entity={entity} />}
         </View>
         
         <View style={{flexDirection: 'row'}}>

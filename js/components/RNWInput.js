@@ -96,7 +96,7 @@ class Input extends Component {
           {rightText && <Text style={[styles.rightTextContainer, rightTextContainerStyle]}>{rightText}</Text>}
         </Animated.View>
         {displayError &&
-          <Text style={[styles.error, errorStyle && errorStyle]}>
+          <Text numberOfLines={10} style={[styles.error, errorStyle && errorStyle]}>
             {errorMessage || 'Error!'}
           </Text>}
       </View>

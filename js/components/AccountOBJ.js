@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 
 	column: {
 		color: 'rgba(40,65,89,1)', 
-		fontSize:20, 
+		fontSize:15, 
 		textAlign:'center',
 
 	}

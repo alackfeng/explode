@@ -19,7 +19,7 @@ const ViewHeader = styled.View`
   margin-bottom: 10;
   border-bottom-color: ${Colors.black};
   border-bottom-width: 1;
-  height: 30;
+  height: 50;
 `;
 
 const AccountText = styled.Text`
@@ -68,10 +68,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row', 
 		alignItems: 'center', 
 		justifyContent: 'space-around',
-		borderBottomWidth: 0.5,
-		borderTopWidth: 0.5,
-		borderBottomColor: 'rgba(40,65,89,1)',
-		borderTopColor: 'rgba(40,65,89,1)',
+		borderBottomWidth: 1,
+		borderBottomColor: 'rgba(0,0,0,0.1)',
 		marginBottom: 10,
 	},
 	headerTitle: {

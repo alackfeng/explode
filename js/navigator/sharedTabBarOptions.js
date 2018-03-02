@@ -11,9 +11,10 @@ export default {
   },
   style: {
     backgroundColor: '#FFF',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'stretch',
   },
-  labelStyle: {
-    color: '#000',
-  },
+
   tabStyle: {},
 };

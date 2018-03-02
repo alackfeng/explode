@@ -4,6 +4,7 @@ import { View, Text } from "react-native";
 import styled from "styled-components/native";
 
 import { ListItem } from "react-native-elements";
+import { ViewContainer, StyleSheet } from "../../../components";
 
 const NodeWrap = styled.View`
 	background-color: rgba(35,82,164,1);
@@ -46,7 +47,9 @@ class NodeInfo extends Component {
 					key={index}
 					//roundAvatar
 					title={item.location}
+					titleStyle={styles.title}
 					subtitle={subTitle}
+					subtitleStyle={styles.subtitle}
 					icon={{ name: item.icon }}
 					rightIcon={{ name: 'cloud-upload'}}
 					onPressRightIcon={this.onPressUpConnect}
@@ -58,6 +61,15 @@ class NodeInfo extends Component {
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+	title: {
+		color: 'white',
+	},
+	subtitle: {
+		color: 'white',
+	}
+});
 
 export const NodeItem = NodeInfo;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import PropTypes from 'prop-types';
 
 import { StackNavigator } from "react-navigation";
@@ -19,6 +19,13 @@ import Ionicons from "react-native-vector-icons/MaterialIcons";
 
 
 export const notFoundKey = 'NotFound';
+
+const ImageTitle = (props) => (
+  <Image 
+    style={{width: 50, height: 36, resizeMode: 'contain', alignSelf: 'center'}}
+    source={require('./components/images/aftlogo.png')}
+  />
+);
 
 /**
  * Gets an Icon component.
@@ -45,24 +52,36 @@ const sharedRoutes = {
     screen: SettingsScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
+      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerRight: <View />,
     }),
   },
   Nodes: {
     screen: NodeScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
+      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerRight: <View />,
     }),
   },
   Transfer: {
     screen: TransferScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Transfer',
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
+      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerRight: <View />,
     }),
   },
   History: {
     screen: HistoryScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Operation History',
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
+      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerRight: <View />,
     }),
   }
 };
@@ -73,6 +92,8 @@ const AssetsStackNavigator = StackNavigator(
       screen: AssetsManageScreen,
       navigationOptions: {
         title: 'Assets Manage',
+        headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
+        headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
       },
     },
     ...sharedRoutes,
@@ -105,7 +126,9 @@ export const AppRoutes = {
     path: 'home',
     navigationOptions: {
       title: 'home news',
-      tabBarLabel: 'ssss', //translate('menu.tab.home', locale),
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
+      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      tabBarLabel: translate('menu.tab.home', locale),
       tabBarIcon: getIcon('home'),
     },
   },
@@ -123,8 +146,8 @@ export const AppRoutes = {
     path: 'hist',
     navigationOptions: {
       title: 'history',
-      headerStyle: { backgroundColor: 'white'},
-      headerTitleStyle: { color: 'rgba(40,65,89,1)', textAlign: 'center'},
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
+      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
       tabBarLabel: translate('menu.tab.hist', locale),
       tabBarIcon: getIcon('receipt'),
     },
@@ -158,18 +181,20 @@ export const StackRoutes = {
   },
   Register: {
     screen: RegisterScreen,
-    navigationOptions: {
-      title: 'AFT',
-      headerStyle: { backgroundColor: 'antiquewhite'},
-      headerTitleStyle: { color: 'white' },
-    },
+    navigationOptions: ({navigation,screenProps}) => ({
+      headerTitle: 'AFT', //<ImageTitle />,
+      headerStyle: { backgroundColor: !screenProps ? screenProps.themeColor : 'white', justifyContent: 'center'},
+      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerRight: <View />,
+    }),
   },
   Login: {
     screen: LoginScreen,
     navigationOptions: ({navigation,screenProps}) => ({
-      title: 'AFT',
-      headerStyle: { backgroundColor: !screenProps ? screenProps.themeColor : 'antiquewhite'},
-      headerTitleStyle: { color: 'white' },
+      headerTitle: 'AFT', //<ImageTitle />,
+      headerStyle: { backgroundColor: !screenProps ? screenProps.themeColor : 'white', justifyContent: 'center'},
+      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerRight: <View />,
     }),
   },
   Welcome: {

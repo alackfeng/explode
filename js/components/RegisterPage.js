@@ -178,7 +178,7 @@ export class RegisterPage extends Component {
 					featured
 					height={SCREEN_HEIGHT}
 					width={SCREEN_WIDTH}
-					view={ View }
+					view={ ScrollView }
 					childrenContainerStyle={styles.children}
 					//icon={{source: require('./images/aftlogo.png')}}
 					//iconStyle={styles.icon}
@@ -245,7 +245,8 @@ const styles = StyleSheet.create({
 		backgroundColor: 'transparent', 
 		borderWidth: 1, 
 		borderColor: 'white', 
-		borderRadius: 5
+		borderRadius: 5,
+		elevation: 0,
 	},
 	tip: {
 		color: 'white',
