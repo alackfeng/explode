@@ -175,7 +175,7 @@ export class RegisterPage extends Component {
 					imageContainerStyle={styles.image}
 					title="注册"
 					titleStyle={styles.title}
-					featured
+					featured={true}
 					height={SCREEN_HEIGHT}
 					width={SCREEN_WIDTH}
 					view={ ScrollView }

@@ -12,8 +12,8 @@ module.exports = {
     // https://webpack.js.org/configuration/dev-server/
     quiet: false,
     contentBase: path.join(process.cwd(), 'web', 'src'),
-    port: process.env.PORT || 3000,
-    host: '192.168.1.16',
+    port: process.env.PORT || 21014,
+    host: '0.0.0.0',
     publicPath: PUBLIC_PATH,
     historyApiFallback: {
       index: '/index.html',

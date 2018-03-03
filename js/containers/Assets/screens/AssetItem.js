@@ -79,7 +79,7 @@ class Asset extends Component {
 
 		const { item, index } = this.props;
 		const { balanceObject, asset, asset_name, symbol } = this.state;
-		console.log("=====[AssetItem.js]::render - node item > ", item, index, symbol);
+		if(TRACE) console.log("=====[AssetItem.js]::render - node item > ", item, index, symbol);
 
 
 		const subTitle = !item ? "0 AFT" : `${balanceObject.get("balance")/100000000} ${symbol}`;

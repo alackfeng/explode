@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8,
-    color: colors.salmon,
   },
   inputContainer: {
     borderWidth: 0, 

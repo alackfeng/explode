@@ -42,7 +42,7 @@ class LaunchScreen extends Component {
 					imageContainerStyle={styles.image}
 					title="ASSETFUN"
 					titleStyle={styles.title}
-					featured
+					featured={true}
 					height={SCREEN_HEIGHT}
 					width={SCREEN_WIDTH}
 					view={ View }
@@ -80,13 +80,12 @@ const styles = {
 		color: 'white',
 	},
 	children: {
-		backgroundColor: 'transparents',
+		backgroundColor: 'transparent',
 	},
   centering: {
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8,
-    color: colors.salmon,
   },
 };
 

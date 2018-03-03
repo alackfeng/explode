@@ -38,7 +38,7 @@ export class SplashScreen extends Component {
 					imageContainerStyle={styles.image}
 					title="ASSETFUN"
 					titleStyle={styles.title}
-					featured
+					featured={true}
 					height={SCREEN_HEIGHT}
 					width={SCREEN_WIDTH}
 					view={ View }

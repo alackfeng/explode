@@ -39,7 +39,7 @@ class Account extends Component {
 					imageContainerStyle={styles.image}
 					title={account}
 					titleStyle={styles.title}
-					featured
+					featured={true}
 				/>
 			</ViewHeader>
 		);

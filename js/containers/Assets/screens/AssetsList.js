@@ -14,6 +14,7 @@ import _ from "lodash";
 
 //import { ChainStore, FetchChain } from "assetfunjs/es";
 let increment_seq = 1;
+const TRACE = false;
 
 class AssetsList extends Component {
 
@@ -32,7 +33,7 @@ class AssetsList extends Component {
 		this.renderRow 	= this.renderRow.bind(this);
 		this.navTo 			= this.navTo.bind(this);
 
-		console.log("=====[AssetList.js]::constructor - assetsList-- : ", props.assetsList, balances);
+		if(TRACE) console.log("=====[AssetList.js]::constructor - assetsList-- : ", props.assetsList, balances);
 
 	}
 
@@ -43,7 +44,7 @@ class AssetsList extends Component {
 		//}
 		const balances = this.getAssetsList(nextProps);
 
-		const dataSource = balances ? this.state.dataSource.cloneWithRows(balances) : this.state.dataSource;
+		const dataSource = balances && this.state.dataSource ? this.state.dataSource.cloneWithRows(balances) : this.state.dataSource;
 		this.setState({dataSource, balances, db: balances});
 
 	}
@@ -139,10 +140,10 @@ class AssetsList extends Component {
   			} else {
   				balances.push({type: asset_type, asset: a});
   			}
-  			console.log("======================: ", balance.length);
+  			if(TRACE) console.log("======================: ", balance.length);
   		});
 
-			console.log("=====[AssetList.js]::getAssetsList - ", balances);
+			if(TRACE) console.log("=====[AssetList.js]::getAssetsList - ", balances);
   		return balances;
 		}
 		
@@ -157,7 +158,7 @@ class AssetsList extends Component {
 		//const balances = this.getAssetsList();
 		//const dataSource = balances ? this.state.dataSource.cloneWithRows(balances.slice(0)) : this.state.dataSource;
 		
-		console.log("=====[AssetList.js]::render - ", assetsList, this.state.dataSource, this.state.ds, this.state.balances);
+		if(TRACE) console.log("=====[AssetList.js]::render - ", assetsList, this.state.dataSource, this.state.ds, this.state.balances);
 
 		// 没有资产时，显示空
 		if(!this.state.dataSource)
