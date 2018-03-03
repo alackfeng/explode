@@ -29,7 +29,7 @@ function buildAndroid(resolve, reject) {
       'android',
       'apk',
       mode.toLowerCase(),
-      `app${mode === 'Production' ? '-unsigned' : ''}.apk`
+      `app${mode === 'Production' ? '-unsigned' : '-aftbomb'}.apk`
     );
     // Remove last build
     rimraf(pathToDest.slice(0, pathToDest.lastIndexOf(path.sep)), (removeErr) => {

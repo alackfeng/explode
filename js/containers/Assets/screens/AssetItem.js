@@ -45,6 +45,10 @@ class Asset extends Component {
 	updateAsset = (props) => {
 
 		const { item } = props || this.props;
+
+		if(!item)
+			return; 
+
 		const balanceObject = ChainStore.getObject(item.asset);
 		const asset_type = balanceObject.get("asset_type");
 		const asset = ChainStore.getAsset(asset_type);
@@ -77,8 +81,9 @@ class Asset extends Component {
 		const { balanceObject, asset, asset_name, symbol } = this.state;
 		console.log("=====[AssetItem.js]::render - node item > ", item, index, symbol);
 
-		const subTitle = `${balanceObject.get("balance")/100000000} ${symbol}`;
-		const assetName = asset_name && (JSON.parse(asset_name).main || JSON.parse(asset_name).main.short_name) || item.type;
+
+		const subTitle = !item ? "0 AFT" : `${balanceObject.get("balance")/100000000} ${symbol}`;
+		const assetName = !item ? "1.3.0" : asset_name && (JSON.parse(asset_name).main || JSON.parse(asset_name).main.short_name) || item.type;
 
 
 		return (
@@ -89,7 +94,6 @@ class Asset extends Component {
 					//roundAvatar
 					title={assetName}
 					subtitle={subTitle}
-					icon={{ name: item.icon }}
 					rightIcon={{ name: 'trending-up'}}
 					rightTitle={'转账'}
 					rightTitleStyle={{color: 'rgba(35,82,164,1)'}}

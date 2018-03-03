@@ -159,9 +159,11 @@ class AssetsList extends Component {
 		
 		console.log("=====[AssetList.js]::render - ", assetsList, this.state.dataSource, this.state.ds, this.state.balances);
 
-
+		// 没有资产时，显示空
 		if(!this.state.dataSource)
-			return <LoadingData message={"数据加载中..."} />;
+			return (<ViewContainer>
+				<AssetItem item={false} index={0} />
+			</ViewContainer>);
 
 		return (
 			<ViewContainer>
