@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Text, ActivityIndicator, Keyboard } from "react-native";
-import Modal from "react-native-modal";
+import { View, Text, ActivityIndicator, Keyboard, Modal } from "react-native";
+//import Modal from "react-native-modal";
 import { Colors as colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
 
 import { Icon, Button, Input, Divider } from 'react-native-elements';
@@ -174,8 +174,8 @@ class UnLock extends Component {
     <View style={styles.container}>
       <Modal 
         style={styles.modalContent}
-        isVisible={true}
-        transparent
+        visible={true}
+        transparent={false}
       >
         
         <View style={{height: 100, backgroundColor: 'white', marginBottom: 10, alignItems: 'center'}}>

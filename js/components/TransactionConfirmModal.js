@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Text, ActivityIndicator, ScrollView } from "react-native";
-import Modal from "react-native-modal";
+import { View, Text, ActivityIndicator, ScrollView, Modal } from "react-native";
+//import Modal from "react-native-modal";
 import { Colors as colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from "../libs";
 
 import { Button, Divider } from "react-native-elements";
@@ -255,8 +255,8 @@ class TransactionConfirm extends Component {
     <View style={styles.container}>
       <Modal 
         style={styles.modalContent}
-        isVisible={true}
-        transparent
+        visible={true}
+        transparent={false}
       >
         
         <View style={{flex: 1, marginTop: 15}}>

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Text, ActivityIndicator, ScrollView } from "react-native";
-import Modal from "react-native-modal";
+import { View, Text, ActivityIndicator, ScrollView, Modal } from "react-native";
+//import Modal from "react-native-modal";
 import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
 
 import { Button, Divider } from "react-native-elements";
@@ -193,8 +193,8 @@ class LoadingRegister extends Component {
 		<View style={styles.container}>
 			<Modal 
 				style={styles.modalContent}
-				isVisible={true}
-				transparent
+				visible={true}
+				transparent={false}
 			>
 				
         <View style={{flex: 1}}>
