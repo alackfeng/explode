@@ -92,9 +92,9 @@ class Center extends Component {
 		if(currentAccount) {
 			this.props.appUserQuit(currentAccount);
 		}
-		if(navigation)
-			navigation.navigate('Login');
-		//resetNavigationTo('Login', navigation);
+		//if(navigation)
+		//	navigation.navigate('Login');
+		resetNavigationTo('Splash', navigation);
 	}
 
 	render() {

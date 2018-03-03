@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Text, ActivityIndicator, Keyboard, Modal } from "react-native";
-//import Modal from "react-native-modal";
+import { View, Text, ActivityIndicator, Keyboard, Modal as RNModal } from "react-native";
+import Modal from "react-native-modal";
 import { Colors as colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
 
 import { Icon, Button, Input, Divider } from 'react-native-elements';
@@ -170,11 +170,15 @@ class UnLock extends Component {
       animating = this.state.animating || false;
     }
 
+    const ModalWarp = Platform.OS === 'web' ? RNModal : Modal;
+
+
     return (
     <View style={styles.container}>
-      <Modal 
+      <ModalWarp 
         style={styles.modalContent}
         visible={true}
+        isVisible={true}
         transparent={false}
       >
         
@@ -265,7 +269,7 @@ class UnLock extends Component {
           />
         </View> 
         
-      </Modal>
+      </ModalWarp>
     </View>
     );
   }

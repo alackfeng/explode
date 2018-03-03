@@ -76,7 +76,7 @@ class History extends Component {
 		return (
 			<ViewContainer>
 				<Header account={false} />
-				<Overlay
+				{!isValid && <Overlay
 				  isVisible={ !isValid }
 				  windowBackgroundColor='transparent'
 				  overlayBackgroundColor='transparent'
@@ -84,7 +84,7 @@ class History extends Component {
 				  height='auto'
 				>
 				  <LoadingData message={"数据加载中..."} size="large" />
-				</Overlay>
+				</Overlay>}
 				{accountHistory && <TableHistory history={accountHistory} account={accountId} />}
 			</ViewContainer>
 		);

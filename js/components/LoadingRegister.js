@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Text, ActivityIndicator, ScrollView, Modal } from "react-native";
-//import Modal from "react-native-modal";
+import { View, Text, ActivityIndicator, ScrollView, Modal as RNModal, Platform } from "react-native";
+import Modal from "react-native-modal";
 import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
 
 import { Button, Divider } from "react-native-elements";
@@ -187,13 +187,14 @@ class LoadingRegister extends Component {
 
 
     const {status, tip} = this.showRegStatus();
-
+    const ModalWarp = Platform.OS === 'web' ? RNModal : Modal;
 
 		return (
 		<View style={styles.container}>
-			<Modal 
+			<ModalWarp 
 				style={styles.modalContent}
 				visible={true}
+        isVisible={true}
 				transparent={false}
 			>
 				
@@ -226,7 +227,7 @@ class LoadingRegister extends Component {
 		      />
 		    </View> 
 	      
-      </Modal>
+      </ModalWarp>
     </View>
 		);
 	}
