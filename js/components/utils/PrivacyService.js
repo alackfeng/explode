@@ -49,7 +49,11 @@ export class PrivacyService extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-    flexDirection: 'row',
+    flexDirection: 'row',   
+    width: SCREEN_WIDTH * 0.8,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
 	},
   checkContainer: {
     backgroundColor: 'transparent',
