@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Text, ActivityIndicator, Keyboard, Modal as RNModal } from "react-native";
+import { View, Text, ActivityIndicator, Keyboard, Modal as RNModal, Platform } from "react-native";
 import Modal from "react-native-modal";
 import { Colors as colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
 
