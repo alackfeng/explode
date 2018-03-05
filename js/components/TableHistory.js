@@ -31,18 +31,19 @@ class TransItem extends Component {
   	const { globalObject, dynGlobalObject } = this.props;
 
   	const blockTime = Utils.calc_block_time(height, globalObject, dynGlobalObject);
-  	if(TRACE) console.log("[TransItem.js]::blockTimeLast - block time : ", blockTime);
 
   	if(blockTime) {
   		let timePassed = Math.round( (new Date().getTime() - new Date(blockTime).getTime()) / 1000 );
+  		
+  		if(TRACE) console.log("[TransItem.js]::blockTimeLast - block time : ", timePassed, blockTime, new Date(), new Date(blockTime));
   		if(timePassed < 60 * 60) {
-  			timePassed = Number(timePassed / 60).toFixed(2) + '秒前'; // < 1 hour
+  			timePassed = Math.ceil(timePassed / 60).toFixed(1) + '分前'; // < 1 hour
   		} else if (timePassed < 60 * 60 * 24) {
-  			timePassed = Number(timePassed / 60 / 60).toFixed(2) + '时前'; // < 1 day
-  		} else if( timePassed < 60 * 60 * 24 * 12) {
-  			timePassed = Number(timePassed / 60 / 60 / 24).toFixed(2) + '天前'; // < 1 year
+  			timePassed = Math.ceil(timePassed / 60 / 60).toFixed(1) + '时前'; // < 1 day
+  		} else if( timePassed < 60 * 60 * 24 * 30 * 12) {
+  			timePassed = Math.ceil(timePassed / 60 / 60 / 24).toFixed(1) + '天前'; // < 1 year
   		} else { 
-  			timePassed = Number(timePassed / 60 / 60 / 24 / 12).toFixed(2) + '年前'; // < 
+  			timePassed = Math.ceil(timePassed / 60 / 60 / 24 / 30 / 12).toFixed(1) + '年前'; // < 
   		}
   		return timePassed;
   	}
