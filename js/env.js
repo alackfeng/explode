@@ -12,5 +12,5 @@ module.exports = {
 		//{url: "ws://119.23.52.40:11011", 	location: "Pre Node2"},
 		{url: "ws://119.23.40.206:11011", location: "Dev Node"},
 	],
-	faucetAddress: "http://119.23.40.206:11015", //http://119.23.52.40:11015",
+	faucetAddress: "http://119.23.40.206:11015", //https://assetfun.net/faucet",
 };

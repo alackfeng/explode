@@ -82,9 +82,9 @@ export class RegisterPage extends Component {
 
 		let password = text ? text.trim() : null;
 
-		var regex = new RegExp('(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,63}');
+		var regex  =  new RegExp('(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[~!@#$%^&*_+=`|(){}:;<>,.?/\\[\\]-]).{8,63}');
 		if(!regex.test(password)) {
-			return {value: password, error: "密码中必须包含大小写字母&数字&特称字符，至少8个字符，最多63个字符"};
+			return {value: password, error: "密码中必须包含大小写字母&数字&常见特殊字符，建议至少15个字符，最多63个字符。"};
 		}
 
 		return {value: password, error: null};
