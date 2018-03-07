@@ -9,76 +9,48 @@ import { Button, Text, Card, ButtonGroup, Tile, Col, Row, Icon, List, ListItem, 
 import { ViewContainer, StyleSheet } from "../../../components";
 import { Colors } from "../../../libs/Colors";
 import { resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../../libs/help";
+import { translate, locale } from "../../../libs";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 import { appUserQuit } from "../../../actions";
 
-const CustBadge = (props) => {
 
-	return <Badge value={props.index} textStyle={{ color: 'orange' }} />
-}
+
+const TRACE = false;
 
 const listMenu = [
 	{
 		title: 'Nodes',
 		icon: 'public',
-		subtitle: '接入点设置',
+		subtitle: 'center.subnav.nodesetting',
 		nav: {
-			title: 'Nodes',
-			user: 'me',
+			title: 'center.nodes',
 		}
 	},
 	{
 		title: 'History',
 		icon: 'receipt',
-		subtitle: '交易记录',
+		subtitle: 'center.subnav.transrecords',
 		nav: true,
 	},
 ];
 
 class Center extends Component {
 
-	constructor() {
-		super();
-
-		this.state = {
-			currentAccount: null,
-		};
+	constructor(props) {
+		super(props);
 
 		this.onPressItem 	= this.onPressItem.bind(this);
 		this.onPressQuit	= this.onPressQuit.bind(this);
 		
 	}
 
-	componentDidMount() {
-
-		const { currentAccount } = this.props;
-		// 验证账号是否登录呢？？？
-		
-		/*if(currentAccount) {
-      FetchChain("getAccount", currentAccount).then((ret) => {
-      	const assetObj = ChainStore.getObject("1.3.0", true);
-        console.log("=====[Center.js]::componentDidMount - : getAccount is : ", JSON.stringify(ret.get("balances")), JSON.stringify(assetObj), JSON.stringify(ret));
-        this.setState({currentAccount: ret});
-
-      }).catch(err => {
-        console.error("=====[Center.js]::componentDidMount - : getAccount is : err ", err);
-      })
-
-      FetchChain("getObject", "1.3.0").then((ret) => {
-        console.log("=====[Center.js]::componentDidMount - : getObject is : ", JSON.stringify(ret));
-
-      }).catch(err => {
-        console.error("=====[Center.js]::componentDidMount - : getObject is : err ", err);
-      })
-		}*/
-	}
-
-
 	onPressItem(item, navigation) {
-		console.log("=====[Center.js]::list item - : ", item);
+		if(TRACE) console.log("=====[Center.js]::onPressItem - list item - : ", item);
+
 		if(item.nav && navigation && navigation.navigate) {
-			console.log("=====[Center.js]::list item to navigation : ", item.title, item.nav);
+			if(TRACE) console.log("=====[Center.js]::onPressItem - list item to navigation : ", item.title, item.nav);
+
 			if(item.nav === true) 
 				navigation.navigate(item.title);
 			else 
@@ -88,45 +60,45 @@ class Center extends Component {
 
 	onPressQuit() {
 		const { navigation, currentAccount } = this.props;
-		console.log("=====[Center.js]::onPressQuit -  - >:", currentAccount);
+
+		if(TRACE) console.log("=====[Center.js]::onPressQuit -  - >:", currentAccount);
 		if(currentAccount) {
 			this.props.appUserQuit(currentAccount);
 		}
-		//if(navigation)
-		//	navigation.navigate('Login');
-		resetNavigationTo('Splash', navigation);
+
+		if(navigation && navigation.navigate)
+			resetNavigationTo('Splash', navigation);
 	}
 
 	render() {
 
 		const { navigation, currentAccount } = this.props;
 
-		console.log("=====[Center.js]::render - navigation - >:", this.state.currentAccount);
+		if(TRACE) console.log("=====[Center.js]::render - navigation - >:", currentAccount);
 
     	return (
     	<ViewContainer>
     		<View style={styles.userContainer} >
     			<Icon color="white" name="invert-colors" size={62} />
-    			<Text style={styles.heading}>{currentAccount ? currentAccount : "Welcome?"}</Text>
+    			<Text style={styles.heading}>{currentAccount ? currentAccount : translate('center.welcome', locale)}</Text>
     		</View>
-    		<ScrollView contentContainerStyle={styles.listContainer} >
+    		<View style={styles.listContainer} >
     			<List>
     				{listMenu.map((l, i) => (
-
-						<ListItem
-							leftIcon={{ name: l.icon, style: {color: 'rgba(35,82,164,1)'} }}
-							key={i}
-							title={l.subtitle}
-							titleStyle={{color: 'rgba(40,65,89,1)'}}
-              onPress={() => this.onPressItem(l, navigation)}
-						/>
+							<ListItem
+								leftIcon={{ name: l.icon, style: {color: Colors.menuBlue} }}
+								key={i}
+								title={ translate(l.subtitle, locale) }
+								titleStyle={{color: Colors.titleGray}}
+	              onPress={() => this.onPressItem(l, navigation)}
+							/>
     				))}
     			</List>
-    		</ScrollView>
+    		</View>
     		<View style={styles.logoutContainer}>
     			<Button
-            text="退  出"
-            textStyle={{color: 'rgba(229,109,57,1)'}}
+          text={ translate('center.quit', locale) }
+            textStyle={{color: Colors.quitGray}}
             buttonStyle={styles.buttonStyle}
             containerStyle={{marginTop: 0, height: 100}}
             onPress={this.onPressQuit}
@@ -139,25 +111,20 @@ class Center extends Component {
 }
 
 const styles = StyleSheet.create({
-	listContainer: {
-		//flexGrow: 2,
-		//justifyContent: 'center',
-		//alignItems: 'center',
-		backgroundColor: 'white',
-		//height: 300,
-	},
 	userContainer: {
-		//flex: 1,
-		//flex: 1,
-		backgroundColor: 'rgba(35,82,164,1)',
-		height: 100,
+		backgroundColor: Colors.menuBlue,
+		height: 120,
 		marginTop: 30,
 	},
+	listContainer: {
+		flex: 5,
+		backgroundColor: 'white',
+	},
 	logoutContainer: {
-		//flex: 1,
-		height: 50,
+		flex: 1,
+		height: 100,
 		backgroundColor: 'transparent',
-		marginBottom: 50,
+		marginBottom: 30,
 	},
 
 	heading: {
@@ -171,10 +138,10 @@ const styles = StyleSheet.create({
 		height: 50, 
 		width: SCREEN_WIDTH, 
 		backgroundColor: 'transparent', 
-		borderBottomWidth: 1, 
-		borderBottomColor: 'rgba(0,0,0,0.1)', 
+		borderBottomWidth: 2, 
+		borderBottomColor: Colors.borderGray, 
 		borderTopWidth: 1, 
-		borderTopColor: 'rgba(0,0,0,0.1)', 		
+		borderTopColor: Colors.borderGray, 		
 		borderRadius: 0,
 		elevation: 0,
 		zIndex: 10,

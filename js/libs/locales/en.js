@@ -1,10 +1,20 @@
 export const en = {
 	greeting: "Hello",
-	"auth": {
-		"greeting": "Hello",
+	auth: {
+		greeting: "Hello",
 	},
 	comm: {
 		welcome: "Welcome to Aftrade Enter",
+	},
+	center: {
+		welcome: "Who?",
+		quit: "QUIT",
+		"subnav": {
+			nodesetting: "Node Switch",
+			transrecords: "Latest Transaction Records",
+		},
+		nodes: "Nodes",
+		trans: "Transaction Records",
 	},
 	menu: {
 		tab: {

@@ -79,6 +79,9 @@ const THEME_COLORS = {
 
   // aft专用
   menuBlue: "rgba(35,82,164,1)",
+  borderGray: "rgba(0,0,0,0.1)",
+  quitGray: "rgba(229,109,57,1)",
+  titleGray: "rgba(40,65,89,1)",
 };
 
 const LOCATION_COLORS = {

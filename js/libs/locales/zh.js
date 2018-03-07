@@ -6,6 +6,16 @@ export const zh = {
 	comm: {
 		welcome: "欢迎来到AFT的世界",
 	},
+	center: {
+		welcome: "你是谁?",
+		quit: "退  出",
+		subnav: {
+			nodesetting: "接入点切换",
+			transrecords: "最近交易记录",
+		},
+		nodes: "接入点",
+		trans: "交易记录",
+	},
 	menu: {
 		tab: {
 			home: "首页",

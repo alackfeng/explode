@@ -60,7 +60,7 @@ const sharedRoutes = {
   Nodes: {
     screen: NodeScreen,
     navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.title,
+      title: translate(navigation.state.params.title, locale),
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
       headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,
@@ -78,7 +78,7 @@ const sharedRoutes = {
   History: {
     screen: HistoryScreen,
     navigationOptions: ({ navigation }) => ({
-      title: 'Operation History',
+      title: translate('center.trans', locale),
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
       headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,
