@@ -36,16 +36,16 @@ class HeaderLink extends Component {
 	}
 	renderHeader() {
     return <View style={styles.header}>
-    	<Text style={styles.headerTitle}>类型</Text>
-    	<Text style={styles.headerTitle}>数量</Text>
-    	<Text style={styles.headerTitle}>对方账号</Text>
-    	<Text style={styles.headerTitle}>时间</Text>
+    	<View style={styles.opertype}><Text style={styles.headerTitle}>类型</Text></View>
+    	<View style={styles.amount}><Text style={styles.headerTitle}>数量</Text></View>
+    	<View style={styles.account}><Text style={styles.headerTitle}>对方账号</Text></View>
+    	<View style={styles.timeage}><Text style={styles.headerTitle}>时间</Text></View>
     </View>;
   }
 
 	render() {
 
-		const { nodeStatus, account, node } = this.props;
+		const { nodeStatus, account, node, header } = this.props;
 
 		console.log("=====[Header.js]::render - ", nodeStatus);
 		if(!nodeStatus)
@@ -55,7 +55,7 @@ class HeaderLink extends Component {
 			<ViewHeader>
 				{account && <AccountText> 当前帐号：{account}</AccountText> }
 				{node && <Text>Block Link Node -: {nodeStatus.url} {nodeStatus.status} </Text>}
-				{this.renderHeader()}
+				{header && this.renderHeader()}
 			</ViewHeader>
 		);
 	}
@@ -75,8 +75,27 @@ const styles = StyleSheet.create({
 	headerTitle: {
 		color: 'rgba(102,102,102,1)', 
 		fontSize:20, 
-		textAlign:'center'
+		textAlign:'right',
 	},
+	account: {
+    justifyContent: 'flex-end',
+    marginRight: 10,
+    flex: 1,
+  },
+  amount: {
+    justifyContent: 'flex-end',
+    marginRight: 10,
+    flex: 1,
+  },
+  opertype: {
+		flex: 0.5,
+		marginRight: 10,
+	},
+	timeage: {
+		justifyContent: 'flex-end',
+		flex: 1,
+		marginRight: 10,
+	}
 });
 
 const mapStateToProps = (state) => ({

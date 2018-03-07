@@ -17,6 +17,14 @@ const ops = Object.keys(operations);
 
 const TRACE = false;
 
+const OperType = (props) => (
+	<View style={styles.opertype}><Text style={[styles.column, {color: props.color}]}>{props.type ? "转出" : "转入"}</Text></View>
+);
+
+const TimeAge = (props) => (
+	<View style={styles.timeage}><Text style={styles.column}>{props.time}</Text></View>
+);
+
 class TransItem extends Component {
 	
 	constructor(props) {
@@ -64,10 +72,10 @@ class TransItem extends Component {
 		switch(ops[op[0]]) {
 			case 'transfer':
 				column = (<View style={[styles.body, {backgroundColor: index%2?'white':'rgba(40,65,89,0.1)'}]}>
-			    	<Text style={[styles.column, {color: index%2?'rgba(229,109,57,1)':'rgba(15,187,134,1)'}]}>{transType ? "转出" : "转入"}</Text>
+			    	<OperType type={transType} color={index%2?'rgba(229,109,57,1)':'rgba(15,187,134,1)'} />
 			    	<AssetOBJ amount={op[1].amount.amount} asset={op[1].amount.asset_id} />
 			    	<AccountOBJ account={transType ? op[1].to : op[1].from} />
-			    	<Text style={styles.column}>{this.blockTimeLast(item.block_num)}</Text>
+			    	<TimeAge time={this.blockTimeLast(item.block_num)} />
 			    </View>);
 			break;
 			default:
@@ -133,7 +141,7 @@ class TableHistoryWrap extends Component {
 
   }
 
-	
+	// 转移到上层，分开处理，goto Header.js
 	renderHeader() {
     return <View style={styles.header}>
     	<Text style={styles.headerTitle}>类型</Text>
@@ -214,8 +222,16 @@ const styles = StyleSheet.create({
 	column: {
 		color: 'rgba(40,65,89,1)', 
 		fontSize:15, 
-		textAlign:'center',
-
+		textAlign:'right',
+	},
+	opertype: {
+		flex: 0.5,
+		marginRight: 10,
+	},
+	timeage: {
+		justifyContent: 'flex-end',
+		flex: 1,
+		marginRight: 10,
 	}
 });
 

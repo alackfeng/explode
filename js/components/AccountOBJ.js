@@ -86,7 +86,7 @@ export class AccountOBJ extends Component {
     const isValid = (!!accountName);
 
 		return (
-			<View>
+			<View style={styles.container}>
 				<Text style={styles.column}>{isValid ? accountName || account : 'NaN'}</Text>
 			</View>
 		);
@@ -94,11 +94,15 @@ export class AccountOBJ extends Component {
 }
 
 const styles = StyleSheet.create({
-
+  container: {
+    justifyContent: 'flex-end',
+    marginRight: 10,
+    flex: 1,
+  },
 	column: {
 		color: 'rgba(40,65,89,1)', 
 		fontSize:15, 
-		textAlign:'center',
+		textAlign:'right',
 
 	}
 });

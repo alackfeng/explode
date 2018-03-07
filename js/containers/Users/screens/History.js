@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Text, ScrollView, Dimensions } from "react-native";
-import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
+import { Colors, resetNavigationTo, SCREEN_WIDTH, translate, locale } from "../../../libs";
 import { Icon, Button, Input, Overlay } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, LoadingLoginModal, Header, TableHistory, LoadingData } from "../../../components";
@@ -75,7 +75,7 @@ class History extends Component {
 
 		return (
 			<ViewContainer>
-				<Header account={false} />
+				<Header account={false} header />
 				{!isValid && <Overlay
 				  isVisible={ !isValid }
 				  windowBackgroundColor='transparent'
@@ -83,7 +83,7 @@ class History extends Component {
 				  width='auto'
 				  height='auto'
 				>
-				  <LoadingData message={"数据加载中..."} size="large" />
+				  <LoadingData message={ translate('comm.loadingdata', locale) } size="large" />
 				</Overlay>}
 				{accountHistory && <TableHistory history={accountHistory} account={accountId} />}
 			</ViewContainer>

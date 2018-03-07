@@ -99,6 +99,8 @@ export class AssetOBJ extends Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'flex-end',
+    marginRight: 10,
+    flex: 1,
   },
 	column: {
 		color: 'rgba(40,65,89,1)', 

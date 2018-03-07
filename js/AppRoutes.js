@@ -3,7 +3,7 @@ import { View, Text, Image } from "react-native";
 import PropTypes from 'prop-types';
 
 import { StackNavigator } from "react-navigation";
-import { translate, locale } from "./libs";
+import { translate, locale, Colors } from "./libs";
 
 import { Icon } from './components/Icon';
 import Home from './containers/Home';
@@ -53,7 +53,7 @@ const sharedRoutes = {
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,
     }),
   },
@@ -62,7 +62,7 @@ const sharedRoutes = {
     navigationOptions: ({ navigation }) => ({
       title: translate(navigation.state.params.title, locale),
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,
     }),
   },
@@ -71,7 +71,7 @@ const sharedRoutes = {
     navigationOptions: ({ navigation }) => ({
       title: 'Transfer',
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,
     }),
   },
@@ -80,7 +80,7 @@ const sharedRoutes = {
     navigationOptions: ({ navigation }) => ({
       title: translate('center.trans', locale),
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,
     }),
   }
@@ -91,9 +91,9 @@ const AssetsStackNavigator = StackNavigator(
     Manage: {
       screen: AssetsManageScreen,
       navigationOptions: {
-        title: 'Assets Manage',
+        title: translate('menu.title.asset', locale),
         headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-        headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+        headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       },
     },
     ...sharedRoutes,
@@ -125,9 +125,9 @@ export const AppRoutes = {
     screen: Home,
     path: 'home',
     navigationOptions: {
-      title: 'home news',
+      title: translate('menu.title.home', locale),
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       tabBarLabel: translate('menu.tab.home', locale),
       tabBarIcon: getIcon('home'),
     },
@@ -137,7 +137,7 @@ export const AppRoutes = {
     path: 'assets',
     navigationOptions: {
       header: null, //title: 'Assets',
-      tabBarLabel: translate('menu.tab.news', locale),
+      tabBarLabel: translate('menu.tab.asset', locale),
       tabBarIcon: getIcon('view-list'),
     },
   },
@@ -145,19 +145,19 @@ export const AppRoutes = {
     screen: HistoryScreen,
     path: 'hist',
     navigationOptions: {
-      title: 'history',
+      title: translate('menu.tab.hist', locale),
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       tabBarLabel: translate('menu.tab.hist', locale),
       tabBarIcon: getIcon('receipt'),
     },
   },
   Users: {
-    screen: UsersStackNavigator, //RegisterScreen, //WelcomeScreen, //NodeScreen,
+    screen: UsersStackNavigator,
     path: 'users',
     navigationOptions: {
-      header: null, //title: 'user center',
-      tabBarLabel: translate('menu.tab.wallet', locale),
+      header: null,
+      tabBarLabel: translate('menu.tab.center', locale),
       tabBarIcon: getIcon('account-circle'),
     },
   },
@@ -184,7 +184,7 @@ export const StackRoutes = {
     navigationOptions: ({navigation,screenProps}) => ({
       headerTitle: 'AFT', //<ImageTitle />,
       headerStyle: { backgroundColor: !screenProps ? screenProps.themeColor : 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,
     }),
   },
@@ -193,7 +193,7 @@ export const StackRoutes = {
     navigationOptions: ({navigation,screenProps}) => ({
       headerTitle: 'AFT', //<ImageTitle />,
       headerStyle: { backgroundColor: !screenProps ? screenProps.themeColor : 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: 'rgba(102,102,102,1)', alignSelf: 'center', justifyContent: 'space-between', },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,
     }),
   },

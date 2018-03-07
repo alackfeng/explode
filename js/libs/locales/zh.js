@@ -5,6 +5,7 @@ export const zh = {
 	},
 	comm: {
 		welcome: "欢迎来到AFT的世界",
+		loadingdata: "数据加载中...",
 	},
 	center: {
 		welcome: "你是谁?",
@@ -19,11 +20,16 @@ export const zh = {
 	menu: {
 		tab: {
 			home: "首页",
-			relation: "发行ICO",
-			news: "通证列表",
+			asset: "通证列表",
 			hist: "交易历史",
-			wallet: "用户中心",
+			center: "用户中心",
 			"404": "找不到"
+		},
+		title: {
+			home: "阿凡提平台",
+			asset: "通证",
+			hist: "最近交易记录",
+			center: "用户",
 		}
 	},
 	enter: {

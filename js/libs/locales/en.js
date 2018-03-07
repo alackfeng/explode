@@ -5,6 +5,7 @@ export const en = {
 	},
 	comm: {
 		welcome: "Welcome to Aftrade Enter",
+		loadingdata: "Loading Data...",
 	},
 	center: {
 		welcome: "Who?",
@@ -20,10 +21,16 @@ export const en = {
 		tab: {
 			home: "Home News",
 			relation: "Ico Issue",
-			news: "Assets Manage",
+			asset: "Token Manage",
 			hist: "Transaction History",
 			wallet: "User Center",
 			"404": "Not Found"
+		},
+		title: {
+			home: "AssetFun Platform",
+			asset: "Tokens",
+			hist: "Transaction Records",
+			center: "User Center",
 		}
 	},
 	enter: {

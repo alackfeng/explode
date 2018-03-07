@@ -82,6 +82,7 @@ const THEME_COLORS = {
   borderGray: "rgba(0,0,0,0.1)",
   quitGray: "rgba(229,109,57,1)",
   titleGray: "rgba(40,65,89,1)",
+  headerGray: "rgba(102,102,102,1)",
 };
 
 const LOCATION_COLORS = {
