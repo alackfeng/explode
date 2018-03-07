@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 	timeage: {
 		justifyContent: 'flex-end',
 		flex: 1,
-		marginRight: 10,
+		marginRight: 0,
 	}
 });
 

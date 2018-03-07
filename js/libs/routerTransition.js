@@ -178,7 +178,8 @@ const willTransitionTo = (nextState, replaceState, callback) => {
                 }
             } else {
                 ;//replaceState("/init-error");
-                callback(connectionManager.url, null, 'init-error');
+                if(connectionManager.url)
+                    callback(connectionManager.url, null, 'init-error');
 
                 let url = connectionManager.urls[0] || connectionString;
                 Apis.reset(url, true).init_promise.then(()=>{
@@ -187,8 +188,8 @@ const willTransitionTo = (nextState, replaceState, callback) => {
                     callback(url, null, 'connect');
 
                 }).catch(err => {
-                    console.error("reset-error:", connectionManager.url, err);
-                    return callback(connectionManager.url, null, 'reset-error');
+                    console.error("reset-error:", url, err);
+                    return callback(url, null, 'reset-error');
                 });
             }
         });

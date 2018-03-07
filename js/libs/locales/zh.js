@@ -6,6 +6,12 @@ export const zh = {
 	comm: {
 		welcome: "欢迎来到AFT的世界",
 		loadingdata: "数据加载中...",
+		node: {
+			hongkong: "香港",
+			usa: "美国",
+			china: "中国大陆",
+			last: "最接近节点",
+		}
 	},
 	center: {
 		welcome: "你是谁?",

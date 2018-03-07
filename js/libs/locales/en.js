@@ -6,6 +6,12 @@ export const en = {
 	comm: {
 		welcome: "Welcome to Aftrade Enter",
 		loadingdata: "Loading Data...",
+		node: {
+			hongkong: "HongKong",
+			usa: "United States of America",
+			china: "China",
+			last: "Lastest Node",
+		}
 	},
 	center: {
 		welcome: "Who?",

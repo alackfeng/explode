@@ -55,7 +55,7 @@ const SLViewText = styled.View`
 const SLText = styled.Text`
 	text-align: left;
 	color: red;
-	margin-top: 30;
+	margin-top: 5;
 `;
 
 const SLListView = styled.ListView`
@@ -214,7 +214,7 @@ class Node extends Component {
 							  icon={{ type: 'font-awesome', name: 'search' }}
 							  placeholder='Type Here...'
 							/> */}
-							<Text style={{textAlign: 'center', color: 'red'}}>区块节点信息：</Text>
+							<Text style={{textAlign: 'center', color: 'red'}}></Text>
 						</SearchContainer>
 					</SearchBarWrapper>
 				</Header>
@@ -228,7 +228,7 @@ class Node extends Component {
 			        dataSource={this.state.dataSource}
 			      />
 			    </List>
-			    <ScrollView>
+			    <ScrollView style={{marginTop: 30}}>
 			    { showStatusList }
 			    </ScrollView>
 				</ListContainer>

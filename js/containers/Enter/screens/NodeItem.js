@@ -5,9 +5,12 @@ import styled from "styled-components/native";
 
 import { ListItem } from "react-native-elements";
 import { ViewContainer, StyleSheet } from "../../../components";
+import { Colors, SCREEN_WIDTH, normalize, translate, locale } from "../../../libs";
 
 const NodeWrap = styled.View`
-	background-color: rgba(35,82,164,1);
+	background-color: transparent;
+	border-bottom-color: ${Colors.titleGray};
+  border-bottom-width: 1;
 `;
 
 class NodeInfo extends Component {
@@ -38,7 +41,7 @@ class NodeInfo extends Component {
 		// console.log("=====[NodeItem.js]::render - node item > ", item, index);
 		let status = linknode.url === item.url ? linknode.status : item.status;
 
-		const subTitle = `${item.url} - <${status} : ${item.latency}>`;
+		const subTitle = `${item.url} - < ${status} : ${item.latency}ms >`;
 
 		return (
 			<NodeWrap>
@@ -46,12 +49,12 @@ class NodeInfo extends Component {
 					//hideChevron
 					key={index}
 					//roundAvatar
-					title={item.location}
+					title={translate(item.location, locale) || 'NaN'}
 					titleStyle={styles.title}
 					subtitle={subTitle}
 					subtitleStyle={styles.subtitle}
 					icon={{ name: item.icon }}
-					rightIcon={{ name: 'cloud-upload'}}
+					rightIcon={{ name: 'cloud-upload', color: 'blue'}}
 					onPressRightIcon={this.onPressUpConnect}
 					//avatar={{uri:rowData.avatar_url}}
 					//badge={{ element: <CustBadge index={rowID}/> }}
@@ -64,10 +67,12 @@ class NodeInfo extends Component {
 
 const styles = StyleSheet.create({
 	title: {
-		color: 'white',
+		color: Colors.menuBlue,
+		fontSize: 20,
+		fontWeight: 'bold',
 	},
 	subtitle: {
-		color: 'white',
+		color: Colors.headerGray,
 	}
 });
 
