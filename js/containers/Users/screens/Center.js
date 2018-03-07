@@ -33,6 +33,12 @@ const listMenu = [
 		subtitle: 'center.subnav.transrecords',
 		nav: true,
 	},
+	//{
+	//	title: 'Language',
+	//	icon: 'language',
+	//	subtitle: 'center.subnav.language',
+	//	nav: true,
+	//}
 ];
 
 class Center extends Component {

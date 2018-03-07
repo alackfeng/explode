@@ -21,7 +21,7 @@ import URIWrapper from './URIWrapper';
 
 
 import { initConnect, nodeConnect, updateRpcConnectionStatus } from "./actions";
-import { willTransitionTo } from "./libs";
+import { willTransitionTo, switchLanguage } from "./libs";
 import { Apis } from "assetfunjs-ws";
 
 import { nodeList } from "./env";
@@ -67,6 +67,10 @@ class App extends Component {
     console.log("=====[App.js]::componentWillMount - init");
 
     this.props.dispatch(initConnect([], null))
+
+        // change locale
+    //if(this.props.locale && switchLanguage)
+    //  switchLanguage(this.props.locale); //this.locale
   }
 
   componentDidMount() {
@@ -183,6 +187,7 @@ function mapStateToProps(state) {
     appReady: state.app.appReady,
     nav: state.nav,
     nodeStatus: state.app.nodeStatus,
+    locale: state.app.locale,
   };
 }
 

@@ -1,5 +1,4 @@
 import I18n, { getLanguages } from 'react-native-i18n';
-
 import { zh, en } from "./locales";
 
 if (typeof navigator === 'object' && navigator) {
@@ -7,7 +6,8 @@ if (typeof navigator === 'object' && navigator) {
     || navigator.language
     || navigator.browserLanguage
     || navigator.systemLanguage;
-  if (locale) {
+
+	if (locale) {
     I18n.locale = locale;
   }
 }

@@ -19,9 +19,11 @@ export const zh = {
 		subnav: {
 			nodesetting: "接入点切换",
 			transrecords: "最近交易记录",
+			language: "语言切换",
 		},
 		nodes: "接入点",
 		trans: "交易记录",
+		langs: "语言中心",
 	},
 	menu: {
 		tab: {
@@ -36,6 +38,7 @@ export const zh = {
 			asset: "通证",
 			hist: "最近交易记录",
 			center: "用户",
+			transfer: "转账",
 		}
 	},
 	enter: {

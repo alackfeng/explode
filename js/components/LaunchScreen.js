@@ -50,7 +50,7 @@ class LaunchScreen extends Component {
 					icon={{source: require('./images/aftlogo.png')}}
 					iconStyle={styles.icon}
 				> 
-          <Text style={styles.centering}>与区块连接中</Text>
+          <Text style={styles.centering}>与区块连接中...</Text>
 					<ActivityIndicator
             style={[styles.centering, {height: 80}]}
             animating={this.state.animating}
@@ -86,6 +86,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8,
+    color: 'white',
   },
 };
 

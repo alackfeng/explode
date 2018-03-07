@@ -19,9 +19,11 @@ export const en = {
 		"subnav": {
 			nodesetting: "Node Switch",
 			transrecords: "Latest Transaction Records",
+			language: "Language Switch",
 		},
 		nodes: "Nodes",
 		trans: "Transaction Records",
+		langs: "Language Center",
 	},
 	menu: {
 		tab: {
@@ -29,7 +31,7 @@ export const en = {
 			relation: "Ico Issue",
 			asset: "Token Manage",
 			hist: "Transaction History",
-			wallet: "User Center",
+			center: "User Center",
 			"404": "Not Found"
 		},
 		title: {
@@ -37,6 +39,7 @@ export const en = {
 			asset: "Tokens",
 			hist: "Transaction Records",
 			center: "User Center",
+			transfer: "Transfer",
 		}
 	},
 	enter: {
