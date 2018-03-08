@@ -25,7 +25,7 @@ export class LoadingData extends Component {
     
     return (
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15, 
-          backgroundColor: 'transparent'}}>
+          backgroundColor: 'transparent', borderWidth: 0}}>
           <ActivityIndicator animating={this.state.animating} size={size || "large"} color={colors.salmon} />
           <Text style={{textAlign: 'center', color: 'red', marginLeft: 10}} numberOfLines={10}>{message}</Text>
         </View>
