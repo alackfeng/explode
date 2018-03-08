@@ -52,7 +52,11 @@ class Register extends Component {
 
     try {
 
-      this.props.userRegister(username, {username, password, registrar, referrer, referrer_percent, refcode});
+            // 延迟加载
+      var _This = this;
+      setTimeout(() => {
+        _This.props.userRegister(username, {username, password, registrar, referrer, referrer_percent, refcode});
+      }, 500);
 
     } catch ( e ) {
       console.error("=====[Register.js]::userRegister - error : ", e.err_no);

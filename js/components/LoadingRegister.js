@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   container: {
   	position: 'absolute',
   	zIndex: 10,
-  	backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  	backgroundColor: 'transparent',
   	height: SCREEN_HEIGHT,
   	width: SCREEN_WIDTH
   },
@@ -37,16 +37,17 @@ const styles = StyleSheet.create({
     borderColor: "rgba(0, 0, 0, 0.1)"
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(128, 128, 128, 0.5)",
     position: 'absolute',
-    height: SCREEN_HEIGHT*0.5,
+    height: SCREEN_HEIGHT*0.3,
     width: SCREEN_WIDTH*0.8,
     top: modalTop,
-    marginTop: -SCREEN_HEIGHT*0.5*0.5,
+    marginTop: -SCREEN_HEIGHT*0.3*0.5,
     left: modalLeft,
     marginLeft: -SCREEN_WIDTH*0.8*0.5,
     borderRadius: 4,
-    borderColor: "rgba(0, 0, 0, 0.1)"
+    borderColor: "white",
+    borderWidth: 2,
   },
   bottomModal: {
     justifyContent: "flex-end",
@@ -195,33 +196,31 @@ class LoadingRegister extends Component {
 				style={styles.modalContent}
 				visible={true}
         isVisible={true}
-				transparent={false}
+				transparent={true}
 			>
 				
-        <View style={{flex: 1}}>
-          <Text style={{textAlign: 'center', fontSize: 25}}>注册流程</Text>
-          
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 10}}>
-            <ActivityIndicator animating={!!!status} />
-            <Text>{tip}</Text>
+        <View style={{flex: 1, alignItems: 'center'}}>          
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 0}}>
+            <ActivityIndicator animating={!!!status} size="large" />
+            <Text style={{textAlign: 'center', fontSize: 25, color: 'white'}}>{tip}</Text>
             <Divider style={{ backgroundColor: 'blue' }} />
           </View>
 
           {TRACE && <TransactionDetails entity={entity} />}
         </View>
 				
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', flex: 1}}>
           <Button
 		        text="登录"
 		        clear
-		        textStyle={{color: 'rgba(78, 116, 289, 1)'}}
+		        textStyle={{color: 'rgba(78, 116, 289, 1)', fontSize: 25}}
 		        containerStyle={styles.button}
 		        onPress={this.onConfirm}
 		      /> 
 	        <Button
 		        text="取消"
 		        clear
-		        textStyle={{color: 'rgba(78, 116, 289, 1)'}}
+		        textStyle={{color: 'rgba(78, 116, 289, 1)', fontSize: 25}}
 		        containerStyle={styles.button}
 		        onPress={this.onCancel}
 		      />

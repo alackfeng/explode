@@ -14,7 +14,7 @@ import { ViewContainer, StyleSheet } from "../components";
 import { triggerUser, USERS_UNLOCK } from "../actions";
 const {unlock: sendUnLock} = triggerUser;
 
-const modalTop = SCREEN_HEIGHT / 2;
+const modalTop = SCREEN_HEIGHT / 3;
 const modalLeft = SCREEN_WIDTH / 2;
 
 const styles = StyleSheet.create({

@@ -28,7 +28,12 @@ class Login extends Component {
 
     try {
 
-      this.props.userLogin(username, password);
+      // 延迟加载
+      var _This = this;
+      setTimeout(() => {
+        _This.props.userLogin(username, password);
+      }, 500);
+      
 
     } catch ( e ) {
       console.error("=====[Login.js]::userLogin - error : ", e);
