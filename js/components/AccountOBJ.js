@@ -34,9 +34,15 @@ export class AccountOBJ extends Component {
 
   componentWillMount() {
     
-    this.fetchAccounts();
+    // this.fetchAccounts();
     //ChainStore.subscribe(this.update); // update
 
+  }
+
+  // BUG: 交易列表没有正常显示账号名，新的列表数据增加时未及时更新account，通过receive update， OK
+  componentWillReceiveProps(nextProps) {
+
+    this.fetchAccounts(nextProps);
   }
 
   update(nextProps = null) {
@@ -45,10 +51,10 @@ export class AccountOBJ extends Component {
     this.fetchAccounts();
   }
 
-	fetchAccounts = () => {
-    const { account } = this.props;
+	fetchAccounts = (props) => {
+    const { account } = props || this.props;
 
-    if(TRACE) console.log("=====[AccountOBJ.js]::fetchAccounts - account---: ", account);
+    if(TRACE) console.log("=====[AccountOBJ.js]::fetchAccounts - account---++++++++++++++++++++++= : ", account);
     
     let updateAccount = (accountObj) => {
 
@@ -84,6 +90,7 @@ export class AccountOBJ extends Component {
     const { accountName } = this.state;
 
     const isValid = (!!accountName);
+    if(TRACE) console.log("=====[AccountOBJ.js]::render - account---++++++++++++++++++++++= : ", account, accountName);
 
 		return (
 			<View style={styles.container}>
