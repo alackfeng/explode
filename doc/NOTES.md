@@ -46,6 +46,15 @@ cp -rf ./ios/build/Build/Products/Release-iphonesimulator/aftbomb.app ~/Desktop/
 cd ~/Desktop/aftbomb-dist
 zip -r aftbomb.ipa Payload
 
+5. other:
+vi /Users/assetfun/source/aftapp/explode-app/node_modules/react-native-modal/src/index.js => 
+  
+  if(DeviceEventEmitter)
+      DeviceEventEmitter.addListener('didUpdateDimensions', this._handleDimensionsUpdate);
+
+vi /Users/assetfun/source/code/explode/node_modules/react-native-elements/src/buttons/Button.js =>
+// expo
+
 ```
 
 #### 20180222 -: 
