@@ -6,19 +6,14 @@ import {
 } from 'react-native';
 
 import styles from './styles';
-import Random from './components/Random';
-import { LoadingScreen } from "../../components";
+import { TokenPii } from './components/TokenPii';
+import { LoadingScreen, ViewContainer } from "../../components";
 
 const Home = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>
-        ASSETFUN
-      </Text>
-      <Text style={[styles.instructions, {fontSize: 25}]}>
-        为了您的健康少玩手机，多看书，骚年，LOL
-      </Text>
-    </View>
+    <ViewContainer>
+      <TokenPii />
+    </ViewContainer>
   );
 };
 

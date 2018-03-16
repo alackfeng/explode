@@ -34,7 +34,7 @@ export const zh = {
 			"404": "找不到"
 		},
 		title: {
-			home: "阿凡提平台",
+			home: "TokenPii",
 			asset: "通证",
 			hist: "最近交易记录",
 			center: "用户",
@@ -48,6 +48,17 @@ export const zh = {
 			signInButton: "登录",
 			registerInButton: "注册",
 		}
+	},
+	home: {
+		summary: {
+			title: '把你的通证资产装进口袋',
+			producttitle: '产品特点',
+			productsubs: '关联您的通证资产，在通证元年与数字资产互动更多',
+			safifytitle: '简单易用 安全存储',
+			safifysubs: '轻松创建账户，私钥由你掌握，实时查询账户情况',
+			assettitle: '支持多种资产 一键快速转账',
+			assetsubs: '汇聚多种通证资产，使用方便，转账速度快',
+		}	
 	},
 	advisable_message: {
     "subject_profile_creator_vote_min": "投票额低于最小限制！",

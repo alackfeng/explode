@@ -35,7 +35,7 @@ export const en = {
 			"404": "Not Found"
 		},
 		title: {
-			home: "AssetFun Platform",
+			home: "TokenPii",
 			asset: "Tokens",
 			hist: "Transaction Records",
 			center: "User Center",
@@ -49,6 +49,17 @@ export const en = {
 			signInButton: "SIGN IN",
 			registerInButton: "REGISTER",
 		}
+	},
+	home: {
+		summary: {
+			title: '把你的通证资产装进口袋',
+			producttitle: '产品特点',
+			productsubs: '关联您的通证资产，在通证元年与数字资产互动更多',
+			safifytitle: '简单易用 安全存储',
+			safifysubs: '轻松创建账户，私钥由你掌握，实时查询账户情况',
+			assettitle: '支持多种资产 一键快速转账',
+			assetsubs: '汇聚多种通证资产，使用方便，转账速度快',
+		}	
 	},
 	advisable_message: {
     "subject_profile_creator_vote_min": "Voting is below minimum line",
