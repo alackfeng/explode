@@ -158,6 +158,9 @@ class Transfer extends Component {
       // encrypt_memo: false,
     });
 
+    // 清空填入数据，
+    this.setState({toUser: '', amount: '', memoText: ''});
+
   }
 
   searchAccount = (name) => {
