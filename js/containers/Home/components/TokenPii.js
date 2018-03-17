@@ -13,9 +13,8 @@ export class TokenPii extends Component {
 				<View style={styles.titleContainer}>
 					<Image 
 						style={styles.titleImage}
-						source={require('../images/tokenpii.png')}
+						source={require('../images/tokenpii.jpg')}
 					/>
-					<Text style={styles.titleSummary}>{ translate('home.summary.title', locale) }</Text>
 				</View>
 				
 				<View style={styles.featuresContainer}>
@@ -52,8 +51,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	titleImage: {
-		width: 110,
-		height: 105,
+		width: SCREEN_WIDTH,
+		height: 150,
 	},
 	titleSummary: {
 		color: 'white',
@@ -76,15 +75,17 @@ const styles = StyleSheet.create({
 		marginTop: 5,
 	},
 	featuresImage: {
-		width: 260,
-		height: 165,
-		marginTop: 20,
+		width: 180,
+		height: 114,
+		marginTop: 50,
+		marginBottom: 30,
 	},
 	features1Container: {
 		flex: 0.5,
 		alignItems: 'center',
 		justifyContent: 'center',	
 		marginTop: 20,
+		marginBottom: 50,
 	}
 
 });

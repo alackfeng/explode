@@ -13,7 +13,7 @@ const Container = styled.View`
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  background-color: white;
+  background-color: #F8F9FC;
 `;
 
 export const ViewContainer = ({ children }: Props) => (
