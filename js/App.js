@@ -153,7 +153,7 @@ class App extends Component {
   mainStatusBar = (nav) => {
 
     const main = nav.routes[nav.index].routeName;
-    console.error("=====[App.js]::App ready - ", main);
+    //console.info("=====[App.js]::App ready - ", main);
     if(main !== 'Main')
       return false;
     return true;
