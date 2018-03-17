@@ -9,8 +9,8 @@ import { Colors, SCREEN_WIDTH, normalize, translate, locale } from "../../../lib
 
 const NodeWrap = styled.View`
 	background-color: transparent;
-	border-bottom-color: ${Colors.titleGray};
-  border-bottom-width: 1;
+	border-bottom-color: #DFDFDF;
+  border-top-width: 0;
 `;
 
 class NodeInfo extends Component {
@@ -41,24 +41,25 @@ class NodeInfo extends Component {
 		// console.log("=====[NodeItem.js]::render - node item > ", item, index);
 		let status = linknode.url === item.url ? linknode.status : item.status;
 
-		const subTitle = `${item.url} - < ${status} : ${item.latency}ms >`;
+		const subTitle = `${status}:${item.latency}ms`;
+		const rightTitle = (status !== 'open') ? ' ' : `(已连接)`;
 
 		return (
 			<NodeWrap>
 				<ListItem
-					//hideChevron
+					hideChevron
 					key={index}
-					//roundAvatar
+					containerStyle={{borderBottomColor: '#DFDFDF', backgroundColor: 'white'}}
+					titleWrapStyle={styles.titleWrapStyle}
 					title={translate(item.location, locale) || 'NaN'}
 					titleStyle={styles.title}
 					subtitle={subTitle}
 					subtitleStyle={styles.subtitle}
-					icon={{ name: item.icon }}
-					rightIcon={{ name: 'cloud-upload', color: 'blue'}}
-					onPressRightIcon={this.onPressUpConnect}
-					//avatar={{uri:rowData.avatar_url}}
-					//badge={{ element: <CustBadge index={rowID}/> }}
-					//onPress={() => this.onPressItem(rowData)}
+					subtitleContainerStyle={{marginLeft: 10,}}
+					rightTitle={rightTitle || ''}
+					rightTitleStyle={{color: status!=='open'?'#AEB4C0':'#7BFFDD', fontSize: 12, fontWeight: 'bold'}}
+					leftIcon={{ name: status==='open'?'radio-button-checked':'radio-button-unchecked', color: status==='open'?'#2352A4':'' }}
+					leftIconOnPress={this.onPressUpConnect}
 				/>
 			</NodeWrap>
 		);
@@ -67,12 +68,18 @@ class NodeInfo extends Component {
 
 const styles = StyleSheet.create({
 	title: {
-		color: Colors.menuBlue,
-		fontSize: 20,
+		color:'#284159',
+		fontSize: 14,
 		fontWeight: 'bold',
 	},
 	subtitle: {
 		color: Colors.headerGray,
+		fontSize: 12,
+	},
+	titleWrapStyle: {
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
+		alignItems: 'center',
 	}
 });
 

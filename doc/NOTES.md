@@ -15,6 +15,13 @@
 
 
 ####
+#### 20180317
+
+###### 1. 增加ListItem中的titleContainer样式设置，用于NodeItem组件
+vi /Users/assetfun/source/aftapp/explode-app/node_modules/react-native-elements/src/list/ListItem.js =>
+<View style={[styles.titleSubtitleContainer, titleWrapStyle && titleWrapStyle]}>
+
+####
 
 #### 20180306 -: 
 ##### 1. 增加密码强度较验，密码中必须包含大小写字母&数字&常见特殊字符，建议至少15个字符，最多63个字符。

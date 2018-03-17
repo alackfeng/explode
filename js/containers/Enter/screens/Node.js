@@ -40,7 +40,9 @@ const SearchContainer = styled.View`
 
 const ListContainer = styled.View`
   margin-bottom: 90;
-  background-color: white;
+  background-color: 'white';
+  margin-top: 10;
+  border-width: 0;
 `;
 
 
@@ -204,30 +206,13 @@ class Node extends Component {
 
 		return (
 			<ViewContainer>
-				<Header>
-					<SearchBarWrapper>
-						<SearchContainer>
-							{/*<SearchBar
-								lightTheme
-							  onChangeText={(text) => this.setState({query: text}) }
-							  onClearText={()=> this.setState({query: ''})}
-							  icon={{ type: 'font-awesome', name: 'search' }}
-							  placeholder='Type Here...'
-							/> */}
-							<Text style={{textAlign: 'center', color: 'red'}}></Text>
-						</SearchContainer>
-					</SearchBarWrapper>
-				</Header>
-
-
 				<ListContainer>
-					<List>
 			      <ListView
 			      	enableEmptySections
 			        renderRow={this.renderRow}
 			        dataSource={this.state.dataSource}
+			        removeClippedSubviews={false}
 			      />
-			    </List>
 			    <ScrollView style={{marginTop: 30}}>
 			    { showStatusList }
 			    </ScrollView>
