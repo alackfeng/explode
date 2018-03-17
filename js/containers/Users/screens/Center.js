@@ -13,6 +13,7 @@ import { translate, locale } from "../../../libs";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 import { appUserQuit } from "../../../actions";
+import SplashTile from "../../../components/SplashTile";
 
 
 
@@ -84,10 +85,20 @@ class Center extends Component {
 
     	return (
     	<ViewContainer>
-    		<View style={styles.userContainer} >
-    			<Icon color="white" name="invert-colors" size={62} />
-    			<Text style={styles.heading}>{currentAccount ? currentAccount : translate('center.welcome', locale)}</Text>
-    		</View>
+    		<SplashTile
+    			containerStyle={styles.userContainer}
+    			imageSrc={require('../images/background.jpg')}
+					imageContainerStyle={styles.image}
+					title={currentAccount ? currentAccount : translate('center.welcome', locale)}
+					titleStyle={styles.title}
+					featured={true} 
+					height={150}
+					icon={{source: require('../images/aftlogo.png')}}
+					iconStyle={styles.icon} 
+					iconContainerStyle={{marginTop: 50}}  		
+				>
+				</SplashTile>
+
     		<View style={styles.listContainer} >
     			<List>
     				{listMenu.map((l, i) => (
@@ -119,12 +130,12 @@ class Center extends Component {
 const styles = StyleSheet.create({
 	userContainer: {
 		backgroundColor: Colors.menuBlue,
-		height: 120,
-		marginTop: 30,
+		height: 150,
+		marginTop: 0,
 	},
 	listContainer: {
 		flex: 5,
-		backgroundColor: 'white',
+		backgroundColor: 'transparent',
 	},
 	logoutContainer: {
 		flex: 1,
@@ -143,7 +154,7 @@ const styles = StyleSheet.create({
 		marginBottom: 0, 
 		height: 50, 
 		width: SCREEN_WIDTH, 
-		backgroundColor: 'transparent', 
+		backgroundColor: 'white', 
 		borderBottomWidth: 2, 
 		borderBottomColor: Colors.borderGray, 
 		borderTopWidth: 1, 
@@ -151,6 +162,18 @@ const styles = StyleSheet.create({
 		borderRadius: 0,
 		elevation: 0,
 		zIndex: 10,
+	},
+	image: {
+		width: SCREEN_WIDTH,
+		height: 150,
+	},
+	icon: {
+		width: 58,
+		height: 41,
+	},
+	title: {
+		color: 'white',
+		marginTop: 10,
 	},
 
 });
