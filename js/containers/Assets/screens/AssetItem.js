@@ -89,18 +89,24 @@ class Asset extends Component {
 		return (
 			<AssetItemWrap>
 				<ListItem
-					//hideChevron
+					containerStyle={{height: 80, flex: 1, borderBottomColor: '#DFDFDF', }}
+					wrapperStyle={{height: 60, flex: 1}}
+					titleWrapStyle={{flex: 1, justifyContent: 'center'}}
+					titleContainerStyle={{height: 25, justifyContent: 'center'}}
+					subtitleContainerStyle={{height: 25, justifyContent: 'center'}}
+					hideChevron
 					key={index}
 					//roundAvatar
 					title={assetName}
+					titleStyle={{fontSize: 18, color: '#284159', fontWeight: 'bold', textAlignVertical: 'center'}}
 					subtitle={subTitle}
+					subtitleStyle={{fontSize: 12, color: '#AEB4C0', textAlignVertical: 'center'}}
 					rightIcon={{ name: 'trending-up'}}
 					rightTitle={'转账'}
-					rightTitleStyle={{color: 'rgba(35,82,164,1)'}}
-					onPressRightIcon={this.onPressNavTo}
-					avatar={require('../images/aft-account.png')}
-					avatarStyle={{backgroundColor: 'blue'}}
-					//badge={{ element: <CustBadge index={rowID}/> }}
+					rightTitleStyle={{color: '#2352A4', fontSize: 14}}
+					avatar={require('../images/assetlogo.jpg')}
+					avatarStyle={{backgroundColor: 'blue', height: 60, width: 100}}
+					avatarContainerStyle={{height: 60, width: 100}}
 					onPress={() => this.onPressNavTo()}
 				/>
 			</AssetItemWrap>

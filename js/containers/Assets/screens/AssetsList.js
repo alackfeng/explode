@@ -169,7 +169,6 @@ class AssetsList extends Component {
 		return (
 			<ViewContainer>
 				<ScrollView>
-					<List>
 			      <ListView
 			      	enableEmptySections
 			      	ref="ListView"
@@ -177,7 +176,6 @@ class AssetsList extends Component {
 			        dataSource={this.state.dataSource}
 			        renderRow={this.renderRow}
 			      />
-			    </List>
 				</ScrollView>
 			</ViewContainer>
 		);

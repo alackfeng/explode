@@ -255,20 +255,20 @@ class Transfer extends Component {
           <View style={styles.avatarContainer}>
             <Avatar
               large
-              source={require('../../../components/images/aftlogo.png')}
+              source={require('../../../components/images/assetlogo.jpg')}
               onPress={() => console.log("Works!")}
-              activeOpacity={0.7}
+              avatarStyle={{backgroundColor: 'red', height: 80, width: 100}}
             />
           </View>
           <View style={styles.itemContainer}>
             <Text style={styles.itemStyle}>{assetName}</Text>
-            <Text style={styles.itemStyle}>{subTitle}</Text>
+            <Text style={styles.itemsubsStyle}>{subTitle}</Text>
           </View>
         </View>
 
 
         <ScrollView>
-        <View style={{backgroundColor: 'transparent', width: SCREEN_WIDTH, alignItems: 'center'}}>
+        <View style={{backgroundColor: 'white', width: SCREEN_WIDTH, alignItems: 'center'}}>
           <View style={styles.overlay}>
             <Input
               containerStyle={[styles.inputContainer, {backgroundColor: 'gray'}]}
@@ -409,9 +409,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     marginRight: 10,
+    backgroundColor: 'white',
   },
   avatarContainer: {
     backgroundColor: 'transparent',
+    height: 80,
+    width: 100,
   },
   itemContainer: {
     justifyContent: 'center',
@@ -420,8 +423,13 @@ const styles = StyleSheet.create({
   },
   itemStyle: {
     fontWeight: 'bold',
-    fontSize: 22,
-    color: 'rgba(171, 189, 219, 1)',
+    fontSize: 18,
+    color: '#284159',
+  },
+  itemsubsStyle: {
+    fontWeight: 'bold',
+    fontSize: 12,
+    color: '#AEB4C0',
   },
   inputContainer: {
     marginTop: 10, 
