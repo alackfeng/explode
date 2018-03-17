@@ -37,4 +37,8 @@ const AppNavigator = StackNavigator({
   },
 });
 
+AppNavigator.onNavigationStateChange = (prev, next) => {
+  alert("ssss", next);
+}
+
 export default AppNavigator;

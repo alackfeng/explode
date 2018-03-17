@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
 	},
 	image: {
 		width: SCREEN_WIDTH,
-		height: SCREEN_HEIGHT-50,
+		height: SCREEN_HEIGHT,
 	},
 	icon: {
 		width: 100,

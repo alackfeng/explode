@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { View, Text, Platform } from "react-native";
+import { View, Text, Platform, StatusBar } from "react-native";
 import LaunchScreen from "./components/LaunchScreen";
 
 //import { SplashScreen as LaunchScreen } from "./components/SplashScreen";
@@ -150,6 +150,15 @@ class App extends Component {
     return force || (synced && connected && (nodeStatus.status === 'open'));
   }
 
+  mainStatusBar = (nav) => {
+
+    const main = nav.routes[nav.index].routeName;
+    console.error("=====[App.js]::App ready - ", main);
+    if(main !== 'Main')
+      return false;
+    return true;
+  } 
+
   render() {
     const {
       appReady,
@@ -166,9 +175,15 @@ class App extends Component {
       return <LaunchScreen />
     }
 
+    const darkstatusbar = this.mainStatusBar(nav);
+
     // enter app
     return (
     <ViewContainer>
+      { darkstatusbar
+        ?<StatusBar backgroundColor={'transparent'} translucent={false} barStyle={'dark-content'} />
+        :<StatusBar backgroundColor={'transparent'} translucent={true} barStyle={'light-content'} />
+      }
       <UnLockModal />
       <TransactionConfirmModal />
       <NavigationWrappedApp

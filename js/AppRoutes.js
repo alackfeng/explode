@@ -191,19 +191,13 @@ export const StackRoutes = {
   Register: {
     screen: RegisterScreen,
     navigationOptions: ({navigation,screenProps}) => ({
-      headerTitle: 'AFT', //<ImageTitle />,
-      headerStyle: { backgroundColor: !screenProps ? screenProps.themeColor : 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
-      headerRight: <View />,
+      header: null,
     }),
   },
   Login: {
     screen: LoginScreen,
     navigationOptions: ({navigation,screenProps}) => ({
-      headerTitle: 'AFT', //<ImageTitle />,
-      headerStyle: { backgroundColor: !screenProps ? screenProps.themeColor : 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
-      headerRight: <View />,
+      header: null,
     }),
   },
   Welcome: {
