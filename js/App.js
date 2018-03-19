@@ -181,7 +181,7 @@ class App extends Component {
     return (
     <ViewContainer>
       { darkstatusbar
-        ?<StatusBar backgroundColor={'transparent'} translucent={false} barStyle={'dark-content'} />
+        ?<StatusBar backgroundColor={'gray'} translucent={false} barStyle={'dark-content'} />
         :<StatusBar backgroundColor={'transparent'} translucent={true} barStyle={'light-content'} />
       }
       <UnLockModal />

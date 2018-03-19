@@ -57,7 +57,7 @@ class NodeInfo extends Component {
 					subtitleStyle={styles.subtitle}
 					subtitleContainerStyle={{marginLeft: 10,}}
 					rightTitle={rightTitle || ''}
-					rightTitleStyle={{color: status!=='open'?'#AEB4C0':'#7BFFDD', fontSize: 12, fontWeight: 'bold'}}
+					rightTitleStyle={{color: status!=='open'?'#04C488':'#7BFFDD', fontSize: 12, fontWeight: 'bold'}}
 					leftIcon={{ name: status==='open'?'radio-button-checked':'radio-button-unchecked', color: status==='open'?'#2352A4':'' }}
 					leftIconOnPress={this.onPressUpConnect}
 				/>

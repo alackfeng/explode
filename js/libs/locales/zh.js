@@ -60,6 +60,14 @@ export const zh = {
 			assetsubs: '汇聚多种通证资产，使用方便，转账速度快',
 		}	
 	},
+	tips: {
+		login: {
+			req: "登录中",
+			ok: "  恭喜您，登录成功.",
+			evt: "  恭喜您，登录成功！",
+			err: "登录错误啦！！！",
+		}
+	},
 	advisable_message: {
     "subject_profile_creator_vote_min": "投票额低于最小限制！",
     "Insufficient_Balance": "账号余额不足",

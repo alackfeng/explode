@@ -6,12 +6,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Text, ActivityIndicator, ScrollView, Modal as RNModal, Platform } from "react-native";
 import Modal from "react-native-modal";
-import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
+import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from "../libs";
 
 import { Button, Divider } from "react-native-elements";
 
 import { ViewContainer, StyleSheet } from "../components";
-import { triggerUser, TRIGGER_USERS_LOGIN } from "../actions";
+import { triggerUser, TRIGGER_USERS_LOGIN, USERS_LOGIN} from "../actions";
 const {reset: resetLogin} = triggerUser;
 
 const modalTop = SCREEN_HEIGHT / 2;
@@ -24,21 +24,30 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     zIndex: 10,
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(0,0,0,0.2)',
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH
   },
   button: {
-    backgroundColor: "lightblue",
-    padding: 12,
-    margin: 16,
+    backgroundColor: "transparent",
+    padding: 0,
+    margin: 0,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 4,
-    borderColor: "rgba(0, 0, 0, 0.1)"
+    borderRadius: 0,
+    borderColor: "#DFDFDF",
+    borderWidth: 0.5,
+    borderLeftWidth: 0,
+    borderBottomWidth: 0,
+    borderRightWidth: 0,
+    width: SCREEN_WIDTH * 0.8, 
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   modalContent: {
-    backgroundColor: 'rgba(128, 128, 128, 0.5)',
+    backgroundColor: 'rgba(255, 255, 255, 1)',
     position: 'absolute',
     height: SCREEN_HEIGHT*0.3,
     width: SCREEN_WIDTH*0.8,
@@ -48,12 +57,17 @@ const styles = StyleSheet.create({
     marginLeft: -SCREEN_WIDTH*0.8*0.5,
     borderRadius: 4,
     borderColor: "white",
-    borderWidth: 2,
+    borderWidth: 0,
   },
   bottomModal: {
     justifyContent: "flex-end",
     margin: 0
-  }
+  },
+  centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
 });
 
 class TransactionDetails extends Component {
@@ -116,9 +130,16 @@ class LoadingLogin extends Component {
     this.onConfirm  = this.onConfirm.bind(this);
   }
 
-  isExistLogin = () => {
+  componentWillReceiveProps(nextProps) {
+    console.log("=====[LoadingLogin.js]::componentWillReceiveProps - props > : ", nextProps);
 
-    const { entityLogin: entity } = this.props;
+    this.onConfirm(nextProps);
+
+  }
+
+  isExistLogin = (props) => {
+
+    const { entityLogin: entity } = props || this.props;
 
     const notify = entity.transaction.length && entity.transaction.filter(item => item.type === 'USERS_LOGIN_SUCCESS'); 
     console.log("=====[LoadingLogin.js]::isExistLogin - notifcation event : ", notify);
@@ -132,55 +153,48 @@ class LoadingLogin extends Component {
     }
   }
 
-  onConfirm = () => {
-    const { navigation } = this.props;
+  onConfirm = (props) => {
+    const { navigation } = props || this.props;
 
     // 账号已经存在，直接转到登录
-    if(this.isExistLogin()) {
+    if(this.isExistLogin(props)) {
       resetNavigationTo('Main', navigation);
+
+      // 退出对话框
+      this.onCancel(props);
     } else {
       
       //resetNavigationTo('Main', navigation);
     }
     
-    // 退出对话框
-    this.onCancel();
   }
 
   onCancel = () => {
-    this.props.resetLogin(TRIGGER_USERS_LOGIN);
-    this.props.onChange(false);
-  }
-
-  showRegStatus = () => {
-    const { entityLogin: entity } = this.props;
-
-    const isLogin = (entity && entity.isLogin) || false;
-    let status  = isLogin?"登录中":"登录完成";
-
-    status = (entity.transaction.length && entity.transaction[0].type === 'USERS_LOGIN_FAILURE') ? "登录错误啦！！！" : status;
-    return status;
+    const propS = this.props;
+    propS.resetLogin(TRIGGER_USERS_LOGIN);
+    propS.onChange(false);
   }
 
   showLoginStatus = () => {
     const { entityLogin: entity } = this.props;
 
-    let isLogin = (entity && entity.isLogin) || false;
-    let tip  = !isLogin?"登录中":"登录完成";
-  
-    tip = (entity.transaction.length && entity.transaction[0].type === 'USERS_LOGIN_FAILURE') ? "登录错误啦！！！" : tip;
-    tip = (entity.transaction.length && entity.transaction[0].type === 'USERS_LOGIN_EVENT') ? "事件通知啦！！！" : tip;
+    let entityReq = null;
+    let entityOk = null;
+    let entityErr = null;
+    let entityEvt = null;
+    let entityObj = entity.transaction.length && entity.transaction.map((item, index) => {
+      console.log("=====[LoadingRegister.js]::showLoginStatus - entity : ", item, index);
+      if(item.type === USERS_LOGIN.FAILURE) entityErr  = 'tips.login.err'; //item.error;
+      if(item.type === USERS_LOGIN.REQUEST) entityReq  = 'tips.login.req'; //item.response;
+      if(item.type === USERS_LOGIN.SUCCESS) entityOk   = 'tips.login.ok';
+      if(item.type === USERS_LOGIN.EVENT)   entityEvt  = 'tips.login.evt'; //item.error;
 
-    const success = entity.transaction.length && entity.transaction.filter(item => item.type === 'USERS_LOGIN_SUCCESS'); 
-    console.log("=====[LoadingRegister.js]::showLoginStatus - success : ", success);
-    if(success.length) {
-      tip = "登录完成";
-      isLogin = true;
-    }
-    
-    //? "注册完成" : tip;
+    });
 
-    return {status: isLogin, tip};
+    console.log("=====[LoadingRegister.js]::showLoginStatus - entity : ", entityObj, entityReq, entityOk, entityErr);
+
+    return { ok: entityOk, err: entityErr, req: entityReq, evt: entityEvt };
+
   }
 
 
@@ -189,43 +203,40 @@ class LoadingLogin extends Component {
     const { onChange, entityLogin: entity, navigation } = this.props;
     console.log("=====[LoadingLogin.js]::render - entity : ", entity);
 
-    const {status, tip} = this.showLoginStatus();
+    const { ok, err, req, evt } = this.showLoginStatus(); 
+    const showAni = !!!err;
+    const tip = err || evt || ok || req ;
+    const showBtn = !!err;
+
     const ModalWarp = Platform.OS === 'web' ? RNModal : Modal;
 
     return (
     <View style={styles.container}>
       <ModalWarp 
-        style={styles.modalContent}
+        style={[styles.modalContent, {backgroundColor: !showBtn ? 'transparent' : 'rgba(255, 255, 255, 1)'}]}
         visible={true}
         isVisible={true}
         transparent={true}
       >
         
-        <View style={{flex: 1, alignItems: 'center'}}>          
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 0}}>
-            <ActivityIndicator animating={!!!status} />
-            <Text style={{textAlign: 'center', fontSize: 25, color: 'white'}}>{tip}</Text>
-            <Divider style={{ backgroundColor: 'blue' }} />
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>          
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 0}}>
+            {showAni && <ActivityIndicator animating={showAni} size={"large"} color={'white'} />}
+            {showBtn && <Text style={{textAlign: 'center', fontSize: 16, color: 'rgba(3,3,3,1)'}}>{translate(tip, locale)}</Text>}
           </View>
 
           {TRACE && <TransactionDetails entity={entity} />}
         </View>
-        <View style={{flexDirection: 'row', flex: 1}}>
+        {showBtn && <View style={{flexDirection: 'row', flex: 0.5}}>
           <Button
-            text="确认"
+            text="退  出"
             clear
-            textStyle={{color: 'rgba(78, 116, 289, 1)', fontSize: 25}}
-            containerStyle={styles.button}
-            onPress={this.onConfirm}
-          /> 
-          <Button
-            text="退出"
-            clear
-            textStyle={{color: 'rgba(78, 116, 289, 1)', fontSize: 25}}
-            containerStyle={styles.button}
+            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 18, fontWeight: 'bold', marginTop: 10}}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.button}
             onPress={this.onCancel}
           />
-        </View> 
+        </View> }
         
       </ModalWarp>
     </View>

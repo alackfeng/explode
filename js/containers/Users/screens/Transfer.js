@@ -271,7 +271,7 @@ class Transfer extends Component {
         <View style={{backgroundColor: 'white', width: SCREEN_WIDTH, alignItems: 'center'}}>
           <View style={styles.overlay}>
             <Input
-              containerStyle={[styles.inputContainer, {backgroundColor: 'gray'}]}
+              containerStyle={[styles.inputContainer, {backgroundColor: '#EEEEEE', borderWidth: 0, borderColor: 'transparent'}]}
               icon={
                 <Icon
                   name='person'

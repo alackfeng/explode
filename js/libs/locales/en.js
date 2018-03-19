@@ -61,6 +61,14 @@ export const en = {
 			assetsubs: '汇聚多种通证资产，使用方便，转账速度快',
 		}	
 	},
+	tips: {
+		login: {
+			req: "登录中",
+			ok: "  恭喜您，登录成功.",
+			evt: "  恭喜您，登录成功！",
+			err: "登录错误啦！！！",
+		}
+	},
 	advisable_message: {
     "subject_profile_creator_vote_min": "Voting is below minimum line",
     "Insufficient_Balance": "Insufficient Balance",

@@ -3,7 +3,7 @@
 
 import React, { Component } from "react";
 
-import { Dimensions, StyleSheet, View, Text, Image, ImageBackground, ActivityIndicator } from "react-native";
+import { Dimensions, StyleSheet, View, Text, Image, ImageBackground, ActivityIndicator, StatusBar } from "react-native";
 
 import { Tile, Button } from "react-native-elements";
 
@@ -36,6 +36,7 @@ class LaunchScreen extends Component {
 
 		return (
 			<ViewContainer>
+				<StatusBar backgroundColor={'transparent'} translucent={true} barStyle={'light-content'} />
 				<SplashTile
 					containerStyle={styles.container}
 					imageSrc={require('./images/launchscreen.jpg')}
