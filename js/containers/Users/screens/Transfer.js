@@ -272,14 +272,7 @@ class Transfer extends Component {
           <View style={styles.overlay}>
             <Input
               containerStyle={[styles.inputContainer, {backgroundColor: '#EEEEEE', borderWidth: 0, borderColor: 'transparent'}]}
-              icon={
-                <Icon
-                  name='person'
-                  color='black'
-                  size={25}
-                />
-              }
-              rightText="AFT账号"
+              leftText="当前帐号"
               placeholder="From"
               placeholderTextColor="black"
               autoCapitalize="none"
@@ -295,19 +288,13 @@ class Transfer extends Component {
               }}
               blurOnSubmit={false}
               value={this.state.fromUser}
+              inputStyle={{textAlign: 'right', marginRight: 20, width: SCREEN_WIDTH-130}}
             />
           </View>
           <View style={styles.overlay}>
             <Input
               containerStyle={styles.inputContainer}
-              icon={
-                <Icon
-                  name='person-outline'
-                  color='black'
-                  size={25}
-                />
-              }
-              rightText="收款账号"
+              leftText="收款账号"
               placeholder="To"
               placeholderTextColor="black"
               autoCapitalize="none"
@@ -324,19 +311,13 @@ class Transfer extends Component {
               value={this.state.toUser}
               displayError={!!errorName}
               errorMessage={errorName || ''}
+              inputStyle={{textAlign: 'right', marginRight: 20, width: SCREEN_WIDTH-130}}
             />
           </View>
           <View style={styles.overlay}>
             <Input
               containerStyle={styles.inputContainer}
-              icon={
-                <Icon
-                  name='account-balance'
-                  color='black'
-                  size={25}
-                />
-              }
-              rightText={`${asset_type}金额`}
+              leftText={`${asset_type}金额`}
               placeholder="Amount"
               placeholderTextColor="black"
               autoCapitalize="none"
@@ -351,20 +332,15 @@ class Transfer extends Component {
               }}
               blurOnSubmit={false}
               value={this.state.amount}
+              inputStyle={{textAlign: 'right', marginRight: 20, width: SCREEN_WIDTH-130}}
             />
           </View>
           <View style={styles.overlay}>
             <Input
-              containerStyle={[styles.inputContainer, {height: 150}]}
-              icon={
-                <Icon
-                  name='assignment'
-                  color='black'
-                  size={25}
-                />
-              }
-              rightText="备注"
-              inputStyle={{height: 130, textAlign: 'justify'}}
+              containerStyle={[styles.inputContainer, {height: 150, flexDirection: 'column'}]}
+              leftText="转账备注"
+              leftContainerStyle={{textAlign: 'left', width: SCREEN_WIDTH-20, height: 30}}
+              inputStyle={{height: 130, textAlign: 'justify', width: SCREEN_WIDTH-40, marginLeft: 10, marginRight: 10}}
               placeholder="Memo"
               placeholderTextColor="black"
               autoCapitalize="none"
@@ -381,6 +357,7 @@ class Transfer extends Component {
               blurOnSubmit={false}
               value={this.state.memoText}
               multiline={true}
+              numberOfLines={10}
             />
           </View>
         </View>
@@ -437,7 +414,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(223,223,223,1)', 
     height: 50, 
     width: SCREEN_WIDTH-20, 
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   buttonStyle: {
     height: 50, 

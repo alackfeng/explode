@@ -60,6 +60,9 @@ class Input extends Component {
       errorMessage,
       rightText,
       rightTextContainerStyle,
+      leftText,
+      leftTextContainerStyle,
+      leftContainerStyle,
       ...attributes
     } = this.props;
     const translateX = this.shakeAnimationValue.interpolate({
@@ -82,6 +85,11 @@ class Input extends Component {
               style={[styles.iconContainer, { height: 40 }, iconContainerStyle]}
             >
               {icon}
+            </View>}
+          {leftText && <View
+              style={[styles.leftContainer, { height: 40 }, leftContainerStyle]}
+            >
+              <Text style={[styles.leftTextContainer, leftTextContainerStyle]}>{leftText}</Text>
             </View>}
           <TextInput
             ref={input => (this.input = input)}
@@ -146,6 +154,16 @@ const styles = StyleSheet.create({
     marginRight: 20,
     fontSize: 15,
     width: 35,
+  },
+  leftTextContainer: {
+    color: 'rgba(171, 189, 219, 1)',
+    marginLeft: 10,
+    fontSize: 15,
+    width: 80,
+    textAlign: 'left',
+  },
+  leftContainer: {
+    marginTop: 10,
   }
 });
 
