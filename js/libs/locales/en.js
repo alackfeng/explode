@@ -67,6 +67,12 @@ export const en = {
 			ok: "  恭喜您，登录成功.",
 			evt: "  恭喜您，登录成功！",
 			err: "登录错误啦！！！",
+		},
+		register: {
+			req: "注册中",
+			ok: "  恭喜您，注册成功.",
+			evt: "  恭喜您，注册成功！",
+			err: "注册错误啦！！！",
 		}
 	},
 	advisable_message: {

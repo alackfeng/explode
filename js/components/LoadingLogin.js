@@ -183,7 +183,7 @@ class LoadingLogin extends Component {
     let entityErr = null;
     let entityEvt = null;
     let entityObj = entity.transaction.length && entity.transaction.map((item, index) => {
-      console.log("=====[LoadingRegister.js]::showLoginStatus - entity : ", item, index);
+      console.log("=====[LoadingLogin.js]::showLoginStatus - entity : ", item, index);
       if(item.type === USERS_LOGIN.FAILURE) entityErr  = 'tips.login.err'; //item.error;
       if(item.type === USERS_LOGIN.REQUEST) entityReq  = 'tips.login.req'; //item.response;
       if(item.type === USERS_LOGIN.SUCCESS) entityOk   = 'tips.login.ok';
@@ -191,7 +191,7 @@ class LoadingLogin extends Component {
 
     });
 
-    console.log("=====[LoadingRegister.js]::showLoginStatus - entity : ", entityObj, entityReq, entityOk, entityErr);
+    console.log("=====[LoadingLogin.js]::showLoginStatus - entity : ", entityObj, entityReq, entityOk, entityErr);
 
     return { ok: entityOk, err: entityErr, req: entityReq, evt: entityEvt };
 
@@ -229,7 +229,7 @@ class LoadingLogin extends Component {
         </View>
         {showBtn && <View style={{flexDirection: 'row', flex: 0.5}}>
           <Button
-            text="退  出"
+            text="取  消"
             clear
             textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 18, fontWeight: 'bold', marginTop: 10}}
             containerStyle={styles.buttonContainer}
