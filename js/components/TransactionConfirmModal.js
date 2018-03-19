@@ -40,13 +40,19 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH
   },
   button: {
-    backgroundColor: "lightblue",
-    padding: 12,
-    margin: 16,
+    backgroundColor: "transparent",
+    padding: 0,
+    margin: 0,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 4,
-    borderColor: "rgba(0, 0, 0, 0.1)"
+    borderRadius: 0,
+    borderColor: "#DFDFDF",
+    borderWidth: 0.5,
+    width: SCREEN_WIDTH * 0.3, 
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   modalContent: {
     backgroundColor: "white",
@@ -274,21 +280,24 @@ class TransactionConfirm extends Component {
           <TransactionDetail entity={entity} />
         </View>
         
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', marginBottom: 20}}>
           <Button
-            text="确认"
+            text="取  消"
             clear
-            textStyle={{color: 'rgba(78, 116, 289, 1)'}}
-            containerStyle={styles.button}
-            onPress={this.onConfirm}
-          /> 
-          <Button
-            text="取消"
-            clear
-            textStyle={{color: 'rgba(78, 116, 289, 1)'}}
-            containerStyle={styles.button}
+            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 18, fontWeight: 'bold', marginTop: 10}}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.button}
             onPress={this.onCancel}
           />
+          <Button
+            text="确  认"
+            clear
+            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 18, fontWeight: 'bold', marginTop: 10}}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.button}
+            onPress={this.onConfirm}
+          />
+
         </View> 
         
       </ModalWarp>

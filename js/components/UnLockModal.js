@@ -21,21 +21,27 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     zIndex: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH
   },
   button: {
-    backgroundColor: "lightblue",
-    padding: 12,
-    margin: 16,
+    backgroundColor: "transparent",
+    padding: 0,
+    margin: 0,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 4,
-    borderColor: "rgba(0, 0, 0, 0.1)"
+    borderRadius: 0,
+    borderColor: "#DFDFDF",
+    borderWidth: 0.5,
+    width: SCREEN_WIDTH * 0.3, 
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 1)",
     position: 'absolute',
     height: SCREEN_HEIGHT*0.5,
     width: SCREEN_WIDTH*0.8,
@@ -44,7 +50,8 @@ const styles = StyleSheet.create({
     left: modalLeft,
     marginLeft: -SCREEN_WIDTH*0.8*0.5,
     borderRadius: 4,
-    borderColor: "rgba(0, 0, 0, 0.1)"
+    borderColor: "white",
+    borderWidth: 0,
   },
   bottomModal: {
     justifyContent: "flex-end",
@@ -70,6 +77,11 @@ const styles = StyleSheet.create({
     borderWidth: 1, 
     borderColor: 'white', 
     borderRadius: 5
+  },
+  centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
   },
 });
 
@@ -182,21 +194,16 @@ class UnLock extends Component {
         transparent={false}
       >
         
-        <View style={{height: 100, backgroundColor: 'white', marginBottom: 10, alignItems: 'center'}}>
-          <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 20}}>解锁账号</Text>
+        <View style={{backgroundColor: 'white', marginTop: 20, marginBottom: 10, alignItems: 'center', flex: 0.5}}>
+          <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 18}}>解锁账号</Text>
           <Divider style={{ backgroundColor: 'rgba(35,82,164,1)', width: SCREEN_WIDTH*0.5, marginBottom: 20 }} />
           <View style={{flexDirection: 'column'}}>
             <Text style={{color: err?'red': 'blue'}}>{ ok || err || req }</Text>
-            <ActivityIndicator
-              style={[styles.centering, {height: 50}]}
-              animating={animating}
-              size="large"
-              color={colors.salmon}
-            />
+
           </View>
         </View>
         
-        <View style={{backgroundColor: 'rgba(255, 255, 255, 1)', alignItems: 'center'}}>
+        <View style={{backgroundColor: 'rgba(255, 255, 255, 1)', alignItems: 'center', flex: 1}}>
           <View style={styles.overlay}>
             <Input
               containerStyle={styles.inputContainer}
@@ -229,7 +236,7 @@ class UnLock extends Component {
               containerStyle={styles.inputContainer}
               icon={
                 <Icon
-                  name='person'
+                  name='lock'
                   color='black'
                   size={25}
                 />
@@ -252,20 +259,22 @@ class UnLock extends Component {
             />
           </View>
         </View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', flex: 0.5, marginBottom: 20}}>
           <Button
-            text = {!!ok ? '确认' : '解锁'}
-            buttonStyle={styles.buttonStyle}
-            containerStyle={{marginVertical: 10}}
-            textStyle={{fontWeight: 'bold'}}
-            onPress={this.onConfirm}
+            text="取  消"
+            clear
+            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 18, fontWeight: 'bold', marginTop: 10}}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.button}
+            onPress={this.onCancel}
           />
           <Button
-            text ='取消'
-            buttonStyle={styles.buttonStyle}
-            containerStyle={{marginVertical: 10}}
-            textStyle={{fontWeight: 'bold'}}
-            onPress={this.onCancel}
+            text={!!ok ? '确  认' : '解  锁'}
+            clear
+            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 18, fontWeight: 'bold', marginTop: 10}}
+            containerStyle={styles.buttonContainer}
+            buttonStyle={styles.button}
+            onPress={this.onConfirm}
           />
         </View> 
         
