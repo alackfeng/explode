@@ -230,3 +230,12 @@ A27. vi /Users/assetfun/source/aftapp/explode-app/android/gradle.properties =>
 android.enableAapt2=false
 ```
 
+```sh
+Q28. A valid provisioning profile for this executable was not found.
+A28. rm ~/Library/MobileDevice/Provisioning\ Profiles/*
+
+```
+
+
+
+
