@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import { View, Text } from "react-native";
 import styled from "styled-components/native";
 
-import { ListItem, Button } from "react-native-elements";
+import { ListItem, Button, Divider } from "react-native-elements";
+import { Colors, SCREEN_WIDTH, normalize, translate, locale } from "../../../libs";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
 
@@ -89,26 +90,27 @@ class Asset extends Component {
 		return (
 			<AssetItemWrap>
 				<ListItem
-					containerStyle={{height: 80, flex: 1, borderBottomColor: '#DFDFDF', }}
-					wrapperStyle={{height: 60, flex: 1}}
+					containerStyle={{height: 80, flex: 1,border: 0 }}
+					wrapperStyle={{height: 60, flex: 1, border: 0}}
 					titleWrapStyle={{flex: 1, justifyContent: 'center'}}
 					titleContainerStyle={{height: 25, justifyContent: 'center'}}
 					subtitleContainerStyle={{height: 25, justifyContent: 'center'}}
 					hideChevron
 					key={index}
-					//roundAvatar
+					avatarOverlayContainerStyle={{borderRadius: 5}}
 					title={assetName}
 					titleStyle={{fontSize: 18, color: '#284159', fontWeight: 'bold', textAlignVertical: 'center'}}
 					subtitle={subTitle}
 					subtitleStyle={{fontSize: 12, color: '#AEB4C0', textAlignVertical: 'center'}}
 					rightIcon={{ name: 'trending-up'}}
-					rightTitle={'转账'}
+					rightTitle={ translate('tips.transfer.commit', locale) }
 					rightTitleStyle={{color: '#2352A4', fontSize: 14}}
 					avatar={require('../images/assetlogo.jpg')}
-					avatarStyle={{backgroundColor: 'blue', height: 60, width: 100}}
+					avatarStyle={{backgroundColor: 'blue', height: 60, width: 100, borderRadius: 5}}
 					avatarContainerStyle={{height: 60, width: 100}}
 					onPress={() => this.onPressNavTo()}
 				/>
+				<Divider style={{ backgroundColor: '#DFDFDF', marginLeft: 15, marginRight: 10 }} />
 			</AssetItemWrap>
 		);
 	}

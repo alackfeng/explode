@@ -75,7 +75,6 @@ class History extends Component {
 
 		return (
 			<ViewContainer>
-				<Header account={false} header />
 				{!isValid && <Overlay
 				  isVisible={ !isValid }
 				  windowBackgroundColor='transparent'

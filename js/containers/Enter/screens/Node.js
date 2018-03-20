@@ -40,7 +40,7 @@ const SearchContainer = styled.View`
 
 const ListContainer = styled.View`
   margin-bottom: 90;
-  background-color: 'white';
+  background-color: transparent;
   margin-top: 10;
   border-width: 0;
 `;

@@ -103,6 +103,8 @@ class Center extends Component {
     			<List>
     				{listMenu.map((l, i) => (
 							<ListItem
+								wrapperStyle={{border: 0 }}
+								containerStyle={{borderWidth: 0, borderColor: '#DFDFDF', borderBottomWidth: 0.5 }}
 								leftIcon={{ name: l.icon, style: {color: Colors.menuBlue} }}
 								key={i}
 								title={ translate(l.subtitle, locale) }
@@ -114,7 +116,7 @@ class Center extends Component {
     		</View>
     		<View style={styles.logoutContainer}>
     			<Button
-          text={ translate('center.quit', locale) }
+          	text={ translate('center.quit', locale) }
             textStyle={{color: Colors.quitGray}}
             buttonStyle={styles.buttonStyle}
             containerStyle={{marginTop: 0, height: 100}}
@@ -134,11 +136,12 @@ const styles = StyleSheet.create({
 		marginTop: 0,
 	},
 	listContainer: {
-		flex: 5,
+		//flex: 1,
 		backgroundColor: 'transparent',
+		borderColor: 'transparent',
 	},
 	logoutContainer: {
-		flex: 1,
+		//flex: 1,
 		height: 100,
 		backgroundColor: 'transparent',
 		marginBottom: 30,

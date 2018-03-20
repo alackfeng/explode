@@ -124,7 +124,6 @@ class AssetsManage extends Component {
       return (
       <ViewContainer>
         <HeaderSearchBar onSearch={this.onSearchAssets}/>
-        <HeaderAccount />
         {!!accountBalance 
           ? <AssetsList 
               navigation={this.props.navigation} account={currentAccount} 
