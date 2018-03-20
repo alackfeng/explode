@@ -110,8 +110,18 @@ class AssetsList extends Component {
 	}
 
 	navTo(url, params) {
-		const { navigation } = this.props;
+		const { navigation, sendUnLock, isUnLock, account: currentAccount } = this.props;
 		// console.log("=====[AssetList.js]::navTo - ", navigation);
+
+    // 先解锁再
+    if(!this.props.isUnLock) {
+      // 先解锁，再发交易
+      this.props.sendUnLock(currentAccount, {
+        type: 'open'
+      });
+      
+      return;
+    }
 
 		if(navigation) {
 			//alert(url);

@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Text, ScrollView, Dimensions, Keyboard } from "react-native";
-import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
+import { Colors, resetNavigationTo, SCREEN_WIDTH, translate, locale } from "../../../libs";
 import { Icon, Button, List, ListItem, Avatar } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, TransactionConfirmModal } from "../../../components";
@@ -257,7 +257,7 @@ class Transfer extends Component {
               large
               source={require('../../../components/images/assetlogo.jpg')}
               onPress={() => console.log("Works!")}
-              avatarStyle={{backgroundColor: 'red', height: 80, width: 100}}
+              avatarStyle={styles.avatorStyle}
             />
           </View>
           <View style={styles.itemContainer}>
@@ -268,13 +268,11 @@ class Transfer extends Component {
 
 
         <ScrollView>
-        <View style={{backgroundColor: 'white', width: SCREEN_WIDTH, alignItems: 'center'}}>
+        <View style={styles.bodyContainer}>
           <View style={styles.overlay}>
             <Input
-              containerStyle={[styles.inputContainer, {backgroundColor: '#EEEEEE', borderWidth: 0, borderColor: 'transparent'}]}
-              leftText="当前帐号"
-              placeholder="From"
-              placeholderTextColor="black"
+              containerStyle={[styles.inputContainer, {backgroundColor: '#F8F9FC', borderWidth: 0, borderColor: 'transparent'}]}
+              leftText={ translate('tips.transfer.from', locale) }
               autoCapitalize="none"
               autoCorrect={false}
               keyboardAppearance="light"
@@ -288,15 +286,13 @@ class Transfer extends Component {
               }}
               blurOnSubmit={false}
               value={this.state.fromUser}
-              inputStyle={{textAlign: 'right', marginRight: 20, width: SCREEN_WIDTH-130}}
+              inputStyle={styles.textStyle}
             />
           </View>
           <View style={styles.overlay}>
             <Input
               containerStyle={styles.inputContainer}
-              leftText="收款账号"
-              placeholder="To"
-              placeholderTextColor="black"
+              leftText={ translate('tips.transfer.to', locale) }
               autoCapitalize="none"
               autoCorrect={false}
               keyboardAppearance="light"
@@ -311,15 +307,13 @@ class Transfer extends Component {
               value={this.state.toUser}
               displayError={!!errorName}
               errorMessage={errorName || ''}
-              inputStyle={{textAlign: 'right', marginRight: 20, width: SCREEN_WIDTH-130}}
+              inputStyle={styles.textStyle}
             />
           </View>
           <View style={styles.overlay}>
             <Input
               containerStyle={styles.inputContainer}
-              leftText={`${asset_type}金额`}
-              placeholder="Amount"
-              placeholderTextColor="black"
+              leftText={ translate('tips.transfer.amount', locale) }
               autoCapitalize="none"
               autoCorrect={false}
               keyboardAppearance="light"
@@ -332,17 +326,15 @@ class Transfer extends Component {
               }}
               blurOnSubmit={false}
               value={this.state.amount}
-              inputStyle={{textAlign: 'right', marginRight: 20, width: SCREEN_WIDTH-130}}
+              inputStyle={styles.textStyle}
             />
           </View>
           <View style={styles.overlay}>
             <Input
-              containerStyle={[styles.inputContainer, {height: 150, flexDirection: 'column'}]}
-              leftText="转账备注"
-              leftContainerStyle={{textAlign: 'left', width: SCREEN_WIDTH-20, height: 30}}
-              inputStyle={{height: 130, textAlign: 'justify', width: SCREEN_WIDTH-40, marginLeft: 10, marginRight: 10}}
-              placeholder="Memo"
-              placeholderTextColor="black"
+              containerStyle={[styles.inputContainer, {height: 110, flexDirection: 'column'}]}
+              leftText={ translate('tips.transfer.memo', locale) }
+              leftContainerStyle={{textAlign: 'left', width: SCREEN_WIDTH, height: 30}}
+              inputStyle={{height: 70, textAlign: 'justify', marginLeft: 10, marginRight: 10, width: SCREEN_WIDTH-20}}
               autoCapitalize="none"
               autoCorrect={false}
               keyboardAppearance="light"
@@ -357,17 +349,21 @@ class Transfer extends Component {
               blurOnSubmit={false}
               value={this.state.memoText}
               multiline={true}
-              numberOfLines={10}
+              numberOfLines={5}
             />
           </View>
         </View>
+        <View style={styles.warningContainer}>
+          <Icon name='warning' color='red' />
+          <Text style={{textAlign: 'left', color: 'red', fontSize: 14, marginRight: 5, width: SCREEN_WIDTH-60}}>{ translate('tips.transfer.warning', locale) }</Text>
+        </View>
         <View style={{height: 100, flexDirection: 'row'}}>
           <Button
-            text ='转账'
+            text ={ translate('tips.transfer.commit', locale) }
             ref={ input => this.commitInput = input }
             buttonStyle={styles.buttonStyle}
             containerStyle={{marginVertical: 10}}
-            textStyle={{fontWeight: 'bold'}}
+            textStyle={{fontWeight: 'bold', fontSize: 16}}
             onPress={this.onPressTransfer}
           />
         </View>
@@ -379,46 +375,81 @@ class Transfer extends Component {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    height: 80,
+    height: 100,
     width: SCREEN_WIDTH,
     flexDirection: 'row',
-    marginLeft: 20,
-    marginTop: 10,
-    marginBottom: 10,
-    marginRight: 10,
+    marginLeft: 0,
+    marginTop: 0,
+    marginBottom: 0,
+    marginRight: 0,
     backgroundColor: 'white',
+    borderWidth: 0.5,
+    borderColor: '#DFDFDF',
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
   },
   avatarContainer: {
     backgroundColor: 'transparent',
     height: 80,
     width: 100,
+    marginLeft: 20,
+    marginTop: 10,
+    justifyContent: 'center',
+  },
+  avatorStyle: {
+    backgroundColor: 'red', 
+    height: 80, 
+    width: 100
   },
   itemContainer: {
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginLeft: 10,
+    marginLeft: 20,
   },
   itemStyle: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 16,
     color: '#284159',
+    marginBottom: 2.5,
   },
   itemsubsStyle: {
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: 14,
     color: '#AEB4C0',
+    marginTop: 2.5,
+  },
+  bodyContainer: {
+    backgroundColor: 'white', 
+    width: SCREEN_WIDTH, 
+    alignItems: 'center'
   },
   inputContainer: {
-    marginTop: 10, 
-    borderWidth: 1, 
-    borderColor: 'rgba(223,223,223,1)', 
+    marginLeft: 0, 
+    marginRight: 0,
+    borderWidth: 0, 
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#DFDFDF', 
     height: 50, 
-    width: SCREEN_WIDTH-20, 
+    width: SCREEN_WIDTH, 
     backgroundColor: 'white',
+  },
+  textStyle: {
+    textAlign: 'right', 
+    marginRight: 0, 
+    color: '#666666'
+  },
+  warningContainer: {
+    marginTop: 20, 
+    marginLeft: 20, 
+    marginRight: 20, 
+    marginBottom: 20,
+    flexDirection: 'row', 
+    backgroundColor: 'transparent', 
+    width: SCREEN_WIDTH*0.9
   },
   buttonStyle: {
     height: 50, 
-    width: 200, 
+    width: SCREEN_WIDTH*0.8, 
     backgroundColor: 'rgba(35,82,164,1)', 
     borderWidth: 1, 
     borderColor: 'white', 

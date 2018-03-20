@@ -10,7 +10,7 @@ import { Icon, Button, Input } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, LoadingLoginModal, Header, HeaderAccount, HeaderSearchBar, LoadingData } from "../../../components";
 import { triggerUser } from "../../../actions";
-const {login: userLogin} = triggerUser;
+const {login: userLogin, unlock: sendUnLock} = triggerUser;
 
 
 import { AssetsListWrap as AssetsList } from "./AssetsList";
@@ -32,6 +32,7 @@ class AssetsManage extends Component {
     this.onSearchAssets = this.onSearchAssets.bind(this);
 
     this.update     = this.update.bind(this);
+
 	}
 
   componentWillUnmount() {
@@ -58,9 +59,9 @@ class AssetsManage extends Component {
     if(TRACE) console.log("=====[AssetsManage.js]::fetchAssetlist - account----------------------------------- ", account, node);
 
 
-    if(!this.isNodeLinked()) {
-      return;
-    }
+    // test if(!this.isNodeLinked()) {
+    //   return;
+    //}
 
 
     FetchChain("getAccount", account).then((res) => {
@@ -109,7 +110,7 @@ class AssetsManage extends Component {
 
   render() {
 
-    const { currentAccount, nodeStatus } = this.props;
+    const { currentAccount, nodeStatus, isUnLock } = this.props;
     const { accountBalance } = this.state;
 
     const isLinked = this.isNodeLinked();
@@ -125,7 +126,10 @@ class AssetsManage extends Component {
         <HeaderSearchBar onSearch={this.onSearchAssets}/>
         <HeaderAccount />
         {!!accountBalance 
-          ? <AssetsList navigation={this.props.navigation} account={currentAccount} node={nodeStatus} assetsList={accountBalance} />
+          ? <AssetsList 
+              navigation={this.props.navigation} account={currentAccount} 
+              node={nodeStatus} assetsList={accountBalance} 
+              sendUnLock={this.props.sendUnLock} isUnLock={isUnLock} />
           : <LoadingData message={"数据加载中"} />
         }
       </ViewContainer>
@@ -140,8 +144,9 @@ class AssetsManage extends Component {
 const mapStateToProps = (state) => ({
   currentAccount: state.app.currentAccount,
   nodeStatus: state.app.nodeStatus,
+  isUnLock: state.users.entityUnLock.isUnLock,
 });
 
 export const AssetsManageScreen = connect(mapStateToProps, {
-
+  sendUnLock
 })(AssetsManage);

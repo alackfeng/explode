@@ -73,6 +73,14 @@ export const en = {
 			ok: "  恭喜您，注册成功.",
 			evt: "  恭喜您，注册成功！",
 			err: "注册错误啦！！！",
+		},
+		transfer: {
+			from: "My account",
+			to: "Send to",
+			amount: "Amount ",
+			memo: "Memo ",
+			commit: "Transfer ",
+			warning: "Please carefully doublecheck the token type and address as the transaction is irreversible. ",
 		}
 	},
 	advisable_message: {

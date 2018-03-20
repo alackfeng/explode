@@ -72,6 +72,14 @@ export const zh = {
 			ok: "  恭喜您，注册成功.",
 			evt: "  恭喜您，注册成功！",
 			err: "注册错误啦！！！",
+		},
+		transfer: {
+			from: "我的帐号",
+			to: "发送至",
+			amount: "数量",
+			memo: "备注",
+			commit: "转账",
+			warning: "请仔细确认所选的资产类型及转账地址，一旦发送不可撤回。",
 		}
 	},
 	advisable_message: {

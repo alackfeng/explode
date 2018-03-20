@@ -87,7 +87,7 @@ class Input extends Component {
               {icon}
             </View>}
           {leftText && <View
-              style={[styles.leftContainer, { height: 40 }, leftContainerStyle]}
+              style={[styles.leftContainer, { height: 50 }, leftContainerStyle]}
             >
               <Text style={[styles.leftTextContainer, leftTextContainerStyle]}>{leftText}</Text>
             </View>}
@@ -151,19 +151,20 @@ const styles = StyleSheet.create({
   },
   rightTextContainer: {
     color: 'rgba(171, 189, 219, 1)',
-    marginRight: 20,
-    fontSize: 15,
+    marginRight: 10,
+    fontSize: 14,
     width: 35,
+    textAlign: 'right',
   },
   leftTextContainer: {
     color: 'rgba(171, 189, 219, 1)',
     marginLeft: 10,
-    fontSize: 15,
-    width: 80,
+    fontSize: 14,
+    width: 60,
     textAlign: 'left',
   },
   leftContainer: {
-    marginTop: 10,
+    justifyContent: 'center',
   }
 });
 
