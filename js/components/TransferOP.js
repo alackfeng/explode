@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     width: 20,
   },
   itemContainer: {
-    flex: 2,
+    flex: 2.5,
     alignItems: 'flex-start',
     marginLeft: 5,
     height: 40,
