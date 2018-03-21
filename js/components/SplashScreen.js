@@ -7,7 +7,7 @@ import { Dimensions, StyleSheet, View, Text, Image, ImageBackground } from "reac
 
 import { Tile, Button } from "react-native-elements";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from "../libs";
 import { ViewContainer } from "../components";
 
 import SplashTile from "./SplashTile";
@@ -33,33 +33,36 @@ export class SplashScreen extends Component {
 		return (
 			<ViewContainer>
 				<SplashTile
-					containerStyle={styles.container1}
-					imageSrc={require('./images/launchscreen.jpg')}
+					containerStyle={styles.container}
+					imageSrc={require('./images/background.jpeg')}
 					imageContainerStyle={styles.image}
-					title="ASSETFUN"
-					titleStyle={styles.title}
+					overlayContainerStyle={{justifyContent: 'space-around'}}
 					featured={true}
 					height={SCREEN_HEIGHT}
 					width={SCREEN_WIDTH}
 					view={ View }
 					childrenContainerStyle={styles.children}
-					icon={{source: require('./images/aftlogo.png')}}
+					icon={{source: require('./images/tokenpiiicon.png')}}
 					iconStyle={styles.icon}
 				>
+					<View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent'}}>
+					<View style={{flex: 0.35}}>
 					<Button
-            text ='登  录'
+            text ={ translate('enter.splash.signInButton', locale) }
             buttonStyle={styles.button}
             textStyle={{fontWeight: 'bold'}}
-            containerStyle={{marginLeft: 0}}
+            containerStyle={{marginTop: 0, height: 50}}
             onPress={()=>this.onPressloginAndReg(true)}
           />
           <Button
-            text ='注  册'
+            text ={ translate('enter.splash.registerInButton', locale) }
             buttonStyle={styles.button}
             textStyle={{fontWeight: 'bold'}}
-            containerStyle={{marginLeft: 0}}
+            containerStyle={{marginTop: 0, height: 50}}
             onPress={()=>this.onPressloginAndReg(false)}
-          />  
+          />
+          </View>
+          </View>
 				</SplashTile>
 			</ViewContainer>
 		);
@@ -70,6 +73,7 @@ const styles = {
 	container: {
 		flex: 1,
 		backgroundColor: 'white',
+		justifyContent: 'space-around',
 	},
 	image: {
 		width: SCREEN_WIDTH,
@@ -77,13 +81,15 @@ const styles = {
 	},
 	icon: {
 		width: 100,
-		height: 73,
+		height: 140,
+		marginTop: 30,
 	},
 	title: {
 		color: 'white',
 	},
 	children: {
-		flex: 0.3,
+		flex: 1,
+		backgroundColor: 'transparent',
 	},
 	button: {
 		marginBottom: 10, 

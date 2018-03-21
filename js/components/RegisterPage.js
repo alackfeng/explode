@@ -7,7 +7,7 @@ import { Dimensions, StyleSheet, View, Image, ImageBackground, ScrollView } from
 
 import { Tile, Button, Text, Icon, Input } from "react-native-elements";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from "../libs";
 import { ViewContainer } from "../components";
 
 import SplashTile from "./SplashTile";
@@ -64,7 +64,7 @@ export class RegisterPage extends Component {
 
 		// 以字母开头并可包含数字，破折号可选，长度3-63字节。如(a-z)[-](0-9)
 		if(ChainValidation.is_account_name_error(account_name))
-			return {value: account_name, error: "账号名以字母开头并可包含数字"};
+			return {value: account_name, error: "tips.register.errorName"};
 
 		//搜索账号是否已经注册过了，
 		if(this.props.search)
@@ -73,7 +73,7 @@ export class RegisterPage extends Component {
 		let account = this.props.searchEntity.searchAccounts.filter(a => a[0] === account_name);
 		console.log("[RegisterPage.js]::checkValidUserName - searchEntity : ", account.length, this.props.searchEntity);
 		if(account.length)
-			return {value: account_name, error: "账号名已被注册"};
+			return {value: account_name, error: "tips.register.errorSamename"};
 
 		return {value: account_name, error: null};
 	}
@@ -84,7 +84,7 @@ export class RegisterPage extends Component {
 
 		var regex  =  new RegExp('(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[~!@#$%^&*_+=`|(){}:;<>,.?/\\[\\]-]).{8,63}');
 		if(!regex.test(password)) {
-			return {value: password, error: "密码中必须包含大小写字母&数字&常见特殊字符，建议至少15个字符，最多63个字符。"};
+			return {value: password, error: "tips.register.errorPassword"};
 		}
 
 		return {value: password, error: null};
@@ -115,7 +115,7 @@ export class RegisterPage extends Component {
     console.log("=====[RegisterPage.js]::onChangeConfirmPass - ", text);
 
     if(!text || text !== this.state.password) {
-      this.setState({confirmPass: text, errorConfirm: "密码不相同"});
+      this.setState({confirmPass: text, errorConfirm: "tips.register.errorConfirm"});
     } else 
       this.setState({confirmPass: text, errorConfirm: ''});  
   }
@@ -133,17 +133,17 @@ export class RegisterPage extends Component {
     
     if(!username || !password || password !== confirmPass) {
       console.error("=====[RegisterPage.js]::userRegister - password not equal to confirmPass", username, password);
-      this.setState({errorConfirm: "请重新检查!!!"});
+      this.setState({errorConfirm: "tips.register.errorCheckAgain"});
       return;
     }
 
     if(errorName || errorPass || errorConfirm /*|| !checkedPrivacy */ ) {
-    	this.setState({errorConfirm: "请重新检查!!!!"});
+    	this.setState({errorConfirm: "tips.register.errorCheckAgain"});
     	return;
     }
 
     if(!checkedPrivacy) {
-    	this.setState({errorChecked: "请阅读并同意服务和隐私条款"});
+    	this.setState({errorChecked: "tips.register.errorChecked"});
     	return;
     }
 
@@ -170,10 +170,11 @@ export class RegisterPage extends Component {
 		return (
 			<ViewContainer>
 				<SplashTile
-					containerStyle={styles.container}
-					imageSrc={require('./images/launchscreen.jpg')}
+					containerStyle={styles.container1}
+					overlayContainerStyle={{backgroundColor: 'transparent'}}
+					imageSrc={require('./images/background.jpeg')}
 					imageContainerStyle={styles.image}
-					title="注册"
+					title={ translate('enter.splash.registerInButton', locale) }
 					titleStyle={styles.title}
 					featured={true}
 					height={SCREEN_HEIGHT}
@@ -183,36 +184,48 @@ export class RegisterPage extends Component {
 					//icon={{source: require('./images/aftlogo.png')}}
 					//iconStyle={styles.icon}
 				>
-					<AccountPasswordInput
-						onChange={this.onChangeUserName}
-	          username={this.state.username}
-	          error={this.state.errorName}
+					<View style={{flex: 1, backgroundColor: 'transparent'}}>
+						<AccountPasswordInput
+							onChange={this.onChangeUserName}
+		          username={this.state.username}
+		          error={ this.state.errorName ? translate(`${this.state.errorName}`, locale) : null }
 
-						confirmed
-						
-	          onChangePass={this.onChangePassword}
-	          onChangeConfirm={this.onChangeConfirmPass}
-	          password={this.state.password}
-	          confirmPass={this.state.confirmPass}
-	          errorPass={this.state.errorPass}
-	          errorConfirm={this.state.errorConfirm}
-					/>
-					<PrivacyService 
-						checked={this.state.checkedPrivacy}
-						onChecked={this.onCheckedPrivacy}
-						errorChecked={this.state.errorChecked}
-					/>
-					<Button
-            text ='注  册'
-            buttonStyle={styles.button}
-            textStyle={{fontWeight: 'bold'}}
-            containerStyle={{marginTop: 0, height: 50}}
-            onPress={this.onSubmit}
-          />
-          <View style={styles.tips}>
-          	<Text style={styles.tip}>密码用于取得和交易您的资产，非常重要</Text>
-          	<Text style={styles.tip}>assetfun是去中心化的软件，无法帮您储存密码</Text>
-          	<Text style={styles.tip}>一旦丢失密码，将无法找回，请知悉</Text>
+							confirmed
+							
+		          onChangePass={this.onChangePassword}
+		          onChangeConfirm={this.onChangeConfirmPass}
+		          password={this.state.password}
+		          confirmPass={this.state.confirmPass}
+		          errorPass={ this.state.errorPass ? translate(`${this.state.errorPass}`, locale) : null }
+		          errorConfirm={ this.state.errorConfirm ? translate(`${this.state.errorConfirm}`, locale) : null }
+						/>
+						<PrivacyService 
+							checked={this.state.checkedPrivacy}
+							onChecked={this.onCheckedPrivacy}
+							errorChecked={this.state.errorChecked}
+						/>
+					</View>
+					<View style={{flex: 0.35, backgroundColor: 'transparent', marginTop: 30}}>
+						<Button
+	            text ={ translate('enter.splash.registerInButton', locale) }
+	            buttonStyle={styles.button}
+	            textStyle={{fontWeight: 'bold'}}
+	            containerStyle={{marginTop: 0, height: 50}}
+	            onPress={this.onSubmit}
+	          />
+	          <Button
+	            text ={ translate('tips.register.accountlogin', locale) }
+	            buttonStyle={styles.button2}
+	            textStyle={{fontWeight: 'bold', textAlign: 'right', fontSize: 16, }}
+	            textProps={{color: 'rgba(145,234,255,1)'}}
+	            containerStyle={{marginTop: 20, alignItems: 'flex-end', backgroundColor: 'transparent'}}
+	            onPress={()=>resetNavigationTo('Login', this.props.navigation)}
+	          />
+	        </View>
+          <View style={{flex: 1, backgroundColor: 'transparent', marginTop: 20, width: SCREEN_WIDTH * 0.8, }}>
+          	<Text style={styles.tip}>{ translate('tips.register.import1', locale) }</Text>
+          	<Text style={styles.tip}>{ translate('tips.register.import2', locale) }</Text>
+          	<Text style={styles.tip}>{ translate('tips.register.import3', locale) }</Text>
           </View>
 				</SplashTile>
 			</ViewContainer>
@@ -236,7 +249,10 @@ const styles = StyleSheet.create({
 		color: 'white',
 	},
 	children: {
-		flex: 0.9,
+		flex: 1,
+		alignItems: 'flex-start',
+		justifyContent: 'center',
+		backgroundColor: 'transparent',
 	},
 	button: {
 		marginBottom: 0, 
@@ -250,7 +266,7 @@ const styles = StyleSheet.create({
 	},
 	tip: {
 		color: 'white',
-		textAlign: 'center',
+		textAlign: 'left',
 	}
 });
 

@@ -74,7 +74,7 @@ class Register extends Component {
       return (
         <ViewContainer>
           {this.state.isOpen && <LoadingRegisterModal onChange={(open) => this.setState({isOpen: !!open})} navigation={navigation} />}
-          <RegisterPage handle={this.userRegister} search={this.searchAccount} searchEntity={this.props.searchEntity} />
+          <RegisterPage handle={this.userRegister} search={this.searchAccount} searchEntity={this.props.searchEntity} navigation={navigation} />
         </ViewContainer>
       );
     }

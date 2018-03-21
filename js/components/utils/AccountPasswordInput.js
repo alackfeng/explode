@@ -5,9 +5,10 @@ import React, { Component } from "react";
 
 import { StyleSheet, View } from "react-native";
 
-import { Tile, Button, Text, Icon, Input } from "react-native-elements";
+import { Tile, Button, Text, Icon } from "react-native-elements";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../../libs";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from "../../libs";
+import Input from "../../components/RNWInput";
 
 
 export class AccountPasswordInput extends Component {
@@ -18,85 +19,65 @@ export class AccountPasswordInput extends Component {
 
 		return (
 			<View style={styles.container}>
-        <Input
-          containerStyle={styles.inputConatiner}
-          icon={
-            <Icon
-              name='person'
-              color='white'
-              size={25}
-            />
-          }
-          iconContainerStyle={{marginLeft: 20}}
-          placeholder="账号名称"
-          placeholderTextColor="white"
-          inputStyle={{marginLeft: 10, color: 'white'}}
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardAppearance="light"
-          keyboardType="email-address"
-          returnKeyType="next"
-          ref={ input => this.usernameInput = input }
-          onSubmitEditing={()=>this.passwordInput.focus()}
-          blurOnSubmit={false}
-          displayError={!!error}
-          errorMessage={error || ''}
-          value={username || ''}
-          onChangeText={(text) => this.props.onChange(text)}
-        />
-        <Input
-          containerStyle={styles.inputConatiner}
-          icon={
-            <Icon
-              name='lock'
-              color='white'
-              size={25}
-            />
-          }
-          iconContainerStyle={{marginLeft: 20}}
-          placeholder="密码"
-          placeholderTextColor="white"
-          inputStyle={{marginLeft: 10, color: 'white'}}
-          autoCapitalize="none"
-          keyboardAppearance="light"
-          secureTextEntry={true}
-          autoCorrect={false}
-          keyboardType="default"
-          returnKeyType={confirmed?"next":"done"}
-          ref={ input => this.passwordInput = input }
-          onSubmitEditing={confirmed?()=>this.confirmPasswordInput.focus():null}
-          blurOnSubmit={confirmed?false:true}
-          displayError={!!errorPass}
-          errorMessage={errorPass || ''}
-          value={password || ''}
-          onChangeText={(text) => this.props.onChangePass(text)}
-        />
-        {confirmed && <Input
-          containerStyle={styles.inputConatiner}
-          icon={
-            <Icon
-              name='lock'
-              color='white'
-              size={25}
-            />
-          }
-          iconContainerStyle={{marginLeft: 20}}
-          placeholder="密码确认"
-          placeholderTextColor="white"
-          inputStyle={{marginLeft: 10, color: 'white'}}
-          autoCapitalize="none"
-          keyboardAppearance="light"
-          secureTextEntry={true}
-          autoCorrect={false}
-          keyboardType="default"
-          returnKeyType="done"
-          ref={ input => this.confirmPasswordInput = input }
-          blurOnSubmit={true}
-          displayError={!!errorConfirm}
-          errorMessage={errorConfirm || ''}
-          value={confirmPass || ''}
-          onChangeText={(text) => this.props.onChangeConfirm(text)}
-        />}
+        <View style={styles.overlay}>
+          <Input
+            containerStyle={styles.inputConatiner}
+            leftText={ translate('tips.register.inputname', locale) }
+            inputStyle={{marginLeft: 10, color: 'white', fontSize: 15,}}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardAppearance="light"
+            keyboardType="email-address"
+            returnKeyType="next"
+            ref={ input => this.usernameInput = input }
+            onSubmitEditing={()=>this.passwordInput.focus()}
+            blurOnSubmit={false}
+            displayError={!!error}
+            errorMessage={error || ''}
+            value={username || ''}
+            onChangeText={(text) => this.props.onChange(text)}
+          />
+        </View>
+        <View style={styles.overlay}>
+          <Input
+            containerStyle={styles.inputConatiner}
+            leftText={ translate('tips.register.inputpass', locale) }
+            inputStyle={{marginLeft: 10, color: 'white', fontSize: 15,}}
+            autoCapitalize="none"
+            keyboardAppearance="light"
+            secureTextEntry={true}
+            autoCorrect={false}
+            keyboardType="default"
+            returnKeyType={confirmed?"next":"done"}
+            ref={ input => this.passwordInput = input }
+            onSubmitEditing={confirmed?()=>this.confirmPasswordInput.focus():null}
+            blurOnSubmit={confirmed?false:true}
+            displayError={!!errorPass}
+            errorMessage={errorPass || ''}
+            value={password || ''}
+            onChangeText={(text) => this.props.onChangePass(text)}
+          />
+        </View>
+        {confirmed && 
+        <View style={styles.overlay}>
+          <Input
+            containerStyle={styles.inputConatiner}
+            leftText={ translate('tips.register.inputconf', locale) }
+            inputStyle={{marginLeft: 10, color: 'white', fontSize: 15,}}
+            autoCapitalize="none"
+            keyboardAppearance="light"
+            secureTextEntry={true}
+            autoCorrect={false}
+            keyboardType="default"
+            returnKeyType="done"
+            ref={ input => this.confirmPasswordInput = input }
+            blurOnSubmit={true}
+            displayError={!!errorConfirm}
+            errorMessage={errorConfirm || ''}
+            value={confirmPass || ''}
+            onChangeText={(text) => this.props.onChangeConfirm(text)}
+          />
+        </View>}
 			</View>
 		);
 	}
@@ -111,7 +92,7 @@ const styles = StyleSheet.create({
 		borderColor: 'white', 
 		height: 50, 
 		width: SCREEN_WIDTH * 0.8, 
-		marginVertical: 10
+		marginVertical: 0,
 	}
 });
 

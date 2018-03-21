@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 
 import { Button, Text, CheckBox } from "react-native-elements";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../../libs";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from "../../libs";
 
 
 export class PrivacyService extends Component {
@@ -25,23 +25,28 @@ export class PrivacyService extends Component {
 
 		return (
 			<View style={styles.container}>
-				<CheckBox
-          title='我已阅读并同意'
-          textStyle={{fontWeight: ''}}
+				<View style={{justifyContent: 'flex-start'}}>
+        <CheckBox
+          title={ translate('tips.register.checkbox', locale) }
+          textStyle={{fontSize: 13, textAlign: 'left', marginLeft: 0}}
           checked={checked || false}
           iconType='material'
           checkedIcon='check'
           uncheckedIcon='close'
           uncheckedColor='red'
+          size={20}
           onPress={this.props.onChecked}
           containerStyle={styles.checkContainer}
         />
+        </View>
+        <View style={{justifyContent: 'flex-end'}}>
         <Button 
           raised
-          text ='服务和隐私条款' 
-          textStyle={{fontSize: 15, color: 'rgba(145,234,255,1)'}}
+          text ={ translate('tips.register.serviceprivacy', locale) }
+          textStyle={{fontSize: 13, color: 'rgba(145,234,255,1)'}}
           buttonStyle={styles.buttonConatiner}
         />
+        </View>
 			</View>
 		);
 	}
@@ -58,12 +63,14 @@ const styles = StyleSheet.create({
   checkContainer: {
     backgroundColor: 'transparent',
     borderColor: 'transparent',
+    marginLeft: 0,
   },
 	buttonConatiner: {
     backgroundColor: 'transparent',
 		borderRadius: 0, 
-		borderBottomWidth: 0.1, 
+		borderBottomWidth: 0.1,
 		borderColor: 'white', 
+    height: 30,
     elevation: 0,
 	}
 });
