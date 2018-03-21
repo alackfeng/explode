@@ -120,7 +120,7 @@ export class LoginPage extends Component {
 					//icon={{source: require('./images/aftlogo.png')}}
 					//iconStyle={styles.icon}
 				>
-					<View style={{flex: 1}}>
+					<View style={{flex: 1, backgroundColor: 'transparent'}}>
 					<AccountInput
 
 						onChange={this.onChangeUserName}
@@ -132,23 +132,25 @@ export class LoginPage extends Component {
 	          errorPass={this.state.errorPass ? translate(`${this.state.errorPass}`, locale) : null}
 					/>
 					</View>
-					<View style={{flex: 1.2, alignItems: 'flex-start', backgroundColor: 'gray'}}>
-					<View>
-					<Button
-            text ={ translate('enter.splash.signInButton', locale) }
-            buttonStyle={styles.button}
-            textStyle={{fontWeight: 'bold'}}
-            containerStyle={{marginTop: 10, height: 50}}
-            onPress={()=> this.onSubmit()}
-          />
-          <Button
-            text ={ translate('enter.splash.registerInButton', locale) }
-            buttonStyle={styles.button2}
-            textStyle={{fontWeight: 'bold'}}
-            containerStyle={{marginTop: 0}}
-            onPress={()=>resetNavigationTo('Register', this.props.navigation)}
-          />
+					<View style={{flex: 1.2, alignItems: 'flex-start', backgroundColor: 'transparent'}}>
+					<View style={{flex: 1, marginTop: 0, alignItems: 'center', backgroundColor: 'transparent'}}>
+	          <View style={{flex: 0.2}} />
+						<Button
+	            text ={ translate('enter.splash.signInButton', locale) }
+	            buttonStyle={styles.button}
+	            textStyle={{fontWeight: 'bold'}}
+	            containerStyle={{marginTop: 20}}
+	            onPress={()=> this.onSubmit()}
+	          />
+	          <Button
+	            text ={ translate('enter.splash.registerInButton', locale) }
+	            buttonStyle={styles.button2}
+	            textStyle={{fontWeight: 'bold'}}
+	            containerStyle={{marginTop: 0}}
+	            onPress={()=>resetNavigationTo('Register', this.props.navigation)}
+	          />
           </View>
+          <View style={{flex: 0.8}} />
           </View>
 				</SplashTile>
 			</ViewContainer>
@@ -189,7 +191,7 @@ const styles = StyleSheet.create({
 		height: 50, 
 		width: SCREEN_WIDTH * 0.8, 
 		backgroundColor: 'transparent', 
-		borderWidth: 2, 
+		borderWidth: 1, 
 		borderColor: 'white', 
 		borderRadius: 5,
 		elevation: 0,

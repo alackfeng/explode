@@ -184,7 +184,7 @@ export class RegisterPage extends Component {
 					//icon={{source: require('./images/aftlogo.png')}}
 					//iconStyle={styles.icon}
 				>
-					<View style={{flex: 1, backgroundColor: 'transparent'}}>
+					<View style={{flex: 1.5, backgroundColor: 'transparent'}}>
 						<AccountPasswordInput
 							onChange={this.onChangeUserName}
 		          username={this.state.username}
@@ -205,24 +205,25 @@ export class RegisterPage extends Component {
 							errorChecked={this.state.errorChecked}
 						/>
 					</View>
-					<View style={{flex: 0.35, backgroundColor: 'transparent', marginTop: 30}}>
+					<View style={{flex: 1, backgroundColor: 'transparent', marginTop: 0}}>
+						
 						<Button
 	            text ={ translate('enter.splash.registerInButton', locale) }
 	            buttonStyle={styles.button}
 	            textStyle={{fontWeight: 'bold'}}
-	            containerStyle={{marginTop: 0, height: 50}}
+	            containerStyle={{marginTop: 0, height: 50, backgroundColor: 'transparent'}}
 	            onPress={this.onSubmit}
 	          />
 	          <Button
 	            text ={ translate('tips.register.accountlogin', locale) }
-	            buttonStyle={styles.button2}
-	            textStyle={{fontWeight: 'bold', textAlign: 'right', fontSize: 16, }}
-	            textProps={{color: 'rgba(145,234,255,1)'}}
-	            containerStyle={{marginTop: 20, alignItems: 'flex-end', backgroundColor: 'transparent'}}
+	            buttonStyle={{justifyContent: 'flex-start'}}
+	            textStyle={{fontWeight: 'bold', textAlign: 'right', fontSize: 12, color: 'rgba(145,234,255,1)', backgroundColor: 'transparent'}}
+	            containerStyle={{marginTop: 0, alignItems: 'flex-end', justifyContent: 'flex-start', backgroundColor: 'transparent'}}
 	            onPress={()=>resetNavigationTo('Login', this.props.navigation)}
 	          />
+	          <View style={{flex: 0.5}} />
 	        </View>
-          <View style={{flex: 1, backgroundColor: 'transparent', marginTop: 20, width: SCREEN_WIDTH * 0.8, }}>
+          <View style={{flex: 1, backgroundColor: 'transparent', marginTop: 0, width: SCREEN_WIDTH * 0.8, }}>
           	<Text style={styles.tip}>{ translate('tips.register.import1', locale) }</Text>
           	<Text style={styles.tip}>{ translate('tips.register.import2', locale) }</Text>
           	<Text style={styles.tip}>{ translate('tips.register.import3', locale) }</Text>
