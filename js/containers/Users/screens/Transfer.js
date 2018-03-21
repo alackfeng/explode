@@ -354,8 +354,8 @@ class Transfer extends Component {
           </View>
         </View>
         <View style={styles.warningContainer}>
-          <Icon name='warning' color='red' />
-          <Text style={{textAlign: 'left', color: 'red', fontSize: 14, marginRight: 5, width: SCREEN_WIDTH-60}}>{ translate('tips.transfer.warning', locale) }</Text>
+          <Icon type='font-awesome' name='exclamation-circle' color={'gray'} />
+          <Text style={{marginLeft: 5, textAlign: 'left', color: 'red', fontSize: 14, marginRight: 5, width: SCREEN_WIDTH-60}}>{ translate('tips.transfer.warning', locale) }</Text>
         </View>
         <View style={{height: 100, flexDirection: 'row'}}>
           <Button

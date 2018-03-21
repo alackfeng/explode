@@ -81,16 +81,17 @@ export class AssetOBJ extends Component {
 
 	render() {
 
-		const { asset, amount } = this.props;
+		const { asset, amount, type } = this.props;
     const { assetName, precision } = this.state;
 
     const isValid = (precision !== -1 && !!assetName);
+    const plus_minus_sign = type ? '-' : '+';
 
     if(TRACE) console.log("[AssetOBJ.js]::render - ", isValid, asset, amount, assetName, precision);
 
 		return (
 			<View style={styles.container} >
-				<Text style={styles.column}>{ isValid ? `${amount/precision} ${assetName || asset}` : 'NaN'}</Text>
+				<Text style={styles.column}>{ isValid ? `${plus_minus_sign}${amount/precision} ${assetName || asset}` : 'NaN'}</Text>
 			</View>
 		);
 	}
@@ -98,13 +99,13 @@ export class AssetOBJ extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     marginRight: 10,
     flex: 1,
   },
 	column: {
-		color: 'rgba(40,65,89,1)', 
-		fontSize:15, 
+		color: '#284159', 
+		fontSize:14, 
 		textAlign:'right',
 
 	}

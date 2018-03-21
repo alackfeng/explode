@@ -8,7 +8,7 @@ import { View, Text, ScrollView, Dimensions, ListView } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH, Utils } from "../libs";
 import { Icon, Button, Input, List, ListItem } from 'react-native-elements';
 
-import { ViewContainer, StyleSheet, AccountOBJ, AssetOBJ } from "../components";
+import { ViewContainer, StyleSheet, AccountOBJ, AssetOBJ, TransferOP } from "../components";
 
 import { ChainStore, FetchChain, ChainTypes } from "assetfunjs/es";
 const { operations } = ChainTypes;
@@ -53,7 +53,7 @@ class TransItem extends Component {
   		} else { 
   			timePassed = Math.ceil(timePassed / 60 / 60 / 24 / 30 / 12).toFixed(1) + '年前'; // < 
   		}
-  		return timePassed;
+  		return new Date(blockTime).toLocaleString();
   	}
   	return 'NaN';
   }
@@ -71,6 +71,9 @@ class TransItem extends Component {
 
 		switch(ops[op[0]]) {
 			case 'transfer':
+				column = <TransferOP type={transType} oper={op} time={this.blockTimeLast(item.block_num)} />;
+			break;
+			case 'transfer1':
 				column = (<View style={[styles.body, {backgroundColor: index%2?'white':'rgba(40,65,89,0.1)'}]}>
 			    	<OperType type={transType} color={index%2?'rgba(229,109,57,1)':'rgba(15,187,134,1)'} />
 			    	<AssetOBJ amount={op[1].amount.amount} asset={op[1].amount.asset_id} />

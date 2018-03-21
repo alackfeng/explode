@@ -107,9 +107,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 	column: {
-		color: 'rgba(40,65,89,1)', 
-		fontSize:15, 
-		textAlign:'right',
+		color: '#284159', 
+		fontSize:14, 
+		textAlign:'left',
 
 	}
 });
