@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Text, ScrollView, Dimensions, ListView } from "react-native";
+import { View, Text, ScrollView, Dimensions, ListView, RefreshControl } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH, Utils } from "../libs";
 import { Icon, Button, Input, List, ListItem } from 'react-native-elements';
 
@@ -106,6 +106,7 @@ class TableHistoryWrap extends Component {
 
 		this.renderRow = this.renderRow.bind(this);
 		this.update = this.update.bind(this);
+		this._onRefresh = this._onRefresh.bind(this);
 
 	}
 
@@ -164,6 +165,9 @@ class TableHistoryWrap extends Component {
 		);
 	}
 
+	_onRefresh = () => {
+		this.props.onRefresh();
+	}
 
 	render() {
 
@@ -176,7 +180,7 @@ class TableHistoryWrap extends Component {
 
 		return (
 			<ViewContainer>
-				{isValid && <ScrollView style={styles.container}>
+				{isValid &&
 		      <ListView
 		      	enableEmptySections
 		      	ref="ListView"
@@ -185,8 +189,19 @@ class TableHistoryWrap extends Component {
 		        renderRow={this.renderRow}
 		        //renderHeader={this.renderHeader}
 		        removeClippedSubviews={false}
+		        refreshControl = {
+		        	<RefreshControl
+								refreshing={this.props.isRefreshing}
+								onRefresh={this._onRefresh}
+								tintColor="#ff0000"
+								title="数据加载中..."
+								titleColor="#00ff00"
+								colors={['#ff0000', '#00ff00', '#0000ff']}
+								progressBackgroundColor="#ffff00"
+		        	/>
+		        }
 		      />
-		    </ScrollView>}
+		    }
 			</ViewContainer>
 		);
 	}

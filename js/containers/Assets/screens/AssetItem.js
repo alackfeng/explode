@@ -51,8 +51,8 @@ class Asset extends Component {
 			return; 
 
 		const balanceObject = ChainStore.getObject(item.asset);
-		const asset_type = balanceObject.get("asset_type");
-		const asset = ChainStore.getAsset(asset_type);
+		const asset_type = balanceObject ? balanceObject.get("asset_type") : null;
+		const asset = asset_type ? ChainStore.getAsset(asset_type) : null;
 
 		if(TRACE) console.log("=====[AssetItem.js]::updateAsset - balanceObject > ", JSON.stringify(balanceObject), asset_type, JSON.stringify(asset));
 		this.setState({balanceObject, asset, symbol: asset && asset.get("symbol"), asset_name: asset && asset.getIn(['options', 'description'])});
@@ -83,8 +83,8 @@ class Asset extends Component {
 		if(TRACE) console.log("=====[AssetItem.js]::render - node item > ", item, index, symbol);
 
 
-		const subTitle = !item ? "0 AFT" : `${balanceObject.get("balance")/100000000} ${symbol}`;
-		const assetName = !item ? "1.3.0" : asset_name && (JSON.parse(asset_name).main || JSON.parse(asset_name).main.short_name) || item.type;
+		const subTitle = (!item || !balanceObject) ? "0 AFT" : `${balanceObject.get("balance")/100000000} ${symbol}`;
+		const assetName = (!item || !balanceObject) ? "1.3.0" : asset_name && (JSON.parse(asset_name).main || JSON.parse(asset_name).main.short_name) || item.type;
 
 
 		return (

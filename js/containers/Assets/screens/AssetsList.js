@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Image, ListView, View, Text, ScrollView, Dimensions } from "react-native";
+import { Image, ListView, View, Text, ScrollView, Dimensions, RefreshControl } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../../libs";
 import { SearchBar, List, ListItem, Icon, Button, Input } from 'react-native-elements';
 
@@ -28,11 +28,13 @@ class AssetsList extends Component {
 			ds: ds,
 			dataSource: balances ? ds.cloneWithRows(balances) : null,
 			db: balances,
+			
 		};
 
 		this.renderRow 	= this.renderRow.bind(this);
 		this.navTo 			= this.navTo.bind(this);
-
+		this._onRefresh = this._onRefresh.bind(this);
+		
 		if(TRACE) console.log("=====[AssetList.js]::constructor - assetsList-- : ", props.assetsList, balances);
 
 	}
@@ -161,6 +163,10 @@ class AssetsList extends Component {
 
 	}
 
+	_onRefresh = () => {
+		this.props.onRefresh();
+	}
+
 	render() {
 
 		const { onScroll = () => {}, navigation, assetsList } = this.props;
@@ -178,15 +184,25 @@ class AssetsList extends Component {
 
 		return (
 			<ViewContainer>
-				<ScrollView>
 			      <ListView
 			      	enableEmptySections
 			      	ref="ListView"
 			      	style={styles.container}
 			        dataSource={this.state.dataSource}
 			        renderRow={this.renderRow}
+			        removeClippedSubviews={false}
+			        refreshControl = {
+			        	<RefreshControl
+									refreshing={this.props.isRefreshing}
+									onRefresh={this._onRefresh}
+									tintColor="#ff0000"
+									title="数据加载中..."
+									titleColor="#00ff00"
+									colors={['#ff0000', '#00ff00', '#0000ff']}
+									progressBackgroundColor="#ffff00"
+			        	/>
+			        }
 			      />
-				</ScrollView>
 			</ViewContainer>
 		);
 	}

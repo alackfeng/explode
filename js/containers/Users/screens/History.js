@@ -22,9 +22,11 @@ class History extends Component {
 		this.state = {
 			accountHistory: null,
 			accountId: null,
+			isRefreshing: false,
 		}
 
 		this.update = this.update.bind(this);
+		this._onRefreshHistory = this._onRefreshHistory.bind(this);
 
 	}
 
@@ -46,29 +48,63 @@ class History extends Component {
     this.fetchHistoryList();
   }
 
-	fetchHistoryList() {
+	fetchHistoryList(force = false) {
 
 		const { currentAccount } = this.props;
 
+		// 开始刷新
+		if(force)
+			this.setState( { isRefreshing: true });
+
 		if(currentAccount) {
       FetchChain("getAccount", currentAccount).then((ret) => {
-        if(TRACE) console.log("=====[History.js]::componentDidMount - : FetchChain:getAccount is : ", JSON.stringify(ret.get("balances")), JSON.stringify(ret));
+        if(TRACE) console.log("=====[History.js]::componentDidMount - : FetchChain:getAccount is : ", JSON.stringify(ret));
         const accountObj = ret; //ChainStore.getAccount(currentAccount);
         const accountHistory = accountObj && accountObj.get ? accountObj.get("history") : null;
 
-        this.setState({accountId: accountObj.get("id"), accountHistory});
+        this.setState({
+        	accountId: accountObj.get("id"), 
+        	accountHistory: accountHistory ? accountHistory : this.state.accountHistory, 
+        	isRefreshing:  false, //accountHistory ? false : this.state.isRefreshing,
+        });
+        //alert(this.state.isRefreshing);
 
       }).catch(err => {
         console.error("=====[History.js]::componentDidMount - : FetchChain:getAccount is : err ", err);
         this.fetchHistoryList();
+        this.setState({isRefreshing: false});
       })
 		}
 	}
 
+	isNodeLinked = () => {
+    const { currentAccount, nodeStatus } = this.props;
+    if(TRACE) console.log("=====[History.js]::isNodeLinked - ", currentAccount, nodeStatus.url, nodeStatus.status);
+    return (!!currentAccount && !!nodeStatus.url && nodeStatus.status === 'open');
+  }
+
+  // 下拉刷新功能 
+	_onRefreshHistory = () => {
+
+		// 节点未连接，提示用户 
+		if(!this.isNodeLinked()) {
+			alert("节点断了，请去【用户中心】手动切换");
+			return;
+		}
+		//alert("refresh")
+		ChainStore.unsubscribe(this.update); // update
+		ChainStore.clearCache();
+		ChainStore.subscribe(this.update); // update
+
+		this.fetchHistoryList(true);
+	}
+
+	
+
 	render() {
 
 		const { currentAccount } = this.props;
-		const { accountHistory, accountId } = this.state;
+		const { accountHistory, accountId, isRefreshing } = this.state;
 		if(!TRACE) console.info("=====[History.js]::render - : render >  ", currentAccount, accountHistory);
 
 		const isValid = !!accountHistory;
@@ -84,7 +120,7 @@ class History extends Component {
 				>
 				  <LoadingData message={ translate('comm.loadingdata', locale) } size="large" />
 				</Overlay>}
-				{accountHistory && <TableHistory history={accountHistory} account={accountId} />}
+				{accountHistory && <TableHistory history={accountHistory} account={accountId} onRefresh={this._onRefreshHistory} isRefreshing={isRefreshing} />}
 			</ViewContainer>
 		);
 	}
@@ -92,6 +128,7 @@ class History extends Component {
 
 const mapStateToProps = (state) => ({
   currentAccount: state.app.currentAccount,
+  nodeStatus: state.app.nodeStatus,
 });
 
 export const HistoryScreen = connect(mapStateToProps, {

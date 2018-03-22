@@ -27,11 +27,13 @@ class AssetsManage extends Component {
     this.state = {
       accountBalance: null,
       balances: null,
+      isRefreshing: false,
     }
 
     this.onSearchAssets = this.onSearchAssets.bind(this);
 
     this.update     = this.update.bind(this);
+    this._onRefreshAssets = this._onRefreshAssets.bind(this);
 
 	}
 
@@ -53,7 +55,7 @@ class AssetsManage extends Component {
     this.fetchAssetlist();
   }
 
-  fetchAssetlist = () => {
+  fetchAssetlist = (force = false) => {
     const { currentAccount: account, nodeStatus: node } = this.props;
 
     if(TRACE) console.log("=====[AssetsManage.js]::fetchAssetlist - account----------------------------------- ", account, node);
@@ -62,7 +64,9 @@ class AssetsManage extends Component {
     // test if(!this.isNodeLinked()) {
     //   return;
     //}
-
+    // 开始刷新
+    if(force)
+      this.setState( { isRefreshing: true });
 
     FetchChain("getAccount", account).then((res) => {
       const accountObj = res; //ChainStore.getAccount(account);
@@ -86,14 +90,16 @@ class AssetsManage extends Component {
           FetchChain("getAsset", asset_types).then(res => {
             
             if(TRACE) console.info("=====[AssetsManage.js]::fetchAssetlist - getAsset : accountBalance is : ", res);
-            this.setState({accountBalance, balances});  
+            this.setState({accountBalance, balances, isRefreshing: false});  
           }).catch(err => {
             console.error("=====[AssetsManage.js]::fetchAssetlist - getAsset : accountBalance is : ", err);
+            this.setState({isRefreshing: false});
           });
       }      
 
       }).catch(err => {
         console.error("=====[AssetsManage.js]::fetchAssetlist - account : getAccount is : err ", err);
+        this.setState({isRefreshing: false});
       })
 
   }
@@ -108,16 +114,33 @@ class AssetsManage extends Component {
     alert("onSearchAssets:  " + content);
   }
 
+  // 下拉刷新功能 
+  _onRefreshAssets = () => {
+
+    // 节点未连接，提示用户 
+    if(!this.isNodeLinked()) {
+      this.setState({isRefreshing: false});
+      alert("节点断了，请去【用户中心】手动切换");
+      return;
+    }
+    //alert("refresh")
+    ChainStore.unsubscribe(this.update); // update
+    ChainStore.clearCache();
+    ChainStore.subscribe(this.update); // update
+
+    this.fetchAssetlist(true);
+  }
+
   render() {
 
     const { currentAccount, nodeStatus, isUnLock } = this.props;
-    const { accountBalance } = this.state;
+    const { accountBalance, isRefreshing } = this.state;
 
     const isLinked = this.isNodeLinked();
     if(TRACE) console.log("=====[AssetsManage.js]::render - ", currentAccount, nodeStatus.url, nodeStatus.status, isLinked);
     console.log("=====[AssetsManage.js]::render - accountBalance: > ", JSON.stringify(accountBalance));
 
-    if(!isLinked) {
+    if(0 && !isLinked) {
       console.log("=====[AssetsManage.js]::render - ", currentAccount, nodeStatus.url, nodeStatus.status);
       return <LoadingData message={"节点尚未连接上，请稍等..."} />;
     } else {
@@ -128,7 +151,9 @@ class AssetsManage extends Component {
           ? <AssetsList 
               navigation={this.props.navigation} account={currentAccount} 
               node={nodeStatus} assetsList={accountBalance} 
-              sendUnLock={this.props.sendUnLock} isUnLock={isUnLock} />
+              sendUnLock={this.props.sendUnLock} isUnLock={isUnLock} 
+              onRefresh={this._onRefreshAssets} isRefreshing={isRefreshing}
+            />
           : <LoadingData message={"数据加载中"} />
         }
       </ViewContainer>

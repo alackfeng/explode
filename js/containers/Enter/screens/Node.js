@@ -10,6 +10,7 @@ import { ViewContainer, StyleSheet } from "../../../components";
 import { nodeConnect, updateRpcConnectionStatus } from "../../../actions";
 
 import { Apis } from "assetfunjs-ws";
+import { ChainStore, FetchChain, ChainTypes } from "assetfunjs/es";
 
 import { nodeList } from "../../../env";
 import willTransitionTo from "../../../libs/routerTransition";
@@ -172,8 +173,9 @@ class Node extends Component {
 
   	console.log("++++++[Node.js]::updateConnect - node - ", connectUrl);
 
-  	
+  	//ChainStore.clearCache();
   	Apis.reset(connectUrl, true); //去掉注释的内容（init_promise），内存、CPU不再高涨
+  	
 
   	this.props.nodeConnect(null, connectUrl);
   }

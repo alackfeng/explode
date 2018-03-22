@@ -16,11 +16,7 @@ export class TransferOP extends Component {
 	render() {
 
 		const { type, oper, time } = this.props;
-
-		const assetName = "AFT";
-		const subTitle = '11111';
-
-		console.log("[TransferOP.js]::render - >>>>>>>>>>>>> ", type, oper, time);
+		//console.log("[TransferOP.js]::render - >>>>>>>>>>>>> ", type, oper, time);
 
 		const transfer_in_out = type ? require('./images/transferout.png') : require('./images/transferin.png');
 		return (
