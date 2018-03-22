@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Text, ActivityIndicator, Keyboard, Modal as RNModal, Platform } from "react-native";
 import Modal from "react-native-modal";
-import { Colors as colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
+import { Colors as colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from "../libs";
 
 import { Icon, Button, Input, Divider } from 'react-native-elements';
 
@@ -250,7 +250,7 @@ class UnLock extends Component {
         <View style={{backgroundColor: 'white', marginTop: 20, marginBottom: 10, alignItems: 'center', flex: 1}}>
           <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 17, color: '#030303'}}>解锁账号</Text>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 0}}>
-            {this.state.animating && <ActivityIndicator animating={showAni} size={"large"} color={'red'} />}
+
             {showBtn && <Text style={{textAlign: 'center', fontSize: 16, color: 'red'}}>{tip}</Text>}
           </View>
         </View>
