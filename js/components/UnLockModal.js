@@ -113,7 +113,7 @@ class UnLock extends Component {
     const { entityUnLock: entity } = this.props;
 
     
-    const username = this.state.username || this.props.currentAccount;
+    const username = this.props.currentAccount;
 
     this.setState({animating: true});
 
@@ -128,6 +128,9 @@ class UnLock extends Component {
       password: this.state.password,
       type: 'unlock',
     });
+
+    // clear password
+    this.setState({password: ''});
   }
 
   onCancel() {
@@ -168,9 +171,11 @@ class UnLock extends Component {
 
     const { onChange, entityUnLock: entity, navigation, isOpen, currentAccount } = this.props;
 
-    
 
-    const isUnLock = (entity && entity.isUnLock) || false;
+    // 锁定账号不需要打开 {"type":"TRIGGER_USERS_UNLOCK","username":"feng1","extra":{"username":"feng1","type":"lock"},"requiredFields":[]}
+
+    //alert(JSON.stringify(entity.raw));
+    //const isUnLock = (entity && entity.raw && entity.raw.extra.type === 'lock') || false;
     if(!isOpen)
       return null;
 
@@ -228,7 +233,7 @@ class UnLock extends Component {
                 this.passwordInput.focus();
               }}
               blurOnSubmit={false}
-              value={this.state.username || currentAccount}
+              value={currentAccount}
             />
           </View>
           <View style={styles.overlay}>

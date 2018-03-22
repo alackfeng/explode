@@ -12,7 +12,9 @@ import { resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../../libs/he
 import { translate, locale } from "../../../libs";
 
 import { ChainStore, FetchChain } from "assetfunjs/es";
-import { appUserQuit } from "../../../actions";
+import { appUserQuit, triggerUser } from "../../../actions";
+const {unlock: sendUnLock} = triggerUser;
+
 import SplashTile from "../../../components/SplashTile";
 
 
@@ -70,7 +72,14 @@ class Center extends Component {
 
 		if(TRACE) console.log("=====[Center.js]::onPressQuit -  - >:", currentAccount);
 		if(currentAccount) {
-			this.props.appUserQuit(currentAccount);
+			
+			// 退出时去掉内存锁
+			this.props.sendUnLock(currentAccount, {
+	      username: currentAccount,
+	      type: 'lock',
+	    });
+
+	    this.props.appUserQuit(currentAccount);
 		}
 
 		if(navigation && navigation.navigate)
@@ -187,6 +196,7 @@ const mapStateToProps = (state) => ({
 
 export const CenterScreen = connect(mapStateToProps, {
 	appUserQuit,
+	sendUnLock,
 })(Center);
 
 

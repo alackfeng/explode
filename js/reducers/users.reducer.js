@@ -87,11 +87,14 @@ const usersReducer = (state = initialState, action = {}) => {
 					}
 				}				
 			} else {
+
+				const isLock = action.extra.type === 'lock' ? true : false ;
+
 				return {
 					...state,
 					entityUnLock: {
 						isOpen: state.entityUnLock.isOpen || false,
-						isUnLock: action.username ? true : false,
+						isUnLock: action.username ? !isLock : false,
 						raw: action || {},
 						transaction: [],
 					}
@@ -136,13 +139,17 @@ const usersReducer = (state = initialState, action = {}) => {
 		{
 			const isopen_status = (action.type === USERS_UNLOCK.SUCCESS) ? true /*false*/ : state.entityUnLock.isOpen;
 			const unlock_status = (action.type === USERS_UNLOCK.SUCCESS) ? true : false;
+
+			// 锁定不需要打开对话框
+			const isLock = (state.entityUnLock.raw && state.entityUnLock.raw.extra && state.entityUnLock.raw.extra.type === 'lock') ? true : false ;
+
 			return {
 				...state,
 				entityUnLock: {
-					isOpen: isopen_status,
-					isUnLock: unlock_status,
-					raw: state.entityUnLock.raw,
-					transaction: [{...action}, ...state.entityUnLock.transaction],
+					isOpen: isLock ? false : isopen_status,
+					isUnLock: isLock ? false : unlock_status,
+					raw: isLock ? {} : state.entityUnLock.raw,
+					transaction: isLock ? [] : [{...action}, ...state.entityUnLock.transaction],
 				}
 			};
 		}
