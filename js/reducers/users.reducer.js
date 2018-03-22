@@ -77,6 +77,7 @@ const usersReducer = (state = initialState, action = {}) => {
 
 			if(action.extra && (action.extra.type === 'open' || action.extra.type === 'close')) {
 				const isOpen = action.extra.type === 'open';
+
 				return {
 					...state,
 					entityUnLock: {
@@ -94,7 +95,7 @@ const usersReducer = (state = initialState, action = {}) => {
 					...state,
 					entityUnLock: {
 						isOpen: state.entityUnLock.isOpen || false,
-						isUnLock: action.username ? !isLock : false,
+						isUnLock: false,
 						raw: action || {},
 						transaction: [],
 					}
@@ -148,7 +149,7 @@ const usersReducer = (state = initialState, action = {}) => {
 				entityUnLock: {
 					isOpen: isLock ? false : isopen_status,
 					isUnLock: isLock ? false : unlock_status,
-					raw: isLock ? {} : state.entityUnLock.raw,
+					raw: state.entityUnLock.raw,
 					transaction: isLock ? [] : [{...action}, ...state.entityUnLock.transaction],
 				}
 			};

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH
   },
-  button: {
+  button1: {
     backgroundColor: "transparent",
     padding: 0,
     margin: 0,
@@ -34,7 +34,25 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     borderColor: "#DFDFDF",
     borderWidth: 0.5,
-    width: SCREEN_WIDTH * 0.3, 
+    borderLeftWidth: 0,
+    borderBottomWidth: 0,
+    width: SCREEN_WIDTH * 0.4, 
+    height: 60,
+  },
+  button2: {
+    backgroundColor: "transparent",
+    padding: 0,
+    margin: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 0,
+    borderColor: "#DFDFDF",
+    borderWidth: 0.5,
+    borderLeftWidth: 0,
+    borderBottomWidth: 0,
+    borderRightWidth: 0,
+    width: SCREEN_WIDTH * 0.4, 
+    height: 60,
   },
   buttonContainer: {
     alignItems: 'center',
@@ -43,7 +61,7 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: "rgba(255, 255, 255, 1)",
     position: 'absolute',
-    height: SCREEN_HEIGHT*0.5,
+    height: SCREEN_HEIGHT*0.3,
     width: SCREEN_WIDTH*0.8,
     top: modalTop,
     marginTop: -SCREEN_HEIGHT*0.5*0.5,
@@ -63,11 +81,10 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   inputContainer: {
-    borderWidth: 0, 
+    borderWidth: 1, 
     borderColor: 'rgba(223,223,223,1)', 
-    borderBottomWidth: 2, 
-    height: 50, 
-    backgroundColor: 'white',
+    height: 40, 
+    backgroundColor: 'rgba(223,223,223,0.2)',
     width: SCREEN_WIDTH*0.8 - 40,
   },
   buttonStyle: {
@@ -100,12 +117,40 @@ class UnLock extends Component {
     this.state = {
       username: props.currentAccount || '',
       password: '',
-
       animating: false,
     }
 
     this.onCancel   = this.onCancel.bind(this);
     this.onConfirm  = this.onConfirm.bind(this);
+    this.onClose    = this.onClose.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log("=====[UnLockModal.js]::componentWillReceiveProps - props > : ", nextProps);
+
+    // 检测是否解锁成功，后关闭
+    if(this.state.animating) {
+      this.onClose(nextProps);
+    }
+
+
+  }
+
+  onClose(nextProps) {
+    const { entityUnLock: entity, currentAccount, sendUnLock } = nextProps || this.props;
+
+    const isUnLock = (entity && entity.isUnLock) || false;
+    //alert(isUnLock);
+    if(isUnLock) {
+    
+      this.setState({animating: false});
+      //alert(currentAccount)
+      if(sendUnLock)
+        sendUnLock(currentAccount, {
+          type: 'close',
+        }); 
+      return;
+    }
   }
 
   onConfirm() {
@@ -123,23 +168,29 @@ class UnLock extends Component {
       return;
     }
 
-    this.props.sendUnLock(username, {
-      username: username,
-      password: this.state.password,
-      type: 'unlock',
-    });
+    // 延迟加载
+    var _This = this;
+    setTimeout(() => {
+      _This.props.sendUnLock(username, {
+        username: username,
+        password: _This.state.password,
+        type: 'unlock',
+      });
 
-    // clear password
-    this.setState({password: ''});
+      // clear password
+      this.setState({password: '', animating: true});
+    }, 500);
+
+    
   }
 
   onCancel() {
-
-    const username = this.state.username || this.props.currentAccount;
+    const propS = this.props;
+    const username = propS.currentAccount;
     
     this.setState({animating: false});
 
-    this.props.sendUnLock(username, {
+    propS.sendUnLock(username, {
       type: 'close',
     }); 
   }
@@ -171,7 +222,7 @@ class UnLock extends Component {
 
     const { onChange, entityUnLock: entity, navigation, isOpen, currentAccount } = this.props;
 
-
+    console.log("=====[UnLockModal.js]::render - entity : ", isOpen, entity);
     // 锁定账号不需要打开 {"type":"TRIGGER_USERS_UNLOCK","username":"feng1","extra":{"username":"feng1","type":"lock"},"requiredFields":[]}
 
     //alert(JSON.stringify(entity.raw));
@@ -180,12 +231,9 @@ class UnLock extends Component {
       return null;
 
     const { ok, err, req } = this.showMessage(); 
-    let animating = !!(req || err || ok);
-    if(animating) {
-      animating = (err || ok) ? false : true;
-    } else {
-      animating = this.state.animating || false;
-    }
+    const showAni = !!!err;
+    const tip = err || ok || req ;
+    const showBtn = !!err;
 
     const ModalWarp = Platform.OS === 'web' ? RNModal : Modal;
 
@@ -199,12 +247,11 @@ class UnLock extends Component {
         transparent={false}
       >
         
-        <View style={{backgroundColor: 'white', marginTop: 20, marginBottom: 10, alignItems: 'center', flex: 0.5}}>
-          <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 18}}>解锁账号</Text>
-          <Divider style={{ backgroundColor: 'rgba(35,82,164,1)', width: SCREEN_WIDTH*0.5, marginBottom: 20 }} />
-          <View style={{flexDirection: 'column'}}>
-            <Text style={{color: err?'red': 'blue'}}>{ ok || err || req }</Text>
-
+        <View style={{backgroundColor: 'white', marginTop: 20, marginBottom: 10, alignItems: 'center', flex: 1}}>
+          <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 17, color: '#030303'}}>解锁账号</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 0}}>
+            {this.state.animating && <ActivityIndicator animating={showAni} size={"large"} color={'red'} />}
+            {showBtn && <Text style={{textAlign: 'center', fontSize: 16, color: 'red'}}>{tip}</Text>}
           </View>
         </View>
         
@@ -212,42 +259,9 @@ class UnLock extends Component {
           <View style={styles.overlay}>
             <Input
               containerStyle={styles.inputContainer}
-              icon={
-                <Icon
-                  name='person'
-                  color='black'
-                  size={25}
-                />
-              }
-              editable={false}
-              placeholder="Current Account"
-              placeholderTextColor="black"
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardAppearance="light"
-              keyboardType="email-address"
-              returnKeyType="next"
-              ref={ input => this.emailInput = input }
-              onChangeText={ text => this.setState({username: text})}
-              onSubmitEditing={() => {
-                this.passwordInput.focus();
-              }}
-              blurOnSubmit={false}
-              value={currentAccount}
-            />
-          </View>
-          <View style={styles.overlay}>
-            <Input
-              containerStyle={styles.inputContainer}
-              icon={
-                <Icon
-                  name='lock'
-                  color='black'
-                  size={25}
-                />
-              }
-              placeholder="Password"
-              placeholderTextColor="black"
+              inputStyle={{marginLeft: 20, fontSize: 13,}}
+              placeholder="请输入密码"
+              placeholderTextColor="#999999"
               autoCapitalize="none"
               autoCorrect={false}
               keyboardAppearance="light"
@@ -264,21 +278,21 @@ class UnLock extends Component {
             />
           </View>
         </View>
-        <View style={{flexDirection: 'row', flex: 0.5, marginBottom: 20}}>
+        <View style={{flexDirection: 'row', flex: 1, marginBottom: 0}}>
           <Button
             text="取  消"
             clear
-            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 18, fontWeight: 'bold', marginTop: 10}}
+            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 17, fontWeight: 'bold', marginTop: 0}}
             containerStyle={styles.buttonContainer}
-            buttonStyle={styles.button}
+            buttonStyle={styles.button1}
             onPress={this.onCancel}
           />
           <Button
             text={!!ok ? '确  认' : '解  锁'}
             clear
-            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 18, fontWeight: 'bold', marginTop: 10}}
+            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 17, fontWeight: 'bold', marginTop: 0}}
             containerStyle={styles.buttonContainer}
-            buttonStyle={styles.button}
+            buttonStyle={styles.button2}
             onPress={this.onConfirm}
           />
         </View> 
