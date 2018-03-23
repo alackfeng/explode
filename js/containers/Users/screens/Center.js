@@ -36,6 +36,12 @@ const listMenu = [
 		subtitle: 'center.subnav.transrecords',
 		nav: true,
 	},
+	{
+		title: 'Card',
+		icon: 'language',
+		subtitle: 'center.subnav.card',
+		nav: true,
+	}
 	//{
 	//	title: 'Language',
 	//	icon: 'language',

@@ -20,10 +20,12 @@ export const en = {
 			nodesetting: "Node",
 			transrecords: "Bill",
 			language: "Language Switch",
+			card: "Visiting card",
 		},
 		nodes: "Node",
 		trans: "Bill",
 		langs: "Language Center",
+		cards: "Visiting card",
 	},
 	menu: {
 		tab: {

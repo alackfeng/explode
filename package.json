@@ -34,6 +34,7 @@
     "normalizr": "^3.2.4",
     "offline-plugin": "^4.6.1",
     "path-to-regexp": "^2.1.0",
+    "qrcode-react": "^0.1.16",
     "react": "16.2.0",
     "react-dom": "^16.2.0",
     "react-motion": "^0.5.2",

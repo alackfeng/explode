@@ -20,10 +20,12 @@ export const zh = {
 			nodesetting: "接入点",
 			transrecords: "交易记录",
 			language: "语言切换",
+			card: "个性名片",
 		},
 		nodes: "接入点",
 		trans: "交易记录",
 		langs: "语言中心",
+		cards: "个性名片",
 	},
 	menu: {
 		tab: {
