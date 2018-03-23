@@ -98,6 +98,33 @@ export const zh = {
 			memo: "备注",
 			commit: "转账",
 			warning: "请仔细确认所选的资产类型及转账地址，一旦发送不可撤回。",
+		},
+		unlock: {
+			error: '解锁失败！',
+			continue: '解锁处理中',
+			success: '恭喜您，解锁成功！开启交易之旅',
+			erroraccount: '解锁失败！账号丢了',
+			inputpass: '请输入密码',
+			cancel: '取消',
+			unlock: '解锁'
+		},
+		transaction: {
+			kong: '无',
+			unkownkey: '请查阅',
+			unkownvalue: '未有相关操作！！！',
+			wherefrom: '来自',
+			sendto: '发往',
+			sendamount: '数量',
+			memo: '备注',
+			transgenerate0: '交易已打包.',
+			transgenerate: '交易已打包',
+			transbroadcast: '交易广播中',
+			transconfirmed: '交易广播成功',
+			transgenertateerror: '交易打包出错啦！请检测: ',
+			transbroadcasterror: '广播失败：',
+			transcancel: '交易取消',
+			cancel: '取消',
+			confirm: '确认'
 		}
 	},
 	advisable_message: {

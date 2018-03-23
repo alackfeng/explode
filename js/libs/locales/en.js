@@ -99,6 +99,33 @@ export const en = {
 			memo: "Memo ",
 			commit: "Transfer ",
 			warning: "Please carefully doublecheck the token type and address as the transaction is irreversible. ",
+		},
+		unlock: {
+			error: 'Unlock Falied',
+			continue: '解锁处理中',
+			success: '恭喜您，解锁成功！开启交易之旅',
+			erroraccount: '解锁失败！账号丢了',
+			inputpass: 'Enter your Password',
+			cancel: 'Cancel',
+			unlock: 'Unlock'
+		},
+		transaction: {
+			kong: '无',
+			unkownkey: '请查阅',
+			unkownvalue: '未有相关操作！！！',
+			wherefrom: 'From',
+			sendto: 'To',
+			sendamount: 'Amount',
+			memo: 'Memo',
+			transgenerate0: 'Generate Transaction.',
+			transgenerate: 'Generate Transaction',
+			transbroadcast: 'Transaction Broadcasting',
+			transconfirmed: 'Transaction Confirmed',
+			transgenertateerror: '交易打包出错啦！请检测: ',
+			transbroadcasterror: '广播失败：',
+			transcancel: 'Transaction Cancel',
+			cancel: 'Cancel',
+			confirm: 'OK'
 		}
 	},
 	advisable_message: {

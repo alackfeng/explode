@@ -206,10 +206,10 @@ class UnLock extends Component {
     let entityErr = null;
     let entityObj = entity.transaction.length && entity.transaction.map((item, index) => {
       console.log("=====[UnLockModal.js]::showMessage - entity : ", item, index);
-      if(item.type === USERS_UNLOCK.FAILURE) entityErr  = '解锁失败！'; //item.error;
-      if(item.type === USERS_UNLOCK.REQUEST) entityReq  = '解锁处理中'; //item.response;
-      if(item.type === USERS_UNLOCK.SUCCESS) entityOk   = '恭喜您，解锁成功！开启交易之旅';
-      if(item.type === USERS_UNLOCK.EVENT)   entityErr  = '解锁失败！账号丢了'; //item.error;
+      if(item.type === USERS_UNLOCK.FAILURE) entityErr  = translate('tips.unlock.error', locale); //item.error;
+      if(item.type === USERS_UNLOCK.REQUEST) entityReq  = translate('tips.unlock.continue', locale); //item.response;
+      if(item.type === USERS_UNLOCK.SUCCESS) entityOk   = translate('tips.unlock.success', locale);
+      if(item.type === USERS_UNLOCK.EVENT)   entityErr  = translate('tips.unlock.erroraccount', locale); //item.error;
 
     });
 
@@ -260,7 +260,7 @@ class UnLock extends Component {
             <Input
               containerStyle={styles.inputContainer}
               inputStyle={{marginLeft: 20, fontSize: 13,}}
-              placeholder="请输入密码"
+              placeholder={ translate('tips.unlock.inputpass', locale) }
               placeholderTextColor="#999999"
               autoCapitalize="none"
               autoCorrect={false}
@@ -280,7 +280,7 @@ class UnLock extends Component {
         </View>
         <View style={{flexDirection: 'row', flex: 1, marginBottom: 0}}>
           <Button
-            text="取  消"
+            text= { translate('tips.transaction.cancel', locale) }
             clear
             textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 17, fontWeight: 'bold', marginTop: 0}}
             containerStyle={styles.buttonContainer}
@@ -288,7 +288,7 @@ class UnLock extends Component {
             onPress={this.onCancel}
           />
           <Button
-            text={!!ok ? '确  认' : '解  锁'}
+            text={!!ok ? translate('tips.unlock.unlock', locale) : translate('tips.unlock.unlock', locale)}
             clear
             textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 17, fontWeight: 'bold', marginTop: 0}}
             containerStyle={styles.buttonContainer}

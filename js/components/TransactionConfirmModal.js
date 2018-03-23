@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     zIndex: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH
   },
-  button: {
+  button1: {
     backgroundColor: "transparent",
     padding: 0,
     margin: 0,
@@ -48,7 +48,25 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     borderColor: "#DFDFDF",
     borderWidth: 0.5,
-    width: SCREEN_WIDTH * 0.3, 
+    borderLeftWidth: 0,
+    borderBottomWidth: 0,
+    width: SCREEN_WIDTH * 0.72 * 0.5, 
+    height: 60,
+  },
+  button2: {
+    backgroundColor: "transparent",
+    padding: 0,
+    margin: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 0,
+    borderColor: "#DFDFDF",
+    borderWidth: 0.5,
+    borderLeftWidth: 0,
+    borderBottomWidth: 0,
+    borderRightWidth: 0,
+    width: SCREEN_WIDTH * 0.72 * 0.5, 
+    height: 60,
   },
   buttonContainer: {
     alignItems: 'center',
@@ -57,14 +75,15 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: "white",
     position: 'absolute',
-    height: SCREEN_HEIGHT*0.5,
-    width: SCREEN_WIDTH*0.8,
+    height: SCREEN_HEIGHT*0.38,
+    width: SCREEN_WIDTH*0.72,
     top: modalTop,
-    marginTop: -SCREEN_HEIGHT*0.5*0.5,
+    marginTop: -SCREEN_HEIGHT*0.38*0.5,
     left: modalLeft,
-    marginLeft: -SCREEN_WIDTH*0.8*0.5,
+    marginLeft: -SCREEN_WIDTH*0.72*0.5,
     borderRadius: 4,
-    borderColor: "rgba(0, 0, 0, 0.1)"
+    borderColor: "white",
+    borderWidth: 0,
   },
   bottomModal: {
     justifyContent: "flex-end",
@@ -72,9 +91,9 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     backgroundColor: 'transparent', 
-    marginTop: 30, 
+    marginTop: 20, 
     height: SCREEN_HEIGHT*0.5, 
-    width: SCREEN_WIDTH*0.8
+    width: SCREEN_WIDTH*0.72
   },
 });
 
@@ -84,9 +103,13 @@ class TransactionItem extends Component {
   render() {
     const { index, title, content } = this.props;
     return (
-    <View style={{flexDirection: 'row', backgroundColor: index%2 ? 'red' : 'lightblue'}}>
-      <View style={{marginLeft: 30, height: 30, alignItems: 'flex-start', justifyContent: 'center', flex: 1}}><Text style={{textAlign: 'center'}}>{title}</Text></View>
-      <View style={{marginLeft: 5, height: 30, alignItems: 'flex-start', justifyContent: 'center', flex: 3}}><Text style={{}}>{content}</Text></View>
+    <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
+      <View style={{marginLeft: 30, height: 30, alignItems: 'flex-start', justifyContent: 'center', flex: 1}}>
+        <Text style={{textAlign: 'center', fontSize: 14, color: '#0303030'}}>{title}</Text>
+      </View>
+      <View style={{marginLeft: 5, height: 30, alignItems: 'flex-start', justifyContent: 'center', flex: 3}}>
+        <Text style={{fontSize: 14, color: '#666666'}}>{content || translate('tips.transaction.kong', locale)}</Text>
+      </View>
     </View>
     );
   }
@@ -115,13 +138,13 @@ class TransactionDetail extends Component {
     if(details) {
       switch (ops.filter(item => item === "transfer")[0]) {
         case "transfer":
-          rows.push(<TransactionItem key={0} index={0} title={"来自于"} content={details.parameters.from_account} />);
-          rows.push(<TransactionItem key={1} index={1} title={"发往"} content={details.parameters.to_account} />);
-          rows.push(<TransactionItem key={2} index={2} title={"金额"} content={`${details.parameters.amount/100000000} ${details.parameters.asset}`} />);
-          rows.push(<TransactionItem key={3} index={3} title={"备注"} content={details.parameters.memo.toString()} />);
+          rows.push(<TransactionItem key={0} index={0} title={translate('tips.transaction.wherefrom', locale)} content={details.parameters.from_account} />);
+          rows.push(<TransactionItem key={1} index={1} title={translate('tips.transaction.sendto', locale)} content={details.parameters.to_account} />);
+          rows.push(<TransactionItem key={2} index={2} title={translate('tips.transaction.sendamount', locale)} content={`${details.parameters.amount/100000000} ${details.parameters.asset}`} />);
+          rows.push(<TransactionItem key={3} index={3} title={translate('tips.transaction.memo', locale)} content={details.parameters.memo.toString()} />);
           break;
         default: 
-          rows.push(<TransactionItem key={0} index={0} title={"请查阅"} content={"未有相关操作！！！"} />)
+          rows.push(<TransactionItem key={0} index={0} title={translate('tips.transaction.unkownkey', locale)} content={translate('tips.transaction.unkownvalue', locale)} />)
           break;
       }
     }
@@ -203,12 +226,12 @@ class TransactionConfirm extends Component {
       case TRIGGER_TRANSACTION_COMMON:
       case TRANSACTION_COMMON.REQUEST:
         {
-          tip = (entityObj.method !== 'broadcast') ? "交易请求打包中" : "交易广播中";
+          tip = (entityObj.method !== 'broadcast') ? translate('tips.transaction.transgenerate0', locale) : translate('tips.transaction.transbroadcast', locale);
           status = (entityObj.method !== 'broadcast') ? false : true;
         }
         break;
       case TRANSACTION_COMMON.SUCCESS:
-        tip = (entityObj.method !== 'broadcast') ? "交易已生成并打包，可广播." : "交易广播成功";
+        tip = (entityObj.method !== 'broadcast') ? translate('tips.transaction.transgenerate', locale) : translate('tips.transaction.transconfirmed', locale);
         break;
       case TRANSACTION_COMMON.FAILURE: 
         {
@@ -227,13 +250,13 @@ class TransactionConfirm extends Component {
           find_key = find_key ? find_key : "advisable_message.default";
 
           tip = (entityObj.method !== 'broadcast') 
-          ? ("交易生成出错啦！请检测。" + JSON.stringify(message)) 
-          : ("广播失败：" + translate(find_key, locale));
+          ? (translate('tips.transaction.transgenertateerror', locale) + JSON.stringify(message)) 
+          : (translate('tips.transaction.transbroadcasterror', locale) + translate(find_key, locale));
         }
         break;
       case TRIGGER_SECOND_CONFIRM: 
         {
-          tip = (entityObj.event === TRIGGER_SECOND_CONFIRM_YES) ? "交易广播中" : "取消交易";
+          tip = (entityObj.event === TRIGGER_SECOND_CONFIRM_YES) ? translate('tips.transaction.transbroadcast', locale) : translate('tips.transaction.transcancel', locale);
           status = (entityObj.event === TRIGGER_SECOND_CONFIRM_YES) ? true: false;
         }
       break;
@@ -267,34 +290,30 @@ class TransactionConfirm extends Component {
         transparent={false}
       >
         
-        <View style={{flex: 1, marginTop: 15}}>
-          <View style={{alignItems: 'center'}}>
-            <Text style={{textAlign: 'center', fontSize: 25}}>交易二次确认</Text>
-            <Divider style={{ backgroundColor: 'blue', height: 2, marginTop: 1, width: SCREEN_WIDTH*0.4 }} />
-          </View>
+        <View style={{flex: 1, marginTop: 0}}>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
-            {status && <ActivityIndicator animating={status} size="large" color={colors.salmon} />}
-            <Text style={{textAlign: 'center', color: 'red', marginLeft: 10}} numberOfLines={10}>{tip}</Text>
+            {status && <ActivityIndicator animating={status} size="small" color={colors.salmon} />}
+            <Text style={{textAlign: 'center', color: '#030303', marginLeft: 10}} numberOfLines={10}>{tip}</Text>
           </View>
 
           <TransactionDetail entity={entity} />
         </View>
         
-        <View style={{flexDirection: 'row', marginBottom: 20}}>
+        <View style={{flexDirection: 'row', marginBottom: 0}}>
           <Button
-            text="取  消"
+            text={ translate('tips.transaction.cancel', locale) }
             clear
-            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 18, fontWeight: 'bold', marginTop: 10}}
+            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 17, fontWeight: 'bold', marginTop: 0}}
             containerStyle={styles.buttonContainer}
-            buttonStyle={styles.button}
+            buttonStyle={styles.button1}
             onPress={this.onCancel}
           />
           <Button
-            text="确  认"
+            text={ translate('tips.transaction.confirm', locale) }
             clear
-            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 18, fontWeight: 'bold', marginTop: 10}}
+            textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 17, fontWeight: 'bold', marginTop: 0}}
             containerStyle={styles.buttonContainer}
-            buttonStyle={styles.button}
+            buttonStyle={styles.button2}
             onPress={this.onConfirm}
           />
 
