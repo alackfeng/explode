@@ -12,7 +12,7 @@ import NotFound from './containers/NotFound';
 import Translation from './containers/Translation';
 import { WelcomeScreen, SplashScreen, LoginScreen, RegisterScreen, NodeScreen } from "./containers/Enter";
 
-import { CenterScreen, SettingsScreen, TransferScreen, HistoryScreen, LanguageScreen, CardScreen } from "./containers/Users";
+import { CenterScreen, SettingsScreen, TransferScreen, HistoryScreen, LanguageScreen, CardScreen, ScanScreen } from "./containers/Users";
 import { AssetsManageScreen } from "./containers/Assets";
 
 import Ionicons from "react-native-vector-icons/MaterialIcons";
@@ -97,6 +97,15 @@ const sharedRoutes = {
     screen: CardScreen,
     navigationOptions: ({ navigation }) => ({
       title: translate('center.cards', locale),
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+      headerRight: <View />,
+    }),
+  },
+  Scan: {
+    screen: ScanScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: translate('center.scans', locale),
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
       headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,

@@ -41,6 +41,12 @@ const listMenu = [
 		icon: 'language',
 		subtitle: 'center.subnav.card',
 		nav: true,
+	},
+	{
+		title: 'Scan',
+		icon: 'public',
+		subtitle: 'center.subnav.scan',
+		nav: true,
 	}
 	//{
 	//	title: 'Language',

@@ -21,11 +21,13 @@ export const en = {
 			transrecords: "Bill",
 			language: "Language Switch",
 			card: "Visiting card",
+			scan: "Scaning"
 		},
 		nodes: "Node",
 		trans: "Bill",
 		langs: "Language Center",
 		cards: "Visiting card",
+		scans: "Scaning",
 	},
 	menu: {
 		tab: {
