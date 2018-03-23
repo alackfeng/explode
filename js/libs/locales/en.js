@@ -47,6 +47,7 @@ export const en = {
 			welcomeMessage: "Wish you Happily Forever",
 			signInButton: "Log in",
 			registerInButton: "Register",
+			connectnode: '与区块节点连接中...',
 		}
 	},
 	home: {

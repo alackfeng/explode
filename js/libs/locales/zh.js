@@ -47,6 +47,7 @@ export const zh = {
 			welcomeMessage: "祝您永远快乐",
 			signInButton: "登录",
 			registerInButton: "注册",
+			connectnode: '与区块节点连接中...',
 		}
 	},
 	home: {

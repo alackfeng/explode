@@ -7,7 +7,7 @@ import { Dimensions, StyleSheet, View, Text, Image, ImageBackground, ActivityInd
 
 import { Tile, Button } from "react-native-elements";
 
-import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../libs";
+import { SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from "../libs";
 import { ViewContainer } from "../components";
 import { loadingAnimation } from "../libs/help";
 import { Colors as colors } from "../libs/Colors";
@@ -39,19 +39,18 @@ class LaunchScreen extends Component {
 				<StatusBar backgroundColor={'transparent'} translucent={true} barStyle={'light-content'} />
 				<SplashTile
 					containerStyle={styles.container}
-					imageSrc={require('./images/launchscreen.jpg')}
+					imageSrc={require('./images/background.jpeg')}
 					imageContainerStyle={styles.image}
-					title="ASSETFUN"
-					titleStyle={styles.title}
+					overlayContainerStyle={{justifyContent: 'flex-start'}}
 					featured={true}
 					height={SCREEN_HEIGHT}
 					width={SCREEN_WIDTH}
 					view={ View }
 					childrenContainerStyle={styles.children}
-					icon={{source: require('./images/aftlogo.png')}}
+					icon={{source: require('./images/tokenpiiicon.png')}}
 					iconStyle={styles.icon}
 				> 
-          <Text style={styles.centering}>与区块连接中...</Text>
+          <Text style={styles.centering}>{ translate('enter.splash.connectnode', locale) }</Text>
 					<ActivityIndicator
             style={[styles.centering, {height: 80}]}
             animating={this.state.animating}
@@ -75,7 +74,8 @@ const styles = {
 	},
 	icon: {
 		width: 100,
-		height: 73,
+		height: 140,
+		marginTop: 30,
 	},
 	title: {
 		color: 'white',
