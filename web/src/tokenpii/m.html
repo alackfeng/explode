@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="renderer" content="webkit|ie-comp|ie-stand"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta content="yes" name="apple-touch-fullscreen">
+<meta name="format-detection" content="telephone=no,email=no"/>
+<title>Tokenpii，把你的通证资产装进口袋。</title>
+<script>
+var isMobile={Android:function(){return navigator.userAgent.match(/Android/i)?!0:!1},BlackBerry:function(){return navigator.userAgent.match(/BlackBerry/i)?!0:!1},iOS:function(){return navigator.userAgent.match(/iPhone|ipad|iPod/i)?!0:!1},Windows:function(){return navigator.userAgent.match(/IEMobile/i)?!0:!1},any:function(){return isMobile.Android()||isMobile.BlackBerry()||isMobile.iOS()||isMobile.Windows()}};
+if(!isMobile.any()){
+    window.location.href="index.html";
+}
+//移动端
+(function (doc, win) {
+    var docEl = doc.documentElement,
+      isIOS = navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+      dpr = isIOS? Math.min(win.devicePixelRatio, 3) : 1,
+      dpr = window.top === window.self? dpr : 1,
+      resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+    docEl.dataset.dpr = dpr;
+    var recalc = function () {
+        var width = docEl.clientWidth;
+        if (width / dpr > 640) {
+            width = 640 * dpr;
+        }
+        docEl.dataset.width = width
+        docEl.dataset.percent = 100 * (width / 640);
+        docEl.style.fontSize = 100 * (width / 640) + 'px';
+      };
+    recalc();
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+})(document, window);
+</script>
+<link rel="stylesheet" href="./css/reset-rem.css" />
+<link rel="stylesheet" href="./css/tokenpii-rem.css" />
+<script src="./js/jquery.js"></script>
+<script src="./js/jquery.cookie.js"></script>
+</head>
+
+<body>
+
+<div id="loadhtml" data-url="load.html"></div>
+
+<script src="./js/tokenpii.js"></script>
+
+</body>
+</html>
