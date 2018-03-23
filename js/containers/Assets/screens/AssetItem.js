@@ -71,7 +71,7 @@ class Asset extends Component {
 		return <Button 
 			buttonStyle={{backgroundColor: 'transparent'}} 
 			textStyle={{fontWeight: 'bold', color: 'rgba(35,82,164,0.7)'}} 
-			text="转帐" 
+			text= { translate('tips.transfer.commit', locale) }
 			onPress={this.onPressNavTo} 
 		/>;
 	}
@@ -92,7 +92,7 @@ class Asset extends Component {
 				<ListItem
 					containerStyle={{height: 80, flex: 1,border: 0 }}
 					wrapperStyle={{height: 60, flex: 1, border: 0}}
-					titleWrapStyle={{flex: 1, justifyContent: 'center'}}
+					titleWrapStyle={{flex: 2, justifyContent: 'center'}}
 					titleContainerStyle={{height: 25, justifyContent: 'center'}}
 					subtitleContainerStyle={{height: 25, justifyContent: 'center'}}
 					hideChevron
