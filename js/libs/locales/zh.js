@@ -7,7 +7,7 @@ export const zh = {
 		welcome: "欢迎来到AFT的世界",
 		loadingdata: "数据加载中...",
 		node: {
-			hongkong: "香港",
+			hongkong: "中国香港",
 			usa: "美国",
 			china: "中国大陆",
 			last: "最接近节点",
@@ -17,8 +17,8 @@ export const zh = {
 		welcome: "你是谁?",
 		quit: "退  出",
 		subnav: {
-			nodesetting: "接入点切换",
-			transrecords: "最近交易记录",
+			nodesetting: "接入点",
+			transrecords: "交易记录",
 			language: "语言切换",
 		},
 		nodes: "接入点",
@@ -28,8 +28,8 @@ export const zh = {
 	menu: {
 		tab: {
 			home: "首页",
-			asset: "通证列表",
-			hist: "交易历史",
+			asset: "我的资产",
+			hist: "交易记录",
 			center: "用户中心",
 			"404": "找不到"
 		},

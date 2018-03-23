@@ -7,38 +7,37 @@ export const en = {
 		welcome: "Welcome to Aftrade Enter",
 		loadingdata: "Loading Data...",
 		node: {
-			hongkong: "HongKong",
-			usa: "United States of America",
+			hongkong: "Hong Kong",
+			usa: "USA",
 			china: "China",
 			last: "Lastest Node",
 		}
 	},
 	center: {
 		welcome: "Who?",
-		quit: "QUIT",
+		quit: "Log out",
 		"subnav": {
-			nodesetting: "Node Switch",
-			transrecords: "Latest Transaction Records",
+			nodesetting: "Node",
+			transrecords: "Bill",
 			language: "Language Switch",
 		},
-		nodes: "Nodes",
-		trans: "Transaction Records",
+		nodes: "Node",
+		trans: "Bill",
 		langs: "Language Center",
 	},
 	menu: {
 		tab: {
-			home: "Home News",
-			relation: "Ico Issue",
-			asset: "Token Manage",
-			hist: "Transaction History",
-			center: "User Center",
+			home: "Home",
+			asset: "My Token",
+			hist: "Bill",
+			center: "Me",
 			"404": "Not Found"
 		},
 		title: {
 			home: "TokenPii",
-			asset: "Tokens",
-			hist: "Transaction Records",
-			center: "User Center",
+			asset: "My Tokens",
+			hist: "Newest Bill",
+			center: "Me",
 			transfer: "Transfer",
 		}
 	},
@@ -46,8 +45,8 @@ export const en = {
 		splash: {
 			welcomeTitle: "Welcome to Aftrade",
 			welcomeMessage: "Wish you Happily Forever",
-			signInButton: "SIGN IN",
-			registerInButton: "REGISTER",
+			signInButton: "Log in",
+			registerInButton: "Register",
 		}
 	},
 	home: {
@@ -63,18 +62,18 @@ export const en = {
 	},
 	tips: {
 		login: {
-			req: "登录中",
-			ok: "  恭喜您，登录成功.",
-			evt: "  恭喜您，登录成功！",
-			err: "登录错误啦！！！",
-			inputname: "账号名称",
-			inputpass: "密码",
+			req: "Log ing",
+			ok: "  Log In success.",
+			evt: "  Log In success！",
+			err: "Log In failure!",
+			inputname: "Account",
+			inputpass: "Password",
 		},
 		register: {
-			req: "注册中",
-			ok: "  恭喜您，注册成功.",
-			evt: "  恭喜您，注册成功！",
-			err: "注册错误啦！！！",
+			req: "Register ing",
+			ok: "  Register success.",
+			evt: "  Register success！",
+			err: "Register failure",
 			inputname: "Account",
 			inputpass: "Password",
 			inputconf: "Confirm password",
