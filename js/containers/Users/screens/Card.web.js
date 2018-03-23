@@ -11,7 +11,8 @@ import { Icon, Button, Input, Overlay, CheckBox } from 'react-native-elements';
 import { ViewContainer, StyleSheet } from "../../../components";
 import { setAppLocale } from "../../../actions";
 
-import QRCode from 'react-native-qrcode-svg';
+var QRCode = require('qrcode-react');
+
 
 const TRACE = true;
 
@@ -53,6 +54,7 @@ class Card extends Component {
 						value={qrValue}
 						size={250}
 						logo={require("../images/aftlogo.png")}
+						logoWidth= {250 * 0.2}
 					/>
 					<View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 20}}>
 						<View style={{width: 100}}><Text onPress={this._setClipboardContent} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
