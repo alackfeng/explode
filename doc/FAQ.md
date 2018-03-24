@@ -241,6 +241,10 @@ Q29. Unhandled JS Exception: undefined is not an object (evaluating 's.PropTypes
 A29. vi /Users/assetfun/source/aftapp/explode-app/node_modules/react-native-smart-barcode/Barcode.js => 
 import PropTypes from 'prop-types'
 
+Q30 .错误: 方法不会覆盖或实现超类型的方法
+        @Override
+A30. vi /Users/assetfun/source/aftapp/explode-app/node_modules/react-native-smart-barcode/android/src/main/java/com/reactnativecomponent/barcode/RCTCapturePackage.java:41
+
 ```
 
 

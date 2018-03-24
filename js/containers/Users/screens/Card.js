@@ -33,8 +33,31 @@ class Card extends Component {
   }
 
   _setClipboardContent = () => {
+  	console.log("_setClipboardContent");
+
   	Clipboard.setString(this.props.currentAccount);
   	alert(this.props.currentAccount);
+  }
+
+  _fetchAppVersion = () => {
+
+  	console.log("fetch...........")
+  	fetch('https://www.pgyer.com/apiv2/app/check', {
+  		headers: {
+	      'Accept': 'application/json',
+	      'Content-Type': 'application/x-www-form-urlencoded',
+	      '_api_key': '701b536596f0d86383bd090ed60bb0f9',
+	      'appKey': '580c635ffdae131c926066ad5b868edb',
+	    },
+	    method: "POST",
+	    body: '_api_key=701b536596f0d86383bd090ed60bb0f9&appKey=580c635ffdae131c926066ad5b868edb', //JSON.stringify({_api_key: '701b536596f0d86383bd090ed60bb0f9'})
+  	}).then(res => {
+  		return res.json()
+  	}).then(json => {
+  		  		alert(JSON.stringify(json))
+  	}).catch(err => {
+  		alert(err)
+  	})
   }
 
 
@@ -59,7 +82,7 @@ class Card extends Component {
           		复制
         		</Text></View>
 
-        		<View style={{width: 100}}><Text onPress={this._setClipboardContent} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
+        		<View style={{width: 100}}><Text onPress={this._fetchAppVersion} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
           		分享
         		</Text></View>
         	</View>
