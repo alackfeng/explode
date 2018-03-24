@@ -236,6 +236,13 @@ A28. rm ~/Library/MobileDevice/Provisioning\ Profiles/*
 
 ```
 
+```sh
+Q29. Unhandled JS Exception: undefined is not an object (evaluating 's.PropTypes..., stack:
+A29. vi /Users/assetfun/source/aftapp/explode-app/node_modules/react-native-smart-barcode/Barcode.js => 
+import PropTypes from 'prop-types'
+
+```
+
 
 
 
