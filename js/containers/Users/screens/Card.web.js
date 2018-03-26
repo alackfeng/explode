@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Text, ScrollView, Dimensions, ListView, Clipboard } from "react-native";
+import { View, Text, ScrollView, Dimensions, ListView, Clipboard, CameraRoll } from "react-native";
 import { Colors, SCREEN_WIDTH, translate, locale, switchLanguage } from "../../../libs";
 import { Icon, Button, Input, Overlay, CheckBox } from 'react-native-elements';
 
@@ -12,7 +12,7 @@ import { ViewContainer, StyleSheet } from "../../../components";
 import { setAppLocale } from "../../../actions";
 
 var QRCode = require('qrcode-react');
-
+import RNFS from "react-native-fs";
 
 const TRACE = true;
 
@@ -22,6 +22,7 @@ class Card extends Component {
 	constructor(props) {
 		super(props);
 
+		this._saveQrToDisk = this._saveQrToDisk.bind(this);
 	}
 
 
@@ -32,7 +33,20 @@ class Card extends Component {
   componentWillMount() {
     
   }
-
+  
+  _saveQrToDisk() {
+   	this.svg.toDataURL((data) => {
+   		alert(data);
+   		RNFS.writeFile(RNFS.CachesDirectoryPath+"/tokenpii-qrcode.png", data, 'base64')
+   		  .then((success) => {
+   			  return CameraRoll.saveToCameraRoll(RNFS.CachesDirectoryPath+"/tokenpii-qrcode.png", 'photo')
+   		  })
+   		  .then(() => {
+   			  this.setState({ busy: false, imageSaved: true  })
+   			  alert('Saved to gallery !!')
+   		  })
+   	})
+  }
   _setClipboardContent = () => {
   	Clipboard.setString(this.props.currentAccount);
   	alert(this.props.currentAccount);
@@ -53,7 +67,7 @@ class Card extends Component {
   	}).then(res => {
   		return res.json()
   	}).then(json => {
-  		  		alert(JSON.stringify(json))
+		  		alert(JSON.stringify(json))
   	}).catch(err => {
   		alert(err)
   	})
@@ -77,6 +91,7 @@ class Card extends Component {
 						size={250}
 						logo={require("../images/aftlogo.png")}
 						logoWidth= {250 * 0.2}
+						getRef={(c) => (this.svg = c)}
 					/>
 					<View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 20}}>
 						<View style={{width: 100}}><Text onPress={this._setClipboardContent} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
@@ -85,6 +100,10 @@ class Card extends Component {
 
         		<View style={{width: 100}}><Text onPress={this._fetchAppVersion} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
           		分享
+        		</Text></View>
+
+        		<View style={{width: 100}}><Text onPress={this._saveQrToDisk} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
+          		下载
         		</Text></View>
         	</View>
 				</View>

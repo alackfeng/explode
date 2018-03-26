@@ -146,6 +146,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fs')
     compile project(':react-native-smart-barcode')
     compile project(':react-native-svg')
     compile project(':react-native-splash-screen')
