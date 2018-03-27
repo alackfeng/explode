@@ -12,7 +12,7 @@ import { ViewContainer, StyleSheet } from "../../../components";
 import { setAppLocale } from "../../../actions";
 
 var QRCode = require('qrcode-react');
-import RNFS from "react-native-fs";
+
 
 const TRACE = true;
 
@@ -35,17 +35,7 @@ class Card extends Component {
   }
   
   _saveQrToDisk() {
-   	this.svg.toDataURL((data) => {
-   		alert(data);
-   		RNFS.writeFile(RNFS.CachesDirectoryPath+"/tokenpii-qrcode.png", data, 'base64')
-   		  .then((success) => {
-   			  return CameraRoll.saveToCameraRoll(RNFS.CachesDirectoryPath+"/tokenpii-qrcode.png", 'photo')
-   		  })
-   		  .then(() => {
-   			  this.setState({ busy: false, imageSaved: true  })
-   			  alert('Saved to gallery !!')
-   		  })
-   	})
+   	alert("not implement!!!")
   }
   _setClipboardContent = () => {
   	Clipboard.setString(this.props.currentAccount);

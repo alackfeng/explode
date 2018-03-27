@@ -69,10 +69,7 @@ const sharedRoutes = {
   Transfer: {
     screen: TransferScreen,
     navigationOptions: ({ navigation }) => ({
-      title: translate('menu.title.transfer', locale),
-      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
-      headerRight: <View />,
+      
     }),
   },
   History: {

@@ -54,9 +54,23 @@ class BarcodeScan extends Component {
     _onBarCodeRead = (e) => {
         console.log(`e.nativeEvent.data.type = ${e.nativeEvent.data.type}, e.nativeEvent.data.code = ${e.nativeEvent.data.code}`)
         this._stopScan()
-        Alert.alert(e.nativeEvent.data.type, e.nativeEvent.data.code, [
-            {text: 'OK', onPress: () => this._startScan()},
-        ])
+        
+
+        // 回调事件
+        const { navigation } = this.props;
+        if(navigation) {
+            navigation.state.params.handleScan({
+                toAccount: e.nativeEvent.data.code}, 
+                (bExit) => {
+                    if(bExit) navigation.goBack(); 
+                }
+            );
+        } else {
+            Alert.alert(e.nativeEvent.data.type, e.nativeEvent.data.code, [
+                {text: 'OK', onPress: () => this._startScan()},
+            ])
+        }
+        
     }
 
     _startScan = (e) => {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { View, Text, ScrollView, Dimensions, Keyboard } from "react-native";
+import { View, Text, ScrollView, Dimensions, Keyboard, Platform } from "react-native";
 import { Colors, resetNavigationTo, SCREEN_WIDTH, translate, locale } from "../../../libs";
 import { Icon, Button, List, ListItem, Avatar } from 'react-native-elements';
 
@@ -21,7 +21,45 @@ const MEMO_LIMIT = 120;
 
 const TRACE = false;
 
+class ScanButton extends Component {
+
+  onPressScan = () => {
+    const { navigation } = this.props;
+    //const result = "feng";
+    //navigation.state.params.handleScan(result);
+    //alert(111)
+    if(navigation)
+      navigation.navigate('Scan', {handleScan: navigation.state.params.handleScan});
+    else {
+      alert("未知异常！");
+    }
+  }
+
+  render() {
+
+    const { navigation } = this.props;
+
+    const title = navigation.state.params && navigation.state.params.title || 'scan';
+    return (
+      <View style={{backgroundColor: 'transparent', marginRight: 10}}>
+        <Icon
+          name={Platform.OS === 'web' ? 'settings-overscan' : 'qrcode-scan'}
+          type={Platform.OS === 'web' ? 'material' : 'material-community'}
+          onPress={this.onPressScan}
+        />
+      </View>
+    );
+  }
+}
+
 class Transfer extends Component {
+
+  static navigationOptions =  ({ navigation, screenProps}) => ({
+    title: translate('center.trans', locale),
+    headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
+    headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+    headerRight: <ScanButton navigation={navigation} />,
+  });
 
 	constructor() {
 		super();
@@ -53,6 +91,7 @@ class Transfer extends Component {
     this.update = this.update.bind(this);
     this.updateAsset = this.updateAsset.bind(this);
 
+    this.scanDetails = this.scanDetails.bind(this);
 	}
 
   componentWillUnmount() {
@@ -65,6 +104,21 @@ class Transfer extends Component {
 
     this.updateAsset();
 
+  }
+
+  componentDidMount() {
+
+    // 传递函数参数到导航头，用于设置本components.state
+    this.props.navigation.setParams({ handleScan: this.scanDetails });
+  }
+
+  scanDetails = (res, backFunc) => {
+    if(res.toAccount) 
+      this.onChangeUserName(res.toAccount);
+
+    // 回退导航
+    if(backFunc)
+      backFunc(true);
   }
 
   update(nextProps = null) {
@@ -354,7 +408,10 @@ class Transfer extends Component {
           </View>
         </View>
         <View style={styles.warningContainer}>
-          <Icon type='font-awesome' name='exclamation-circle' color={'gray'} />
+          <Icon 
+            type={Platform.OS === 'web' ? 'material' : 'font-awesome'}
+            name={Platform.OS === 'web' ? 'warning' : 'exclamation-circle'} 
+            color={'gray'} />
           <Text style={{marginLeft: 5, textAlign: 'left', color: 'red', fontSize: 14, marginRight: 5, width: SCREEN_WIDTH-60}}>{ translate('tips.transfer.warning', locale) }</Text>
         </View>
         <View style={{height: 100, flexDirection: 'row'}}>

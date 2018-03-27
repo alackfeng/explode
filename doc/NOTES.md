@@ -76,7 +76,7 @@ vi /Users/assetfun/source/code/explode/node_modules/react-native-elements/src/bu
 ```sh
 1. 准备icon and launch images, 通过网址生成图标： https://apetools.webprofusion.com/app/#/tools/imagegorilla
  icon: 1024*1024.png  背景设纯白之类
- launch： 宽最小2048　.png 
+ launch： 2048*2048　.png  不合适的再修改 
 2. 添加到app中，
 3. 安装 https://github.com/crazycodeboy/react-native-splash-screen/blob/master/README.zh.md
 yarn add react-native-splash-screen
