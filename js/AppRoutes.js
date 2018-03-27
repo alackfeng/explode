@@ -64,6 +64,7 @@ const sharedRoutes = {
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
       headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,
+      tabBarVisible: false,
     }),
   },
   Transfer: {
@@ -97,6 +98,7 @@ const sharedRoutes = {
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
       headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,
+      tabBarVisible: false,
     }),
   },
   Scan: {
@@ -106,6 +108,7 @@ const sharedRoutes = {
       headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
       headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
       headerRight: <View />,
+      tabBarVisible: false,
     }),
   },
 };

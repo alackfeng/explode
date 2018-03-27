@@ -114,7 +114,7 @@ class Center extends Component {
 					titleStyle={styles.title}
 					featured={true} 
 					height={150}
-					icon={{source: require('../../../components/images/tokenpiiicon.png')}}
+					icon={{source: require('../images/tokenpii.png')}}
 					iconStyle={styles.icon} 
 					iconContainerStyle={{marginTop: 50}}  		
 				>
@@ -192,8 +192,8 @@ const styles = StyleSheet.create({
 		height: 150,
 	},
 	icon: {
-		width: 58,
-		height: 41,
+		width: 60,
+		height: 60,
 	},
 	title: {
 		color: 'white',
