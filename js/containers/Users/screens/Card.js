@@ -10,6 +10,7 @@ import { Icon, Button, Input, Overlay, CheckBox } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet } from "../../../components";
 import { setAppLocale } from "../../../actions";
+import SplashTile from "../../../components/SplashTile";
 
 import QRCode from 'react-native-qrcode-svg';
 import RNFS from "react-native-fs";
@@ -39,11 +40,10 @@ class Card extends Component {
    		alert(RNFS.DocumentDirectoryPath);
    		RNFS.writeFile(RNFS.DocumentDirectoryPath+"/tokenpii-qrcode.png", data, 'base64')
    		  .then((success) => {
-   		  	alert("save ", RNFS.DocumentDirectoryPath, success);
+   		  	//alert("save ", RNFS.DocumentDirectoryPath, success);
    			  return CameraRoll.saveToCameraRoll(RNFS.DocumentDirectoryPath+"/tokenpii-qrcode.png", 'photo')
    		  })
    		  .then(() => {
-   			  this.setState({ busy: false, imageSaved: true  })
    			  alert('Saved to gallery !!')
    		  })
    	})
@@ -53,7 +53,7 @@ class Card extends Component {
   	console.log("_setClipboardContent");
 
   	Clipboard.setString(this.props.currentAccount);
-  	alert(this.props.currentAccount);
+  	//alert(this.props.currentAccount);
   }
 
   _fetchAppVersion = () => {
@@ -84,43 +84,108 @@ class Card extends Component {
 		if(TRACE) console.info("=====[Language.js]::render - : currentAccount >  ", currentAccount);
 
 
-		const qrValue = currentAccount + "@tokenpii.org";
+		const qrValue = "tokenpii://" + currentAccount;
 		return (
 			<ViewContainer>
-				<Text>Hello Cards</Text>
-				<View style={{backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center', flex: 1}}>
-					<QRCode 
-						value={qrValue}
-						size={250}
-						logo={require("../images/aftlogo.png")}
-						getRef={(c) => (this.svg = c)}
-					/>
-					<View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 20}}>
-						<View style={{width: 100}}><Text onPress={this._setClipboardContent} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
-          		复制
-        		</Text></View>
+        <SplashTile
+          containerStyle={styles.userContainer}
+          imageSrc={require('../images/background.jpg')}
+          imageContainerStyle={styles.image}
+          title={currentAccount ? currentAccount : translate('center.welcome', locale)}
+          titleStyle={styles.title}
+          featured={true} 
+          height={150}
+          icon={{source: require('../images/tokenpii.png')}}
+          iconStyle={styles.icon} 
+          iconContainerStyle={{marginTop: 50}}      
+        >
+        </SplashTile>
 
-        		<View style={{width: 100}}><Text onPress={this._fetchAppVersion} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
-          		分享
-        		</Text></View>
+        <View style={styles.container}>
+          <View style={styles.qrcodeContainer}>
+            <QRCode 
+              value={qrValue}
+              size={180}
+              logo={require("../images/tokenpii.png")}
+              logoWidth= {180 * 0.2}
+              logoBackgroundColor='#4871db'
+              getRef={(c) => (this.svg = c)}
 
-        		<View style={{width: 100}}><Text onPress={this._saveQrToDisk} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
-          		下载
-        		</Text></View>
-        	</View>
-				</View>
-			</ViewContainer>
+            />
+          </View>
+          <View style={styles.buttonContainer} >
+            <Button
+              text ={ translate('tips.scan.copy', locale) }
+              buttonStyle={styles.buttonStyle}
+              containerStyle={{marginVertical: 10, backgroundColor: 'transparent', flex: 1, justifyContent: 'flex-end'}}
+              textStyle={{fontWeight: 'bold', fontSize: 14, color: '#2153A2'}}
+              onPress={this._setClipboardContent}
+            />
+            <Button
+              text ={ translate('tips.scan.savephoto', locale) }
+              buttonStyle={styles.buttonStyle}
+              containerStyle={{marginVertical: 10, backgroundColor: 'transparent', flex: 1, justifyContent: 'flex-start'}}
+              textStyle={{fontWeight: 'bold', fontSize: 14, color: '#2153A2'}}
+              onPress={this._saveQrToDisk}
+            />
+            <View style={{flex: 0.5}} />
+          </View>
+        </View>
+      </ViewContainer>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	container: {
-		justifyContent: 'space-around',
-		borderWidth: 1,
-		margin: 0,
-		backgroundColor: Colors.white,
-	}
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 0,
+    margin: 20,
+    backgroundColor: 'transparent',
+    flex: 1
+  },
+  userContainer: {
+    backgroundColor: Colors.menuBlue,
+    height: 120,
+    marginTop: 0,
+  },
+  image: {
+    width: SCREEN_WIDTH,
+    height: 120,
+  },
+  icon: {
+    width: 50,
+    height: 50,
+  },
+  title: {
+    color: 'white',
+    marginTop: 10,
+  },
+  buttonStyle: {
+    height: 40, 
+    width: 200, 
+    backgroundColor: 'transparent', 
+    borderWidth: 1, 
+    borderColor: '#DFDFDF', 
+    borderRadius: 5,
+    elevation: 0,
+  },
+  qrcodeContainer: {
+    backgroundColor: 'white', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    flex: 1,
+    width: 200,
+    height: 200,
+  },
+  buttonContainer: {
+    backgroundColor: 'transparent', 
+    justifyContent: 'flex-start', 
+    alignItems: 'center', 
+    flex: 1,
+    marginTop: 0,
+  }
 })
 
 const mapStateToProps = (state) => ({

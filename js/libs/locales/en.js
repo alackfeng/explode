@@ -130,6 +130,10 @@ export const en = {
 			transcancel: 'Transaction Cancel',
 			cancel: 'Cancel',
 			confirm: 'OK'
+		},
+		scan: {
+			copy: 'Copy',
+			savephoto: 'Save To Photo'
 		}
 	},
 	advisable_message: {

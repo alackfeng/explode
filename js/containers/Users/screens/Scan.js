@@ -58,13 +58,22 @@ class BarcodeScan extends Component {
 
         // 回调事件
         const { navigation } = this.props;
-        if(navigation) {
-            navigation.state.params.handleScan({
-                toAccount: e.nativeEvent.data.code}, 
-                (bExit) => {
-                    if(bExit) navigation.goBack(); 
-                }
-            );
+        if(navigation && navigation.state.params && navigation.state.params.handleScan) {
+            let res = e.nativeEvent.data.code;
+            let pos = res.indexOf("tokenpii://");
+            if(0 === pos) {
+                navigation.state.params.handleScan({
+                    toAccount: res.substr(11)}, 
+                    (bExit) => {
+                        if(bExit) navigation.goBack(); 
+                    }
+                );
+            }
+            else {
+                Alert.alert(e.nativeEvent.data.type, 'unkown support proto', [
+                    {text: 'OK', onPress: () => this._startScan()},
+                ])
+            }
         } else {
             Alert.alert(e.nativeEvent.data.type, e.nativeEvent.data.code, [
                 {text: 'OK', onPress: () => this._startScan()},

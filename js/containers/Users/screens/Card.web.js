@@ -10,6 +10,7 @@ import { Icon, Button, Input, Overlay, CheckBox } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet } from "../../../components";
 import { setAppLocale } from "../../../actions";
+import SplashTile from "../../../components/SplashTile";
 
 var QRCode = require('qrcode-react');
 
@@ -74,29 +75,49 @@ class Card extends Component {
 		const qrValue = currentAccount + "@tokenpii.org";
 		return (
 			<ViewContainer>
-				<Text>Hello Cards</Text>
-				<View style={{backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center', flex: 1}}>
-					<QRCode 
-						value={qrValue}
-						size={250}
-						logo={require("../images/aftlogo.png")}
-						logoWidth= {250 * 0.2}
-						getRef={(c) => (this.svg = c)}
-					/>
-					<View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 20}}>
-						<View style={{width: 100}}><Text onPress={this._setClipboardContent} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
-          		复制
-        		</Text></View>
+				<SplashTile
+    			containerStyle={styles.userContainer}
+    			imageSrc={require('../images/background.jpg')}
+					imageContainerStyle={styles.image}
+					title={currentAccount ? currentAccount : translate('center.welcome', locale)}
+					titleStyle={styles.title}
+					featured={true} 
+					height={150}
+					icon={{source: require('../images/tokenpii.png')}}
+					iconStyle={styles.icon} 
+					iconContainerStyle={{marginTop: 50}}  		
+				>
+				</SplashTile>
 
-        		<View style={{width: 100}}><Text onPress={this._fetchAppVersion} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
-          		分享
-        		</Text></View>
+				<View style={styles.container}>
+					<View style={styles.qrcodeContainer}>
+						<QRCode 
+							value={qrValue}
+							size={180}
+							logo={require("../images/tokenpii.png")}
+							logoWidth= {180 * 0.2}
+							logoBackgroundColor='red'
+							getRef={(c) => (this.svg = c)}
 
-        		<View style={{width: 100}}><Text onPress={this._saveQrToDisk} style={{textAlign: 'center', color: 'blue', fontSize: 18}}>
-          		下载
-        		</Text></View>
-        	</View>
-				</View>
+						/>
+					</View>
+    			<View style={{marginTop: 20}} ><Button
+            text ={ translate('tips.scan.copy', locale) }
+            ref={ input => this.commitInput = input }
+            buttonStyle={styles.buttonStyle}
+            containerStyle={{marginVertical: 10}}
+            textStyle={{fontWeight: 'bold', fontSize: 16, color: '#2153A2'}}
+            onPress={this._setClipboardContent}
+          />
+    			<Button
+            text ={ translate('tips.scan.savephoto', locale) }
+            ref={ input => this.commitInput = input }
+            buttonStyle={styles.buttonStyle}
+            containerStyle={{marginVertical: 10}}
+            textStyle={{fontWeight: 'bold', fontSize: 16, color: '#2153A2'}}
+            onPress={this._saveQrToDisk}
+          /></View>
+    		</View>
 			</ViewContainer>
 		);
 	}
@@ -104,11 +125,51 @@ class Card extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		justifyContent: 'space-around',
-		borderWidth: 1,
-		margin: 0,
-		backgroundColor: Colors.white,
-	}
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderWidth: 0,
+		margin: 40,
+		backgroundColor: 'transparent',
+	},
+	userContainer: {
+		backgroundColor: Colors.menuBlue,
+		height: 120,
+		marginTop: 0,
+	},
+	image: {
+		width: SCREEN_WIDTH,
+		height: 120,
+	},
+	icon: {
+		width: 50,
+		height: 50,
+	},
+	title: {
+		color: 'white',
+		marginTop: 5,
+	},
+	buttonStyle: {
+    height: 40, 
+    width: 200, 
+    backgroundColor: 'white', 
+    borderWidth: 1, 
+    borderColor: '#DFDFDF', 
+    borderRadius: 5
+  },
+  qrcodeContainer: {
+  	backgroundColor: 'white', 
+  	justifyContent: 'center', 
+  	alignItems: 'center', 
+  	flex: 1,
+  	width: 200,
+  	height: 200,
+  },
+  buttonContainer: {
+  	backgroundColor: 'white', 
+  	justifyContent: 'center', 
+  	alignItems: 'center', 
+  	flex: 1
+  }
 })
 
 const mapStateToProps = (state) => ({

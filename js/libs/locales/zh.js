@@ -20,7 +20,7 @@ export const zh = {
 			nodesetting: "接入点",
 			transrecords: "交易记录",
 			language: "语言切换",
-			card: "个性名片",
+			card: "收款二维码",
 			scan: "扫一扫"
 		},
 		nodes: "接入点",
@@ -130,6 +130,10 @@ export const zh = {
 			transcancel: '交易取消',
 			cancel: '取消',
 			confirm: '确认'
+		},
+		scan: {
+			copy: '复  制',
+			savephoto: '保存相册'
 		}
 	},
 	advisable_message: {
