@@ -22,16 +22,15 @@ a:hover{text-decoration:none;color:#007FFF;}
 
 /*内容*/
 #section-1{ background:url(../images/bitmap.jpg) no-repeat center; background-size:cover; }
-#section-1 .inner{padding-top:1.55rem; color:#FFF; padding-bottom:2.5rem; padding-left:0.25rem; padding-right:0.25rem;}
+#section-1 .inner{padding-top:1.55rem; color:#FFF; padding-bottom:4rem; padding-left:0.25rem; padding-right:0.25rem;}
 .s_1_1{ width:100%;}
-.s_1_2{ width:100%; height:5.25rem; background:url(../images/token.png) no-repeat center; background-size:auto 100%; margin-top:-7.25rem;}
+.s_1_2{ width:100%; height:5.25rem; background:url(../images/token.png) no-repeat center; background-size:auto 100%; margin-top:-8.5rem;}
 
 h1{ font-size:0.32rem; margin-bottom:0.25rem; text-align:center; font-weight:bold;}
 p{ font-size:0.25rem; line-height:1.8;margin-bottom:0.5rem;text-align:center;}
 p._btn{line-height:1; margin-top:7rem;}
-p._btn a{ display:inline-block; border:0.02rem #FFF solid; padding:0.1rem 0.3rem; border-radius:0.1rem; font-size:0.25rem; color:#FFF; margin:0 0.25rem;}
+p._btn a{ display:inline-block; border:0.02rem #FFF solid; padding:0.1rem 0.3rem; border-radius:0.1rem; font-size:0.25rem; color:#FFF; margin:0 0.25rem;display: block;  margin:0.2rem auto;  width: 50%;}
 
-.english_html p._btn a{margin:0 0.05rem;}
 
 #section-2 .inner{padding-top:0.5rem;padding-bottom:1.55rem;}
 .s_2_1{ text-align:center; padding-bottom:0.5rem;}
