@@ -101,6 +101,16 @@ const sharedRoutes = {
       tabBarVisible: false,
     }),
   },
+  Scan: {
+    screen: ScanScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: translate('center.scans', locale),
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+      headerRight: <View />,
+      tabBarVisible: false,
+    }),
+  },
   Version: {
     screen: VersionScreen,
     navigationOptions: ({ navigation }) => ({
