@@ -21,13 +21,15 @@ export const zh = {
 			transrecords: "交易记录",
 			language: "语言切换",
 			card: "收款二维码",
-			scan: "扫一扫"
+			scan: "扫一扫",
+			vers: "版本检查",
 		},
 		nodes: "接入点",
 		trans: "交易记录",
 		langs: "语言中心",
 		cards: "个性名片",
 		scans: "扫一扫",
+		versn: "版本检查",
 	},
 	menu: {
 		tab: {

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import styled from "styled-components/native";
 import { connect } from "react-redux";
 
-import { Dimensions, View, ScrollView, Image, TouchableHighlight, ListView } from "react-native";
+import { Dimensions, View, ScrollView, Image, TouchableHighlight, ListView, Linking, Alert } from "react-native";
 import { Button, Text, Card, ButtonGroup, Tile, Col, Row, Icon, List, ListItem, Avatar, Badge } from "react-native-elements";
 
 import { ViewContainer, StyleSheet } from "../../../components";
@@ -16,6 +16,7 @@ import { appUserQuit, triggerUser } from "../../../actions";
 const {unlock: sendUnLock} = triggerUser;
 
 import SplashTile from "../../../components/SplashTile";
+import { VersionInfo } from "./Version";
 
 
 
@@ -42,12 +43,7 @@ const listMenu = [
 		subtitle: 'center.subnav.card',
 		nav: true,
 	},
-	{
-		title: 'Scan',
-		icon: 'public',
-		subtitle: 'center.subnav.scan',
-		nav: true,
-	}
+	
 	//{
 	//	title: 'Language',
 	//	icon: 'language',
@@ -55,6 +51,8 @@ const listMenu = [
 	//	nav: true,
 	//}
 ];
+
+
 
 class Center extends Component {
 
@@ -133,6 +131,7 @@ class Center extends Component {
 	              onPress={() => this.onPressItem(l, navigation)}
 							/>
     				))}
+    				<VersionInfo />
     			</List>
     		</View>
     		<View style={styles.logoutContainer}>
