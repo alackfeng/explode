@@ -13,7 +13,7 @@ module.exports = {
     quiet: false,
     contentBase: path.join(process.cwd(), 'web', 'src'),
     port: process.env.PORT || 21014,
-    host: '192.168.1.180',
+    host: '192.168.1.181',
     publicPath: PUBLIC_PATH,
     historyApiFallback: {
       index: '/index.html',

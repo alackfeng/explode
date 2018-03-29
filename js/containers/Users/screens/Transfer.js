@@ -411,8 +411,8 @@ class Transfer extends Component {
           <Icon 
             type={Platform.OS === 'web' ? 'material' : 'font-awesome'}
             name={Platform.OS === 'web' ? 'warning' : 'exclamation-circle'} 
-            color={'gray'} />
-          <Text style={{marginLeft: 5, textAlign: 'left', color: 'red', fontSize: 14, marginRight: 5, width: SCREEN_WIDTH-60}}>{ translate('tips.transfer.warning', locale) }</Text>
+            color={'red'} />
+          <Text style={{marginLeft: 5, textAlign: 'left', color: 'gray', fontSize: 14, marginRight: 5, width: SCREEN_WIDTH-60}}>{ translate('tips.transfer.warning', locale) }</Text>
         </View>
         <View style={{height: 100, flexDirection: 'row'}}>
           <Button
