@@ -36,6 +36,7 @@ export class AccountInput extends Component {
             errorMessage={error || ''}
             value={username || ''}
             onChangeText={(text) => this.props.onChange(text)}
+            selectionColor={'white'}
           />
         </View>
         <View style={styles.overlay}>
@@ -56,6 +57,7 @@ export class AccountInput extends Component {
             errorMessage={errorPass || ''}
             value={password || ''}
             onChangeText={(text) => this.props.onChangePass(text)}
+            selectionColor={'white'}
           />
         </View>
       </View>

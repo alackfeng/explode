@@ -36,6 +36,7 @@ export class AccountPasswordInput extends Component {
             errorMessage={error || ''}
             value={username || ''}
             onChangeText={(text) => this.props.onChange(text)}
+            selectionColor={'white'}
           />
         </View>
         <View style={styles.overlay}>
@@ -56,6 +57,7 @@ export class AccountPasswordInput extends Component {
             errorMessage={errorPass || ''}
             value={password || ''}
             onChangeText={(text) => this.props.onChangePass(text)}
+            selectionColor={'white'}
           />
         </View>
         {confirmed && 
@@ -76,6 +78,7 @@ export class AccountPasswordInput extends Component {
             errorMessage={errorConfirm || ''}
             value={confirmPass || ''}
             onChangeText={(text) => this.props.onChangeConfirm(text)}
+            selectionColor={'white'}
           />
         </View>}
 			</View>
