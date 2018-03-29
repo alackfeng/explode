@@ -31,12 +31,12 @@ const listMenu = [
 			title: 'center.nodes',
 		}
 	},
-	{
+	/*{
 		title: 'History',
 		icon: 'receipt',
 		subtitle: 'center.subnav.transrecords',
 		nav: true,
-	},
+	},*/
 	{
 		title: 'Card',
 		icon: 'language',
