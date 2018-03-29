@@ -20,17 +20,17 @@ module.exports = {
 	update: {
 		url: 'https://www.pgyer.com/apiv2/app/check',
 		version: {
-			ios: '1.0-0',
-			android: '1.0-0',
-			web: '1.0-0',
+			ios: '1.1-2',
+			android: '1.1-2',
+			web: '1.1-2',
 		},
 		androidKey: {
-			api: '701b536596f0d86383bd090ed60bb0f9',
-			app: '46c289a8f4c27fb49c7b1ab9abbb2439'
+			api: '97863b98cd55f9b414c334ba7599c4db',
+			app: 'ff22e82bd0ae5570c6e2565fa0ce7509'
 		},
 		iosKey: {
-			api: '701b536596f0d86383bd090ed60bb0f9',
-			app: '580c635ffdae131c926066ad5b868edb'
+			api: '97863b98cd55f9b414c334ba7599c4db',
+			app: '9f567de0996628600f896b90d546bcdc'
 		}
 	}
 };
