@@ -83,8 +83,18 @@ class Asset extends Component {
 		if(TRACE) console.log("=====[AssetItem.js]::render - node item > ", item, index, symbol);
 
 
+		// 兼容不同的description
+		let getAssetName = (asset_name) => {
+			try {
+				return JSON.parse(asset_name).short_name || JSON.parse(asset_name).main;
+			} catch(e) {
+				return null;
+			}
+		}
+
+
 		const subTitle = (!item || !balanceObject) ? "0 AFT" : `${balanceObject.get("balance")/100000000} ${symbol}`;
-		const assetName = (!item || !balanceObject) ? "1.3.0" : asset_name && (JSON.parse(asset_name).main || JSON.parse(asset_name).main.short_name) || item.type;
+		const assetName = (!item || !balanceObject) ? "1.3.0" : asset_name && (getAssetName(asset_name)) || item.type;
 
 
 		return (
