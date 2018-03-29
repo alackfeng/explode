@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Image, ListView, View, Text, ScrollView, Dimensions, RefreshControl } from "react-native";
-import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT } from "../../../libs";
+import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from "../../../libs";
 import { SearchBar, List, ListItem, Icon, Button, Input } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, LoadingLoginModal, LoadingData } from "../../../components";
@@ -196,8 +196,8 @@ class AssetsList extends Component {
 									refreshing={this.props.isRefreshing}
 									onRefresh={this._onRefresh}
 									tintColor="#ff0000"
-									title="数据加载中..."
-									titleColor="#00ff00"
+									title={ translate('comm.loadingdata', locale) }
+									titleColor="gray"
 									colors={['#ff0000', '#00ff00', '#0000ff']}
 									progressBackgroundColor="#ffff00"
 			        	/>

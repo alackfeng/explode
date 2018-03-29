@@ -138,6 +138,10 @@ export const en = {
 		scan: {
 			copy: 'Copy',
 			savephoto: 'Save To Photo'
+		},
+		card: {
+			copyed: "Copyed",
+			saved: "Saved to album"
 		}
 	},
 	advisable_message: {

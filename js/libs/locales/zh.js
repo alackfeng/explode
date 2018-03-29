@@ -138,6 +138,10 @@ export const zh = {
 		scan: {
 			copy: '复  制',
 			savephoto: '保存相册'
+		},
+		card: {
+			copyed: "已复制",
+			saved: "已保存到相册"
 		}
 	},
 	advisable_message: {

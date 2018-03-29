@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Text, ScrollView, Dimensions, ListView, RefreshControl } from "react-native";
-import { Colors, resetNavigationTo, SCREEN_WIDTH, Utils } from "../libs";
+import { Colors, resetNavigationTo, SCREEN_WIDTH, Utils, translate, locale } from "../libs";
 import { Icon, Button, Input, List, ListItem } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, AccountOBJ, AssetOBJ, TransferOP } from "../components";
@@ -194,8 +194,8 @@ class TableHistoryWrap extends Component {
 								refreshing={this.props.isRefreshing}
 								onRefresh={this._onRefresh}
 								tintColor="#ff0000"
-								title="数据加载中..."
-								titleColor="#00ff00"
+								title={ translate('comm.loadingdata', locale) }
+								titleColor="gray"
 								colors={['#ff0000', '#00ff00', '#0000ff']}
 								progressBackgroundColor="#ffff00"
 		        	/>
