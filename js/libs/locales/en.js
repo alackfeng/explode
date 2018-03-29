@@ -75,6 +75,7 @@ export const en = {
 			err: "Log In failure!",
 			inputname: "Account",
 			inputpass: "Password",
+			errorNameNull: "Account name can not be empty"
 		},
 		register: {
 			req: "Register ing",
@@ -97,6 +98,7 @@ export const en = {
 			errorSamename: "Account name is taken",
 			errorName: "Account name should start with letters and contain numers",
 			errorPassNull: "Password can not be empty",
+			errorNameNull: "Account name can not be empty"
 		},
 		transfer: {
 			from: "My account",

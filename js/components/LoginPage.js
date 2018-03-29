@@ -42,7 +42,7 @@ export class LoginPage extends Component {
 		let account_name = text.trim();
 
 		if(account_name === "")
-			return {value: account_name, error: "账号名为空"};
+			return {value: account_name, error: "tips.login.errorNameNull"};
 
 		// 以字母开头并可包含数字，破折号可选，长度3-63字节。如(a-z)[-](0-9)
 		if(ChainValidation.is_account_name_error(account_name))

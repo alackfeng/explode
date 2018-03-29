@@ -75,6 +75,7 @@ export const zh = {
 			err: "登录错误啦！！！",
 			inputname: "账号名称",
 			inputpass: "密码",
+			errorNameNull: "账号名不能为空"
 		},
 		register: {
 			req: "注册中",
@@ -97,6 +98,7 @@ export const zh = {
 			errorSamename: "账号名已被注册",
 			errorName: "账号名以字母开头并可包含数字",
 			errorPassNull: "密码不能为空",
+			errorNameNull: "账号名不能为空"
 		},
 		transfer: {
 			from: "我的帐号",
