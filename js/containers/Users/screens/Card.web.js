@@ -40,7 +40,7 @@ class Card extends Component {
   }
   _setClipboardContent = () => {
   	Clipboard.setString(this.props.currentAccount);
-  	alert(this.props.currentAccount);
+  	alert(translate('tips.card.copyed', locale));
   }
 
 

@@ -37,14 +37,14 @@ class Card extends Component {
 
   _saveQrToDisk() {
    	this.svg.toDataURL((data) => {
-   		alert(RNFS.DocumentDirectoryPath);
+   		//alert(RNFS.DocumentDirectoryPath);
    		RNFS.writeFile(RNFS.DocumentDirectoryPath+"/tokenpii-qrcode.png", data, 'base64')
    		  .then((success) => {
    		  	//alert("save ", RNFS.DocumentDirectoryPath, success);
    			  return CameraRoll.saveToCameraRoll(RNFS.DocumentDirectoryPath+"/tokenpii-qrcode.png", 'photo')
    		  })
    		  .then(() => {
-   			  alert('Saved to gallery !!')
+   			  alert(translate('tips.card.saved', locale));
    		  })
    	})
   }
@@ -53,7 +53,7 @@ class Card extends Component {
   	console.log("_setClipboardContent");
 
   	Clipboard.setString(this.props.currentAccount);
-  	//alert(this.props.currentAccount);
+  	alert(translate('tips.card.copyed', locale));
   }
 
 	render() {
