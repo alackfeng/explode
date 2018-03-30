@@ -71,6 +71,10 @@ export const en = {
 		comm: {
 			nodelose: "Failed to synchronize with nodes, please switch in user center",
 			fatal: 'Unknown Faults！',
+			linked: '(Linked)',
+			tip: "Tip",
+			cancel: 'Cancel',
+			confirm: 'OK'
 		},
 		login: {
 			req: "Log ing",
@@ -123,7 +127,8 @@ export const en = {
 			erroraccount: 'Incorrect Password',
 			inputpass: 'Enter your Password',
 			cancel: 'Cancel',
-			unlock: 'Unlock'
+			unlock: 'Unlock',
+			title: "Unlock Account",
 		},
 		transaction: {
 			kong: 'kong',

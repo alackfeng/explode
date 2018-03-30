@@ -248,7 +248,7 @@ class UnLock extends Component {
       >
         
         <View style={{backgroundColor: 'white', marginTop: 20, marginBottom: 10, alignItems: 'center', flex: 1}}>
-          <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 17, color: '#030303'}}>解锁账号</Text>
+          <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 17, color: '#030303'}}>{translate('tips.unlock.title', locale)}</Text>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 0}}>
 
             {showBtn && <Text style={{textAlign: 'center', fontSize: 16, color: 'red'}}>{tip}</Text>}

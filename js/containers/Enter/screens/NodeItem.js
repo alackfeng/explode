@@ -42,7 +42,7 @@ class NodeInfo extends Component {
 		let status = linknode.url === item.url ? linknode.status : item.status;
 
 		const subTitle = `${status}:${item.latency}ms`;
-		const rightTitle = (status !== 'open') ? ' ' : `(已连接)`;
+		const rightTitle = (status !== 'open') ? ' ' : translate('tips.comm.linked', locale);
 
 		return (
 			<NodeWrap>

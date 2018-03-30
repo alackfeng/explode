@@ -96,7 +96,7 @@ export class VersionInfo extends Component {
             if (!supported){  
               console.log('Can\'t handle url: ' + url);  
               Alert.alert(  
-                '提示',   
+                translate('tips.comm.tip', locale),   
                 'Can\'t handle url: ' + url,  
                 [  
                   {text: 'OK', onPress:()=>{}}  
@@ -104,11 +104,11 @@ export class VersionInfo extends Component {
               );  
             }else{ 
               Alert.alert(  
-                '提示',   
+                translate('tips.comm.tip', locale),   
                 json.data.buildUpdateDescription || 'Open?: ' + url,  
                 [  
-                  {text: 'Cancel', onPress:()=>{}},
-                  {text: 'OK', onPress:()=>{
+                  {text: translate('tips.comm.cancel', locale), onPress:()=>{}},
+                  {text: translate('tips.comm.confirm', locale), onPress:()=>{
                     Linking.openURL(url);
                   }}  
                 ]  
@@ -117,10 +117,10 @@ export class VersionInfo extends Component {
           }).catch(err => {
             console.log('An error occurred', err);  
             Alert.alert(  
-              '提示',   
+              translate('tips.comm.tip', locale),   
               'An error occurred: ' + err,  
               [  
-                {text: 'OK', onPress:()=>{}}  
+                {text: translate('tips.comm.confirm', locale), onPress:()=>{}}  
               ]  
             );
           });

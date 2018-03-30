@@ -88,7 +88,7 @@ class History extends Component {
 
 		// 节点未连接，提示用户 
 		if(!this.isNodeLinked()) {
-			alert("节点断了，请去【用户中心】手动切换");
+			alert( translate('tips.comm.nodelose', locale) );
 			return;
 		}
 		//alert("refresh")

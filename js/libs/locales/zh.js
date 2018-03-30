@@ -71,6 +71,10 @@ export const zh = {
 		comm: {
 			nodelose: "节点断了，请去【用户中心】手动切换",
 			fatal: '未知异常！',
+			linked: '(已连接)',
+			tip: "提示",
+			cancel: '取消',
+			confirm: '确认'
 		},
 		login: {
 			req: "登录中",
@@ -123,7 +127,8 @@ export const zh = {
 			erroraccount: '密码错误',
 			inputpass: '请输入密码',
 			cancel: '取消',
-			unlock: '解锁'
+			unlock: '解锁',
+			title: "解锁账号",
 		},
 		transaction: {
 			kong: '无',

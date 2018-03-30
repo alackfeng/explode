@@ -111,7 +111,7 @@ class AssetsManage extends Component {
   }
 
   onSearchAssets(content) {
-    alert("onSearchAssets:  " + content);
+    alert("Not implement");
   }
 
   // 下拉刷新功能 
