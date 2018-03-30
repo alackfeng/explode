@@ -113,14 +113,14 @@ export const zh = {
 			warning: "请仔细确认所选的资产类型及转账地址，一旦发送不可撤回。",
 			nonecurrentname: "获得当前用户失败，请重新进入！",
 			checkagain: "请重新检查!",
-			noneblockaccount: "账号名未存在区块链上",
+			noneblockaccount: "无效的账号名",
 			noneaccount: "账号名为空",
 		},
 		unlock: {
 			error: '解锁失败！',
 			continue: '解锁处理中',
-			success: '恭喜您，解锁成功！开启交易之旅',
-			erroraccount: '解锁失败！账号丢了',
+			success: '解锁成功！',
+			erroraccount: '密码错误',
 			inputpass: '请输入密码',
 			cancel: '取消',
 			unlock: '解锁'
