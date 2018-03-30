@@ -75,10 +75,10 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: "white",
     position: 'absolute',
-    height: SCREEN_HEIGHT*0.38,
+    height: SCREEN_HEIGHT*0.42,
     width: SCREEN_WIDTH*0.72,
     top: modalTop,
-    marginTop: -SCREEN_HEIGHT*0.38*0.5,
+    marginTop: -SCREEN_HEIGHT*0.42*0.5,
     left: modalLeft,
     marginLeft: -SCREEN_WIDTH*0.72*0.5,
     borderRadius: 4,
@@ -108,7 +108,7 @@ class TransactionItem extends Component {
         <Text style={{textAlign: 'center', fontSize: 14, color: '#0303030'}}>{title}</Text>
       </View>
       <View style={{marginLeft: 5, height: 30, alignItems: 'flex-start', justifyContent: 'center', flex: 3}}>
-        <Text style={{fontSize: 14, color: '#666666'}}>{content || translate('tips.transaction.kong', locale)}</Text>
+        <Text style={{fontSize: 14, color: '#666666'}} numberOfLines={1}>{content || translate('tips.transaction.kong', locale)}</Text>
       </View>
     </View>
     );
@@ -120,9 +120,24 @@ class TransactionDetail extends Component {
 
   transDetails() {
     const { status, entity } = this.props;
-    if(entity.raw) {
+
+    let generateSuccess = entity.transaction.length && entity.transaction.filter(item => item.type === TRANSACTION_COMMON.SUCCESS);
+    
+    if(entity.raw && generateSuccess.length && generateSuccess[0].response.transaction) {
+
       console.log("=====[TransactionConfirmModal.js]::transDetails - ", entity.raw);
-      return { details: entity.raw}
+
+      let fee = {amount: "0", asset: "AFT"};
+      const op = generateSuccess[0].response.transaction.operations[0];
+      switch(ops[op[0]]) {
+        case 'transfer':
+          fee = {amount: op[1].fee.amount, asset: op[1].fee.asset_id === '1.3.0' ? "AFT":"AFT"};
+        break;
+        default:
+        break;
+      }
+
+      return { details: entity.raw, fee: fee};
     }
     return {};
   }
@@ -131,7 +146,7 @@ class TransactionDetail extends Component {
 
     const { status, entity } = this.props;
 
-    const { details } = this.transDetails();
+    const { details, fee } = this.transDetails();
 
     let rows = [];
 
@@ -141,7 +156,9 @@ class TransactionDetail extends Component {
           rows.push(<TransactionItem key={0} index={0} title={translate('tips.transaction.wherefrom', locale)} content={details.parameters.from_account} />);
           rows.push(<TransactionItem key={1} index={1} title={translate('tips.transaction.sendto', locale)} content={details.parameters.to_account} />);
           rows.push(<TransactionItem key={2} index={2} title={translate('tips.transaction.sendamount', locale)} content={`${details.parameters.amount/100000000} ${details.parameters.asset}`} />);
-          rows.push(<TransactionItem key={3} index={3} title={translate('tips.transaction.memo', locale)} content={details.parameters.memo.toString()} />);
+          rows.push(<TransactionItem key={3} index={3} title={translate('tips.transaction.fee', locale)} content={`${fee.amount/100000000} ${fee.asset}`} />);
+          if(details.parameters.memo)
+            rows.push(<TransactionItem key={4} index={4} title={translate('tips.transaction.memo', locale)} content={details.parameters.memo.toString()} />);
           break;
         default: 
           rows.push(<TransactionItem key={0} index={0} title={translate('tips.transaction.unkownkey', locale)} content={translate('tips.transaction.unkownvalue', locale)} />)
@@ -293,7 +310,7 @@ class TransactionConfirm extends Component {
         <View style={{flex: 1, marginTop: 0}}>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
             {status && <ActivityIndicator animating={status} size="small" color={colors.salmon} />}
-            <Text style={{textAlign: 'center', color: '#030303', marginLeft: 10}} numberOfLines={10}>{tip}</Text>
+            <Text style={{textAlign: 'center', color: '#030303', marginLeft: 10, fontWeight: 'bold'}} numberOfLines={10}>{tip}</Text>
           </View>
 
           <TransactionDetail entity={entity} />

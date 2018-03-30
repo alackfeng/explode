@@ -159,8 +159,8 @@ const styles = StyleSheet.create({
   leftTextContainer: {
     color: 'rgba(171, 189, 219, 1)',
     marginLeft: 10,
-    fontSize: 14,
-    width: 60,
+    fontSize: 12,
+    width: 70,
     textAlign: 'left',
   },
   leftContainer: {

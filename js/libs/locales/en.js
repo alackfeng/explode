@@ -101,7 +101,7 @@ export const en = {
 			errorNameNull: "Account name can not be empty"
 		},
 		transfer: {
-			from: "My account",
+			from: "MyAccount",
 			to: "Send to",
 			amount: "Amount ",
 			memo: "Memo ",
@@ -118,15 +118,16 @@ export const en = {
 			unlock: 'Unlock'
 		},
 		transaction: {
-			kong: '无',
+			kong: 'kong',
 			unkownkey: '请查阅',
 			unkownvalue: '未有相关操作！！！',
 			wherefrom: 'From',
 			sendto: 'To',
 			sendamount: 'Amount',
+			fee: "Fee",
 			memo: 'Memo',
-			transgenerate0: 'Generate Transaction.',
-			transgenerate: 'Generate Transaction',
+			transgenerate0: 'Pending Transaction',
+			transgenerate: 'Generated Transaction',
 			transbroadcast: 'Transaction Broadcasting',
 			transconfirmed: 'Transaction Confirmed',
 			transgenertateerror: '交易打包出错啦！请检测: ',

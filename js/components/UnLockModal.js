@@ -259,7 +259,7 @@ class UnLock extends Component {
           <View style={styles.overlay}>
             <Input
               containerStyle={styles.inputContainer}
-              inputStyle={{marginLeft: 20, fontSize: 13,}}
+              inputStyle={{marginLeft: 10, fontSize: 13,}}
               placeholder={ translate('tips.unlock.inputpass', locale) }
               placeholderTextColor="#999999"
               autoCapitalize="none"
