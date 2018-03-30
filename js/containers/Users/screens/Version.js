@@ -82,6 +82,8 @@ export class VersionInfo extends Component {
           || (version === localVersion && Number(json.data.buildBuildVersion) > Number(_This.state.buildBuildVersion))) {
 
           _This.setState({needUpdate: true});
+        } else {
+          return;
         }
           
 
