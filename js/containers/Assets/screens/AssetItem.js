@@ -94,8 +94,8 @@ class Asset extends Component {
 
 
 		const subTitle = (!item || !balanceObject) ? "0 AFT" : `${balanceObject.get("balance")/100000000} ${symbol}`;
-		const assetName = (!item || !balanceObject) ? "1.3.0" : asset_name && (getAssetName(asset_name)) || item.type;
-
+		let assetName = (!item || !balanceObject) ? "1.3.0" : asset_name && (getAssetName(asset_name)) || item.type;
+		assetName = assetName === '1.3.0' ? "assetfun" : assetName;
 
 		return (
 			<AssetItemWrap>
