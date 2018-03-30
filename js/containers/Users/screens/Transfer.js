@@ -314,7 +314,17 @@ class Transfer extends Component {
 
     console.log("=====[Transfer.js]::render - navigation : ", navigation);
 
-    const assetName = asset_name && (JSON.parse(asset_name).main || JSON.parse(asset_name).main.short_name) || item.type;
+    // 兼容不同的description
+    let getAssetName = (asset_name) => {
+      try {
+        return JSON.parse(asset_name).short_name || JSON.parse(asset_name).main;
+      } catch(e) {
+        return null;
+      }
+    }
+
+    let assetName = asset_name && (getAssetName(asset_name)) || item.type;
+    assetName = assetName === '1.3.0' ? "assetfun" : assetName;
 
     return (
       <ViewContainer>
