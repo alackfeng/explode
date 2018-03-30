@@ -68,6 +68,10 @@ export const zh = {
 		}	
 	},
 	tips: {
+		comm: {
+			nodelose: "节点断了，请去【用户中心】手动切换",
+			fatal: '未知异常！',
+		},
 		login: {
 			req: "登录中",
 			ok: "  恭喜您，登录成功.",
@@ -107,6 +111,10 @@ export const zh = {
 			memo: "备注",
 			commit: "转账",
 			warning: "请仔细确认所选的资产类型及转账地址，一旦发送不可撤回。",
+			nonecurrentname: "获得当前用户失败，请重新进入！",
+			checkagain: "请重新检查!",
+			noneblockaccount: "账号名未存在区块链上",
+			noneaccount: "账号名为空",
 		},
 		unlock: {
 			error: '解锁失败！',

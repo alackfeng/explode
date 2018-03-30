@@ -115,6 +115,13 @@ class AssetsList extends Component {
 		const { navigation, sendUnLock, isUnLock, account: currentAccount } = this.props;
 		// console.log("=====[AssetList.js]::navTo - ", navigation);
 
+		// 节点未连接，提示用户 
+    if(!this.isNodeLinked()) {
+
+      alert( translate('tips.comm.nodelose', locale) );
+      return;
+    }
+
     // 先解锁再
     if(!this.props.isUnLock) {
       // 先解锁，再发交易

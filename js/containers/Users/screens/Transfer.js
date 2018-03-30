@@ -31,7 +31,7 @@ class ScanButton extends Component {
     if(navigation)
       navigation.navigate('Scan', {handleScan: navigation.state.params.handleScan});
     else {
-      alert("未知异常！");
+      alert( translate('tips.comm.fatal', locale) );
     }
   }
 
@@ -159,16 +159,22 @@ class Transfer extends Component {
 
     // 检验有效性
     if(!fromUser || !toUser || !amount || !asset_type) {
-      alert("请重新检查!!!!");
+      alert( translate('tips.transfer.checkagain', locale) );
       return false;
     }
 
     if(!this.props.currentAccount) {
-      alert("获得当前用户失败，请重新进入！");
+      alert( translate('tips.transfer.nonecurrentname', locale) );
       return false;
     }
 
     return true;
+  }
+
+  isNodeLinked = () => {
+    const { currentAccount, nodeStatus } = this.props;
+    if(TRACE) console.log("=====[Transfer.js]::isNodeLinked - ", currentAccount, nodeStatus.url, nodeStatus.status);
+    return (!!currentAccount && !!nodeStatus.url && nodeStatus.status === 'open');
   }
 
   onPressTransfer() {
@@ -179,6 +185,13 @@ class Transfer extends Component {
 
     // 检验有效性
     if(!this.checkFininsh()) {
+      return;
+    }
+
+    // 节点未连接，提示用户 
+    if(!this.isNodeLinked()) {
+      this.setState({isRefreshing: false});
+      alert("节点断了，请去【用户中心】手动切换");
       return;
     }
 
@@ -227,7 +240,7 @@ class Transfer extends Component {
     let account = searchEntity.searchAccounts.filter(a => a[0] === account_name);
     console.log("[Transfer.js]::findAccount - searchEntity : ", account.length, searchEntity);
     if(0 === account.length)
-      return {value: account_name, error: "账号名未存在区块链上"};
+      return {value: account_name, error: translate('tips.transfer.noneblockaccount', locale)};
 
     return {value: account_name, error: null};
   }
@@ -237,7 +250,7 @@ class Transfer extends Component {
     let account_name = text.trim();
 
     if(account_name === "")
-      return {value: account_name, error: "账号名为空"};
+      return {value: account_name, error:  translate('tips.transfer.noneaccount', locale)};
 
     //搜索账号是否已经注册过了，
     if(this.searchAccount)

@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, Text, ScrollView, Dimensions } from "react-native";
-import { Colors, resetNavigationTo, SCREEN_WIDTH } from "../../../libs";
+import { Colors, resetNavigationTo, SCREEN_WIDTH, translate, locale } from "../../../libs";
 import { Icon, Button, Input } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, LoadingLoginModal, Header, HeaderAccount, HeaderSearchBar, LoadingData } from "../../../components";
@@ -120,7 +120,7 @@ class AssetsManage extends Component {
     // 节点未连接，提示用户 
     if(!this.isNodeLinked()) {
       this.setState({isRefreshing: false});
-      alert("节点断了，请去【用户中心】手动切换");
+      alert( translate('tips.comm.nodelose', locale) );
       return;
     }
     //alert("refresh")
@@ -142,7 +142,7 @@ class AssetsManage extends Component {
 
     if(0 && !isLinked) {
       console.log("=====[AssetsManage.js]::render - ", currentAccount, nodeStatus.url, nodeStatus.status);
-      return <LoadingData message={"节点尚未连接上，请稍等..."} />;
+      return <LoadingData message={ translate('tips.comm.nodelose', locale) } />;
     } else {
       return (
       <ViewContainer>
@@ -154,7 +154,7 @@ class AssetsManage extends Component {
               sendUnLock={this.props.sendUnLock} isUnLock={isUnLock} 
               onRefresh={this._onRefreshAssets} isRefreshing={isRefreshing}
             />
-          : <LoadingData message={"数据加载中"} />
+          : <LoadingData message={ translate('comm.loadingdata', locale) } />
         }
       </ViewContainer>
       );

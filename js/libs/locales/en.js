@@ -68,6 +68,10 @@ export const en = {
 		}	
 	},
 	tips: {
+		comm: {
+			nodelose: "节点断了，请去【用户中心】手动切换",
+			fatal: '未知异常！',
+		},
 		login: {
 			req: "Log ing",
 			ok: "  Log In success.",
@@ -107,6 +111,10 @@ export const en = {
 			memo: "Memo ",
 			commit: "Transfer ",
 			warning: "Please carefully doublecheck the token type and address as the transaction is irreversible. ",
+			nonecurrentname: "获得当前用户失败，请重新进入！",
+			checkagain: "请重新检查!",
+			noneblockaccount: "账号名未存在区块链上",
+			noneaccount: "账号名为空",
 		},
 		unlock: {
 			error: 'Unlock Falied',
