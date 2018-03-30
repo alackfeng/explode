@@ -89,7 +89,7 @@ export const zh = {
 			import1: "账号和密码用于登录和交易您的资产。",
 			import2: "我们不保存您的账户信息、不能恢复密码、不能撤回交易。",
 			import3: "请做好备份，确保钱包安全。",
-			checkbox: '我已阅读并同意',
+			checkbox: '我已阅读并同意服务和隐私条款',
 			serviceprivacy: "服务和隐私条款",
 			errorChecked: "请阅读并同意服务和隐私条款",
 			errorCheckAgain: "请重新检查!",

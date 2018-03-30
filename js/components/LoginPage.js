@@ -121,36 +121,34 @@ export class LoginPage extends Component {
 					//iconStyle={styles.icon}
 				>
 					<View style={{flex: 1, backgroundColor: 'transparent'}}>
-					<AccountInput
+						<AccountInput
 
-						onChange={this.onChangeUserName}
-	          username={this.state.username}
-	          error={ this.state.errorName ? translate(`${this.state.errorName}`, locale) : null }
+							onChange={this.onChangeUserName}
+		          username={this.state.username}
+		          error={ this.state.errorName ? translate(`${this.state.errorName}`, locale) : null }
 
-	          onChangePass={this.onChangePassword}
-	          password={this.state.password}
-	          errorPass={this.state.errorPass ? translate(`${this.state.errorPass}`, locale) : null}
-					/>
+		          onChangePass={this.onChangePassword}
+		          password={this.state.password}
+		          errorPass={this.state.errorPass ? translate(`${this.state.errorPass}`, locale) : null}
+						/>
 					</View>
 					<View style={{flex: 1.2, alignItems: 'flex-start', backgroundColor: 'transparent'}}>
-					<View style={{flex: 1, marginTop: 0, alignItems: 'center', backgroundColor: 'transparent'}}>
-	          <View style={{flex: 0.2}} />
-						<Button
-	            text ={ translate('enter.splash.signInButton', locale) }
-	            buttonStyle={styles.button}
-	            textStyle={{fontWeight: 'bold'}}
-	            containerStyle={{marginTop: 20}}
-	            onPress={()=> this.onSubmit()}
-	          />
-	          <Button
-	            text ={ translate('enter.splash.registerInButton', locale) }
-	            buttonStyle={styles.button2}
-	            textStyle={{fontWeight: 'bold'}}
-	            containerStyle={{marginTop: 0}}
-	            onPress={()=>resetNavigationTo('Register', this.props.navigation)}
-	          />
-          </View>
-          <View style={{flex: 0.8}} />
+						<View style={{flex: 1, marginTop: 0, alignItems: 'center', backgroundColor: 'transparent'}}>
+							<Button
+		            text ={ translate('enter.splash.signInButton', locale) }
+		            buttonStyle={styles.button}
+		            textStyle={{fontWeight: 'bold'}}
+		            containerStyle={{marginTop: 20, flex: 1, justifyContent: 'flex-end'}}
+		            onPress={()=> this.onSubmit()}
+		          />
+		          <Button
+		            text ={ translate('enter.splash.registerInButton', locale) }
+		            buttonStyle={styles.button2}
+		            textStyle={{fontWeight: 'bold'}}
+		            containerStyle={{marginTop: 0, flex: 1, justifyContent: 'flex-start'}}
+		            onPress={()=>resetNavigationTo('Register', this.props.navigation)}
+		          />
+	          </View>
           </View>
 				</SplashTile>
 			</ViewContainer>

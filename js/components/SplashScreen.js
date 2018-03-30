@@ -46,22 +46,20 @@ export class SplashScreen extends Component {
 					iconStyle={styles.icon}
 				>
 					<View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent'}}>
-					<View style={{flex: 0.35}}>
 					<Button
             text ={ translate('enter.splash.signInButton', locale) }
             buttonStyle={styles.button}
             textStyle={{fontWeight: 'bold'}}
-            containerStyle={{marginTop: 0, height: 50}}
+            containerStyle={{marginTop: 0, height: 50, flex: 1, justifyContent: 'flex-end'}}
             onPress={()=>this.onPressloginAndReg(true)}
           />
           <Button
             text ={ translate('enter.splash.registerInButton', locale) }
             buttonStyle={styles.button}
             textStyle={{fontWeight: 'bold'}}
-            containerStyle={{marginTop: 0, height: 50}}
+            containerStyle={{marginTop: 0, height: 50, flex: 1, justifyContent: 'flex-start'}}
             onPress={()=>this.onPressloginAndReg(false)}
           />
-          </View>
           </View>
 				</SplashTile>
 			</ViewContainer>

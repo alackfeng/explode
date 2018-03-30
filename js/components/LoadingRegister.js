@@ -241,7 +241,7 @@ class LoadingRegister extends Component {
 				
         {showBtn && <View style={{flexDirection: 'row', flex: 1}}>
           <Button
-            text="取  消"
+            text={ translate('tips.transaction.cancel', locale) }
             clear
             textStyle={{color: 'rgba(35, 81, 162, 1)', fontSize: 18, fontWeight: 'bold', marginTop: 10}}
             containerStyle={styles.buttonContainer}
