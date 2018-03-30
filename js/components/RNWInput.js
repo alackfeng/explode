@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     color: '#FF2D00',
     margin: 5,
     fontSize: 12,
+    width: SCREEN_WIDTH * 0.78
   },
   rightTextContainer: {
     color: 'rgba(171, 189, 219, 1)',
