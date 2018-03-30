@@ -3,7 +3,7 @@
 
 import React, { Component } from "react";
 
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 
 import { Button, Text, CheckBox } from "react-native-elements";
 
@@ -28,25 +28,25 @@ export class PrivacyService extends Component {
 				<View style={{justifyContent: 'flex-start'}}>
         <CheckBox
           title={ translate('tips.register.checkbox', locale) }
-          textStyle={{fontSize: 13, textAlign: 'left', marginLeft: 0}}
+          textStyle={{fontSize: 13, textAlign: 'left', marginLeft: 5}}
           checked={checked || false}
-          iconType='material'
-          checkedIcon='check'
-          uncheckedIcon='close'
-          uncheckedColor='red'
+          iconType={Platform.OS === 'web' ? 'material' : 'font-awesome'}
+          checkedIcon={Platform.OS === 'web' ? 'check' : 'check-square-o'} 
+          uncheckedIcon={Platform.OS === 'web' ? 'close' : 'square-o'} 
+          //uncheckedColor='red'
           size={20}
           onPress={this.props.onChecked}
           containerStyle={styles.checkContainer}
         />
         </View>
-        <View style={{justifyContent: 'flex-end'}}>
+        {/*<View style={{justifyContent: 'flex-end'}}>
         <Button 
           raised
           text ={ translate('tips.register.serviceprivacy', locale) }
           textStyle={{fontSize: 13, color: 'rgba(145,234,255,1)'}}
           buttonStyle={styles.buttonConatiner}
         />
-        </View>
+        </View>*/}
 			</View>
 		);
 	}
