@@ -132,7 +132,7 @@ export class LoginPage extends Component {
 		          errorPass={this.state.errorPass ? translate(`${this.state.errorPass}`, locale) : null}
 						/>
 					</View>
-					<View style={{flex: 1.2, alignItems: 'flex-start', backgroundColor: 'transparent'}}>
+					<View style={{flex: 1, alignItems: 'flex-start', backgroundColor: 'transparent'}}>
 						<View style={{flex: 1, marginTop: 0, alignItems: 'center', backgroundColor: 'transparent'}}>
 							<Button
 		            text ={ translate('enter.splash.signInButton', locale) }
@@ -149,6 +149,10 @@ export class LoginPage extends Component {
 		            onPress={()=>resetNavigationTo('Register', this.props.navigation)}
 		          />
 	          </View>
+          </View>
+          <View style={{flex: 0.7, backgroundColor: 'transparent', marginTop: 0, width: SCREEN_WIDTH * 0.8, }}>
+          	<Text style={styles.tip}>{ translate('tips.register.import1', locale) }</Text>
+          	<Text style={styles.tip}>{ translate('tips.register.import2', locale) }</Text>
           </View>
 				</SplashTile>
 			</ViewContainer>
@@ -203,6 +207,10 @@ const styles = StyleSheet.create({
 		borderColor: 'white', 
 		borderRadius: 0,
 		elevation: 0,
+	},
+	tip: {
+		color: 'white',
+		textAlign: 'left',
 	}
 });
 

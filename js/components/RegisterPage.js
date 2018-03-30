@@ -5,7 +5,7 @@ import React, { Component } from "react";
 
 import { Dimensions, StyleSheet, View, Image, ImageBackground, ScrollView } from "react-native";
 
-import { Tile, Button, Text, Icon, Input } from "react-native-elements";
+import { Tile, Button, Text, Icon, Input, Overlay } from "react-native-elements";
 
 import { SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from "../libs";
 import { ViewContainer } from "../components";
@@ -13,7 +13,7 @@ import { ViewContainer } from "../components";
 import SplashTile from "./SplashTile";
 import { resetNavigationTo } from "../libs/help";
 
-import { AccountPasswordInput, PrivacyService } from "./utils";
+import { AccountPasswordInput, PrivacyService, EmpowermentModel } from "./utils";
 
 import { ChainValidation } from "assetfunjs/es";
 
@@ -43,6 +43,8 @@ export class RegisterPage extends Component {
       errorChecked: false,
 
       searchEntity: [],
+
+      openServPriv: false,
 		}
 
 		this.onChangeUserName = this.onChangeUserName.bind(this);
@@ -120,7 +122,26 @@ export class RegisterPage extends Component {
       this.setState({confirmPass: text, errorConfirm: ''});  
   }
 
+
+  onApproved = (agree) => {
+  	//alert(agree);
+
+  	this.setState({
+  		openServPriv: false,
+  		checkedPrivacy: !!agree, 
+  		errorChecked: this.state.checkedPrivacy
+  	});
+  }
+
   onCheckedPrivacy = () => {
+
+  	// 未同意就打开
+  	if(!this.state.checkedPrivacy) {
+
+  		this.setState({openServPriv: true});
+  		return;
+  	}
+  	
   	this.setState({checkedPrivacy: !this.state.checkedPrivacy, errorChecked: this.state.checkedPrivacy});  
   }
 
@@ -167,8 +188,13 @@ export class RegisterPage extends Component {
 
 	render() {
 
+		console.log("=====[RegisterPage.js]::render - ");
+
 		return (
 			<ViewContainer>
+
+				<EmpowermentModel open={this.state.openServPriv} approved={this.onApproved} />
+
 				<SplashTile
 					containerStyle={styles.container1}
 					overlayContainerStyle={{backgroundColor: 'transparent'}}
@@ -226,7 +252,6 @@ export class RegisterPage extends Component {
           <View style={{flex: 1, backgroundColor: 'transparent', marginTop: 0, width: SCREEN_WIDTH * 0.8, }}>
           	<Text style={styles.tip}>{ translate('tips.register.import1', locale) }</Text>
           	<Text style={styles.tip}>{ translate('tips.register.import2', locale) }</Text>
-          	<Text style={styles.tip}>{ translate('tips.register.import3', locale) }</Text>
           </View>
 				</SplashTile>
 			</ViewContainer>
