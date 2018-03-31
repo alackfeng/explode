@@ -76,7 +76,7 @@ class AssetsManage extends Component {
 
       }
 
-      if(!TRACE) console.log("=====[AssetsManage.js]::fetchAssetlist - account : getAccount Balances is : ", this.state.accountBalanceX === accountBalance, JSON.stringify(accountBalance));
+      if(TRACE) console.log("=====[AssetsManage.js]::fetchAssetlist - account : getAccount Balances is : ", this.state.accountBalanceX === accountBalance, JSON.stringify(accountBalance));
       if(accountBalance) {
 
           let asset_types = [];

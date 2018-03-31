@@ -88,6 +88,7 @@ class History extends Component {
 
 		// 节点未连接，提示用户 
 		if(!this.isNodeLinked()) {
+			this.setState({isRefreshing: false});
 			alert( translate('tips.comm.nodelose', locale) );
 			return;
 		}

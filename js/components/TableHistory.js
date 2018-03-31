@@ -62,6 +62,10 @@ class TransItem extends Component {
  
 		const { item, index, account, globalObject, dynGlobalObject } = this.props;
 		if(TRACE) console.log("[TableHistory.js]::TransItem - render . ", item, account, globalObject, dynGlobalObject);
+
+		//if(index == 1 || index == 0)
+		//	console.log("[TableHistory.js]::TransItem - render . dataSource ", item, index);
+		
 		const op = item.op;
 
 		let column = null;
@@ -98,8 +102,10 @@ class TableHistoryWrap extends Component {
 		var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 		this.state = {
+			ds: ds,
+			dataSource: !!props.history ? ds.cloneWithRows(props.history.toJS()) : null,
+			db: !!props.history ? props.history.toJS() : null,
 
-			dataSource: !!props.history ? ds.cloneWithRows(props.history) : null,
 			globalObject: null,
 			dynGlobalObject: null,
 		}
@@ -108,6 +114,31 @@ class TableHistoryWrap extends Component {
 		this.update = this.update.bind(this);
 		this._onRefresh = this._onRefresh.bind(this);
 
+	}
+
+	componentWillReceiveProps(nextProps) {
+
+		///////
+		
+		let transHistory = !!nextProps.history ? nextProps.history.toJS() : null;
+
+		if(transHistory && this.state.dataSource) {
+			
+			
+
+			let historys = this.state && this.state.db ? this.state.db.slice(0) : [];
+
+  		transHistory.forEach((a, index) => {
+  			if(TRACE) console.log("=====[TableHistory.js::componentWillReceiveProps] - transHistory - item > ", a, index);
+
+  			historys.splice(index, 1, a);
+  		});
+
+  		const dataSource = this.state.dataSource.cloneWithRows(historys) || this.state.dataSource;
+  		//console.log("=====[TableHistory.js::componentWillReceiveProps] - dataSource - dataSource > ", dataSource._dataBlob.s1[0], dataSource._dataBlob.s1[1]);
+			this.setState({dataSource, db: transHistory});
+		}
+		
 	}
 
 	componentWillUnmount() {
@@ -185,7 +216,7 @@ class TableHistoryWrap extends Component {
 		      	enableEmptySections
 		      	ref="ListView"
 		      	style={styles.container1}
-		        dataSource={new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}).cloneWithRows(history.toJS())	}
+		        dataSource={this.state.dataSource	}
 		        renderRow={this.renderRow}
 		        //renderHeader={this.renderHeader}
 		        removeClippedSubviews={false}

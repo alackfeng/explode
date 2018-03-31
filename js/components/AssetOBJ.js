@@ -40,14 +40,19 @@ export class AssetOBJ extends Component {
 
   }
 
+  componentWillReceiveProps(nextProps) {
+
+    this.fetchAssets(nextProps);
+  }
+
   update(nextProps = null) {
     if(TRACE) console.info("=====[AssetOBJ.js]::update - ChainStore::subscribe : ************** nextProps ", nextProps);
 
     //this.fetchAssets();
   }
 
-	fetchAssets = () => {
-    const { asset } = this.props;
+	fetchAssets = (props) => {
+    const { asset } = props || this.props;
 
     if(TRACE) console.log("=====[AssetOBJ.js]::fetchAssets - asset---: ", asset);
 
