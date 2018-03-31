@@ -100,6 +100,7 @@ class AssetsManage extends Component {
       }).catch(err => {
         console.error("=====[AssetsManage.js]::fetchAssetlist - account : getAccount is : err ", err);
         this.setState({isRefreshing: false});
+        this.fetchAssetlist(); // timeout again
       })
 
   }
