@@ -61,7 +61,7 @@ export class AssetOBJ extends Component {
       if(TRACE) console.log("=====[AssetOBJ.js]::fetchAssets - asset : AssetOBJ is : ", JSON.stringify(assetObj));
       if(assetObj) {
 
-          this.setState({assetName: assetObj.get("symbol"), precision: Utils.get_asset_precision(assetObj)});
+          this.setState({assetName: assetObj.toJS ? assetObj.get("symbol") : null, precision: Utils.get_asset_precision(assetObj)});
       }
     }
 

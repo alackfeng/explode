@@ -362,7 +362,7 @@ assert@^1.1.1:
 
 "assetfunjs@git+https://github.com/alackfeng/assetfunjs.git":
   version "1.1.0"
-  resolved "git+https://github.com/alackfeng/assetfunjs.git#9896a4f630b1714157a2e0e00a0ac34e3cf48f48"
+  resolved "git+https://github.com/alackfeng/assetfunjs.git#0016f076dfa37e16ca0fca8b4c62f0a9953092ae"
   dependencies:
     assetfunjs-ws "git+https://github.com/alackfeng/assetfunjs-ws.git"
     babel-plugin-add-module-exports "^0.2.1"

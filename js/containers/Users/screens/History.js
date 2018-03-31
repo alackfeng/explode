@@ -58,7 +58,7 @@ class History extends Component {
 
 		if(currentAccount) {
       FetchChain("getAccount", currentAccount).then((ret) => {
-        if(TRACE) console.log("=====[History.js]::componentDidMount - : FetchChain:getAccount is : ", JSON.stringify(ret));
+        if(TRACE) console.log("=====[History.js]::fetchHistoryList - : FetchChain:getAccount is : ", JSON.stringify(ret));
         const accountObj = ret; //ChainStore.getAccount(currentAccount);
         const accountHistory = accountObj && accountObj.get ? accountObj.get("history") : null;
 
@@ -70,7 +70,7 @@ class History extends Component {
         //alert(this.state.isRefreshing);
 
       }).catch(err => {
-        console.error("=====[History.js]::componentDidMount - : FetchChain:getAccount is : err ", err);
+        console.error("=====[History.js]::fetchHistoryList - : FetchChain:getAccount is : err ", err);
         this.fetchHistoryList();
         this.setState({isRefreshing: false});
       })
