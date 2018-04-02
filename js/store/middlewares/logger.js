@@ -10,7 +10,7 @@ export default function () {
       process.env.NODE_ENV !== 'production'
       && !NO_LOG.includes(action.type)
     ) {
-      console.log("=====LOGGER-action ", action);
+      console.log('=====LOGGER-action ', action);
     }
     return result;
   };

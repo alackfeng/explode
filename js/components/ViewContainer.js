@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import styled from 'styled-components/native';
 
-import { Colors } from "../libs/Colors";
+import { Colors } from '../libs/Colors';
 
 
 type Props = {

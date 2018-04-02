@@ -1,5 +1,5 @@
 import I18n, { getLanguages } from 'react-native-i18n';
-import { zh, en } from "./locales";
+import { zh, en } from './locales';
 
 if (typeof navigator === 'object' && navigator) {
   const locale = navigator.userLanguage
@@ -7,7 +7,7 @@ if (typeof navigator === 'object' && navigator) {
     || navigator.browserLanguage
     || navigator.systemLanguage;
 
-	if (locale) {
+  if (locale) {
     I18n.locale = locale;
   }
 }
@@ -15,8 +15,8 @@ if (typeof navigator === 'object' && navigator) {
 
 I18n.fallbacks = true;
 I18n.translations = {
-	en,
-	zh,
+  en,
+  zh,
 };
 
 export default I18n;

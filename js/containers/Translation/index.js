@@ -4,7 +4,7 @@ import {
   Text,
 } from 'react-native';
 import I18n from 'react-native-i18n';
-import { translate, locale } from "../../libs";
+import { translate, locale } from '../../libs';
 
 import styles from './styles';
 

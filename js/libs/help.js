@@ -1,4 +1,4 @@
-import { Colors } from "./Colors";
+import { Colors } from './Colors';
 import { Animated, PixelRatio, Dimensions } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
@@ -13,9 +13,9 @@ import { NavigationActions } from 'react-navigation';
 // version: 03
 //
 
-//const React = require('react-native'); // eslint-disable-line no-undef
+// const React = require('react-native'); // eslint-disable-line no-undef
 
-//const { PixelRatio, Dimensions } = React;
+// const { PixelRatio, Dimensions } = React;
 
 const pixelRatio = PixelRatio.get();
 const deviceHeight = Dimensions.get('window').height;
@@ -30,7 +30,7 @@ const deviceWidth = Dimensions.get('window').width;
 // console.log('normalizeText getDW ->', deviceWidth);
 // console.log('normalizeText getPSFLS ->', layoutSize);
 
-export const normalize = size => {
+export const normalize = (size) => {
   if (pixelRatio === 2) {
     // iphone 5s and older Androids
     if (deviceWidth < 360) {
@@ -41,7 +41,8 @@ export const normalize = size => {
     if (deviceHeight < 667) {
       return size;
       // iphone 6-6s
-    } else if (deviceHeight >= 667 && deviceHeight <= 735) {
+    }
+    else if (deviceHeight >= 667 && deviceHeight <= 735) {
       return size * 1.15;
     }
 
@@ -99,8 +100,7 @@ export const SCREEN_HEIGHT = deviceHeight;
 export const PIXEL_RATIO = pixelRatio;
 
 
-
-export const getFontColorByBackground = bgColor => {
+export const getFontColorByBackground = (bgColor) => {
   const r = parseInt(bgColor.substr(0, 2), 16);
   const g = parseInt(bgColor.substr(2, 2), 16);
   const b = parseInt(bgColor.substr(4, 2), 16);
@@ -115,7 +115,7 @@ export const createActionSet = actionName => ({
   ERROR: `${actionName}_ERROR`,
 });
 
-export const loadingAnimation = state => {
+export const loadingAnimation = (state) => {
   const duration = 500;
   const iterations = 10;
   let opacity1 = 0.3;
@@ -123,9 +123,7 @@ export const loadingAnimation = state => {
   const animatedTimings = [];
 
   for (let i = 0; i < iterations; i += 1) {
-    animatedTimings.push(
-      Animated.timing(state, { toValue: opacity1, duration })
-    );
+    animatedTimings.push(Animated.timing(state, { toValue: opacity1, duration }));
     const tempFrom = opacity2;
 
     opacity2 = opacity1;

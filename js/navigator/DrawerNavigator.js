@@ -1,18 +1,18 @@
 
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { Button, View, Text } from "react-native";
-import { DrawerNavigator } from "react-navigation";
+import { Button, View, Text } from 'react-native';
+import { DrawerNavigator } from 'react-navigation';
 
-import Ionicons from "react-native-vector-icons/MaterialIcons";
+import Ionicons from 'react-native-vector-icons/MaterialIcons';
 
 
 const HomeScreen = ({ navigation }) => (
   <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
     <Text>Home Screen</Text>
-    <Button 
-    	title="Tabs"
-    	onPress={()=>navigation.navigate('DrawerToggle')}
+    <Button
+      title="Tabs"
+      onPress={() => navigation.navigate('DrawerToggle')}
     />
   </View>
 );
@@ -30,7 +30,7 @@ const RootDrawer = DrawerNavigator({
       drawerLabel: 'Home',
       drawerIcon: ({ tintColor, focused }) => (
         <Ionicons
-          name={focused ? 'home': 'face'}
+          name={focused ? 'home' : 'face'}
           size={20}
           style={{ color: tintColor }}
         />
@@ -43,7 +43,7 @@ const RootDrawer = DrawerNavigator({
       drawerLabel: 'Profile',
       drawerIcon: ({ tintColor, focused }) => (
         <Ionicons
-          name={focused ? 'explore': 'fingerprint'}
+          name={focused ? 'explore' : 'fingerprint'}
           size={20}
           style={{ color: tintColor }}
         />

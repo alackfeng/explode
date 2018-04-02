@@ -1,7 +1,7 @@
 
-import React, { Component } from "react";
-import SwipeableViews from "react-swipeable-views";
-import { Colors as colors } from "../libs/Colors";
+import React, { Component } from 'react';
+import SwipeableViews from 'react-swipeable-views';
+import { Colors as colors } from '../libs/Colors';
 import {
   StyleSheet,
   Text,
@@ -10,11 +10,12 @@ import {
   Button,
 } from 'react-native';
 
-//import { Button } from 'react-native-elements';
+// import { Button } from 'react-native-elements';
 import { Icon } from '../components/Icon';
-import { normalize } from "../libs/help";
+import { normalize } from '../libs/help';
 
 import styled from 'styled-components';
+
 const Container = styled.div`
   display: flex;
   flex-wrap: nowrap;
@@ -26,40 +27,40 @@ const Container = styled.div`
   height: 100%;
 `;
 export const SwipeableView = () => (
-	<Container>
-  <SwipeableViews style={Object.assign({}, styles.slideContainer)} index={0} enableMouseEvents>
-		<div style={Object.assign({}, styles.slide, styles.slide1)}>
-      <Image
-        style={styles.logo}
-        source={require('../containers/Enter/images/reglogin-background.png')}
-      />
+  <Container>
+    <SwipeableViews style={Object.assign({}, styles.slideContainer)} index={0} enableMouseEvents>
+      <div style={Object.assign({}, styles.slide, styles.slide1)}>
+        <Image
+          style={styles.logo}
+          source={require('../containers/Enter/images/reglogin-background.png')}
+        />
       slide n°1
-    </div>
-    <div style={Object.assign({}, styles.slide, styles.slide2)}>
-      <Icon
-        style={styles.iconMargin}
-        color={colors.white}
-        size={85}
-        name="home"
-        type="octicon"
-      />
+      </div>
+      <div style={Object.assign({}, styles.slide, styles.slide2)}>
+        <Icon
+          style={styles.iconMargin}
+          color={colors.white}
+          size={85}
+          name="home"
+          type="octicon"
+        />
       slide n°2
-    </div>
-    <div style={Object.assign({}, styles.slide, styles.slide3)}>
+      </div>
+      <div style={Object.assign({}, styles.slide, styles.slide3)}>
       slide n°3
-    </div>
-    <div style={Object.assign({}, styles.slide, styles.slide4)}>
+      </div>
+      <div style={Object.assign({}, styles.slide, styles.slide4)}>
       slide n°4
-      <Button
-        title={'cancel'}
-        buttonStyle={styles.button}
-        disabled={true}
-        textStyle={styles.buttonText}
-        onPress={() => this.props.onLogin(true)}
-      />
+        <Button
+          title="cancel"
+          buttonStyle={styles.button}
+          disabled
+          textStyle={styles.buttonText}
+          onPress={() => this.props.onLogin(true)}
+        />
 
-    </div>
-	</SwipeableViews>
+      </div>
+    </SwipeableViews>
   </Container>
 );
 
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     shadowColor: colors.transparent,
   },
   buttonText: {
-   // ...fonts.fontPrimaryBold,
+    // ...fonts.fontPrimaryBold,
     fontSize: normalize(12),
   },
   slideContainer: {

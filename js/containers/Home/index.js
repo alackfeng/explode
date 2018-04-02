@@ -7,7 +7,7 @@ import {
 
 import styles from './styles';
 import { TokenPii } from './components/TokenPii';
-import { LoadingScreen, ViewContainer } from "../../components";
+import { LoadingScreen, ViewContainer } from '../../components';
 
 const Home = () => {
   return (

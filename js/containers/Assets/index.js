@@ -1,2 +1,2 @@
 
-export * from "./screens/AssetsManage";
+export * from './screens/AssetsManage';

@@ -1,34 +1,34 @@
-//import TabNavigator from './TabNavigator';
+// import TabNavigator from './TabNavigator';
 import { TabRoutes, MainRoutes, MenuRoutes } from './TabRoutes';
 import sharedTabBarOptions from './sharedTabBarOptions';
-import { TabNavigator, StackNavigator, DrawerNavigator } from "react-navigation";
-import TabBarComponent from "./TabBarComponent";
+import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
+import TabBarComponent from './TabBarComponent';
 
 const AppTabNavigator = TabNavigator(TabRoutes, {
   initialRouteName: 'Home',
   tabBarPosition: 'bottom',
-  swipeEnabled: false, //是否允许在标签之间进行滑动
+  swipeEnabled: false, // 是否允许在标签之间进行滑动
   animationEnabled: false,
   tabBarOptions: sharedTabBarOptions,
   tabBarComponent: TabBarComponent,
 });
 
 const AppDrawerDrawer = DrawerNavigator({
-  ...MenuRoutes, 
+  ...MenuRoutes,
   Main: {
-    screen: AppTabNavigator
+    screen: AppTabNavigator,
   },
 
-},);
+});
 
 const AppNavigator = StackNavigator({
-	...MainRoutes, 
-	Main: {
-		screen: AppTabNavigator
-	},
+  ...MainRoutes,
+  Main: {
+    screen: AppTabNavigator,
+  },
   Draw: {
-    screen: AppDrawerDrawer
-  }
+    screen: AppDrawerDrawer,
+  },
 }, {
   headerMode: 'screen',
   URIPrefix: 'aftbomb://',
@@ -38,7 +38,7 @@ const AppNavigator = StackNavigator({
 });
 
 AppNavigator.onNavigationStateChange = (prev, next) => {
-  alert("ssss", next);
-}
+  alert('ssss', next);
+};
 
 export default AppNavigator;

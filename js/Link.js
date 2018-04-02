@@ -1,6 +1,4 @@
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   Platform,
@@ -8,9 +6,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import {
-  NavigationActions,
-} from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 
 /**
  * A "link" for wiring up buttons to routes and the internet

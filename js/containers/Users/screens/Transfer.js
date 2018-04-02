@@ -1,47 +1,47 @@
 
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from "styled-components/native";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { View, Text, ScrollView, Dimensions, Keyboard, Platform } from "react-native";
-import { Colors, resetNavigationTo, SCREEN_WIDTH, translate, locale } from "../../../libs";
+import styled from 'styled-components/native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { View, Text, ScrollView, Dimensions, Keyboard, Platform } from 'react-native';
+import { Colors, resetNavigationTo, SCREEN_WIDTH, translate, locale } from '../../../libs';
 import { Icon, Button, List, ListItem, Avatar } from 'react-native-elements';
 
-import { ViewContainer, StyleSheet, TransactionConfirmModal } from "../../../components";
-import { triggerTrans, triggerUser, accountSearch } from "../../../actions";
-const {handle: sendTransfer} = triggerTrans;
-const {unlock: sendUnLock} = triggerUser;
+import { ViewContainer, StyleSheet, TransactionConfirmModal } from '../../../components';
+import { triggerTrans, triggerUser, accountSearch } from '../../../actions';
 
-import { ChainStore, FetchChain } from "assetfunjs/es";
-import Input from "../../../components/RNWInput";
-import { Utils } from "../../../libs/Utils";
+const { handle: sendTransfer } = triggerTrans;
+const { unlock: sendUnLock } = triggerUser;
+
+import { ChainStore, FetchChain } from 'assetfunjs/es';
+import Input from '../../../components/RNWInput';
+import { Utils } from '../../../libs/Utils';
 
 const MEMO_LIMIT = 120;
 
 const TRACE = false;
 
 class ScanButton extends Component {
-
   onPressScan = () => {
     const { navigation } = this.props;
-    //const result = "feng";
-    //navigation.state.params.handleScan(result);
-    //alert(111)
-    if(navigation)
-      navigation.navigate('Scan', {handleScan: navigation.state.params.handleScan});
+    // const result = "feng";
+    // navigation.state.params.handleScan(result);
+    // alert(111)
+    if (navigation) {
+      navigation.navigate('Scan', { handleScan: navigation.state.params.handleScan });
+    }
     else {
-      alert( translate('tips.comm.fatal', locale) );
+      alert(translate('tips.comm.fatal', locale));
     }
   }
 
   render() {
-
     const { navigation } = this.props;
 
     const title = navigation.state.params && navigation.state.params.title || 'scan';
     return (
-      <View style={{backgroundColor: 'transparent', marginRight: 10}}>
+      <View style={{ backgroundColor: 'transparent', marginRight: 10 }}>
         <Icon
           name={Platform.OS === 'web' ? 'settings-overscan' : 'qrcode-scan'}
           type={Platform.OS === 'web' ? 'material' : 'material-community'}
@@ -53,16 +53,15 @@ class ScanButton extends Component {
 }
 
 class Transfer extends Component {
-
-  static navigationOptions =  ({ navigation, screenProps}) => ({
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: translate('center.trans', locale),
-    headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-    headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+    headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
+    headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
     headerRight: <ScanButton navigation={navigation} />,
   });
 
-	constructor() {
-		super();
+  constructor() {
+    super();
 
     this.state = {
       fromUser: '',
@@ -82,7 +81,7 @@ class Transfer extends Component {
       errorName: '',
     };
 
-    this.onPressTransfer  = this.onPressTransfer.bind(this);
+    this.onPressTransfer = this.onPressTransfer.bind(this);
     this.searchAccount = this.searchAccount.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
     this.onChangeMemo = this.onChangeMemo.bind(this);
@@ -92,79 +91,86 @@ class Transfer extends Component {
     this.updateAsset = this.updateAsset.bind(this);
 
     this.scanDetails = this.scanDetails.bind(this);
-	}
+  }
 
   componentWillUnmount() {
     ChainStore.unsubscribe(this.update); // update
   }
 
   componentWillMount() {
-    
     ChainStore.subscribe(this.update); // update
 
     this.updateAsset();
-
   }
 
   componentDidMount() {
-
     // 传递函数参数到导航头，用于设置本components.state
     this.props.navigation.setParams({ handleScan: this.scanDetails });
   }
 
   scanDetails = (res, backFunc) => {
-    if(res.toAccount) 
+    if (res.toAccount) {
       this.onChangeUserName(res.toAccount);
+    }
 
     // 回退导航
-    if(backFunc)
+    if (backFunc) {
       backFunc(true);
+    }
   }
 
   update(nextProps = null) {
-    if(TRACE) console.info("=====[Transfer.js]::update - ChainStore::subscribe : ************** nextProps ", nextProps);
+    if (TRACE) console.info('=====[Transfer.js]::update - ChainStore::subscribe : ************** nextProps ', nextProps);
 
     this.updateAsset();
   }
 
 
   updateAsset = (props) => {
-
     const { navigation, currentAccount } = props || this.props;
-    if(navigation && navigation.state.params) {
+    if (navigation && navigation.state.params) {
       const { item, index } = navigation.state.params;
 
       const balanceObject = ChainStore.getObject(item.asset);
-      const asset_type = balanceObject.get("asset_type");
+      const asset_type = balanceObject.get('asset_type');
       const asset = ChainStore.getObject(asset_type);
 
-      this.setState({fromUser: currentAccount, item, index, balanceObject, asset, 
-        asset_type: asset&&asset.get("symbol"), asset_name: asset && asset.getIn(['options', 'description'])})
+      this.setState({
+        fromUser: currentAccount,
+        item,
+        index,
+        balanceObject,
+        asset,
+        asset_type: asset && asset.get('symbol'),
+        asset_name: asset && asset.getIn(['options', 'description']),
+      });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    
     // 增强用户是否存在查找
-    if(this.state.errorName) {
-      console.log("[Transfer.js]::componentWillReceiveProps - response searchAccount, so try to find it, account > ", this.state.toUser);
-      const {value, error} = this.findAccount(this.state.toUser, nextProps);
-      if(!error)
-        this.setState({toUser: value, errorName: error});
-    };
+    if (this.state.errorName) {
+      console.log('[Transfer.js]::componentWillReceiveProps - response searchAccount, so try to find it, account > ', this.state.toUser);
+      const { value, error } = this.findAccount(this.state.toUser, nextProps);
+      if (!error) {
+        this.setState({ toUser: value, errorName: error });
+      }
+    }
   }
 
   checkFininsh = () => {
-    const { fromUser, toUser, amount, asset_type, memoText } = this.state;
+    const {
+      fromUser, toUser, amount, asset_type, memoText,
+    } = this.state;
 
     // 检验有效性
-    if(!fromUser || !toUser || !amount || !asset_type) {
-      alert( translate('tips.transfer.checkagain', locale) );
+    if (!fromUser || !toUser || !amount || !asset_type) {
+      alert(translate('tips.transfer.checkagain', locale));
       return false;
     }
 
-    if(!this.props.currentAccount) {
-      alert( translate('tips.transfer.nonecurrentname', locale) );
+    if (!this.props.currentAccount) {
+      alert(translate('tips.transfer.nonecurrentname', locale));
       return false;
     }
 
@@ -173,158 +179,164 @@ class Transfer extends Component {
 
   isNodeLinked = () => {
     const { currentAccount, nodeStatus } = this.props;
-    if(TRACE) console.log("=====[Transfer.js]::isNodeLinked - ", currentAccount, nodeStatus.url, nodeStatus.status);
+    if (TRACE) console.log('=====[Transfer.js]::isNodeLinked - ', currentAccount, nodeStatus.url, nodeStatus.status);
     return (!!currentAccount && !!nodeStatus.url && nodeStatus.status === 'open');
   }
 
   onPressTransfer() {
-    const { fromUser, toUser, amount, asset_type, memoText } = this.state;
+    const {
+      fromUser, toUser, amount, asset_type, memoText,
+    } = this.state;
 
-    console.log("=====[Transfer.js]::onPressTransfer - param > ", fromUser, toUser, amount);
-    
+    console.log('=====[Transfer.js]::onPressTransfer - param > ', fromUser, toUser, amount);
+
 
     // 检验有效性
-    if(!this.checkFininsh()) {
+    if (!this.checkFininsh()) {
       return;
     }
 
-    // 节点未连接，提示用户 
-    if(!this.isNodeLinked()) {
-      this.setState({isRefreshing: false});
-      alert("节点断了，请去【用户中心】手动切换");
+    // 节点未连接，提示用户
+    if (!this.isNodeLinked()) {
+      this.setState({ isRefreshing: false });
+      alert('节点断了，请去【用户中心】手动切换');
       return;
     }
 
     // 先解锁再
-    if(!this.props.isUnLock) {
+    if (!this.props.isUnLock) {
       // 先解锁，再发交易
       this.props.sendUnLock(this.props.currentAccount, {
-        type: 'open'
+        type: 'open',
       });
-      
+
       return;
     }
 
     const memoText_ = memoText.trim();
 
     const precision = 100000000;
-    const amount_ = Utils.replace( amount );
-    let multi_factor = amount_.split(".")[1] ? amount_.split(".")[1].length : 0;
-    let trans_amount = multi_factor === 0 ? (Number(amount_) * precision) : (Number(amount_.replace(".", ""))*precision/Math.pow(10, multi_factor));
-    console.log("=====[Transfer.js]::onPressTransfer - multi_factor: ", multi_factor, " precision: ", precision, " trans_amount: ", trans_amount);
+    const amount_ = Utils.replace(amount);
+    const multi_factor = amount_.split('.')[1] ? amount_.split('.')[1].length : 0;
+    const trans_amount = multi_factor === 0 ? (Number(amount_) * precision) : (Number(amount_.replace('.', '')) * precision / Math.pow(10, multi_factor));
+    console.log('=====[Transfer.js]::onPressTransfer - multi_factor: ', multi_factor, ' precision: ', precision, ' trans_amount: ', trans_amount);
 
 
     this.props.sendTransfer(fromUser, 'transfer', {
-      from_account: fromUser, 
-      to_account: toUser, 
-      amount: parseInt(trans_amount, 10), 
+      from_account: fromUser,
+      to_account: toUser,
+      amount: parseInt(trans_amount, 10),
       asset: asset_type,
-      memo: memoText_ ? new Buffer(memoText_, "utf-8") : memoText_,
+      memo: memoText_ ? new Buffer(memoText_, 'utf-8') : memoText_,
       propose_account: null,
-      fee_asset_id: "1.3.0",
+      fee_asset_id: '1.3.0',
       // encrypt_memo: false,
     });
 
     // 清空填入数据，
-    this.setState({toUser: '', amount: '', memoText: ''});
-
+    this.setState({ toUser: '', amount: '', memoText: '' });
   }
 
   searchAccount = (name) => {
-    console.log("[Transfer.js]::searchAccount - entity : ", this.props.searchEntity);
+    console.log('[Transfer.js]::searchAccount - entity : ', this.props.searchEntity);
     this.props.accountSearch(name);
   }
 
   findAccount = (account_name, props) => {
     const { searchEntity } = props || this.props;
-    let account = searchEntity.searchAccounts.filter(a => a[0] === account_name);
-    console.log("[Transfer.js]::findAccount - searchEntity : ", account.length, searchEntity);
-    if(0 === account.length)
-      return {value: account_name, error: translate('tips.transfer.noneblockaccount', locale)};
+    const account = searchEntity.searchAccounts.filter(a => a[0] === account_name);
+    console.log('[Transfer.js]::findAccount - searchEntity : ', account.length, searchEntity);
+    if (account.length === 0) {
+      return { value: account_name, error: translate('tips.transfer.noneblockaccount', locale) };
+    }
 
-    return {value: account_name, error: null};
+    return { value: account_name, error: null };
   }
 
   checkValidUserName = (text) => {
+    const account_name = text.trim();
 
-    let account_name = text.trim();
+    if (account_name === '') {
+      return { value: account_name, error: translate('tips.transfer.noneaccount', locale) };
+    }
 
-    if(account_name === "")
-      return {value: account_name, error:  translate('tips.transfer.noneaccount', locale)};
-
-    //搜索账号是否已经注册过了，
-    if(this.searchAccount)
+    // 搜索账号是否已经注册过了，
+    if (this.searchAccount) {
       this.searchAccount(account_name);
-    
+    }
+
     return this.findAccount(account_name);
   }
 
   onChangeUserName = (text) => {
+    console.log('=====[Transfer.js]::onChangeUserName - ', text);
 
-    console.log("=====[Transfer.js]::onChangeUserName - ", text);
-
-    const {value, error} = this.checkValidUserName(text);
-    if(error) {
-      this.setState({toUser: value, errorName: error});
-    } else 
-      this.setState({toUser: value, errorName: ''});
+    const { value, error } = this.checkValidUserName(text);
+    if (error) {
+      this.setState({ toUser: value, errorName: error });
+    }
+    else {
+      this.setState({ toUser: value, errorName: '' });
+    }
   }
 
   checkValidAmount = (text) => {
-
     // 验证是否金额数字，并且小数点后8位
-    if(text && ! /^(\d+,?)+(\.[0-9]{0,8})?$/.test(text))
-      return {ret: false, valid_amount: this.state.amount};
+    if (text && !/^(\d+,?)+(\.[0-9]{0,8})?$/.test(text)) {
+      return { ret: false, valid_amount: this.state.amount };
+    }
 
-    let amount = Utils.formatAmount(text);
-    
+    const amount = Utils.formatAmount(text);
+
     return Utils.checkValidAmount(amount, 0, 90000000, 8);
   }
 
   onChangeAmount = (text) => {
+    console.log('=====[Transfer.js]::onChangeAmount - ', text);
 
-    console.log("=====[Transfer.js]::onChangeAmount - ", text);
-
-    const {ret, valid_amount} = this.checkValidAmount(text);
-    if(!ret) {
-      this.setState({amount: valid_amount, errorAmount: ''});
-    } else 
-      this.setState({amount: valid_amount, errorAmount: ''});
+    const { ret, valid_amount } = this.checkValidAmount(text);
+    if (!ret) {
+      this.setState({ amount: valid_amount, errorAmount: '' });
+    }
+    else {
+      this.setState({ amount: valid_amount, errorAmount: '' });
+    }
   }
 
   onChangeMemo = (text) => {
-    
-    let memo = text;//.trim();
+    const memo = text;// .trim();
 
-    if(memo.length <= MEMO_LIMIT) {
-      this.setState({memoText: memo});
-    } else {
-      //this.setState({memoText: this.state.memoText})
+    if (memo.length <= MEMO_LIMIT) {
+      this.setState({ memoText: memo });
+    }
+    else {
+      // this.setState({memoText: this.state.memoText})
     }
   }
 
 
-
   render() {
-
     const { currentAccount, navigation } = this.props;
-    const { item, index, asset_name, errorName } = this.state;
+    const {
+      item, index, asset_name, errorName,
+    } = this.state;
     const { balanceObject, asset, asset_type } = this.state;
-    const subTitle = `${balanceObject.get("balance")/100000000} ${asset_type}`;
+    const subTitle = `${balanceObject.get('balance') / 100000000} ${asset_type}`;
 
-    console.log("=====[Transfer.js]::render - navigation : ", navigation);
+    console.log('=====[Transfer.js]::render - navigation : ', navigation);
 
     // 兼容不同的description
-    let getAssetName = (asset_name) => {
+    const getAssetName = (asset_name) => {
       try {
         return JSON.parse(asset_name).short_name || JSON.parse(asset_name).main;
-      } catch(e) {
+      }
+      catch (e) {
         return null;
       }
-    }
+    };
 
     let assetName = asset_name && (getAssetName(asset_name)) || item.type;
-    assetName = assetName === '1.3.0' ? "assetfun" : assetName;
+    assetName = assetName === '1.3.0' ? 'assetfun' : assetName;
 
     return (
       <ViewContainer>
@@ -333,7 +345,7 @@ class Transfer extends Component {
             <Avatar
               large
               source={require('../../../components/images/assetlogo.jpg')}
-              onPress={() => console.log("Works!")}
+              onPress={() => console.log('Works!')}
               avatarStyle={styles.avatorStyle}
             />
           </View>
@@ -345,108 +357,115 @@ class Transfer extends Component {
 
 
         <ScrollView>
-        <View style={styles.bodyContainer}>
-          <View style={styles.overlay}>
-            <Input
-              containerStyle={[styles.inputContainer, {backgroundColor: '#F8F9FC', borderWidth: 0, borderColor: 'transparent'}]}
-              leftText={ translate('tips.transfer.from', locale) }
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardAppearance="light"
-              keyboardType="default"
-              returnKeyType="next"
-              editable={false}
-              ref={ input => this.fromuserInput = input }
-              onChangeText={ text => this.setState({fromUser: text})}
-              onSubmitEditing={() => {
+          <View style={styles.bodyContainer}>
+            <View style={styles.overlay}>
+              <Input
+                containerStyle={[styles.inputContainer, { backgroundColor: '#F8F9FC', borderWidth: 0, borderColor: 'transparent' }]}
+                leftText={translate('tips.transfer.from', locale)}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardAppearance="light"
+                keyboardType="default"
+                returnKeyType="next"
+                editable={false}
+                ref={input => this.fromuserInput = input}
+                onChangeText={text => this.setState({ fromUser: text })}
+                onSubmitEditing={() => {
                 this.touserInput.focus();
               }}
-              blurOnSubmit={false}
-              value={this.state.fromUser}
-              inputStyle={styles.textStyle}
-            />
-          </View>
-          <View style={styles.overlay}>
-            <Input
-              containerStyle={styles.inputContainer}
-              leftText={ translate('tips.transfer.to', locale) }
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardAppearance="light"
-              keyboardType="default"
-              returnKeyType="next"
-              ref={ input => this.touserInput = input }
-              onChangeText={ this.onChangeUserName }
-              onSubmitEditing={() => {
+                blurOnSubmit={false}
+                value={this.state.fromUser}
+                inputStyle={styles.textStyle}
+              />
+            </View>
+            <View style={styles.overlay}>
+              <Input
+                containerStyle={styles.inputContainer}
+                leftText={translate('tips.transfer.to', locale)}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardAppearance="light"
+                keyboardType="default"
+                returnKeyType="next"
+                ref={input => this.touserInput = input}
+                onChangeText={this.onChangeUserName}
+                onSubmitEditing={() => {
                 this.amountInput.focus();
               }}
-              blurOnSubmit={false}
-              value={this.state.toUser}
-              displayError={!!errorName}
-              errorMessage={errorName || ''}
-              inputStyle={styles.textStyle}
-            />
-          </View>
-          <View style={styles.overlay}>
-            <Input
-              containerStyle={styles.inputContainer}
-              leftText={ translate('tips.transfer.amount', locale) }
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardAppearance="light"
-              keyboardType="default"
-              returnKeyType="next"
-              ref={ input => this.amountInput = input }
-              onChangeText={ this.onChangeAmount }
-              onSubmitEditing={() => {
+                blurOnSubmit={false}
+                value={this.state.toUser}
+                displayError={!!errorName}
+                errorMessage={errorName || ''}
+                inputStyle={styles.textStyle}
+              />
+            </View>
+            <View style={styles.overlay}>
+              <Input
+                containerStyle={styles.inputContainer}
+                leftText={translate('tips.transfer.amount', locale)}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardAppearance="light"
+                keyboardType="default"
+                returnKeyType="next"
+                ref={input => this.amountInput = input}
+                onChangeText={this.onChangeAmount}
+                onSubmitEditing={() => {
                 this.memoInput.focus();
               }}
-              blurOnSubmit={false}
-              value={this.state.amount}
-              inputStyle={styles.textStyle}
-            />
-          </View>
-          <View style={styles.overlay}>
-            <Input
-              containerStyle={[styles.inputContainer, {height: 110, flexDirection: 'column'}]}
-              leftText={ translate('tips.transfer.memo', locale) }
-              leftContainerStyle={{textAlign: 'left', width: SCREEN_WIDTH, height: 30}}
-              inputStyle={{height: 70, textAlign: 'justify', marginLeft: 10, marginRight: 10, width: SCREEN_WIDTH-20}}
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardAppearance="light"
-              keyboardType="default"
-              returnKeyType="done"
-              ref={ input => this.memoInput = input }
-              onChangeText={ this.onChangeMemo }
-              onSubmitEditing={() => {
-                //this.commitInput.focus();
-                Keyboard.dismiss()
+                blurOnSubmit={false}
+                value={this.state.amount}
+                inputStyle={styles.textStyle}
+              />
+            </View>
+            <View style={styles.overlay}>
+              <Input
+                containerStyle={[styles.inputContainer, { height: 110, flexDirection: 'column' }]}
+                leftText={translate('tips.transfer.memo', locale)}
+                leftContainerStyle={{ textAlign: 'left', width: SCREEN_WIDTH, height: 30 }}
+                inputStyle={{
+ height: 70, textAlign: 'justify', marginLeft: 10, marginRight: 10, width: SCREEN_WIDTH - 20,
+}}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardAppearance="light"
+                keyboardType="default"
+                returnKeyType="done"
+                ref={input => this.memoInput = input}
+                onChangeText={this.onChangeMemo}
+                onSubmitEditing={() => {
+                // this.commitInput.focus();
+                Keyboard.dismiss();
               }}
-              blurOnSubmit={false}
-              value={this.state.memoText}
-              multiline={true}
-              numberOfLines={5}
+                blurOnSubmit={false}
+                value={this.state.memoText}
+                multiline
+                numberOfLines={5}
+              />
+            </View>
+          </View>
+          <View style={styles.warningContainer}>
+            <Icon
+              type={Platform.OS === 'web' ? 'material' : 'font-awesome'}
+              name={Platform.OS === 'web' ? 'warning' : 'exclamation-circle'}
+              color="red"
+            />
+            <Text style={{
+marginLeft: 5, textAlign: 'left', color: 'gray', fontSize: 14, marginRight: 5, width: SCREEN_WIDTH - 60,
+}}
+            >{ translate('tips.transfer.warning', locale) }
+            </Text>
+          </View>
+          <View style={{ height: 100, flexDirection: 'row' }}>
+            <Button
+              text={translate('tips.transfer.commit', locale)}
+              ref={input => this.commitInput = input}
+              buttonStyle={styles.buttonStyle}
+              containerStyle={{ marginVertical: 10 }}
+              textStyle={{ fontWeight: 'bold', fontSize: 16 }}
+              onPress={this.onPressTransfer}
             />
           </View>
-        </View>
-        <View style={styles.warningContainer}>
-          <Icon 
-            type={Platform.OS === 'web' ? 'material' : 'font-awesome'}
-            name={Platform.OS === 'web' ? 'warning' : 'exclamation-circle'} 
-            color={'red'} />
-          <Text style={{marginLeft: 5, textAlign: 'left', color: 'gray', fontSize: 14, marginRight: 5, width: SCREEN_WIDTH-60}}>{ translate('tips.transfer.warning', locale) }</Text>
-        </View>
-        <View style={{height: 100, flexDirection: 'row'}}>
-          <Button
-            text ={ translate('tips.transfer.commit', locale) }
-            ref={ input => this.commitInput = input }
-            buttonStyle={styles.buttonStyle}
-            containerStyle={{marginVertical: 10}}
-            textStyle={{fontWeight: 'bold', fontSize: 16}}
-            onPress={this.onPressTransfer}
-          />
-        </View>
         </ScrollView>
       </ViewContainer>
     );
@@ -477,9 +496,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   avatorStyle: {
-    backgroundColor: 'red', 
-    height: 80, 
-    width: 100
+    backgroundColor: 'red',
+    height: 80,
+    width: 100,
   },
   itemContainer: {
     justifyContent: 'center',
@@ -499,45 +518,45 @@ const styles = StyleSheet.create({
     marginTop: 2.5,
   },
   bodyContainer: {
-    backgroundColor: 'white', 
-    width: SCREEN_WIDTH, 
-    alignItems: 'center'
+    backgroundColor: 'white',
+    width: SCREEN_WIDTH,
+    alignItems: 'center',
   },
   inputContainer: {
-    marginLeft: 0, 
+    marginLeft: 0,
     marginRight: 0,
-    borderWidth: 0, 
+    borderWidth: 0,
     borderBottomWidth: 0.5,
-    borderBottomColor: '#DFDFDF', 
-    height: 50, 
-    width: SCREEN_WIDTH, 
+    borderBottomColor: '#DFDFDF',
+    height: 50,
+    width: SCREEN_WIDTH,
     backgroundColor: 'white',
   },
   textStyle: {
-    textAlign: 'right', 
-    marginRight: 0, 
-    color: '#666666'
+    textAlign: 'right',
+    marginRight: 0,
+    color: '#666666',
   },
   warningContainer: {
-    marginTop: 20, 
-    marginLeft: 20, 
-    marginRight: 20, 
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
     marginBottom: 20,
-    flexDirection: 'row', 
-    backgroundColor: 'transparent', 
-    width: SCREEN_WIDTH*0.9
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    width: SCREEN_WIDTH * 0.9,
   },
   buttonStyle: {
-    height: 50, 
-    width: SCREEN_WIDTH*0.8, 
-    backgroundColor: 'rgba(35,82,164,1)', 
-    borderWidth: 1, 
-    borderColor: 'white', 
-    borderRadius: 5
-  }
+    height: 50,
+    width: SCREEN_WIDTH * 0.8,
+    backgroundColor: 'rgba(35,82,164,1)',
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 5,
+  },
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   currentAccount: state.app.currentAccount,
   nodeStatus: state.app.nodeStatus,
   isUnLock: state.users.entityUnLock.isUnLock,

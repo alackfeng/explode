@@ -1,10 +1,6 @@
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  addNavigationHelpers,
-} from 'react-navigation';
+import { addNavigationHelpers } from 'react-navigation';
 import getAction from './getAction';
 
 /**
@@ -45,15 +41,14 @@ export default (NavigationAwareView) => {
       } = this.props;
       // set webpage title when page changes
       if (typeof document !== 'undefined') {
-        let title = NavigationAwareView.router.getScreenOptions({
+        const title = NavigationAwareView.router.getScreenOptions({
           state: state.routes[state.index],
           dispatch,
         }, 'title');
-        
-        // BUG: not show right title, 
-        document.title = title ? title.title : document.title;
-        console.log("----- URIWrapper.js::NavigationContainer - title - ", document.title);
 
+        // BUG: not show right title,
+        document.title = title ? title.title : document.title;
+        console.log('----- URIWrapper.js::NavigationContainer - title - ', document.title);
       }
       // when url is changed, dispatch action to update view
       if (typeof window !== 'undefined') {
@@ -81,17 +76,20 @@ export default (NavigationAwareView) => {
         window.history.pushState({}, state.title, uri);
       }
       // set webpage title when page changes
-      let title = NavigationAwareView.router.getScreenOptions({
+      const title = NavigationAwareView.router.getScreenOptions({
         state: state.routes[state.index],
         dispatch,
       }, 'title');
 
-      // BUG: not show right title, 
+      // BUG: not show right title,
       document.title = title ? title.title : document.title;
-      console.log("----- URIWrapper.js::NavigationContainer - title ", uri, state.title, document.title);
+      console.log(
+        '----- URIWrapper.js::NavigationContainer - title ',
+        uri, state.title, document.title
+      );
     }
     getURIForAction = (action) => {
-      console.log("----- URIWrapper.js::NavigationContainer - getURIForAction - ", action.type);
+      console.log('----- URIWrapper.js::NavigationContainer - getURIForAction - ', action.type);
 
       const state = NavigationAwareView.router.getStateForAction(action, this.state) || this.state;
       const {
@@ -100,7 +98,10 @@ export default (NavigationAwareView) => {
       return `/${path}`;
     }
     getActionForPathAndParams = (path, params) => {
-      console.log("----- URIWrapper.js::NavigationContainer - getActionForPathAndParams - ", path, params);
+      console.log(
+        '----- URIWrapper.js::NavigationContainer - getActionForPathAndParams - ',
+        path, params
+      );
       return NavigationAwareView.router.getActionForPathAndParams(path, params);
     }
     render() {

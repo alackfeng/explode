@@ -10,7 +10,7 @@ import {
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { Icon } from 'react-native-elements';
 
-import { Colors as colors, fonts, normalize } from "../libs";
+import { Colors as colors, fonts, normalize } from '../libs';
 
 const STICKY_HEADER_HEIGHT = 62;
 

@@ -12,7 +12,7 @@ export type AuthAccount = {
   encrypted_key: string,
   password_pubkey: string,
   keys: {
-    pubKey: string //"privKey"
+    pubKey: string // "privKey"
   }
 };
 
@@ -33,15 +33,14 @@ const initState = {
   nodeStatus: {
     url: null,
     status: null,
-  }
+  },
 };
 
 /**
  * Data that shouldn't be persisted across sessions can be saved here
  */
 export default function appReducer(state = initState, action) {
-
-  console.log(">>>>>[app.reducer.js]::appReducer - ", action.type, action);
+  console.log('>>>>>[app.reducer.js]::appReducer - ', action.type, action);
 
   switch (action.type) {
     case SET_APP_READY: {
@@ -57,36 +56,36 @@ export default function appReducer(state = initState, action) {
       };
     }
     case APP_FOREVER_USER_QUIT: {
-
-      let original = state.authAccounts.filter(key => {
-        ///console.log("--------------------- original ", key);
-        if(!key || !key.username || !action.username)
+      const original = state.authAccounts.filter((key) => {
+        // /console.log("--------------------- original ", key);
+        if (!key || !key.username || !action.username) {
           return;
+        }
         return (key.username !== action.username);
       });
 
-      let account = original.length ? original[0].username : null;
+      const account = original.length ? original[0].username : null;
 
       return {
         ...state,
         authAccounts: [...original],
         currentAccount: account,
-      }
+      };
     }
     case APP_FOREVER_SAVE_KEY: {
-
-      let original = state.authAccounts.filter(key => {
-        ///console.log("--------------------- original ", key);
-        if(!key || !key.username || !action.username)
+      const original = state.authAccounts.filter((key) => {
+        // /console.log("--------------------- original ", key);
+        if (!key || !key.username || !action.username) {
           return;
+        }
         return (key.username !== action.username);
       });
 
       return {
         ...state,
-        authAccounts: [...original, {username: action.username, authAccount: action.keys}],
+        authAccounts: [...original, { username: action.username, authAccount: action.keys }],
         currentAccount: action.username,
-      }
+      };
     }
     case APP_FOREVER_INIT_NODES: {
       return {
@@ -95,8 +94,8 @@ export default function appReducer(state = initState, action) {
         nodeStatus: {
           url: null, // not use action.url,
           status: null,
-        }
-      }
+        },
+      };
     }
     case APP_FOREVER_UPDATE_NODES: {
       return {
@@ -104,25 +103,24 @@ export default function appReducer(state = initState, action) {
         nodesApi: action.nodes ? action.nodes : state.nodesApi,
         nodeStatus: {
           url: action.url,
-          status: action.url !== state.nodeStatus.url ? 'reset' : state.nodeStatus.status
-        }
-      }
+          status: action.url !== state.nodeStatus.url ? 'reset' : state.nodeStatus.status,
+        },
+      };
     }
     case APP_FOREVER_CHANGE_RPC_STATUS: {
-
-      if(action.url !== state.nodeStatus.url) {
+      if (action.url !== state.nodeStatus.url) {
         return state;
       }
 
-      //只变更相应url的状态
-      let changeStatus = (action.status === 'reconnect' ? state.nodeStatus.status  : action.status);
+      // 只变更相应url的状态
+      const changeStatus = (action.status === 'reconnect' ? state.nodeStatus.status : action.status);
       return {
         ...state,
         nodeStatus: {
           url: action.url ? action.url : state.nodeStatus.url,
           status: changeStatus,
-        }
-      }
+        },
+      };
     }
     default:
       return state;

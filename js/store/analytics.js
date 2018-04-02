@@ -1,7 +1,7 @@
+/* eslint-disable */
+import track from './track';
 
-import track from "./track";
-
-export default store => next => action => {
+export default store => next => (action) => {
   track(action);
   return next(action);
 };

@@ -1,14 +1,10 @@
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   Linking,
   Platform,
 } from 'react-native';
-import {
-  addNavigationHelpers,
-} from 'react-navigation';
+import { addNavigationHelpers } from 'react-navigation';
 import getAction from './getAction';
 
 /**
@@ -21,7 +17,7 @@ export default (NavigationAwareView) => {
       state: PropTypes.object,
     }
     state = {
-      initUrl: null,
+      // initUrl: null,
     };
     async componentDidMount() {
       const {
@@ -30,11 +26,13 @@ export default (NavigationAwareView) => {
 
       if (typeof Linking.getInitialURL === 'function') {
         const initURL = await Linking.getInitialURL();
-        
+
         if (initURL && initURL.length) {
-          
           const pathFromURL = initURL.slice(initURL.indexOf('://') + 3);
-          console.log("=====[URIWrapper.js]::NavigationContainer - call deepLinkAction - ", pathFromURL);
+          console.log(
+            '=====[URIWrapper.js]::NavigationContainer - call deepLinkAction - ',
+            pathFromURL
+          );
           const deepLinkAction = getAction(
             NavigationAwareView.router,
             // Android usually includes hostname so slice that out too

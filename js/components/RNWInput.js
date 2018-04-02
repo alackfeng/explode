@@ -17,7 +17,6 @@ const ViewPropTypes = RNViewPropTypes || View.propTypes;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class Input extends Component {
-
   componentWillMount() {
     this.shake = this.shake.bind(this);
     this.shakeAnimationValue = new Animated.Value(0);
@@ -87,10 +86,10 @@ class Input extends Component {
               {icon}
             </View>}
           {leftText && <View
-              style={[styles.leftContainer, { height: 50 }, leftContainerStyle]}
-            >
-              <Text style={[styles.leftTextContainer, leftTextContainerStyle]}>{leftText}</Text>
-            </View>}
+            style={[styles.leftContainer, { height: 50 }, leftContainerStyle]}
+          >
+            <Text style={[styles.leftTextContainer, leftTextContainerStyle]}>{leftText}</Text>
+          </View>}
           <TextInput
             ref={input => (this.input = input)}
             underlineColorAndroid="transparent"
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
     color: '#FF2D00',
     margin: 5,
     fontSize: 12,
-    width: SCREEN_WIDTH * 0.78
+    width: SCREEN_WIDTH * 0.78,
   },
   rightTextContainer: {
     color: 'rgba(171, 189, 219, 1)',
@@ -166,7 +165,7 @@ const styles = StyleSheet.create({
   },
   leftContainer: {
     justifyContent: 'center',
-  }
+  },
 });
 
 export default Input;

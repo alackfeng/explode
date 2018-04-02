@@ -22,26 +22,27 @@
  * @flow
  */
 
-"use strict";
 
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Platform } from 'react-native';
 
 export const MStyleSheet = {
   create(styles: Object): { [name: string]: number } {
     const platformStyles = {};
-    Object.keys(styles).forEach(name => {
-      let { ios, android, web, ...style } = { ...styles[name] };
-      if (ios && Platform.OS === "ios") {
+    Object.keys(styles).forEach((name) => {
+      let {
+        ios, android, web, ...style
+      } = { ...styles[name] };
+      if (ios && Platform.OS === 'ios') {
         style = { ...style, ...ios };
       }
-      if (android && Platform.OS === "android") {
+      if (android && Platform.OS === 'android') {
         style = { ...style, ...android };
       }
-      if (web && Platform.OS === "web") {
+      if (web && Platform.OS === 'web') {
         style = { ...style, ...web };
       }
       platformStyles[name] = style;
     });
     return StyleSheet.create(platformStyles);
-  }
+  },
 };

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  TabRouter,
-} from 'react-navigation';
+import { TabRouter } from 'react-navigation';
 
 import AppFrame from './AppFrame';
 

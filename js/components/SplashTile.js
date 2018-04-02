@@ -11,13 +11,13 @@ import {
   ImageBackground,
 } from 'react-native';
 
-import { Text, Icon } from "react-native-elements";
+import { Text, Icon } from 'react-native-elements';
 
 const ViewPropTypes = RNViewPropTypes || View.propTypes;
 const BackgroundImage = ImageBackground || Image;
 
 
-const SplashTile = props => {
+const SplashTile = (props) => {
   const {
     title,
     icon,
@@ -94,10 +94,10 @@ const SplashTile = props => {
       width: 100,
       height: 100,
       backgroundColor: 'transparent',
-    }
+    },
   });
 
-  const  ViewContent =  view || TouchableOpacity; 
+  const ViewContent = view || TouchableOpacity;
   return (
     <ViewContent
       {...attributes}
@@ -109,7 +109,7 @@ const SplashTile = props => {
           styles.imageContainer,
           imageContainerStyle && imageContainerStyle,
         ]}
-        resizeMode = 'cover'
+        resizeMode="cover"
       >
         <View
           style={[

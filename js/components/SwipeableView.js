@@ -10,10 +10,9 @@ import SwipeableViews from 'react-swipeable-views-native';
 // There is another version using the scroll component instead of animated.
 // I'm unsure which one give the best UX. Please give us some feedback.
 // import SwipeableViews from 'react-swipeable-views-native/lib/SwipeableViews.scroll';
-import { Colors as colors } from "../libs/Colors";
+import { Colors as colors } from '../libs/Colors';
 import { Button, Icon } from 'react-native-elements';
-import { normalize } from "../libs/help";
-
+import { normalize } from '../libs/help';
 
 
 const styles = StyleSheet.create({
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
     shadowColor: colors.transparent,
   },
   buttonText: {
-   // ...fonts.fontPrimaryBold,
+    // ...fonts.fontPrimaryBold,
     fontSize: normalize(12),
   },
   slideContainer: {
@@ -102,9 +101,9 @@ export const SwipeableView = () => (
         slide n°4
       </Text>
       <Button
-        title={'cancel'}
+        title="cancel"
         buttonStyle={styles.button}
-        disabled={true}
+        disabled
         textStyle={styles.buttonText}
         onPress={() => this.props.onLogin(true)}
       />

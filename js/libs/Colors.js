@@ -20,41 +20,40 @@
  * DEALINGS IN THE SOFTWARE
  */
 
-"use strict";
 
 /* Color Definitions
 ============================================================================= */
 
 const NAMED_COLORS = {
   // grayscale (light to dark)
-  white: "rgba(255, 255, 255, 1)",
-  bianca: "rgba(251, 249, 240, 1)",
-  timberwolf: "rgba(218, 216, 210, 1)",
-  magnesium: "rgba(178, 178, 178, 1)",
-  black: "rgba(3, 3, 3, 1)",
+  white: 'rgba(255, 255, 255, 1)',
+  bianca: 'rgba(251, 249, 240, 1)',
+  timberwolf: 'rgba(218, 216, 210, 1)',
+  magnesium: 'rgba(178, 178, 178, 1)',
+  black: 'rgba(3, 3, 3, 1)',
 
   // blues (light to dark)
-  iceberg: "rgba(216, 240, 246, 1)",
-  coolGray: "rgba(136, 145, 181, 1)",
-  blueBayoux: "rgba(101, 113, 135, 1)",
-  facebookBlue: "rgba(66, 103, 178, 1)",
-  blue: "rgba(29, 86, 251, 1)",
-  palatinateBlue: "rgba(24, 76, 223, 1)",
-  persianBlue: "rgba(23, 68, 200, 1)",
-  sapphire: "rgba(10, 42, 102, 1)",
-  sapphire2: "rgba(18, 36, 108, 1)",
-  tangaroa: "rgba(1, 23, 65, 1)",
-  blueCharcoal: "rgba(1, 10, 28, 1)",
+  iceberg: 'rgba(216, 240, 246, 1)',
+  coolGray: 'rgba(136, 145, 181, 1)',
+  blueBayoux: 'rgba(101, 113, 135, 1)',
+  facebookBlue: 'rgba(66, 103, 178, 1)',
+  blue: 'rgba(29, 86, 251, 1)',
+  palatinateBlue: 'rgba(24, 76, 223, 1)',
+  persianBlue: 'rgba(23, 68, 200, 1)',
+  sapphire: 'rgba(10, 42, 102, 1)',
+  sapphire2: 'rgba(18, 36, 108, 1)',
+  tangaroa: 'rgba(1, 23, 65, 1)',
+  blueCharcoal: 'rgba(1, 10, 28, 1)',
 
   // the rest
-  yellow: "rgba(246, 253, 55, 1)",
-  green: "rgba(106, 246, 162, 1)",
-  turquoise: "rgba(0, 205, 223, 1)",
-  purple: "rgba(144, 63, 199, 1)",
-  pink: "rgba(245, 64, 199, 1)",
-  darkPink: "rgba(200, 40, 159, 1)",
-  orange: "rgba(247, 144, 77, 1)",
-  salmon: "rgba(243, 91, 89, 1)"
+  yellow: 'rgba(246, 253, 55, 1)',
+  green: 'rgba(106, 246, 162, 1)',
+  turquoise: 'rgba(0, 205, 223, 1)',
+  purple: 'rgba(144, 63, 199, 1)',
+  pink: 'rgba(245, 64, 199, 1)',
+  darkPink: 'rgba(200, 40, 159, 1)',
+  orange: 'rgba(247, 144, 77, 1)',
+  salmon: 'rgba(243, 91, 89, 1)',
 };
 
 const THEME_COLORS = {
@@ -69,28 +68,28 @@ const THEME_COLORS = {
   cellBorder: NAMED_COLORS.blueCharcoal,
   lightText: NAMED_COLORS.blueBayoux,
 
-  // loading 
-  greyDark: "#999",
+  // loading
+  greyDark: '#999',
   greyLight: '#f1f1f1',
   primaryDark: '#262626',
 
   // legacy
-  inactiveText: "#9B9B9B",
+  inactiveText: '#9B9B9B',
 
   // aft专用
-  menuBlue: "rgba(35,82,164,1)",
-  borderGray: "rgba(0,0,0,0.1)",
-  quitGray: "rgba(229,109,57,1)",
-  titleGray: "rgba(40,65,89,1)",
-  headerGray: "rgba(102,102,102,1)",
+  menuBlue: 'rgba(35,82,164,1)',
+  borderGray: 'rgba(0,0,0,0.1)',
+  quitGray: 'rgba(229,109,57,1)',
+  titleGray: 'rgba(40,65,89,1)',
+  headerGray: 'rgba(102,102,102,1)',
 };
 
 const LOCATION_COLORS = {
-  "220A": NAMED_COLORS.sapphire2,
-  "220B": NAMED_COLORS.purple,
-  "220C": NAMED_COLORS.blue,
-  "210F": NAMED_COLORS.turquoise,
-  "210G": NAMED_COLORS.turquoise,
+  '220A': NAMED_COLORS.sapphire2,
+  '220B': NAMED_COLORS.purple,
+  '220C': NAMED_COLORS.blue,
+  '210F': NAMED_COLORS.turquoise,
+  '210G': NAMED_COLORS.turquoise,
   LL20: NAMED_COLORS.green,
   REGISTRATION: NAMED_COLORS.tangaroa,
   REGISTRATIONDESK: NAMED_COLORS.tangaroa,
@@ -102,7 +101,7 @@ const LOCATION_COLORS = {
   C: NAMED_COLORS.blue,
   F: NAMED_COLORS.turquoise,
   G: NAMED_COLORS.turquoise,
-  LL: NAMED_COLORS.green
+  LL: NAMED_COLORS.green,
 };
 
 /* Exports
@@ -111,18 +110,18 @@ const LOCATION_COLORS = {
 export const Colors = {
   ...THEME_COLORS, // pass through all theme colors (named and by-purpose)
 
-  colorWithAlpha(name: ?string = "blue", opacity: number = 1) {
+  colorWithAlpha(name: ?string = 'blue', opacity: number = 1) {
     if (!THEME_COLORS[name]) {
-      name = "blue";
+      name = 'blue';
     }
-    return THEME_COLORS[name].split(", 1)").join(`, ${opacity})`);
+    return THEME_COLORS[name].split(', 1)').join(`, ${opacity})`);
   },
 
   colorForLocation(location: ?string): string {
     if (!location) {
       return NAMED_COLORS.tangaroa;
     }
-    let color = LOCATION_COLORS[location.replace(/ /g, "").toUpperCase()];
+    let color = LOCATION_COLORS[location.replace(/ /g, '').toUpperCase()];
     if (!color) {
       color = NAMED_COLORS.tangaroa;
     }
@@ -132,5 +131,5 @@ export const Colors = {
   colorForTopic(count: number, index: number): string {
     const hue = Math.round(360 * index / (count + 1));
     return `hsl(${hue}, 74%, 65%)`;
-  }
+  },
 };

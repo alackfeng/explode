@@ -1,15 +1,11 @@
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   View,
   Platform,
   StyleSheet,
 } from 'react-native';
-import {
-  addNavigationHelpers,
-} from 'react-navigation';
+import { addNavigationHelpers } from 'react-navigation';
 
 import SceneContainer from './SceneContainer';
 import { CustomTabBar } from '../components';

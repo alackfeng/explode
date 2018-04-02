@@ -1,6 +1,4 @@
-import {
-  Platform,
-} from 'react-native';
+/* eslint-disable */
 import {
   createStore,
   applyMiddleware,
@@ -8,19 +6,18 @@ import {
 } from 'redux';
 import {
   persistStore,
-  autoRehydrate,
-  persistCombineReducers
+  persistCombineReducers,
 } from 'redux-persist';
 
 import thunkMiddleware from 'redux-thunk';
-import loggerMiddleware from './middlewares/logger';
+// import loggerMiddleware from './middlewares/logger';
 
 // add logger promise array to middleware
-import { createLogger } from "redux-logger";
-import promise from "./promise";
-import array from "./array";
-import analytics from "./analytics";
-import { isDebuggingInChrome } from "../env";
+import { createLogger } from 'redux-logger';
+import promise from './promise';
+import array from './array';
+// import analytics from './analytics';
+import { isDebuggingInChrome } from '../env';
 
 import storageEngine from './storageEngine';
 import reducers from '../reducers';
@@ -28,11 +25,14 @@ import { SET_APP_READY, initConnect } from '../actions';
 
 // add support redux saga
 import 'regenerator-runtime/runtime';
-import createSagaMiddleware, { END } from "redux-saga";
+import createSagaMiddleware, { END } from 'redux-saga';
+
+
+
 const sagaMiddleware = createSagaMiddleware();
 
 
-//const isDebuggingInChrome = true;
+// const isDebuggingInChrome = true;
 const logger = createLogger({
   predicate: (getState, action) => isDebuggingInChrome,
   collapsed: true,
@@ -43,18 +43,17 @@ const persistConfig = {
   key: 'app:',
   // don't restore data from these reducers
   blacklist: [
-    //'app',
+    // 'app',
     'nav',
     'comm',
     'users',
   ],
-  storage: storageEngine
+  storage: storageEngine,
 };
-//if (Platform.OS !== 'web') {
-//  persistConfig.storage = storageEngine;
-//}
 
-let reducer = persistCombineReducers(persistConfig, reducers);
+const reducer = persistCombineReducers(persistConfig, reducers);
+
+/* eslint-enable */
 
 let store;
 
@@ -62,23 +61,22 @@ let store;
  * exportable function for creating the store
  * (exported for use with server-side rendering)
  */
-export function generateStore(initialState, hydrate = true) {
-
+export function generateStore(initialState /* hydrate = true */) {
   // conditionally add args to store
   const args = [
-    //hydrate ? autoRehydrate() : null,
-    applyMiddleware(sagaMiddleware, thunkMiddleware, promise, array, /*analytics, loggerMiddleware,*/ logger),
+    // hydrate ? autoRehydrate() : null,
+    applyMiddleware(
+      sagaMiddleware, thunkMiddleware, promise,
+      array, /* analytics, loggerMiddleware, */ logger
+    ),
   ].filter(arg => arg !== null);
 
-  
 
   // create the store
   return createStore(
     reducer,
     initialState,
-    compose(
-      ...args
-    )
+    compose(...args)
   );
 }
 
@@ -98,7 +96,7 @@ function init() {
   persistStore(store, null, () => {
     // called when rehydration complete
 
-    store.dispatch(initConnect([], null)); //清理节点数据
+    store.dispatch(initConnect([], null)); // 清理节点数据
     store.dispatch({
       type: SET_APP_READY,
       appReady: true,
@@ -107,9 +105,9 @@ function init() {
 
   // add support redux saga
   store.runSaga = sagaMiddleware.run;
-  store.close = () => store.dispatch(END)
+  store.close = () => store.dispatch(END);
 
-  if(isDebuggingInChrome) {
+  if (isDebuggingInChrome) {
     window.store = store;
   }
   return store;

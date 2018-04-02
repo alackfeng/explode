@@ -1,18 +1,12 @@
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   View,
   Text,
 } from 'react-native';
-import {
-  connect,
-} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {
-  getRandomNumber,
-} from '../../../actions';
+import { getRandomNumber } from '../../../actions';
 
 class Random extends Component {
   componentWillMount() {

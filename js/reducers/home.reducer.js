@@ -1,13 +1,12 @@
 
-import { GET_RANDOM } from "../actions";
+import { GET_RANDOM } from '../actions';
 
 const initState = {
   random: null,
 };
 
 export default function homeReducer(state = initState, action) {
-
-  //DEBUG console.log(">>>>>[home.reducer.js]::homeReducer - ", action.type, action);
+  // DEBUG console.log(">>>>>[home.reducer.js]::homeReducer - ", action.type, action);
 
   switch (action.type) {
     case GET_RANDOM: {

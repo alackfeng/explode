@@ -1,10 +1,6 @@
 
-import * as _api from './Api'
-//import { browserHistory } from 'react-router'
+import * as UsersBox from './user.box';
 
+export { UsersBox };
 
-export const api = _api
-//export const history = browserHistory
-
-
-export * from "./user.box";
+export default UsersBox;

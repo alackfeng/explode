@@ -1,6 +1,4 @@
-import {
-  StyleSheet,
-} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   customTabBar: {
@@ -17,7 +15,7 @@ const styles = StyleSheet.create({
   linkContent: {
     display: 'flex',
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   link: {
     alignItems: 'center',

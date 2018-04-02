@@ -1,6 +1,6 @@
 // Translations
 import I18n from './I18n';
-import willTransitionTo from "./routerTransition";
+import willTransitionTo from './routerTransition';
 
 
 /**
@@ -17,17 +17,17 @@ if (process.env.NODE_ENV === 'production') {
 export const translate = (key, locale, interpolation = null) =>
   I18n.t(key, { locale, ...interpolation });
 
-export const locale = null; //I18n.locale;
+export const locale = null; // I18n.locale;
 
 export const switchLanguage = (language) => {
-	I18n.locale = language || 'en';
-	alert(language);
-}
+  I18n.locale = language || 'en';
+  alert(language);
+};
 
-export * from "./help";
-export * from "./Colors";
+export * from './help';
+export * from './Colors';
 
 export { willTransitionTo };
 
-export * from "./Utils";
+export * from './Utils';
 

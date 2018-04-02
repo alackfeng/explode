@@ -1,21 +1,21 @@
 
-import React, { Component } from "react";
-import styled from "styled-components/native";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { ListView, Text, Dimensions, FlatList, ScrollView } from "react-native";
-import { Colors, SCREEN_WIDTH, normalize } from "../../../libs";
-import { SearchBar, List, ListItem } from "react-native-elements";
-import { ViewContainer, StyleSheet } from "../../../components";
-import { nodeConnect, updateRpcConnectionStatus } from "../../../actions";
+import React, { Component } from 'react';
+import styled from 'styled-components/native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ListView, Text, Dimensions, FlatList, ScrollView } from 'react-native';
+import { Colors, SCREEN_WIDTH, normalize } from '../../../libs';
+import { SearchBar, List, ListItem } from 'react-native-elements';
+import { ViewContainer, StyleSheet } from '../../../components';
+import { nodeConnect, updateRpcConnectionStatus } from '../../../actions';
 
-import { Apis } from "assetfunjs-ws";
-import { ChainStore, FetchChain, ChainTypes } from "assetfunjs/es";
+import { Apis } from 'assetfunjs-ws';
+import { ChainStore, FetchChain, ChainTypes } from 'assetfunjs/es';
 
-import { nodeList } from "../../../env";
-import willTransitionTo from "../../../libs/routerTransition";
+import { nodeList } from '../../../env';
+import willTransitionTo from '../../../libs/routerTransition';
 
-import { NodeItem } from "./NodeItem";
+import { NodeItem } from './NodeItem';
 
 const Header = styled.View`
   margin-top: 10;
@@ -66,119 +66,111 @@ const SLListView = styled.ListView`
 
 
 class Node extends Component {
-
 	props: {
 		url: string,
 		status: boolean
 	}
 
 	constructor(props) {
-		super(props);
+	  super(props);
 
-		let nodeList = props.nodeList;
+	  const nodeList = props.nodeList;
 
-		var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-		this.state = {
-			dataSource: ds.cloneWithRows(nodeList),
-			statusList: [],
-			query: '',
-      searchStart: false,
-      searchFocus: false,
-      nodeList: nodeList,
-      ds: ds,
-		};
+	  const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+	  this.state = {
+	    dataSource: ds.cloneWithRows(nodeList),
+	    statusList: [],
+	    query: '',
+	    searchStart: false,
+	    searchFocus: false,
+	    nodeList,
+	    ds,
+	  };
 
-		this.search 	 	= this.search.bind(this);
-		this.getNodes 	= this.getNodes.bind(this);
-		this.renderRow	= this.renderRow.bind(this);
-		this.updateConnect = this.updateConnect.bind(this);
-
-
+	  this.search 	 	= this.search.bind(this);
+	  this.getNodes 	= this.getNodes.bind(this);
+	  this.renderRow	= this.renderRow.bind(this);
+	  this.updateConnect = this.updateConnect.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log("+++++[Node.js]::componentWillReceiveProps - node ...", nextProps.nodeStatus.status, nextProps.nodeStatus.url, this.state.statusList);
-		if(nextProps.nodeStatus) {
-			
-			this.state.statusList.length && this.state.statusList.push(nextProps.nodeStatus);
+	  console.log('+++++[Node.js]::componentWillReceiveProps - node ...', nextProps.nodeStatus.status, nextProps.nodeStatus.url, this.state.statusList);
+	  if (nextProps.nodeStatus) {
+	    this.state.statusList.length && this.state.statusList.push(nextProps.nodeStatus);
 
-			this.setState({
-				statusList: this.state.statusList.length ? this.state.statusList : [nextProps.nodeStatus],
-				dataSource: this.state.ds.cloneWithRows(nextProps.nodeList),
-			});
-		}
+	    this.setState({
+	      statusList: this.state.statusList.length ? this.state.statusList : [nextProps.nodeStatus],
+	      dataSource: this.state.ds.cloneWithRows(nextProps.nodeList),
+	    });
+	  }
 	}
 
 	componentDidMount() {
-		
-		const { nodeStatus } = this.props;
-		// call someting, example api to node
-		this.setState({statusList: [nodeStatus]});
-		
-		if(nodeStatus.url) {
-			console.log("+++++[Node.js]::nodeConnect - ", nodeStatus.url, nodeStatus.status, ", Not use nodeTransition!!!");
-			return;
-		}
+	  const { nodeStatus } = this.props;
+	  // call someting, example api to node
+	  this.setState({ statusList: [nodeStatus] });
 
-		let nodeTransition = (res, nodeList) => {
-			console.log("+++++[Node.js]::nodeConnect - call api...", res);
-			const url = res;
-			this.props.nodeConnect(nodeList, url);
-		};
+	  if (nodeStatus.url) {
+	    console.log('+++++[Node.js]::nodeConnect - ', nodeStatus.url, nodeStatus.status, ', Not use nodeTransition!!!');
+	    return;
+	  }
 
-		willTransitionTo(null, null, nodeTransition);
-		Apis.setRpcConnectionStatusCallback(this.updateRpcConnectionStatus.bind(this));
+	  const nodeTransition = (res, nodeList) => {
+	    console.log('+++++[Node.js]::nodeConnect - call api...', res);
+	    const url = res;
+	    this.props.nodeConnect(nodeList, url);
+	  };
 
+	  willTransitionTo(null, null, nodeTransition);
+	  Apis.setRpcConnectionStatusCallback(this.updateRpcConnectionStatus.bind(this));
 	}
 
 	updateRpcConnectionStatus(status, url) {
-		console.log("=====[Node.js]::updateRpcConnectionStatus - status - ", status, url);
-		this.props.updateRpcConnectionStatus(status, url);
+	  console.log('=====[Node.js]::updateRpcConnectionStatus - status - ', status, url);
+	  this.props.updateRpcConnectionStatus(status, url);
 	}
 
 	renderRow(rowData, sectionID, rowID) {
+	  const { nodeStatus } = this.props;
 
-		const { nodeStatus } = this.props;
-
-		return (
-			<NodeItem item={rowData} index={rowID} updateConnect={this.updateConnect} linknode={nodeStatus} />
-		);
+	  return (
+  <NodeItem item={rowData} index={rowID} updateConnect={this.updateConnect} linknode={nodeStatus} />
+	  );
 	}
 
 	renderNodeList() {
-		return (
-			<SLListView 
-				dataSource={this.state.dataSource}
-				renderRow={this.renderRow}
-				enableEmptySections={true}
-			/>
-		);
+	  return (
+  <SLListView
+    dataSource={this.state.dataSource}
+    renderRow={this.renderRow}
+    enableEmptySections
+  />
+	  );
 	}
 
 	search(query) {
-    //const { searchUserRepos } = this.props;
-    //const user = this.props.navigation.state.params.user;
-    console.log("=====[Node.js]::search - query - ", query);
-    if (query !== '') {
-      this.setState({
-        searchStart: true,
-        query,
-      });
+	  // const { searchUserRepos } = this.props;
+	  // const user = this.props.navigation.state.params.user;
+	  console.log('=====[Node.js]::search - query - ', query);
+	  if (query !== '') {
+	    this.setState({
+	      searchStart: true,
+	      query,
+	    });
 
-      //searchUserRepos(query, user);
-    }
-  }
+	    // searchUserRepos(query, user);
+	  }
+	}
 
-  updateConnect(connectUrl) {
+	updateConnect(connectUrl) {
+  	console.log('++++++[Node.js]::updateConnect - node - ', connectUrl);
 
-  	console.log("++++++[Node.js]::updateConnect - node - ", connectUrl);
+  	// ChainStore.clearCache();
+  	Apis.reset(connectUrl, true); // 去掉注释的内容（init_promise），内存、CPU不再高涨
 
-  	//ChainStore.clearCache();
-  	Apis.reset(connectUrl, true); //去掉注释的内容（init_promise），内存、CPU不再高涨
-  	
 
   	this.props.nodeConnect(null, connectUrl);
-  }
+	}
 
   getNodes = () => {
     const { nodeList } = this.state;
@@ -190,47 +182,45 @@ class Node extends Component {
   }
 
 
- 
-	render() {
+  render() {
+    const { nodeStatus, navigation } = this.props;
+    const { searchStart, searchFocus, query } = this.state;
 
-		const { nodeStatus, navigation } = this.props;
-		const { searchStart, searchFocus, query } = this.state;
+    console.log('=====[Node.js]::render - node - ', query, nodeStatus, navigation.state.params);
+    const showNodeList = nodeList.map((item, index) => {
+      // console.log("=====[Node.js]::render - showNodeList - ", item, index);
+      return <SLText key={index}>{index}: {item.url} - {item.location}</SLText>;
+    });
 
-		console.log("=====[Node.js]::render - node - ", query, nodeStatus, navigation.state.params);
-		let showNodeList = nodeList.map((item, index) => {
-			// console.log("=====[Node.js]::render - showNodeList - ", item, index);
-			return <SLText key={index}>{index}: {item.url} - {item.location}</SLText>
-		});
+    const showStatusList = this.state.statusList.map((item, index) => {
+      return <SLText key={index}>Connect to Node-{item.url}, status-{item.status}</SLText>;
+    });
 
-		let showStatusList = this.state.statusList.map((item, index) => {
-			return <SLText key={index}>Connect to Node-{item.url}, status-{item.status}</SLText>;
-		});
-
-		return (
-			<ViewContainer>
-				<ListContainer>
-			      <ListView
-			      	enableEmptySections
-			        renderRow={this.renderRow}
-			        dataSource={this.state.dataSource}
-			        removeClippedSubviews={false}
-			      />
-			    <ScrollView style={{marginTop: 30}}>
-			    { showStatusList }
-			    </ScrollView>
-				</ListContainer>
-			</ViewContainer>
-		);
-	}
+    return (
+      <ViewContainer>
+        <ListContainer>
+          <ListView
+            enableEmptySections
+            renderRow={this.renderRow}
+            dataSource={this.state.dataSource}
+            removeClippedSubviews={false}
+          />
+          <ScrollView style={{ marginTop: 30 }}>
+            { showStatusList }
+          </ScrollView>
+        </ListContainer>
+      </ViewContainer>
+    );
+  }
 }
 
 
-const mapStateToProps = (state) => ({
-	nodeList: state.app.nodesApi,
-	nodeStatus: state.app.nodeStatus,
+const mapStateToProps = state => ({
+  nodeList: state.app.nodesApi,
+  nodeStatus: state.app.nodeStatus,
 });
 
 export const NodeScreen = connect(mapStateToProps, {
-	nodeConnect,
-	updateRpcConnectionStatus,
+  nodeConnect,
+  updateRpcConnectionStatus,
 })(Node);

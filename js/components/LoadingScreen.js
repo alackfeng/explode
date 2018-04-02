@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Animated, View } from 'react-native';
 
-import { Colors as colors } from "../libs/Colors";
-import { loadingAnimation } from "../libs/help";
+import { Colors as colors } from '../libs/Colors';
+import { loadingAnimation } from '../libs/help';
 
 const styles = StyleSheet.create({
   container: {
@@ -45,9 +45,8 @@ export class LoadingScreen extends Component {
   }
 
   render() {
-
     const { message } = this.props;
-    
+
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>

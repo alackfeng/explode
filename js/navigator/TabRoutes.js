@@ -6,13 +6,13 @@ import {
 } from '../AppRoutes';
 
 const constructRoutes = (routes) => {
-	const Routes = {};
-	for (const key in routes) {
+  const Routes = {};
+  for (const key in routes) {
 	  if (key !== notFoundKey) {
 	    Routes[key] = routes[key];
 	  }
-	}
-	return Routes;
+  }
+  return Routes;
 };
 
 // 增加不同导航处理，主导航，TAB导航，侧华导航

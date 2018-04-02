@@ -1,32 +1,30 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, ScrollView, Dimensions, Keyboard } from "react-native";
+import { View, Text, ScrollView, Dimensions, Keyboard } from 'react-native';
 
 import { Icon, Button, List, ListItem, Avatar } from 'react-native-elements';
-import { ViewContainer, StyleSheet, AccountOBJ, AssetOBJ } from "../components";
+import { ViewContainer, StyleSheet, AccountOBJ, AssetOBJ } from '../components';
 
-import { Colors, resetNavigationTo, SCREEN_WIDTH, translate, locale } from "../libs";
+import { Colors, resetNavigationTo, SCREEN_WIDTH, translate, locale } from '../libs';
 
-const TimeAge = (props) => (
+const TimeAge = props => (
   <View style={styles.timeage}><Text style={styles.column}>{props.time}</Text></View>
 );
 
 export class TransferOP extends Component {
+  render() {
+    const { type, oper, time } = this.props;
+    // console.log("[TransferOP.js]::render - >>>>>>>>>>>>> ", type, oper, time);
 
-	render() {
-
-		const { type, oper, time } = this.props;
-		//console.log("[TransferOP.js]::render - >>>>>>>>>>>>> ", type, oper, time);
-
-		const transfer_in_out = type ? require('./images/transferout.png') : require('./images/transferin.png');
-		return (
+    const transfer_in_out = type ? require('./images/transferout.png') : require('./images/transferin.png');
+    return (
       <View style={styles.container}>
         <View style={styles.avatarContainer}>
           <Avatar
             source={transfer_in_out}
-            onPress={() => console.log("Works!")}
+            onPress={() => console.log('Works!')}
             avatarStyle={styles.avatorStyle}
-            containerStyle={{backgroundColor: 'white', justifyContent: 'center'}}
+            containerStyle={{ backgroundColor: 'white', justifyContent: 'center' }}
             width={20}
             height={16.4}
           />
@@ -39,12 +37,12 @@ export class TransferOP extends Component {
           <AssetOBJ amount={oper[1].amount.amount} asset={oper[1].amount.asset_id} type={type} />
         </View>
       </View>
-		);
-	}
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-	container: {
+  container: {
     height: 60,
     width: SCREEN_WIDTH,
     flexDirection: 'row',
@@ -70,8 +68,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   avatorStyle: {
-    backgroundColor: 'transparent', 
-    height: 16.4, 
+    backgroundColor: 'transparent',
+    height: 16.4,
     width: 20,
   },
   itemContainer: {
@@ -93,8 +91,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   column: {
-    color: '#AEB4C0', 
-    fontSize: 12, 
-    textAlign:'left',
+    color: '#AEB4C0',
+    fontSize: 12,
+    textAlign: 'left',
   },
 });

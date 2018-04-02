@@ -1,28 +1,30 @@
 import React from 'react';
-import { View, Text, Image } from "react-native";
+import { View, Text, Image } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { StackNavigator } from "react-navigation";
-import { translate, locale, Colors } from "./libs";
+import { StackNavigator } from 'react-navigation';
+import { translate, locale, Colors } from './libs';
 
 import { Icon } from './components/Icon';
 import Home from './containers/Home';
 import IconsGrid from './containers/IconsGrid';
 import NotFound from './containers/NotFound';
 import Translation from './containers/Translation';
-import { WelcomeScreen, SplashScreen, LoginScreen, RegisterScreen, NodeScreen } from "./containers/Enter";
+import { WelcomeScreen, SplashScreen, LoginScreen, RegisterScreen, NodeScreen } from './containers/Enter';
 
-import { CenterScreen, SettingsScreen, TransferScreen, HistoryScreen, LanguageScreen, CardScreen, ScanScreen, VersionScreen } from "./containers/Users";
-import { AssetsManageScreen } from "./containers/Assets";
+import { CenterScreen, SettingsScreen, TransferScreen, HistoryScreen, LanguageScreen, CardScreen, ScanScreen, VersionScreen } from './containers/Users';
+import { AssetsManageScreen } from './containers/Assets';
 
-import Ionicons from "react-native-vector-icons/MaterialIcons";
+import Ionicons from 'react-native-vector-icons/MaterialIcons';
 
 
 export const notFoundKey = 'NotFound';
 
-const ImageTitle = (props) => (
-  <Image 
-    style={{width: 50, height: 36, resizeMode: 'contain', alignSelf: 'center'}}
+const ImageTitle = props => (
+  <Image
+    style={{
+ width: 50, height: 36, resizeMode: 'contain', alignSelf: 'center',
+}}
     source={require('./components/images/aftlogo.png')}
   />
 );
@@ -33,7 +35,7 @@ const ImageTitle = (props) => (
 const getIcon = (name) => {
   const comp = ({ tintColor, focused }) => (
     <Icon
-      name={!focused ? name : name }
+      name={!focused ? name : name}
       size={24}
       style={{
         color: tintColor,
@@ -52,8 +54,8 @@ const sharedRoutes = {
     screen: SettingsScreen,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.params.title,
-      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
       headerRight: <View />,
     }),
   },
@@ -61,8 +63,8 @@ const sharedRoutes = {
     screen: NodeScreen,
     navigationOptions: ({ navigation }) => ({
       title: translate(navigation.state.params.title, locale),
-      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
       headerRight: <View />,
       tabBarVisible: false,
     }),
@@ -70,15 +72,15 @@ const sharedRoutes = {
   Transfer: {
     screen: TransferScreen,
     navigationOptions: ({ navigation }) => ({
-      
+
     }),
   },
   History: {
     screen: HistoryScreen,
     navigationOptions: ({ navigation }) => ({
       title: translate('center.trans', locale),
-      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
       headerRight: <View />,
     }),
   },
@@ -86,8 +88,8 @@ const sharedRoutes = {
     screen: LanguageScreen,
     navigationOptions: ({ navigation }) => ({
       title: translate('center.langs', locale),
-      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
       headerRight: <View />,
     }),
   },
@@ -95,8 +97,8 @@ const sharedRoutes = {
     screen: CardScreen,
     navigationOptions: ({ navigation }) => ({
       title: translate('center.cards', locale),
-      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
       headerRight: <View />,
       tabBarVisible: false,
     }),
@@ -105,8 +107,8 @@ const sharedRoutes = {
     screen: ScanScreen,
     navigationOptions: ({ navigation }) => ({
       title: translate('center.scans', locale),
-      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
       headerRight: <View />,
       tabBarVisible: false,
     }),
@@ -115,8 +117,8 @@ const sharedRoutes = {
     screen: VersionScreen,
     navigationOptions: ({ navigation }) => ({
       title: translate('center.versn', locale),
-      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
       headerRight: <View />,
       tabBarVisible: false,
     }),
@@ -129,8 +131,8 @@ const AssetsStackNavigator = StackNavigator(
       screen: AssetsManageScreen,
       navigationOptions: {
         title: translate('menu.title.asset', locale),
-        headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-        headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+        headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
+        headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
       },
     },
     ...sharedRoutes,
@@ -163,17 +165,17 @@ export const AppRoutes = {
     path: 'home',
     navigationOptions: {
       title: translate('menu.title.home', locale),
-      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
       tabBarLabel: translate('menu.tab.home', locale),
       tabBarIcon: getIcon('home'),
     },
   },
   Assets: {
-    screen: AssetsStackNavigator, //Translation,
+    screen: AssetsStackNavigator, // Translation,
     path: 'assets',
     navigationOptions: {
-      header: null, //title: 'Assets',
+      header: null, // title: 'Assets',
       tabBarLabel: translate('menu.tab.asset', locale),
       tabBarIcon: getIcon('view-list'),
     },
@@ -183,8 +185,8 @@ export const AppRoutes = {
     path: 'hist',
     navigationOptions: {
       title: translate('menu.tab.hist', locale),
-      headerStyle: { backgroundColor: 'white', justifyContent: 'center'},
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between', },
+      headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
+      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
       tabBarLabel: translate('menu.tab.hist', locale),
       tabBarIcon: getIcon('receipt'),
     },
@@ -207,7 +209,7 @@ export const AppRoutes = {
   },
 };
 /*
- * stack导航，用于主导航，包括欢迎，登录，主页面等 
+ * stack导航，用于主导航，包括欢迎，登录，主页面等
 */
 export const StackRoutes = {
   Splash: {
@@ -218,13 +220,13 @@ export const StackRoutes = {
   },
   Register: {
     screen: RegisterScreen,
-    navigationOptions: ({navigation,screenProps}) => ({
+    navigationOptions: ({ navigation, screenProps }) => ({
       header: null,
     }),
   },
   Login: {
     screen: LoginScreen,
-    navigationOptions: ({navigation,screenProps}) => ({
+    navigationOptions: ({ navigation, screenProps }) => ({
       header: null,
     }),
   },
@@ -244,7 +246,7 @@ export const DrawRoutes = {
       drawerLabel: 'Auth',
       drawerIcon: ({ tintColor, focused }) => (
         <Ionicons
-          name={focused ? 'home': 'face'}
+          name={focused ? 'home' : 'face'}
           size={20}
           style={{ color: tintColor }}
         />
@@ -257,11 +259,11 @@ export const DrawRoutes = {
       drawerLabel: 'IconsGrid',
       drawerIcon: ({ tintColor, focused }) => (
         <Ionicons
-          name={focused ? 'explore': 'fingerprint'}
+          name={focused ? 'explore' : 'fingerprint'}
           size={20}
           style={{ color: tintColor }}
         />
       ),
     },
-  }
+  },
 };

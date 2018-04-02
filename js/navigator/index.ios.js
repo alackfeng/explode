@@ -1,37 +1,37 @@
 import {
   TabNavigator,
-  StackNavigator, 
+  StackNavigator,
   DrawerNavigator,
 } from 'react-navigation';
 
-import { MainRoutes, TabRoutes, MenuRoutes } from "./TabRoutes";
+import { MainRoutes, TabRoutes, MenuRoutes } from './TabRoutes';
 import sharedTabBarOptions from './sharedTabBarOptions';
-import TabBarComponent from "./TabBarComponent";
+import TabBarComponent from './TabBarComponent';
 
 const AppTabNavigator = TabNavigator(TabRoutes, {
   initialRouteName: 'Home',
   tabBarPosition: 'bottom',
-  swipeEnabled: false, //是否允许在标签之间进行滑动
+  swipeEnabled: false, // 是否允许在标签之间进行滑动
   animationEnabled: false,
   tabBarOptions: sharedTabBarOptions,
   tabBarComponent: TabBarComponent,
 });
 
 const AppDrawerDrawer = DrawerNavigator({
-  ...MenuRoutes, 
+  ...MenuRoutes,
   Main: {
-    screen: AppTabNavigator
+    screen: AppTabNavigator,
   },
-},);
+});
 
 const AppNavigator = StackNavigator({
-	...MainRoutes, 
-	Main: {
-		screen: AppTabNavigator
-	},
+  ...MainRoutes,
+  Main: {
+    screen: AppTabNavigator,
+  },
   Draw: {
-    screen: AppDrawerDrawer
-  }
+    screen: AppDrawerDrawer,
+  },
 }, {
   headerMode: 'screen',
   URIPrefix: 'aftbomb://',
@@ -39,7 +39,6 @@ const AppNavigator = StackNavigator({
     backgroundColor: 'transparent',
   },
 });
-
 
 
 export default AppNavigator;

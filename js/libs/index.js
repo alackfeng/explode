@@ -1,6 +1,6 @@
 // Translations
 import I18n from './I18n';
-import willTransitionTo from "./routerTransition";
+import willTransitionTo from './routerTransition';
 
 
 export const translate = (key, locale, interpolation = null) =>
@@ -9,13 +9,13 @@ export const translate = (key, locale, interpolation = null) =>
 export const locale = I18n.locale || 'en';
 
 export const switchLanguage = (language) => {
-	I18n.locale = language || 'en';
-	alert(language);
-}
+  I18n.locale = language || 'en';
+  alert(language);
+};
 
-export * from "./help";
-export * from "./Colors";
+export * from './help';
+export * from './Colors';
 
 export { willTransitionTo };
 
-export * from "./Utils";
+export * from './Utils';

@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { View, Text, Button, ActivityIndicator,  } from "react-native";
+import React, { Component } from 'react';
+import { View, Text, Button, ActivityIndicator } from 'react-native';
 
-import { ViewContainer, StyleSheet } from "../../../components";
-import { Colors as colors, normalize, translate, locale } from "../../../libs";
+import { ViewContainer, StyleSheet } from '../../../components';
+import { Colors as colors, normalize, translate, locale } from '../../../libs';
 
 
 const styles = StyleSheet.create({
@@ -21,35 +21,35 @@ const styles = StyleSheet.create({
     web: {
       margin: 20,
       paddingBottom: 0,
-      backgroundColor: '#5f9ea0'
+      backgroundColor: '#5f9ea0',
     },
     margin: 0,
     paddingBottom: 20,
-    backgroundColor: '#5f9ea0',  
+    backgroundColor: '#5f9ea0',
   },
   indicator: {
-    color: '#000'
-  }
+    color: '#000',
+  },
 });
 
 class Welcome extends Component {
-	render() {
-
-		const { navigation } = this.props;
-		return (
-			<ViewContainer>
+  render() {
+    const { navigation } = this.props;
+    return (
+      <ViewContainer>
         <View style={styles.container}>
-  				<Text style={styles.welcomeMessage} >{translate('comm.welcome', locale)}</Text>
-          <ActivityIndicator animating={true} color='red' />
-  				<View style={styles.menu}>
-            <Button title="Enter to Main Page"
-  					 onPress={() => navigation.navigate('Main')}
-  				  />
+          <Text style={styles.welcomeMessage} >{translate('comm.welcome', locale)}</Text>
+          <ActivityIndicator animating color="red" />
+          <View style={styles.menu}>
+            <Button
+              title="Enter to Main Page"
+              onPress={() => navigation.navigate('Main')}
+            />
           </View>
-				</View>
-			</ViewContainer>
-		);
-	}
+        </View>
+      </ViewContainer>
+    );
+  }
 }
 
 export const WelcomeScreen = Welcome;
