@@ -100,8 +100,8 @@ class Asset extends Component {
 	  return (
   <AssetItemWrap>
     <ListItem
-      containerStyle={{ height: 80, flex: 1, border: 0 }}
-      wrapperStyle={{ height: 60, flex: 1, border: 0 }}
+      containerStyle={{ height: 80, flex: 1, border: 0, borderBottomWidth: 0 }}
+      wrapperStyle={{ height: 60, flex: 1, border: 0, borderBottomWidth: 0 }}
       titleWrapStyle={{ flex: 2, justifyContent: 'center' }}
       titleContainerStyle={{ height: 25, justifyContent: 'center' }}
       subtitleContainerStyle={{ height: 25, justifyContent: 'center' }}
