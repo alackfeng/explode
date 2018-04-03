@@ -168,49 +168,49 @@ export const en = {
     'default': 'Assetfun is coming with little donkey lol...',
   },
   privacyservice: {
-    title: '用户服务与隐私条款',
+    title: 'Customer Services and Privacy Policies',
     content: {
       term0: {
         title: '',
         subtitle: { 
-          sub0: 'tokenfun是一个区块链开源项目，由社区共同参与开发和运营，因此tokenfun无法找回您的密码、无法登陆您的账户、也无法回滚记录，为了您的钱包安全，请您在使用客户端前仔细阅读本条款并自主考虑风险。',
-          sub1: '您在成为tokenfun用户的过程中点击"注册"及“登陆”按钮即表示您已仔细阅读并明确同意遵守本条款以及经参引而并入其中的所有条款、政策以及指南，并受该等规则的约束（合称"本条款"）。如果您不同意本条款的全部规定，则请勿使用tokenfun提供的所有服务。',
-          sub2: '本协议可由tokenfun随时更新，经修改的协议一经在tokenfun上公布，立即自动生效，恕不另行通知。'
+          sub0: 'TOKENFUN is a blockchain open source project jointly participated by communities in its development and operation. Therefore, TOKENFUN cannot retrieve your password, login to your account or rollback the record. For the security of your wallet, please read these terms and conditions carefully before using the Client, and weigh the risks on your own.',
+          sub1: 'Your clicking of the “registration” and “Log In” buttons during the process of becoming an TOKENFUN user will be deemed that you have already read the terms and conditions carefully and agreed to comply with them as well as all other provisions, policies and guidelines included therein by reference, and to be bound by these rules (collectively referred to as the “Terms”). If you do not agree with all provisions of the terms, please do not use all services provided by TOKENFUN.',
+          sub2: 'This Agreement can be updated by TOKENFUN at any time. The modified agreement shall come into effect automatically once published on TOKENFUN. Please note that no further notice will be made. '
         },
         item: "",
       },
       term1: {
-        title: '一、服务内容',
+        title: 'Content of Services',
         subtitle: {
-          sub0: '1. tokenfun指的是基于区块链系统开发区块链钱包，具体服务内容由根据项目发展情况进行不时更新，包括但不限于通证类型的增加、通证的接收与发送、管理数字资产、交易记录、图片保存等。tokenfun创始团队对提供的服务拥有最终解释权。 ',
+          sub0: '1. TOKENFUN refers to the development of blockchain wallets based on blockchain system, with specific service content updated from time to time according to the status of development of the project, including but not limited to increase of types of tokens, receipt and sending of tokens, management of digital assets, transaction records, picture saving, etc. The founding team of TOKENFUN owns the right of final explanation for the services provided. ',
           sub1: {
-            title: '2. tokenfun是一个开源的区块链项目，您在访问、使用tokenfun的所有服务时，需要提供注册账号和登陆密码，账号和密码的备份及储存由您个人负责，您应知悉基于区块链系统交易“不可撤销”及“去中心化”的属性， tokenfun的服务具有以下特点：',
+            title: '2. TOKENFUN is an open source blockchain project. When accessing or using all services provided by TOKENFUN, you are required to provide registered account and password, of which the backup and saving shall be your personal responsibility. You should be aware of the “irrevocable” and “decentralized” property of transactions on the basis of blockchain system. TOKENFUN’s services have the following characteristics: ',
             items: {
-              item0: '1) 不存储用户的钱包密码',
-              item1: '2) 不能登陆用户的账户',
-              item2: '3) 不可修改、找回用户的密码',
-              item3: '4) 不可暂停或撤销转账交易',
-              item4: '5) 不可冻结钱包、挂失钱包、回复钱包',
-              item5: '6) 不可为您暂停或撤销转账交易'
+              item0: '1) Do not save users’ wallet passwords',
+              item1: '2) Cannot log onto users’ accounts',
+              item2: '3) Cannot change or retrieve users’ passwords',
+              item3: '4) Cannot suspend or revoke transfer transaction',
+              item4: '5) Cannot freeze, report the loss of, or resume a wallet',
+              item5: '6) Cannot suspend or revoke a transfer transaction for you'
             }
           },
-          sub2: '3. 由于tokenfun的服务特性，您必须要为您的钱包安全负责，自行保管含有tokenfun的移动设备、备份账户和密码。若用户发生设备丢失、账户密码遗忘、交易误操作（如转账地址输错）、黑客或病毒入侵造成通证资产的丢失，均无法通过tokenfun还原钱包、找回密码、回滚交易。如您发现任何安全漏洞的情况，请立即与tokenfun联系。'
+          sub2: '3. Due to TOKENFUN services’ characteristics, you have to take the responsibility of your wallet security, take care of mobile devices carrying TOKENFUN and create backups of accounts and passwords on your own. For users’ lost devices, forgotten account passwords, mishandled transaction (such as wrong transfer address inputted) or lost pass assets due to hacker or virus invasion, the user cannot restore the wallet, retrieve the password or rollback the transaction through TOKENFUN. Upon your discovery of any security loophole, please contact TOKENFUN immediately. '
         },
       },
       term2: {
-        title: '二、免责及安全声明',
+        title: 'Disclaimer and Security Statement',
         subtitle: {
-          sub1: '您违反本条款、违反道德或法律的，侵犯他人权利的，由您自行承担全部责任，tokenfun不承担任何责任。',
-          sub2: 'tokenfun不保证服务一定能满足您的要求；不保证服务不会中断，也不保证服务的及时性、安全性、准确性。',
-          sub3: 'tokenfun不保证您在tokenfun上的交易各方会及时履行其在与您达成的交易协议中各项义务。'
+          sub1: 'You shall bear full responsibility for your violation of the Terms, violation of morality or the law or infringement of the rights of others; TOKENFUN shall assume no responsibility.',
+          sub2: 'TOKENFUN provides no guarantee that the service will certainly meet your requirements; does not warrant that the service will not be interrupted and makes no commitment to the timeliness, security and accuracy of the services. ',
+          sub3: 'TOKENFUN does not guarantee that the parties of your transaction on TOKENFUN will perform their obligations under the trade agreement they reached with you in a timely manner. '
         },
       },
       term3: {
-        title: '三、服务变更、中断或终止',
-        subtitle: '如因升级的需要而需暂停网络服务、或调整服务内容，tokenfun将尽可能在网站上进行通告。由于用户未能及时浏览通告而造成的损失，tokenfun不承担任何责任。 '
+        title: 'Alteration, Interruption or Termination of the Services',
+        subtitle: 'TOKENFUN will post notifications on the website as far as possible if the network service is suspended as required for upgrading, or the content of service is adjusted. For the losses arising from users’ behind-time browsing of the notification, TOKENFUN will assume no responsibility. '
       },
       term4: {
-        title: '本条款最终解释权归tokenfun所有。',
+        title: 'TOKENFUN reserves the right of final interpretation of the Terms.',
       }
     }
   }

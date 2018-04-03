@@ -221,20 +221,20 @@ const styles = StyleSheet.create({
     // height: SCREEN_HEIGHT*0.8-80
   },
   empowerContentTitle: {
-    color: 'black',
+    color: 'rgba(51,51,51,0.7)',
     fontSize: 16,
     fontWeight: 'bold',
     marginTop: 10,
     marginRight: 5,
   },
   empowerContentSubTitle: {
-    color: 'black',
+    color: 'rgba(51,51,51,0.7)',
     fontSize: 14,
     marginTop: 10,
     marginRight: 5,
   },
   empowerContentItem: {
-    color: 'black',
+    color: 'rgba(51,51,51,0.7)',
     fontSize: 12,
     marginLeft: 10,
     marginTop: 10,
