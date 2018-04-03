@@ -6,7 +6,7 @@ import { Colors } from '../../../libs/Colors';
 import { translate, locale } from '../../../libs';
 import { resetNavigationTo } from '../../../libs/help';
 
-import { SwipeableView, SplashScreen as SplashScreenA } from '../../../components';
+import { SplashScreen as SplashScreenA } from '../../../components';
 
 import { Button, Icon } from 'react-native-elements';
 

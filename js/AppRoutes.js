@@ -20,15 +20,6 @@ import Ionicons from 'react-native-vector-icons/MaterialIcons';
 
 export const notFoundKey = 'NotFound';
 
-const ImageTitle = props => (
-  <Image
-    style={{
- width: 50, height: 36, resizeMode: 'contain', alignSelf: 'center',
-}}
-    source={require('./components/images/aftlogo.png')}
-  />
-);
-
 /**
  * Gets an Icon component.
  */

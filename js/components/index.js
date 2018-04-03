@@ -8,8 +8,6 @@ export * from './CustomTabBar';
 export * from './LoadingScreen';
 export * from './LoadingData';
 
-export * from './SwipeableView';
-
 export * from './TransactionConfirmModal';
 export * from './LoadingRegister';
 export * from './LoadingLogin';

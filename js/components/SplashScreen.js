@@ -82,8 +82,8 @@ const styles = {
     height: SCREEN_HEIGHT,
   },
   icon: {
-    width: 100,
-    height: 140,
+    width: 90,
+    height: 106,
     marginTop: 30,
   },
   title: {
