@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { ViewContainer } from '../../../components';
 import { Colors, SCREEN_WIDTH, SCREEN_HEIGTH, normalize, translate, locale } from '../../../libs';
 
-export class TokenPii extends Component {
+export class TokenFun extends Component {
   render() {
     return (
       <ViewContainer>
@@ -12,7 +12,7 @@ export class TokenPii extends Component {
           <View style={styles.titleContainer}>
             <Image
               style={styles.titleImage}
-              source={require('../images/tokenpii.jpg')}
+              source={require('../images/tokenfun.jpg')}
             />
           </View>
 

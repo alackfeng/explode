@@ -6,13 +6,13 @@ import {
 } from 'react-native';
 
 import styles from './styles';
-import { TokenPii } from './components/TokenPii';
+import { TokenFun } from './components/TokenFun';
 import { LoadingScreen, ViewContainer } from '../../components';
 
 const Home = () => {
   return (
     <ViewContainer>
-      <TokenPii />
+      <TokenFun />
     </ViewContainer>
   );
 };

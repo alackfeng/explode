@@ -37,10 +37,10 @@ class Card extends Component {
   _saveQrToDisk() {
    	this.svg.toDataURL((data) => {
    		// alert(RNFS.DocumentDirectoryPath);
-   		RNFS.writeFile(`${RNFS.DocumentDirectoryPath}/tokenpii-qrcode.png`, data, 'base64')
+   		RNFS.writeFile(`${RNFS.DocumentDirectoryPath}/tokenfun-qrcode.png`, data, 'base64')
    		  .then((success) => {
    		  	// alert("save ", RNFS.DocumentDirectoryPath, success);
-   			  return CameraRoll.saveToCameraRoll(`${RNFS.DocumentDirectoryPath}/tokenpii-qrcode.png`, 'photo');
+   			  return CameraRoll.saveToCameraRoll(`${RNFS.DocumentDirectoryPath}/tokenfun-qrcode.png`, 'photo');
    		  })
    		  .then(() => {
    			  alert(translate('tips.card.saved', locale));
@@ -60,7 +60,7 @@ class Card extends Component {
     if (TRACE) console.info('=====[Language.js]::render - : currentAccount >  ', currentAccount);
 
 
-    const qrValue = `tokenpii://${currentAccount}`;
+    const qrValue = `tokenfun://${currentAccount}`;
     return (
       <ViewContainer>
         <SplashTile
@@ -71,7 +71,7 @@ class Card extends Component {
           titleStyle={styles.title}
           featured
           height={150}
-          icon={{ source: require('../images/tokenpii.png') }}
+          icon={{ source: require('../images/tokenfun.png') }}
           iconStyle={styles.icon}
           iconContainerStyle={{ marginTop: 50 }}
         />
@@ -81,7 +81,7 @@ class Card extends Component {
             <QRCode
               value={qrValue}
               size={180}
-              logo={require('../images/tokenpii.png')}
+              logo={require('../images/tokenfun.png')}
               logoWidth={180 * 0.2}
               logoBackgroundColor="#4871db"
               getRef={c => (this.svg = c)}

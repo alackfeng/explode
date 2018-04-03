@@ -56,7 +56,7 @@ class BarcodeScan extends Component {
       const { navigation } = this.props;
       if (navigation && navigation.state.params && navigation.state.params.handleScan) {
         const res = e.nativeEvent.data.code;
-        const pos = res.indexOf('tokenpii://');
+        const pos = res.indexOf('tokenfun://');
         if (pos === 0) {
           navigation.state.params.handleScan(
             { toAccount: res.substr(11) },

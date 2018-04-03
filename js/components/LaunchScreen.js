@@ -43,7 +43,7 @@ class LaunchScreen extends Component {
           width={SCREEN_WIDTH}
           view={View}
           childrenContainerStyle={styles.children}
-          icon={{ source: require('./images/tokenpiiicon.png') }}
+          icon={{ source: require('./images/tokenfunicon.png') }}
           iconStyle={styles.icon}
         >
           <Text style={styles.centering}>{ translate('enter.splash.connectnode', locale) }</Text>

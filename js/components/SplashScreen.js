@@ -39,7 +39,7 @@ export class SplashScreen extends Component {
       width={SCREEN_WIDTH}
       view={View}
       childrenContainerStyle={styles.children}
-      icon={{ source: require('./images/tokenpiiicon.png') }}
+      icon={{ source: require('./images/tokenfunicon.png') }}
       iconStyle={styles.icon}
     >
       <View style={{

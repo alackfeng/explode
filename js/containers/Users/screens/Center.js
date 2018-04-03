@@ -110,7 +110,7 @@ class Center extends Component {
           titleStyle={styles.title}
           featured
           height={150}
-          icon={{ source: require('../images/tokenpii.png') }}
+          icon={{ source: require('../images/tokenfun.png') }}
           iconStyle={styles.icon}
           iconContainerStyle={{ marginTop: 50 }}
         />

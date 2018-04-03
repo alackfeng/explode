@@ -48,7 +48,7 @@ class Card extends Component {
     if (TRACE) console.info('=====[Language.js]::render - : currentAccount >  ', currentAccount);
 
 
-    const qrValue = `${currentAccount}@tokenpii.org`;
+    const qrValue = `${currentAccount}@tokenfun.org`;
     return (
       <ViewContainer>
         <SplashTile
@@ -59,7 +59,7 @@ class Card extends Component {
           titleStyle={styles.title}
           featured
           height={150}
-          icon={{ source: require('../images/tokenpii.png') }}
+          icon={{ source: require('../images/tokenfun.png') }}
           iconStyle={styles.icon}
           iconContainerStyle={{ marginTop: 50 }}
         />
@@ -69,7 +69,7 @@ class Card extends Component {
             <QRCode
               value={qrValue}
               size={180}
-              logo={require('../images/tokenpii.png')}
+              logo={require('../images/tokenfun.png')}
               logoWidth={180 * 0.2}
               logoBackgroundColor="red"
               getRef={c => (this.svg = c)}
