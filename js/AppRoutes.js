@@ -12,7 +12,7 @@ import NotFound from './containers/NotFound';
 import Translation from './containers/Translation';
 import { WelcomeScreen, SplashScreen, LoginScreen, RegisterScreen, NodeScreen } from './containers/Enter';
 
-import { CenterScreen, SettingsScreen, TransferScreen, HistoryScreen, LanguageScreen, CardScreen, ScanScreen, VersionScreen } from './containers/Users';
+import { CenterScreen, TransferScreen, HistoryScreen, LanguageScreen, CardScreen, ScanScreen, VersionScreen } from './containers/Users';
 import { AssetsManageScreen } from './containers/Assets';
 
 import Ionicons from 'react-native-vector-icons/MaterialIcons';
@@ -41,15 +41,6 @@ const getIcon = (name) => {
 };
 
 const sharedRoutes = {
-  Settings: {
-    screen: SettingsScreen,
-    navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.title,
-      headerStyle: { backgroundColor: 'white', justifyContent: 'center' },
-      headerTitleStyle: { color: Colors.headerGray, alignSelf: 'center', justifyContent: 'space-between' },
-      headerRight: <View />,
-    }),
-  },
   Nodes: {
     screen: NodeScreen,
     navigationOptions: ({ navigation }) => ({
