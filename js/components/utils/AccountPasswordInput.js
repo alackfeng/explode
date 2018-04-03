@@ -22,6 +22,7 @@ export class AccountPasswordInput extends Component {
           <Input
             containerStyle={styles.inputConatiner}
             leftText={translate('tips.register.inputname', locale)}
+            leftTextContainerStyle={{color: 'white'}}
             inputStyle={{ marginLeft: 10, color: 'white', fontSize: 15 }}
             autoCapitalize="none"
             autoCorrect={false}
@@ -42,6 +43,7 @@ export class AccountPasswordInput extends Component {
           <Input
             containerStyle={styles.inputConatiner}
             leftText={translate('tips.register.inputpass', locale)}
+            leftTextContainerStyle={{color: 'white'}}
             inputStyle={{ marginLeft: 10, color: 'white', fontSize: 15 }}
             autoCapitalize="none"
             keyboardAppearance="light"
@@ -64,6 +66,7 @@ export class AccountPasswordInput extends Component {
           <Input
             containerStyle={styles.inputConatiner}
             leftText={translate('tips.register.inputconf', locale)}
+            leftTextContainerStyle={{color: 'white'}}
             inputStyle={{ marginLeft: 10, color: 'white', fontSize: 15 }}
             autoCapitalize="none"
             keyboardAppearance="light"

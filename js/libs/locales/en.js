@@ -20,7 +20,7 @@ export const en = {
       nodesetting: 'Node',
       transrecords: 'Bill',
       language: 'Language Switch',
-      card: 'Visiting card',
+      card: 'Receipt code',
       scan: 'Scaning',
       vers: 'Version Update',
     },
@@ -40,8 +40,8 @@ export const en = {
       '404': 'Not Found',
     },
     title: {
-      home: 'tokenfun',
-      asset: 'My Tokens',
+      home: 'Tokenfun',
+      asset: 'My Token',
       hist: 'Newest Bill',
       center: 'Me',
       transfer: 'Transfer',
@@ -94,7 +94,7 @@ export const en = {
       inputpass: 'Password',
       inputconf: 'Confirm',
       accountlogin: 'Log In?',
-      import1: 'tokenfun does not hold your passwords for you. We cannot access accounts, reset passwords, nor reverse transactions. Protect your password & log in in safe environment. ',
+      import1: 'Tokenfun does not hold your passwords for you. We cannot access accounts, reset passwords, nor reverse transactions. Protect your password & log in in safe environment. ',
       import2: 'You are responsible for your security. ',
       import3: ' ',
       checkbox: 'I have read and agree to Terms of Service and privacy policy',
@@ -173,18 +173,18 @@ export const en = {
       term0: {
         title: '',
         subtitle: { 
-          sub0: 'TOKENFUN is a blockchain open source project jointly participated by communities in its development and operation. Therefore, TOKENFUN cannot retrieve your password, login to your account or rollback the record. For the security of your wallet, please read these terms and conditions carefully before using the Client, and weigh the risks on your own.',
-          sub1: 'Your clicking of the “registration” and “Log In” buttons during the process of becoming an TOKENFUN user will be deemed that you have already read the terms and conditions carefully and agreed to comply with them as well as all other provisions, policies and guidelines included therein by reference, and to be bound by these rules (collectively referred to as the “Terms”). If you do not agree with all provisions of the terms, please do not use all services provided by TOKENFUN.',
-          sub2: 'This Agreement can be updated by TOKENFUN at any time. The modified agreement shall come into effect automatically once published on TOKENFUN. Please note that no further notice will be made. '
+          sub0: 'Tokenfun is a blockchain open source project jointly participated by communities in its development and operation. Therefore, Tokenfun cannot retrieve your password, login to your account or rollback the record. For the security of your wallet, please read these terms and conditions carefully before using the Client, and weigh the risks on your own.',
+          sub1: 'Your clicking of the “registration” and “Log In” buttons during the process of becoming an Tokenfun user will be deemed that you have already read the terms and conditions carefully and agreed to comply with them as well as all other provisions, policies and guidelines included therein by reference, and to be bound by these rules (collectively referred to as the “Terms”). If you do not agree with all provisions of the terms, please do not use all services provided by Tokenfun.',
+          sub2: 'This Agreement can be updated by Tokenfun at any time. The modified agreement shall come into effect automatically once published on Tokenfun. Please note that no further notice will be made. '
         },
         item: "",
       },
       term1: {
         title: 'Content of Services',
         subtitle: {
-          sub0: '1. TOKENFUN refers to the development of blockchain wallets based on blockchain system, with specific service content updated from time to time according to the status of development of the project, including but not limited to increase of types of tokens, receipt and sending of tokens, management of digital assets, transaction records, picture saving, etc. The founding team of TOKENFUN owns the right of final explanation for the services provided. ',
+          sub0: '1. Tokenfun refers to the development of blockchain wallets based on blockchain system, with specific service content updated from time to time according to the status of development of the project, including but not limited to increase of types of tokens, receipt and sending of tokens, management of digital assets, transaction records, picture saving, etc. The founding team of Tokenfun owns the right of final explanation for the services provided. ',
           sub1: {
-            title: '2. TOKENFUN is an open source blockchain project. When accessing or using all services provided by TOKENFUN, you are required to provide registered account and password, of which the backup and saving shall be your personal responsibility. You should be aware of the “irrevocable” and “decentralized” property of transactions on the basis of blockchain system. TOKENFUN’s services have the following characteristics: ',
+            title: '2. Tokenfun is an open source blockchain project. When accessing or using all services provided by Tokenfun, you are required to provide registered account and password, of which the backup and saving shall be your personal responsibility. You should be aware of the “irrevocable” and “decentralized” property of transactions on the basis of blockchain system. Tokenfun’s services have the following characteristics: ',
             items: {
               item0: '1) Do not save users’ wallet passwords',
               item1: '2) Cannot log onto users’ accounts',
@@ -194,23 +194,23 @@ export const en = {
               item5: '6) Cannot suspend or revoke a transfer transaction for you'
             }
           },
-          sub2: '3. Due to TOKENFUN services’ characteristics, you have to take the responsibility of your wallet security, take care of mobile devices carrying TOKENFUN and create backups of accounts and passwords on your own. For users’ lost devices, forgotten account passwords, mishandled transaction (such as wrong transfer address inputted) or lost pass assets due to hacker or virus invasion, the user cannot restore the wallet, retrieve the password or rollback the transaction through TOKENFUN. Upon your discovery of any security loophole, please contact TOKENFUN immediately. '
+          sub2: '3. Due to Tokenfun services’ characteristics, you have to take the responsibility of your wallet security, take care of mobile devices carrying Tokenfun and create backups of accounts and passwords on your own. For users’ lost devices, forgotten account passwords, mishandled transaction (such as wrong transfer address inputted) or lost pass assets due to hacker or virus invasion, the user cannot restore the wallet, retrieve the password or rollback the transaction through Tokenfun. Upon your discovery of any security loophole, please contact Tokenfun immediately. '
         },
       },
       term2: {
         title: 'Disclaimer and Security Statement',
         subtitle: {
-          sub1: 'You shall bear full responsibility for your violation of the Terms, violation of morality or the law or infringement of the rights of others; TOKENFUN shall assume no responsibility.',
-          sub2: 'TOKENFUN provides no guarantee that the service will certainly meet your requirements; does not warrant that the service will not be interrupted and makes no commitment to the timeliness, security and accuracy of the services. ',
-          sub3: 'TOKENFUN does not guarantee that the parties of your transaction on TOKENFUN will perform their obligations under the trade agreement they reached with you in a timely manner. '
+          sub1: 'You shall bear full responsibility for your violation of the Terms, violation of morality or the law or infringement of the rights of others; Tokenfun shall assume no responsibility.',
+          sub2: 'Tokenfun provides no guarantee that the service will certainly meet your requirements; does not warrant that the service will not be interrupted and makes no commitment to the timeliness, security and accuracy of the services. ',
+          sub3: 'Tokenfun does not guarantee that the parties of your transaction on Tokenfun will perform their obligations under the trade agreement they reached with you in a timely manner. '
         },
       },
       term3: {
         title: 'Alteration, Interruption or Termination of the Services',
-        subtitle: 'TOKENFUN will post notifications on the website as far as possible if the network service is suspended as required for upgrading, or the content of service is adjusted. For the losses arising from users’ behind-time browsing of the notification, TOKENFUN will assume no responsibility. '
+        subtitle: 'Tokenfun will post notifications on the website as far as possible if the network service is suspended as required for upgrading, or the content of service is adjusted. For the losses arising from users’ behind-time browsing of the notification, Tokenfun will assume no responsibility. '
       },
       term4: {
-        title: 'TOKENFUN reserves the right of final interpretation of the Terms.',
+        title: 'Tokenfun reserves the right of final interpretation of the Terms.',
       }
     }
   }
