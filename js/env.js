@@ -17,9 +17,9 @@ module.exports = {
   update: {
     url: 'https://www.pgyer.com/apiv2/app/check',
     version: {
-      ios: '1.1-2',
-      android: '1.1-2',
-      web: '1.1-2',
+      ios: '1.1-3',
+      android: '1.1-3',
+      web: '1.1-3',
     },
     androidKey: {
       api: '97863b98cd55f9b414c334ba7599c4db',
