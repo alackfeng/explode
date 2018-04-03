@@ -66,7 +66,7 @@ export class VersionInfo extends Component {
     }).then((res) => {
       return res.json();
     }).then((json) => {
-      // alert(JSON.stringify(json))
+
 
       if (json.data) {
         const strToNum = ver => (ver.split('.')[0] * 10000 + ver.split('.')[1] * 1);

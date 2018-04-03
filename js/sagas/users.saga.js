@@ -196,7 +196,7 @@ function* login(username, password, requiredFields) {
           yield put(userLogin.notify({ id: 1200001, message: 'Save Keys SUCESS, CONFIRM!' }));
         }
         else {
-          alert('Login user Private not OK???');
+          //alert('Login user Private not OK???');
           yield put(userLogin.notify({ id: 1200002, message: 'Login user Private not OK???' }));
         }
       }
@@ -209,7 +209,7 @@ function* login(username, password, requiredFields) {
         yield put(userRegister.success(username, 'local exists user'));
       }
       else {
-        alert('login user not check valid!!!');
+        ;// alert('login user not check valid!!!');
       }
     }
   }
@@ -244,7 +244,7 @@ function* unlock(username, extra, requiredFields) {
     }
     else {
       console.log('=====[users.saga.js]::login - not exists user: ', user, ', Notification UI');
-      alert('local not exists user');
+      // alert('local not exists user');
       yield put(userUnlock.notify(username, { id: 1300001, message: 'local not exists user' }));
     }
   }

@@ -10,7 +10,7 @@ export const locale = I18n.locale || 'en';
 
 export const switchLanguage = (language) => {
   I18n.locale = language || 'en';
-  alert(language);
+
 };
 
 export * from './help';

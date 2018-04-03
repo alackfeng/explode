@@ -137,10 +137,10 @@ class UnLock extends Component {
     const { entityUnLock: entity, currentAccount, sendUnLock } = nextProps || this.props;
 
     const isUnLock = (entity && entity.isUnLock) || false;
-    // alert(isUnLock);
+
     if (isUnLock) {
       this.setState({ animating: false });
-      // alert(currentAccount)
+
       if (sendUnLock) {
         sendUnLock(currentAccount, {
           type: 'close',

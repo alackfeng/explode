@@ -145,7 +145,7 @@ export class LoginPage extends Component {
             text={translate('enter.splash.registerInButton', locale)}
             buttonStyle={styles.button2}
             textStyle={{ fontWeight: 'bold' }}
-            containerStyle={{ marginTop: 0, flex: 1, justifyContent: 'flex-start' }}
+            containerStyle={{ marginTop: 0, flex: 1, justifyContent: 'flex-start', backgroundColor: 'transparent' }}
             onPress={() => resetNavigationTo('Register', this.props.navigation)}
           />
         </View>

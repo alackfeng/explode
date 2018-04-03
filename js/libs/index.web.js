@@ -21,7 +21,6 @@ export const locale = null; // I18n.locale;
 
 export const switchLanguage = (language) => {
   I18n.locale = language || 'en';
-  alert(language);
 };
 
 export * from './help';

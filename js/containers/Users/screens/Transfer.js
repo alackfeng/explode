@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, Text, ScrollView, Dimensions, Keyboard, Platform } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Keyboard, Platform, Alert } from 'react-native';
 import { Colors, resetNavigationTo, SCREEN_WIDTH, translate, locale } from '../../../libs';
 import { Icon, Button, List, ListItem, Avatar } from 'react-native-elements';
 
@@ -27,12 +27,13 @@ class ScanButton extends Component {
     const { navigation } = this.props;
     // const result = "feng";
     // navigation.state.params.handleScan(result);
-    // alert(111)
+
     if (navigation) {
       navigation.navigate('Scan', { handleScan: navigation.state.params.handleScan });
     }
     else {
-      alert(translate('tips.comm.fatal', locale));
+
+      Alert.alert(' ', translate('tips.comm.fatal', locale), [{ text: 'OK', onPress: () => {} },]);
     }
   }
 
@@ -165,12 +166,12 @@ class Transfer extends Component {
 
     // 检验有效性
     if (!fromUser || !toUser || !amount || !asset_type) {
-      alert(translate('tips.transfer.checkagain', locale));
+      Alert.alert(' ', translate('tips.transfer.checkagain', locale), [{ text: 'OK', onPress: () => {} },]);
       return false;
     }
 
     if (!this.props.currentAccount) {
-      alert(translate('tips.transfer.nonecurrentname', locale));
+      Alert.alert(' ', translate('tips.transfer.nonecurrentname', locale), [{ text: 'OK', onPress: () => {} },]);
       return false;
     }
 
@@ -199,7 +200,7 @@ class Transfer extends Component {
     // 节点未连接，提示用户
     if (!this.isNodeLinked()) {
       this.setState({ isRefreshing: false });
-      alert('节点断了，请去【用户中心】手动切换');
+      Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
       return;
     }
 

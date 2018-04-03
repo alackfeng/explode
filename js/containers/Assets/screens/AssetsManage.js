@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, Text, ScrollView, Dimensions } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Alert } from 'react-native';
 import { Colors, resetNavigationTo, SCREEN_WIDTH, translate, locale } from '../../../libs';
 import { Icon, Button, Input } from 'react-native-elements';
 
@@ -106,7 +106,8 @@ class AssetsManage extends Component {
   }
 
   onSearchAssets(content) {
-    alert('Not implement');
+
+    Alert.alert(' ', 'Not implement', [{ text: 'OK', onPress: () => {} },]);
   }
 
   // 下拉刷新功能
@@ -114,10 +115,11 @@ class AssetsManage extends Component {
     // 节点未连接，提示用户
     if (!this.isNodeLinked()) {
       this.setState({ isRefreshing: false });
-      alert(translate('tips.comm.nodelose', locale));
+
+      Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
       return;
     }
-    // alert("refresh")
+
     ChainStore.unsubscribe(this.update); // update
     ChainStore.clearCache();
     ChainStore.subscribe(this.update); // update

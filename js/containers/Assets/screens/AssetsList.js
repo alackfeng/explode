@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Image, ListView, View, Text, ScrollView, Dimensions, RefreshControl } from 'react-native';
+import { Image, ListView, View, Text, ScrollView, Dimensions, RefreshControl, Alert } from 'react-native';
 import { Colors, resetNavigationTo, SCREEN_WIDTH, SCREEN_HEIGHT, translate, locale } from '../../../libs';
 import { SearchBar, List, ListItem, Icon, Button, Input } from 'react-native-elements';
 
@@ -52,7 +52,7 @@ class AssetsList extends Component {
   }
 
   componentWillMount() {
-    // alert("ddddd");
+
     const { account, node } = this.props;
     // console.log("=====[AssetList.js]::componentDidMount - account-- ", account, node);
     /*
@@ -115,7 +115,7 @@ class AssetsList extends Component {
 
 	  // 节点未连接，提示用户
 	  if (!this.isNodeLinked()) {
-	    alert(translate('tips.comm.nodelose', locale));
+      Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
 	    return;
 	  }
 
@@ -130,7 +130,6 @@ class AssetsList extends Component {
 	  }
 
 	  if (navigation) {
-	    // alert(url);
 	    navigation.navigate(url, params);
 	  }
 	}

@@ -151,11 +151,11 @@ export const en = {
     },
     scan: {
       copy: 'Copy',
-      savephoto: 'Save To Photo',
+      savephoto: 'Save To albums',
     },
     card: {
       copyed: 'Copyed',
-      saved: 'Saved to album',
+      saved: 'Saved to albums',
     },
   },
   advisable_message: {

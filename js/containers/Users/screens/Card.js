@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, Text, ScrollView, Dimensions, ListView, Clipboard, CameraRoll } from 'react-native';
+import { View, Text, ScrollView, Dimensions, ListView, Clipboard, CameraRoll, Alert } from 'react-native';
 import { Colors, SCREEN_WIDTH, translate, locale, switchLanguage } from '../../../libs';
 import { Icon, Button, Input, Overlay, CheckBox } from 'react-native-elements';
 
@@ -36,14 +36,15 @@ class Card extends Component {
 
   _saveQrToDisk() {
    	this.svg.toDataURL((data) => {
-   		// alert(RNFS.DocumentDirectoryPath);
+
    		RNFS.writeFile(`${RNFS.DocumentDirectoryPath}/tokenfun-qrcode.png`, data, 'base64')
    		  .then((success) => {
-   		  	// alert("save ", RNFS.DocumentDirectoryPath, success);
+
    			  return CameraRoll.saveToCameraRoll(`${RNFS.DocumentDirectoryPath}/tokenfun-qrcode.png`, 'photo');
    		  })
    		  .then(() => {
-   			  alert(translate('tips.card.saved', locale));
+
+          Alert.alert(' ', translate('tips.card.saved', locale), [{ text: 'OK', onPress: () => {} },]);
    		  });
    	});
   }
@@ -52,7 +53,8 @@ class Card extends Component {
   	console.log('_setClipboardContent');
 
   	Clipboard.setString(this.props.currentAccount);
-  	alert(translate('tips.card.copyed', locale));
+
+    Alert.alert(' ', translate('tips.card.copyed', locale), [{ text: 'OK', onPress: () => {} },]);
   }
 
   render() {

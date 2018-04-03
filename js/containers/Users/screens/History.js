@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, Text, ScrollView, Dimensions } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Alert } from 'react-native';
 import { Colors, resetNavigationTo, SCREEN_WIDTH, translate, locale } from '../../../libs';
 import { Icon, Button, Input, Overlay } from 'react-native-elements';
 
@@ -63,7 +63,7 @@ class History extends Component {
         	accountHistory: accountHistory || this.state.accountHistory,
         	isRefreshing: false, // accountHistory ? false : this.state.isRefreshing,
         });
-        // alert(this.state.isRefreshing);
+
       }).catch((err) => {
         console.error('=====[History.js]::fetchHistoryList - : FetchChain:getAccount is : err ', err);
         this.fetchHistoryList();
@@ -83,10 +83,11 @@ class History extends Component {
 	  // 节点未连接，提示用户
 	  if (!this.isNodeLinked()) {
 	    this.setState({ isRefreshing: false });
-	    alert(translate('tips.comm.nodelose', locale));
+
+      Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
 	    return;
 	  }
-	  // alert("refresh")
+
 	  ChainStore.unsubscribe(this.update); // update
 	  ChainStore.clearCache();
 	  ChainStore.subscribe(this.update); // update

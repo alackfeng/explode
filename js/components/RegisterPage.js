@@ -127,7 +127,6 @@ export class RegisterPage extends Component {
 
 
   onApproved = (agree) => {
-  	// alert(agree);
 
   	this.setState({
   		openServPriv: false,
@@ -245,9 +244,9 @@ export class RegisterPage extends Component {
          />
          <Button
            text={translate('tips.register.accountlogin', locale)}
-           buttonStyle={{ justifyContent: 'flex-start' }}
+           buttonStyle={{ justifyContent: 'flex-start', backgroundColor: 'transparent', elevation: 0 }}
            textStyle={{
- fontWeight: 'bold', textAlign: 'right', fontSize: 12, color: 'rgba(145,234,255,1)', backgroundColor: 'transparent',
+ fontWeight: 'bold', textAlign: 'right', fontSize: 12, color: 'white', backgroundColor: 'transparent',
 }}
            containerStyle={{
 marginTop: 0, alignItems: 'flex-end', justifyContent: 'flex-start', backgroundColor: 'transparent',
