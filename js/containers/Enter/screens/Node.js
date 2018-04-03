@@ -196,6 +196,8 @@ class Node extends Component {
       return <SLText key={index}>Connect to Node-{item.url}, status-{item.status}</SLText>;
     });
 
+    const debugStatusList = null; /// debug (<ScrollView style={{ marginTop: 30 }}>{ showStatusList }</ScrollView>);
+
     return (
       <ViewContainer>
         <ListContainer>
@@ -205,9 +207,7 @@ class Node extends Component {
             dataSource={this.state.dataSource}
             removeClippedSubviews={false}
           />
-          <ScrollView style={{ marginTop: 30 }}>
-            { showStatusList }
-          </ScrollView>
+          { debugStatusList }
         </ListContainer>
       </ViewContainer>
     );
