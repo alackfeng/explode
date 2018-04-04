@@ -4,9 +4,9 @@ module.exports = {
   isDebuggingInChrome: true,
   testMenuEnabled: false,
   nodeList: [
-    { url: 'ws://119.23.52.40:11011',     location: 'comm.node.china' },
     { url: 'ws://54.169.30.79:11011', location: 'comm.node.usa' },
-    //{ url: 'ws://39.108.54.180:11011',  location: 'comm.node.hongkong' },
+    { url: 'ws://119.23.52.40:11011',     location: 'comm.node.china' },
+    { url: 'ws://39.108.54.180:11011',  location: 'comm.node.hongkong' },
     // {url: "ws://119.23.40.206:21011", location: "comm.node.china"},
     // {url: "wss://blockasset.org/ws", 	location: "Newest NODE"},
     // {url: "ws://106.14.2.1:11011", 		location: "comm.node.usa"},
@@ -17,7 +17,7 @@ module.exports = {
   update: {
     url: 'https://www.pgyer.com/apiv2/app/check',
     version: {
-      ios: '1.1-3',
+      ios: '1.1-0',
       android: '1.1-3',
       web: '1.1-3',
     },

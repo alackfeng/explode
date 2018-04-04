@@ -10,6 +10,8 @@ import { Icon, Button, Input } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, LoadingLoginModal, Header, HeaderAccount, HeaderSearchBar, LoadingData } from '../../../components';
 import { triggerUser } from '../../../actions';
+import Toast, {DURATION} from 'react-native-easy-toast';
+
 
 const { login: userLogin, unlock: sendUnLock } = triggerUser;
 
@@ -116,7 +118,8 @@ class AssetsManage extends Component {
     if (!this.isNodeLinked()) {
       this.setState({ isRefreshing: false });
 
-      Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
+      this.refs.toast.show(translate('tips.comm.nodelose', locale));
+      // Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
       return;
     }
 
@@ -142,6 +145,7 @@ class AssetsManage extends Component {
     else {
       return (
         <ViewContainer>
+          <Toast ref="toast" position='top' positionValue={100} />
           <HeaderSearchBar onSearch={this.onSearchAssets} />
           {accountBalance
           ? <AssetsList
@@ -155,7 +159,8 @@ class AssetsManage extends Component {
             isRefreshing={isRefreshing}
           />
           : <LoadingData message={translate('comm.loadingdata', locale)} />
-        }
+          }
+          
         </ViewContainer>
       );
     }

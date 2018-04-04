@@ -15,6 +15,8 @@ import SplashTile from '../../../components/SplashTile';
 import QRCode from 'react-native-qrcode-svg';
 import RNFS from 'react-native-fs';
 
+import Toast, {DURATION} from 'react-native-easy-toast';
+
 const TRACE = true;
 
 
@@ -44,7 +46,8 @@ class Card extends Component {
    		  })
    		  .then(() => {
 
-          Alert.alert(' ', translate('tips.card.saved', locale), [{ text: 'OK', onPress: () => {} },]);
+          this.refs.toast.show(translate('tips.card.saved', locale));
+          // Alert.alert(' ', translate('tips.card.saved', locale), [{ text: 'OK', onPress: () => {} },]);
    		  });
    	});
   }
@@ -54,7 +57,9 @@ class Card extends Component {
 
   	Clipboard.setString(this.props.currentAccount);
 
-    Alert.alert(' ', translate('tips.card.copyed', locale), [{ text: 'OK', onPress: () => {} },]);
+    this.refs.toast.show(translate('tips.card.copyed', locale));
+    
+    // Alert.alert(' ', translate('tips.card.copyed', locale), [{ text: 'OK', onPress: () => {} },]);
   }
 
   render() {
@@ -111,6 +116,7 @@ marginVertical: 10, backgroundColor: 'transparent', flex: 1, justifyContent: 'fl
             <View style={{ flex: 0.5 }} />
           </View>
         </View>
+        <Toast ref="toast"/>
       </ViewContainer>
     );
   }

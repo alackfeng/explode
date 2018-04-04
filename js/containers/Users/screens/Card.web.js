@@ -11,8 +11,10 @@ import { Icon, Button, Input, Overlay, CheckBox } from 'react-native-elements';
 import { ViewContainer, StyleSheet } from '../../../components';
 import { setAppLocale } from '../../../actions';
 import SplashTile from '../../../components/SplashTile';
+import Toast, {DURATION} from 'react-native-easy-toast';
 
 const QRCode = require('qrcode-react');
+
 
 
 const TRACE = true;
@@ -35,11 +37,13 @@ class Card extends Component {
   }
 
   _saveQrToDisk() {
-   	alert('not implement!!!');
+    this.refs.toast.show('not implement!');
+   	// alert('not implement!!!');
   }
+  
   _setClipboardContent = () => {
   	Clipboard.setString(this.props.currentAccount);
-  	alert(translate('tips.card.copyed', locale));
+    this.refs.toast.show(translate('tips.card.copyed', locale));
   }
 
 
@@ -93,6 +97,7 @@ class Card extends Component {
             />
           </View>
         </View>
+        <Toast ref="toast"/>
       </ViewContainer>
     );
   }

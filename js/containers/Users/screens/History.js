@@ -11,6 +11,8 @@ import { Icon, Button, Input, Overlay } from 'react-native-elements';
 import { ViewContainer, StyleSheet, LoadingLoginModal, Header, TableHistory, LoadingData } from '../../../components';
 
 import { ChainStore, FetchChain } from 'assetfunjs/es';
+import Toast, {DURATION} from 'react-native-easy-toast';
+
 
 const TRACE = false;
 
@@ -84,7 +86,8 @@ class History extends Component {
 	  if (!this.isNodeLinked()) {
 	    this.setState({ isRefreshing: false });
 
-      Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
+      // Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
+      this.refs.toast.show(translate('tips.comm.nodelose', locale));
 	    return;
 	  }
 
@@ -105,6 +108,7 @@ class History extends Component {
 
 	  return (
   <ViewContainer>
+    <Toast ref="toast" position='top' positionValue={100}/>
     {!isValid && <Overlay
       isVisible={!isValid}
       windowBackgroundColor="transparent"
@@ -115,6 +119,7 @@ class History extends Component {
       <LoadingData message={translate('comm.loadingdata', locale)} size="large" />
     </Overlay>}
     {accountHistory && <TableHistory history={accountHistory} account={accountId} onRefresh={this._onRefreshHistory} isRefreshing={isRefreshing} />}
+    
   </ViewContainer>
 	  );
 	}

@@ -10,6 +10,7 @@ import { Icon, Button, List, ListItem, Avatar } from 'react-native-elements';
 
 import { ViewContainer, StyleSheet, TransactionConfirmModal } from '../../../components';
 import { triggerTrans, triggerUser, accountSearch } from '../../../actions';
+import Toast, {DURATION} from 'react-native-easy-toast';
 
 const { handle: sendTransfer } = triggerTrans;
 const { unlock: sendUnLock } = triggerUser;
@@ -32,8 +33,8 @@ class ScanButton extends Component {
       navigation.navigate('Scan', { handleScan: navigation.state.params.handleScan });
     }
     else {
-
-      Alert.alert(' ', translate('tips.comm.fatal', locale), [{ text: 'OK', onPress: () => {} },]);
+      this.refs.toast.show(translate('tips.comm.fatal', locale));
+      // Alert.alert(' ', translate('tips.comm.fatal', locale), [{ text: 'OK', onPress: () => {} },]);
     }
   }
 
@@ -166,12 +167,14 @@ class Transfer extends Component {
 
     // 检验有效性
     if (!fromUser || !toUser || !amount || !asset_type) {
-      Alert.alert(' ', translate('tips.transfer.checkagain', locale), [{ text: 'OK', onPress: () => {} },]);
+      this.refs.toast.show(translate('tips.transfer.checkagain', locale));
+      // Alert.alert(' ', translate('tips.transfer.checkagain', locale), [{ text: 'OK', onPress: () => {} },]);
       return false;
     }
 
     if (!this.props.currentAccount) {
-      Alert.alert(' ', translate('tips.transfer.nonecurrentname', locale), [{ text: 'OK', onPress: () => {} },]);
+      this.refs.toast.show(translate('tips.transfer.nonecurrentname', locale));
+      // Alert.alert(' ', translate('tips.transfer.nonecurrentname', locale), [{ text: 'OK', onPress: () => {} },]);
       return false;
     }
 
@@ -200,7 +203,8 @@ class Transfer extends Component {
     // 节点未连接，提示用户
     if (!this.isNodeLinked()) {
       this.setState({ isRefreshing: false });
-      Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
+      this.refs.toast.show(translate('tips.comm.nodelose', locale));
+      // Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
       return;
     }
 
@@ -341,6 +345,7 @@ class Transfer extends Component {
 
     return (
       <ViewContainer>
+        <Toast ref="toast" position='top' positionValue={100}/>
         <View style={styles.titleContainer}>
           <View style={styles.avatarContainer}>
             <Avatar
@@ -468,6 +473,7 @@ marginLeft: 5, textAlign: 'left', color: 'gray', fontSize: 14, marginRight: 5, w
             />
           </View>
         </ScrollView>
+        
       </ViewContainer>
     );
   }

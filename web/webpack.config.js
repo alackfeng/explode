@@ -45,6 +45,7 @@ module.exports = {
       'react-native-elements',
       'react-native-modal',
       'react-native-animatable',
+      'react-native-easy-toast',
     ],
   },
   output: {
@@ -81,6 +82,7 @@ module.exports = {
           path.resolve(process.cwd(), 'node_modules', 'react-native-elements'),
           path.resolve(process.cwd(), 'node_modules', 'react-native-modal'),
           path.resolve(process.cwd(), 'node_modules', 'react-native-animatable'),
+          path.resolve(process.cwd(), 'node_modules', 'react-native-easy-toast'),
           path.resolve(process.cwd(), 'js'),
           path.resolve(process.cwd(), 'index.web.js'),
         ],

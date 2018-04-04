@@ -11,6 +11,7 @@ import { SearchBar, List, ListItem, Icon, Button, Input } from 'react-native-ele
 import { ViewContainer, StyleSheet, LoadingLoginModal, LoadingData } from '../../../components';
 import { AssetItem } from './AssetItem';
 import _ from 'lodash';
+import Toast, {DURATION} from 'react-native-easy-toast';
 
 // import { ChainStore, FetchChain } from "assetfunjs/es";
 const increment_seq = 1;
@@ -115,7 +116,8 @@ class AssetsList extends Component {
 
 	  // 节点未连接，提示用户
 	  if (!this.isNodeLinked()) {
-      Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
+      // Alert.alert(' ', translate('tips.comm.nodelose', locale), [{ text: 'OK', onPress: () => {} },]);
+      this.refs.toast.show(translate('tips.comm.nodelose', locale));
 	    return;
 	  }
 
@@ -186,6 +188,7 @@ class AssetsList extends Component {
 
 	  return (
   <ViewContainer>
+    <Toast ref="toast" position='top' positionValue={100} />
     <ListView
       enableEmptySections
       ref="ListView"

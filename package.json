@@ -40,6 +40,7 @@
     "react-dom": "^16.2.0",
     "react-motion": "^0.5.2",
     "react-native": "0.52.0",
+    "react-native-easy-toast": "^1.1.0",
     "react-native-elements": "1.0.0-beta",
     "react-native-fs": "^2.9.11",
     "react-native-i18n": "^2.0.10",
